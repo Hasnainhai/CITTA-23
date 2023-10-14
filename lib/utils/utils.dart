@@ -34,7 +34,7 @@ class Utils {
         flushbarPosition: FlushbarPosition.TOP,
         icon: const Icon(
           Icons.error,
-          color: AppColor.whiteColor,
+          color: Colors.white,
           size: 30.0,
         ),
       )..show(context),
