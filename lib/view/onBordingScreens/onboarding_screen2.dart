@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/onboarding_button.dart';
-import '../../res/components/verticalSpacing.dart';
+import '../../res/components/widgets/verticalSpacing.dart';
 
 class OnBordingScreen2 extends StatelessWidget {
   const OnBordingScreen2({super.key});
