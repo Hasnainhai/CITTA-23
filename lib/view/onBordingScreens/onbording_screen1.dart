@@ -2,6 +2,7 @@ import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../res/components/onboarding_button.dart';
 import '../../res/components/verticalSpacing.dart';
 
 class OnBordingScreen1 extends StatelessWidget {
@@ -45,33 +46,9 @@ class OnBordingScreen1 extends StatelessWidget {
                 ),
               ),
               const VerticalSpeacing(66),
-              CircularPercentIndicator(
-                radius: 45,
-                percent: 0.3,
-                progressColor: AppColor.primaryColor,
-                backgroundColor: AppColor.inActiveColor,
-                center: GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColor.primaryColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFFFE0180),
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              OnButton(
+                progress: 0.3,
+                onTap: () {},
               ),
             ],
           ),
