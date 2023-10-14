@@ -1,6 +1,7 @@
-import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import '../../res/components/colors.dart';
 import '../../res/components/onboarding_button.dart';
 import '../../res/components/verticalSpacing.dart';
 
@@ -24,30 +25,45 @@ class OnBordingScreen2 extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/onboarding1.png"),
+                    image: AssetImage("images/onboarding2.png"),
                   ),
                 ),
               ),
               const VerticalSpeacing(60),
-              const Text(
-                "Browse all the category",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.fontColor),
+              Text(
+                "Amazing Discounts & Offers",
+                style: GoogleFonts.getFont(
+                  "Gothic A1",
+                  textStyle: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor),
+                ),
               ),
               const VerticalSpeacing(16),
-              const Text(
+              Text(
                 "In aliquip aute exercitation ut et nisi ut mollit. Deserunt dolor elit pariatur aute .",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
+                style: GoogleFonts.getFont(
+                  "Gothic A1",
+                  textStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
+                  ),
                 ),
               ),
               const VerticalSpeacing(66),
               OnButton(
                 progress: 0.6,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => const OnBordingScreen3()),
+                    ),
+                  );
+                },
               ),
             ],
           ),
