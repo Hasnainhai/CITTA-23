@@ -1,13 +1,12 @@
-import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
+import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../res/components/colors.dart';
 import '../../res/components/onboarding_button.dart';
 import '../../res/components/verticalSpacing.dart';
 
-class OnBordingScreen1 extends StatelessWidget {
-  const OnBordingScreen1({super.key});
+class OnBordingScreen2 extends StatelessWidget {
+  const OnBordingScreen2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +25,13 @@ class OnBordingScreen1 extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/onboarding1.png"),
+                    image: AssetImage("images/onboarding2.png"),
                   ),
                 ),
               ),
               const VerticalSpeacing(60),
               Text(
-                "Browse all the category",
+                "Amazing Discounts & Offers",
                 style: GoogleFonts.getFont(
                   "Gothic A1",
                   textStyle: const TextStyle(
@@ -48,19 +47,20 @@ class OnBordingScreen1 extends StatelessWidget {
                 style: GoogleFonts.getFont(
                   "Gothic A1",
                   textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
+                  ),
                 ),
               ),
               const VerticalSpeacing(66),
               OnButton(
-                progress: 0.3,
+                progress: 0.6,
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: ((context) => const OnBordingScreen2()),
+                      builder: ((context) => const OnBordingScreen3()),
                     ),
                   );
                 },

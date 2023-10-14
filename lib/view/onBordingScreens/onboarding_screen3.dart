@@ -1,13 +1,12 @@
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/onboarding_button.dart';
 import '../../res/components/verticalSpacing.dart';
 
-class OnBordingScreen1 extends StatelessWidget {
-  const OnBordingScreen1({super.key});
+class OnBordingScreen3 extends StatelessWidget {
+  const OnBordingScreen3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +25,13 @@ class OnBordingScreen1 extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("images/onboarding1.png"),
+                    image: AssetImage("images/onboarding3.png"),
                   ),
                 ),
               ),
               const VerticalSpeacing(60),
               Text(
-                "Browse all the category",
+                "Delivery in 30 Min",
                 style: GoogleFonts.getFont(
                   "Gothic A1",
                   textStyle: const TextStyle(
@@ -48,22 +47,16 @@ class OnBordingScreen1 extends StatelessWidget {
                 style: GoogleFonts.getFont(
                   "Gothic A1",
                   textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
+                  ),
                 ),
               ),
               const VerticalSpeacing(66),
               OnButton(
-                progress: 0.3,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => const OnBordingScreen2()),
-                    ),
-                  );
-                },
+                progress: 1.0,
+                onTap: () {},
               ),
             ],
           ),
