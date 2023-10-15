@@ -1,9 +1,10 @@
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/onboarding_button.dart';
-import '../../res/components/widgets/verticalSpacing.dart';
 
 class OnBordingScreen3 extends StatelessWidget {
   const OnBordingScreen3({super.key});
@@ -56,7 +57,9 @@ class OnBordingScreen3 extends StatelessWidget {
               const VerticalSpeacing(40.0),
               OnButton(
                 progress: 1.0,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.loginorsiginscreen);
+                },
               ),
             ],
           ),

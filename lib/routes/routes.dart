@@ -4,6 +4,7 @@ import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import '../view/onBordingScreens/login_or_signin_screen.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
 
 class Routes {
@@ -28,6 +29,9 @@ class Routes {
         case RoutesName.loginOrSignup:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginOrSignUp(),
+      case RoutesName.loginorsiginscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const LoginOrSigninScreen(),
         );
       default:
         return MaterialPageRoute(
