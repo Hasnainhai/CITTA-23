@@ -1,3 +1,4 @@
+import 'package:citta_23/view/onBordingScreens/login_or_signin_screen.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: LoginOrSigninScreen(),
     );
   }
 }
