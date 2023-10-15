@@ -7,6 +7,10 @@ class AppColor {
   static const Color inActiveColor = Color(0xffCFD8DC);
   static const Color buttonBgColor = Color(0xffCB0166);
   static const Color buttonTxColor = Color(0xffFFFFFF);
-  static const Color whiteColor=  Color(0xffFFFFFF);
+  static const Color whiteColor = Color(0xffFFFFFF);
   static const Color logoBgColor = Color(0xffFBB9D2);
+  static const Color appleColor = Color(0xff444444);
+  static const Color googleColor = Color(0xffDD4B39);
+  static const Color twitterColor = Color(0xff55ACEE);
+  static const Color fbColor = Color(0xff3B5998);
 }
