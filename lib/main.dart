@@ -1,6 +1,6 @@
-import 'package:citta_23/view/AuthenticationScreens/login_screen.dart';
-import 'package:flutter/material.dart';
 
+import 'package:citta_23/view/HomeScreen/homeScreen.dart';
+import 'package:flutter/material.dart';
 import 'routes/routes.dart';
 
 void main() {
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       // initialRoute: RoutesName.loginOrSignup,
       onGenerateRoute: Routes.generateRoute,
       home: LoginScreen(),
+
     );
   }
 }

@@ -81,6 +81,15 @@ class LoginOrSignUp extends StatelessWidget {
                   height: 20,
                   width: 20,
                 ),
+
+                const AuthButton(
+                    color: AppColor.appleColor, img: 'images/apple.png'),
+                const AuthButton(
+                    color: AppColor.googleColor, img: 'images/google.png'),
+                const AuthButton(
+                    color: AppColor.twitterColor, img: 'images/twitter.png'),
+                const AuthButton(color: AppColor.fbColor, img: 'images/fb.png'),
+
               ],
             ),
           ],
