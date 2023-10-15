@@ -1,3 +1,4 @@
+import 'package:citta_23/view/AuthenticationScreens/loginorSignup.dart';
 import 'package:flutter/material.dart';
 
 import 'routes/routes.dart';
@@ -13,8 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutesName.splashScreen,
+      // initialRoute: RoutesName.loginOrSignup,
       onGenerateRoute: Routes.generateRoute,
+      home: LoginOrSignUp(),
     );
   }
 }
