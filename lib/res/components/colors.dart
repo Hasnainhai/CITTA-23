@@ -8,4 +8,5 @@ class AppColor {
   static const Color buttonBgColor = Color(0xffCB0166);
   static const Color buttonTxColor = Color(0xffFFFFFF);
   static const Color whiteColor=  Color(0xffFFFFFF);
+  static const Color logoBgColor = Color(0xffFBB9D2);
 }
