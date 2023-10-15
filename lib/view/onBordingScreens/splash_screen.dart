@@ -46,14 +46,12 @@ class _SplashScreenState extends State<SplashScreen> {
             const VerticalSpeacing(126),
             Stack(
               children: <Widget>[
-
                 Container(
                   height: MediaQuery.of(context).size.height * 0.5,
-
                   width: double.infinity,
                 ),
                 Positioned(
-                  bottom: -100,
+                  bottom: -150,
                   left: 0,
                   right: 0,
                   child: Container(
