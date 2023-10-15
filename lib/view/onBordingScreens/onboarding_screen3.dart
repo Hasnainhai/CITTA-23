@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/onboarding_button.dart';
-import '../../res/components/verticalSpacing.dart';
+import '../../res/components/widgets/verticalSpacing.dart';
 
 class OnBordingScreen3 extends StatelessWidget {
   const OnBordingScreen3({super.key});
@@ -29,7 +29,7 @@ class OnBordingScreen3 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(60),
+              const VerticalSpeacing(30),
               Text(
                 "Delivery in 30 Min",
                 style: GoogleFonts.getFont(
@@ -53,7 +53,7 @@ class OnBordingScreen3 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(66),
+              const VerticalSpeacing(40.0),
               OnButton(
                 progress: 1.0,
                 onTap: () {},
