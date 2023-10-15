@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 
 import '../../res/components/colors.dart';
+import '../../res/components/roundedButton.dart';
+import '../../routes/routes_name.dart';
 
 class LoginOrSigninScreen extends StatelessWidget {
   const LoginOrSigninScreen({super.key});
@@ -24,6 +26,7 @@ class LoginOrSigninScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 24, right: 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +55,38 @@ class LoginOrSigninScreen extends StatelessWidget {
                   ],
                 ),
                 Column(
-                  children: [],
+                  children: [
+                    RoundedButton(
+                      title: "Continue with Email or Phone",
+                      onpress: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.loginOrSignup,
+                        );
+                      },
+                    ),
+                    const VerticalSpeacing(20),
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        height: 56.0,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: const BoxDecoration(
+                          color: AppColor.buttonTxColor,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            "Create an account",
+                            style: TextStyle(
+                              color: AppColor.fontColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const VerticalSpeacing(50),
+                  ],
                 )
               ],
             ),
