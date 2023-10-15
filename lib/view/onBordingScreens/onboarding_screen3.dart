@@ -29,7 +29,7 @@ class OnBordingScreen3 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(60),
+              const VerticalSpeacing(30),
               Text(
                 "Delivery in 30 Min",
                 style: GoogleFonts.getFont(
@@ -53,7 +53,7 @@ class OnBordingScreen3 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(66),
+              const VerticalSpeacing(40.0),
               OnButton(
                 progress: 1.0,
                 onTap: () {},

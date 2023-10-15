@@ -1,10 +1,9 @@
-import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../res/components/colors.dart';
 import '../../res/components/onboarding_button.dart';
+import '../../routes/routes_name.dart';
 
 class OnBordingScreen1 extends StatelessWidget {
   const OnBordingScreen1({super.key});
@@ -30,7 +29,7 @@ class OnBordingScreen1 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(60),
+              const VerticalSpeacing(30),
               Text(
                 "Browse all the category",
                 style: GoogleFonts.getFont(
@@ -53,16 +52,11 @@ class OnBordingScreen1 extends StatelessWidget {
                       color: AppColor.fontColor),
                 ),
               ),
-              const VerticalSpeacing(66),
+              const VerticalSpeacing(46),
               OnButton(
                 progress: 0.3,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => const OnBordingScreen2()),
-                    ),
-                  );
+                  Navigator.pushNamed(context, RoutesName.onboarding2);
                 },
               ),
             ],
