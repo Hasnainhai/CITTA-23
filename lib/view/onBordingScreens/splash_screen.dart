@@ -28,46 +28,28 @@ class _SplashScreenState extends State<SplashScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.splashBgColor,
       body: SafeArea(
-        child: Column(
-          children: [
-            const VerticalSpeacing(150),
-            Container(
-              alignment: Alignment.center,
-              height: 57.87,
-              width: 195,
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-                image: DecorationImage(
-                  image: AssetImage('images/logo.png'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            const VerticalSpeacing(126),
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  width: double.infinity,
-                ),
-                Positioned(
-                  bottom: -150,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('images/splash.png'),
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("images/splash.png"), fit: BoxFit.cover),
+          ),
+          child: Column(
+            children: [
+              VerticalSpeacing(MediaQuery.of(context).size.height / 4),
+              Container(
+                height: 58,
+                width: 195,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/logo.png"),
+
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
