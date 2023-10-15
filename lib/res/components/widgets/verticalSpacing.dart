@@ -1,9 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class VerticalSpeacing extends StatelessWidget {
-   const VerticalSpeacing(this.height);
+  const VerticalSpeacing(this.height, {super.key});
 
-   final double height;
+  final double height;
 
   @override
   Widget build(BuildContext context) {

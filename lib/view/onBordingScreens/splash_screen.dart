@@ -1,6 +1,8 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+
 import 'package:citta_23/routes/routes_name.dart';
+
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -44,8 +46,10 @@ class _SplashScreenState extends State<SplashScreen> {
             const VerticalSpeacing(126),
             Stack(
               children: <Widget>[
+
                 Container(
                   height: MediaQuery.of(context).size.height * 0.5,
+
                   width: double.infinity,
                 ),
                 Positioned(

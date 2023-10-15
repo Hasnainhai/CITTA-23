@@ -1,9 +1,9 @@
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/onboarding_button.dart';
-import '../../res/components/widgets/verticalSpacing.dart';
 
 class OnBordingScreen3 extends StatelessWidget {
   const OnBordingScreen3({super.key});
