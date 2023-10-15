@@ -1,8 +1,6 @@
-import 'package:citta_23/view/AuthenticationScreens/loginorSignup.dart';
+import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'routes/routes.dart';
-import 'routes/routes_name.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: RoutesName.loginOrSignup,
       onGenerateRoute: Routes.generateRoute,
-      home: LoginOrSignUp(),
+      home: HomeScreen(),
     );
   }
 }
