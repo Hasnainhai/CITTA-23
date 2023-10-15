@@ -1,4 +1,5 @@
-import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
+import 'package:citta_23/routes/routes.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+
+      initialRoute: RoutesName.splashScreen,
+   onGenerateRoute: Routes.generateRoute,
     );
+
   }
 }
