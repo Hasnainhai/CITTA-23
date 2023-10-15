@@ -2,6 +2,7 @@
 
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
+import 'package:citta_23/res/components/widgets/authButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
@@ -73,14 +74,15 @@ class LoginOrSignUp extends StatelessWidget {
               ),
             ),
             const VerticalSpeacing(50.0),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Image.asset(
-                  'images/apple.png',
-                  height: 20,
-                  width: 20,
-                ),
+                AuthButton(color: AppColor.appleColor, img: 'images/apple.png'),
+                AuthButton(
+                    color: AppColor.googleColor, img: 'images/google.png'),
+                AuthButton(
+                    color: AppColor.twitterColor, img: 'images/twitter.png'),
+                AuthButton(color: AppColor.fbColor, img: 'images/fb.png'),
               ],
             ),
           ],
