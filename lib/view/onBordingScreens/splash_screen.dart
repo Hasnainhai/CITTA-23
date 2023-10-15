@@ -1,6 +1,5 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/onBordingScreens/onbording_screen1.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             Stack(
               children: <Widget>[
-                Container(
+                const SizedBox(
                   height: 450,
                   width: double.infinity,
                 ),
