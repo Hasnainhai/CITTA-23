@@ -1,9 +1,9 @@
-import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/onboarding_button.dart';
-import '../../res/components/verticalSpacing.dart';
+import '../../res/components/widgets/verticalSpacing.dart';
 
 class OnBordingScreen2 extends StatelessWidget {
   const OnBordingScreen2({super.key});
@@ -29,7 +29,7 @@ class OnBordingScreen2 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(60),
+              const VerticalSpeacing(30),
               Text(
                 "Amazing Discounts & Offers",
                 style: GoogleFonts.getFont(
@@ -53,16 +53,11 @@ class OnBordingScreen2 extends StatelessWidget {
                   ),
                 ),
               ),
-              const VerticalSpeacing(66),
+              const VerticalSpeacing(46),
               OnButton(
                 progress: 0.6,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => const OnBordingScreen3()),
-                    ),
-                  );
+                  Navigator.pushNamed(context, RoutesName.onboarding3);
                 },
               ),
             ],
