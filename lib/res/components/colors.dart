@@ -15,7 +15,7 @@ class AppColor {
   static const Color fbColor = Color(0xff3B5998);
   static const Color appBarButtonColor = Color(0xffEEEEEE);
   static const Color menuColor = Color(0xff16162E);
-   static const Color grayColor = Color(0xff8B8B97);
-   static const Color bannerBgColor = Color(0xffFFDDBF);
-    static const Color blackColor = Color(0xff000000);
+  static const Color grayColor = Color(0xff8B8B97);
+  static const Color bannerBgColor = Color(0xffFFDDBF);
+  static const Color blackColor = Color(0xff000000);
 }

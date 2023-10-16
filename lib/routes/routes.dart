@@ -1,6 +1,9 @@
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/AuthenticationScreens/login_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/loginorSignup.dart';
+import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
+import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
+import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
@@ -30,17 +33,30 @@ class Routes {
       case RoutesName.loginOrSignup:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginOrSignUp(),
-
-
-          );
+        );
       case RoutesName.loginorsiginscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginOrSigninScreen(),
         );
+
       case RoutesName.loginscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginScreen(),
         );
+
+      case RoutesName.restscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const RestScreen(),
+        );
+      case RoutesName.homeScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const HomeScreen(),
+        );
+      case RoutesName.registerScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const RegisterScreen(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) {
