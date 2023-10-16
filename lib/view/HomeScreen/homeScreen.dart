@@ -1,16 +1,39 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/view/HomeScreen/widgets/Home_design.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'widgets/homeCard.dart';
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  final List<IconData> iconList = [
+    Icons.home,
+    Icons.menu,
+    Icons.save,
+    Icons.person_2_rounded,
+  ];
+  final List<Widget> pages = [
+    FirstPage(),
+    SecondPage(),
+    ThirdPage(),
+    FourthPage(),
+  ];
+  final List<String> pagesName = [
+    'Home',
+    'Menu',
+    'Save',
+    'Profile',
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    bool isTrue = true;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -104,145 +127,113 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: ListView(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    height: 180.0,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('images/bannerImg.png'),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Popular Pack",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor),
-                        ),
+        body: pages[_currentIndex],
+        bottomNavigationBar: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: AnimatedBottomNavigationBar.builder(
+                onTap: (index){
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                itemCount: iconList.length,
+                tabBuilder: (int index, bool isActive) {
+                  final color = isActive ? Colors.blue : Colors.grey;
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        iconList[index],
+                        size: 24,
+                        color: color,
                       ),
                       Text(
-                        "View All",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.buttonBgColor),
-                        ),
+                        pagesName[index],
+                        style: TextStyle(color: color),
                       ),
                     ],
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeCard(
-                        name: 'Bundle Pack',
-                        categories: 'Onion,Oil,Salt...',
-                        price: '\$35 ',
-                        dPrice: '\$50.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.appBarButtonColor,
-                        cartBorder: isTrue
-                            ? AppColor.appBarButtonColor
-                            : AppColor.buttonBgColor,
-                        img: 'images/fruit1.png',
-                        iconColor: AppColor.buttonBgColor,
-                      ),
-                      HomeCard(
-                        name: 'Fruit Pack',
-                        categories: 'Apple,banana...',
-                        price: '\$50 ',
-                        dPrice: '\$70.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: isTrue
-                            ? AppColor.buttonBgColor
-                            : AppColor.appBarButtonColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit2.png',
-                        iconColor:
-                            isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
-                      ),
-                    ],
-                  ),
-                  const VerticalSpeacing(16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Our New Item",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor),
-                        ),
-                      ),
-                      Text(
-                        "View All",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.buttonBgColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeCard(
-                        name: 'Girl Guide',
-                        categories: '1000 GM',
-                        price: '\$10 ',
-                        dPrice: '\$15.99',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: isTrue
-                            ? AppColor.buttonBgColor
-                            : AppColor.appBarButtonColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit3.png',
-                        iconColor:
-                            isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
-                      ),
-                      HomeCard(
-                        name: 'Tomato',
-                        categories: '1000 GM',
-                        price: '\$5 ',
-                        dPrice: '\$9.99',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: isTrue
-                            ? AppColor.buttonBgColor
-                            : AppColor.appBarButtonColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit4.png',
-                        iconColor:
-                            isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
-                      ),
-                    ],
-                  ),
-                ],
+                  );
+                },
+                activeIndex: _currentIndex,
+                splashColor: Colors.blue,
+                splashSpeedInMilliseconds: 300,
+                splashRadius: 20,
+                gapLocation: GapLocation.center,
+                notchSmoothness: NotchSmoothness.defaultEdge,
+                // onTap: (index) {
+                //   setState(() {
+                //     _currentIndex = index;
+                //   });
+                // },
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: 20.0,
+              left: (MediaQuery.of(context).size.width / 2) - 30.0,
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: const BoxDecoration(
+                  color: Colors.pink,
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.shopping_basket_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'First Paage',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Second Page'),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Third Page'),
+    );
+  }
+}
+
+class FourthPage extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Fourth Page'),
     );
   }
 }

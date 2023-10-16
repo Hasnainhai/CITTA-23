@@ -39,6 +39,7 @@ dependencies:
   another_flushbar: ^1.12.30
   percent_indicator: ^4.2.3
   google_fonts: ^6.1.0
+  animated_bottom_navigation_bar: ^1.3.0
 
 dev_dependencies:
   flutter_test:
