@@ -2,6 +2,7 @@ import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/sigin_buttons.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -84,24 +85,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.emailAddress,
                   obscureText: true,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Forget Password?",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      RoutesName.restscreen,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Forget Password?",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const VerticalSpeacing(30),
-                RoundedButton(title: "Login", onpress: () {}),
+                RoundedButton(
+                    title: "Login",
+                    onpress: () {
+                      Navigator.pushNamed(context, RoutesName.homeScreen);
+                    }),
                 const VerticalSpeacing(30.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,14 +151,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      "Sign up",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.primaryColor,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RoutesName.registerScreen);
+                      },
+                      child: Text(
+                        "Sign up",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
+                          ),
                         ),
                       ),
                     ),
