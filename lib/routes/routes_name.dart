@@ -10,4 +10,5 @@ class RoutesName {
   static const String restscreen = "/Rest_Screen";
   static const String homeScreen = "/Home_Screen";
   static const String registerScreen = "/Register_Screen";
+  static const String otpscreen = "/OTP_Screen";
 }

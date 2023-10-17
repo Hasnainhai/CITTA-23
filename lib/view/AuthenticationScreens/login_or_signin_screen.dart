@@ -67,7 +67,12 @@ class LoginOrSigninScreen extends StatelessWidget {
                     ),
                     const VerticalSpeacing(20),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.registerScreen,
+                        );
+                      },
                       child: Container(
                         height: 56.0,
                         width: MediaQuery.of(context).size.width * 0.9,
