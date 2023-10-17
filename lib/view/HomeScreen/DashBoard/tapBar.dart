@@ -1,18 +1,15 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class TapBar extends StatefulWidget {
+  const TapBar({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TapBar> createState() => _TapBarState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TapBarState extends State<TapBar> {
   int _currentIndex = 0;
   final List<IconData> iconList = [
     Icons.home,
@@ -37,11 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
         body: IndexedStack(
-        index: _currentIndex,
-        children: pages,
-      ),
+          index: _currentIndex,
+          children: pages,
+        ),
         bottomNavigationBar: Stack(
           children: [
             Align(
@@ -72,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 splashRadius: 20,
                 gapLocation: GapLocation.center,
                 notchSmoothness: NotchSmoothness.defaultEdge,
-                 onTap: (index){
+                onTap: (index) {
                   setState(() {
                     _currentIndex = index;
                   });
@@ -105,7 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class FirstPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -118,7 +113,6 @@ class FirstPage extends StatelessWidget {
 }
 
 class SecondPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -128,7 +122,6 @@ class SecondPage extends StatelessWidget {
 }
 
 class ThirdPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -138,7 +131,6 @@ class ThirdPage extends StatelessWidget {
 }
 
 class FourthPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Center(
