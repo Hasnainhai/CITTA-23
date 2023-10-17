@@ -4,14 +4,15 @@ import 'package:citta_23/view/AuthenticationScreens/loginorSignup.dart';
 import 'package:citta_23/view/AuthenticationScreens/otp_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
-import 'package:citta_23/view/AuthenticationScreens/verification_popup.dart';
-import 'package:citta_23/view/HomeScreen/homeScreen.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
+
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -45,14 +46,9 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginScreen(),
         );
-
       case RoutesName.restscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const RestScreen(),
-        );
-      case RoutesName.homeScreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const HomeScreen(),
         );
       case RoutesName.otpscreen:
         return MaterialPageRoute(
