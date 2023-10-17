@@ -1,5 +1,9 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
+import 'package:citta_23/view/card/card_screen.dart';
+import 'package:citta_23/view/menu/menu.dart';
+import 'package:citta_23/view/profile/profile_screen.dart';
+import 'package:citta_23/view/save/save_screen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -32,7 +36,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           physics: const NeverScrollableScrollPhysics(),
           controller: tabController,
           children: const [
-            HomeScreen()
+            HomeScreen(),
+            MenuScreen(),
+            CardScreen(),
+            SaveScreen(),
+            ProfileScreen(),
             // DiscoverScreen(),
             // ChatScreen(),
             // JobPost(),
@@ -59,11 +67,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             BottomNavigationBar(
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: ('Discover'),
+                  icon: Icon(
+                    Icons.home,
+                  ),
+                  label: ('Home'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.list_alt_outlined),
+                  icon: Icon(
+                    Icons.list_alt_outlined,
+                  ),
                   label: ('Menu'),
                 ),
                 BottomNavigationBarItem(
@@ -71,14 +83,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     Icons.shopping_basket_outlined,
                     size: 34,
                   ),
-                  label: ('Chat'),
+                  label: ('Card'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark_outline_rounded),
+                  icon: Icon(
+                    Icons.bookmark_outline_rounded,
+                  ),
                   label: ('Save'),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle),
+                  icon: Icon(
+                    Icons.account_circle,
+                  ),
                   label: ('Profile'),
                 ),
               ],
