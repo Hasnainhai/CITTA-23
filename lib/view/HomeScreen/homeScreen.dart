@@ -123,81 +123,109 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 60.0,
-                        width: MediaQuery.of(context).size.width * 0.43,
-                        child: Container(
-                          height: 45.0,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          color: Colors.amber,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                height: 33.0,
-                                width: 63.0,
-                                color: AppColor.categoryLightColor,
-                              ),
-                              Text(
-                                'Food',
-                                style: GoogleFonts.getFont(
-                                  "Gothic A1",
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.fontColor),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 60.0,
-                        width: MediaQuery.of(context).size.width * 0.43,
-                        color: Colors.amber,
-                        child: Stack(
-                          children: [
-                            // Content
-                            Container(
-                              height: 45.0,
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    height: 33.0,
-                                    width: 63.0,
-                                    color: AppColor.categoryLightColor,
-                                  ),
-                                  Text(
-                                    'Food',
-                                    style: GoogleFonts.getFont(
-                                      "Gothic A1",
-                                      textStyle: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColor.fontColor),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 60.0,
+                            width: MediaQuery.of(context).size.width * 0.43,
+                            child: Center(
+                              child: Container(
+                                height: 45.0,
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                color: AppColor.buttonBgColor,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Container(
+                                      height: 33.0,
+                                      width: 63.0,
+                                      color: AppColor.categoryLightColor,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      'Food',
+                                      style: GoogleFonts.getFont(
+                                        "Gothic A1",
+                                        textStyle: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColor.whiteColor),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            // Background Image
-                            Positioned(
-                              left: 5,
-                              top: 0,
+                          ),
+                          Positioned(
+                            left: 25,
+                            top: 0,
+                            bottom: 5.0,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Image.asset(
+                                'images/foodimg.png',
+                                height: 59.0,
+                                width: 59.0,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 60.0,
+                            width: MediaQuery.of(context).size.width * 0.43,
+                            child: Center(
+                              child: Container(
+                                height: 45.0,
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: AppColor.buttonBgColor)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Container(
+                                      height: 33.0,
+                                      width: 63.0,
+                                      color: AppColor.categoryLightColor,
+                                    ),
+                                    Text(
+                                      'Fashion',
+                                      style: GoogleFonts.getFont(
+                                        "Gothic A1",
+                                        textStyle: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColor.buttonBgColor),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 30,
+                            top: 0,
+                            bottom: 12.0,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
                               child: Image.asset(
                                 'images/fashionimg.png',
-                                height: 45.0,
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                fit: BoxFit.cover,
+                                height: 56.0,
+                                width: 42.0,
+                                fit: BoxFit.contain,
                               ),
                             ),
-                          ],
-                        ),
-                      )
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   const VerticalSpeacing(50.0),
