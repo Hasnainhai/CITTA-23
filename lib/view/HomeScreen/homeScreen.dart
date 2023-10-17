@@ -152,35 +152,52 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                       Container(
+                      Container(
                         height: 60.0,
                         width: MediaQuery.of(context).size.width * 0.43,
-                        child: Container(
-                          height: 45.0,
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          color: Colors.amber,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                height: 33.0,
-                                width: 63.0,
-                                color: AppColor.categoryLightColor,
+                        color: Colors.amber,
+                        child: Stack(
+                          children: [
+                            // Content
+                            Container(
+                              height: 45.0,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    height: 33.0,
+                                    width: 63.0,
+                                    color: AppColor.categoryLightColor,
+                                  ),
+                                  Text(
+                                    'Food',
+                                    style: GoogleFonts.getFont(
+                                      "Gothic A1",
+                                      textStyle: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.fontColor),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                'Food',
-                                style: GoogleFonts.getFont(
-                                  "Gothic A1",
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.fontColor),
-                                ),
-                              )
-                            ],
-                          ),
+                            ),
+                            // Background Image
+                            Positioned(
+                              left: 5,
+                              top: 0,
+                              child: Image.asset(
+                                'images/fashionimg.png',
+                                height: 45.0,
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                      )
                     ],
                   ),
                   const VerticalSpeacing(50.0),
