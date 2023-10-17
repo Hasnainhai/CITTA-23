@@ -1,6 +1,7 @@
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/AuthenticationScreens/login_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/loginorSignup.dart';
+import 'package:citta_23/view/AuthenticationScreens/otp_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
@@ -51,6 +52,10 @@ class Routes {
       case RoutesName.homeScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const HomeScreen(),
+        );
+      case RoutesName.otpscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const OtpScreen(),
         );
       case RoutesName.registerScreen:
         return MaterialPageRoute(

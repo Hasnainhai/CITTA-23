@@ -1,6 +1,7 @@
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -107,7 +108,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         obscureText: true,
                       ),
                       const VerticalSpeacing(30),
-                      RoundedButton(title: "Register", onpress: () {}),
+                      RoundedButton(
+                          title: "Register",
+                          onpress: () {
+                            Navigator.pushNamed(
+                              context,
+                              RoutesName.otpscreen,
+                            );
+                          }),
                       const VerticalSpeacing(30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +135,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.loginscreen);
+                            },
                             child: Text(
                               "Log In",
                               style: GoogleFonts.getFont(
