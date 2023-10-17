@@ -12,7 +12,7 @@ import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
-
+import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -57,6 +57,10 @@ class Routes {
       case RoutesName.registerScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const RegisterScreen(),
+        );
+      case RoutesName.homeScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const HomeScreen(),
         );
 
       default:

@@ -18,4 +18,5 @@ class AppColor {
   static const Color grayColor = Color(0xff8B8B97);
   static const Color bannerBgColor = Color(0xffFFDDBF);
   static const Color blackColor = Color(0xff000000);
+  static const Color categoryLightColor = Color(0xffFFE6F2);
 }
