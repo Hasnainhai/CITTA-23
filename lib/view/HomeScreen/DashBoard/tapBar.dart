@@ -1,97 +1,142 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/view/HomeScreen/homeScreen.dart';
+import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
+import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  TabController? tabController;
-  int selectIndex = 0;
-  onItemClick(int index) {
-    setState(() {
-      selectIndex = index;
-      tabController!.index = selectIndex;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: 5, vsync: this);
-  }
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  final List<IconData> iconList = [
+    Icons.home,
+    Icons.menu,
+    Icons.save,
+    Icons.person_2_rounded,
+  ];
+  final List<Widget> pages = [
+    const SplashScreen(),
+    SecondPage(),
+    ThirdPage(),
+    FourthPage(),
+  ];
+  final List<String> pagesName = [
+    'Home',
+    'Menu',
+    'Save',
+    'Profile',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: tabController,
-          children: const [
-            HomeScreen()
-            // DiscoverScreen(),
-            // ChatScreen(),
-            // JobPost(),
-            // NotificationScreen(),
-            // SettingScreen(),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: IndexedStack(
+          index: _currentIndex,
+          children: pages,
         ),
         bottomNavigationBar: Stack(
           children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: AnimatedBottomNavigationBar.builder(
+                itemCount: iconList.length,
+                tabBuilder: (int index, bool isActive) {
+                  final color = isActive ? Colors.blue : Colors.grey;
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        iconList[index],
+                        size: 24,
+                        color: color,
+                      ),
+                      Text(
+                        pagesName[index],
+                        style: TextStyle(color: color),
+                      ),
+                    ],
+                  );
+                },
+                activeIndex: _currentIndex,
+                splashColor: Colors.blue,
+                splashSpeedInMilliseconds: 300,
+                splashRadius: 20,
+                gapLocation: GapLocation.center,
+                notchSmoothness: NotchSmoothness.defaultEdge,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+            ),
             Positioned(
-              left: 100,
-              right: 100,
-              bottom: 0,
+              bottom: 20.0,
+              left: (MediaQuery.of(context).size.width / 2) - 30.0,
               child: Container(
-                height: 40,
-                width: 40,
-                color: AppColor.primaryColor,
-                child: const Icon(
-                  Icons.shopping_basket_outlined,
-                  size: 34,
+                width: 60,
+                height: 60,
+                decoration: const BoxDecoration(
+                  color: Colors.pink,
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.shopping_basket_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-            BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: ('Discover'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.list_alt_outlined),
-                  label: ('Menu'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.shopping_basket_outlined,
-                    size: 34,
-                  ),
-                  label: ('Chat'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark_outline_rounded),
-                  label: ('Save'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle),
-                  label: ('Profile'),
-                ),
-              ],
-              unselectedItemColor: AppColor.grayColor,
-              selectedItemColor: AppColor.buttonBgColor,
-              backgroundColor: Colors.white,
-              type: BottomNavigationBarType.fixed,
-              showUnselectedLabels: true,
-              // selectedLabelStyle: const TextStyle(fontSize: 16),
-              currentIndex: selectIndex,
-              onTap: onItemClick,
-            ),
           ],
-        ));
+        ),
+      ),
+    );
+  }
+}
+
+class FirstPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'First Paage',
+        style: TextStyle(color: Colors.red),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Second Page'),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Third Page'),
+    );
+  }
+}
+
+class FourthPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Fourth Page'),
+    );
   }
 }
