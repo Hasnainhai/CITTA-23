@@ -4,6 +4,7 @@ import 'package:citta_23/view/AuthenticationScreens/loginorSignup.dart';
 import 'package:citta_23/view/AuthenticationScreens/otp_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
+import 'package:citta_23/view/AuthenticationScreens/verification_popup.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
