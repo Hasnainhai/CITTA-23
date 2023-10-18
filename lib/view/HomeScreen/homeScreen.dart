@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  VerticalSpeacing(50.0),
+                  const VerticalSpeacing(50.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
