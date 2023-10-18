@@ -3,8 +3,9 @@ import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
 import 'package:citta_23/view/menu/menu.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
-import 'package:citta_23/view/save/save_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../Favourite/favourite_list.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -32,82 +33,84 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: tabController,
-          children: const [
-            HomeScreen(),
-            MenuScreen(),
-            CardScreen(),
-            SaveScreen(),
-            ProfileScreen(),
-            // DiscoverScreen(),
-            // ChatScreen(),
-            // JobPost(),
-            // NotificationScreen(),
-            // SettingScreen(),
-          ],
-        ),
-        bottomNavigationBar: Stack(
-          children: [
-            Positioned(
-              left: 100,
-              right: 100,
-              bottom: 0,
-              child: Container(
-                height: 40,
-                width: 40,
-                color: AppColor.primaryColor,
-                child: const Icon(
-                  Icons.shopping_basket_outlined,
-                  size: 34,
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: tabController,
+        children: const [
+          HomeScreen(),
+          MenuScreen(),
+          CardScreen(),
+          FavouriteList(),
+          ProfileScreen(),
+          // DiscoverScreen(),
+          // ChatScreen(),
+          // JobPost(),
+          // NotificationScreen(),
+          // SettingScreen(),
+        ],
+      ),
+      bottomNavigationBar: Stack(
+        children: [
+          BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
                 ),
+                label: ('Home'),
               ),
-            ),
-            BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.home,
-                  ),
-                  label: ('Home'),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.list_alt_outlined,
                 ),
+                label: ('Menu'),
+              ),
                 BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.list_alt_outlined,
-                  ),
-                  label: ('Menu'),
+                icon: Icon(
+                  Icons.shopping_bag_outlined,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.shopping_basket_outlined,
-                    size: 34,
-                  ),
-                  label: ('Card'),
+                label: ('Cart')
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.bookmark_outline_rounded,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.bookmark_outline_rounded,
-                  ),
-                  label: ('Save'),
+                label: ('Save'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.account_circle,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.account_circle,
-                  ),
-                  label: ('Profile'),
-                ),
-              ],
-              unselectedItemColor: AppColor.grayColor,
-              selectedItemColor: AppColor.buttonBgColor,
-              backgroundColor: Colors.white,
-              type: BottomNavigationBarType.fixed,
-              showUnselectedLabels: true,
-              // selectedLabelStyle: const TextStyle(fontSize: 16),
-              currentIndex: selectIndex,
-              onTap: onItemClick,
-            ),
-          ],
-        ));
+                label: ('Profile'),
+              ),
+            ],
+            unselectedItemColor: AppColor.grayColor,
+            selectedItemColor: AppColor.buttonBgColor,
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            showUnselectedLabels: true,
+            // selectedLabelStyle: const TextStyle(fontSize: 16),
+            currentIndex: selectIndex,
+            onTap: onItemClick,
+          ),
+          // Positioned(
+          //   left: MediaQuery.of(context).size.width / 2 - 30, 
+          //   bottom: 0,
+          //   child: Container(
+          //     color: AppColor.primaryColor,
+          //     height: 60,
+          //     width: 60,
+          //     child: const Center(
+          //       child: Icon(
+          //         Icons.shopping_basket_outlined,
+          //         size: 40,
+          //         color: AppColor.whiteColor, 
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
+      ),
+    );
   }
 }
