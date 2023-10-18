@@ -245,14 +245,22 @@ class HomeScreen extends StatelessWidget {
                               color: AppColor.fontColor),
                         ),
                       ),
-                      Text(
-                        "View All",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.buttonBgColor),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.popularpackscreen,
+                          );
+                        },
+                        child: Text(
+                          "View All",
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.buttonBgColor),
+                          ),
                         ),
                       ),
                     ],
