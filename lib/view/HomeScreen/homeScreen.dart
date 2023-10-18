@@ -1,3 +1,4 @@
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -231,6 +232,12 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       HomeCard(
+                        ontap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.productdetailscreen,
+                          );
+                        },
                         name: 'Bundle Pack',
                         categories: 'Onion,Oil,Salt...',
                         price: '\$35 ',
@@ -244,6 +251,7 @@ class HomeScreen extends StatelessWidget {
                         iconColor: AppColor.buttonBgColor,
                       ),
                       HomeCard(
+                        ontap: () {},
                         name: 'Fruit Pack',
                         categories: 'Apple,banana...',
                         price: '\$50 ',
@@ -291,6 +299,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       HomeCard(
+                        ontap: () {},
                         name: 'Girl Guide',
                         categories: '1000 GM',
                         price: '\$10 ',
@@ -306,6 +315,7 @@ class HomeScreen extends StatelessWidget {
                             : AppColor.buttonBgColor,
                       ),
                       HomeCard(
+                        ontap: () {},
                         name: 'Tomato',
                         categories: '1000 GM',
                         price: '\$5 ',
