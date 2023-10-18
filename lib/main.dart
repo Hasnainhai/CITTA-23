@@ -1,7 +1,8 @@
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:flutter/material.dart';
 import 'routes/routes.dart';
 import 'routes/routes_name.dart';
-import 'view/HomeScreen/DashBoard/tapBar.dart';
+import 'view/HomeScreen/homeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      // initialRoute: RoutesName.homeScreen,s
+      // initialRoute: RoutesName.homeScreen,
       onGenerateRoute: Routes.generateRoute,
       home: Home(),
     );

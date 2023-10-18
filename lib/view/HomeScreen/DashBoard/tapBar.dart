@@ -67,12 +67,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
                 label: ('Menu'),
               ),
-                BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.shopping_bag_outlined,
-                ),
-                label: ('Cart')
-              ),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.shopping_bag_outlined,
+                  ),
+                  label: ('Cart')),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.bookmark_outline_rounded,
@@ -96,7 +95,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             onTap: onItemClick,
           ),
           // Positioned(
-          //   left: MediaQuery.of(context).size.width / 2 - 30, 
+          //   left: MediaQuery.of(context).size.width / 2 - 30,
           //   bottom: 0,
           //   child: Container(
           //     color: AppColor.primaryColor,
@@ -106,7 +105,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           //       child: Icon(
           //         Icons.shopping_basket_outlined,
           //         size: 40,
-          //         color: AppColor.whiteColor, 
+          //         color: AppColor.whiteColor,
           //       ),
           //     ),
           //   ),
