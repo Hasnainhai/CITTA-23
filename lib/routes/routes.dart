@@ -5,6 +5,7 @@ import 'package:citta_23/view/AuthenticationScreens/otp_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
 import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
+import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
@@ -12,6 +13,7 @@ import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
+import '../view/HomeScreen/popular_pack_screen.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
 
 class Routes {
@@ -70,7 +72,14 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const NewItemsScreen(),
         );
-
+      case RoutesName.popularpackscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const PopularPackScreen(),
+        );
+      case RoutesName.bundleproductdetail:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const BundleProductScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) {

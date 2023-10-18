@@ -13,4 +13,6 @@ class RoutesName {
   static const String verficationpopup = "/Verification_PopUp";
   static const String productdetailscreen = "/Product_Detail_screen";
   static const String newitemsscreen = "/New_Items_Screen";
+  static const String popularpackscreen = "/Popular_Pack_screen";
+  static const String bundleproductdetail = "/Bundle_Product_Detail";
 }
