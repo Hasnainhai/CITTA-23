@@ -16,6 +16,7 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: AppBar(

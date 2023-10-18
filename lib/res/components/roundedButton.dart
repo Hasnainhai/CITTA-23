@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +26,7 @@ class RoundedButton extends StatelessWidget {
         ),
         child: Center(
           child: loading
-              ?  const CircularProgressIndicator(
+              ? const CircularProgressIndicator(
                   color: AppColor.whiteColor,
                 )
               : Text(

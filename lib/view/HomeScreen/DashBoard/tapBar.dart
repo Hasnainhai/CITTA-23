@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
