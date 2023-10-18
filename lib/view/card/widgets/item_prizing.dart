@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
-
 
 class ItemPrizingWidget extends StatelessWidget {
   const ItemPrizingWidget({
-    super.key, required this.title, required this.price,
+    super.key,
+    required this.title,
+    required this.price,
   });
   final String title;
   final String price;
@@ -27,7 +27,7 @@ class ItemPrizingWidget extends StatelessWidget {
             ),
           ),
         ),
-         Text(
+        Text(
           price,
           style: GoogleFonts.getFont(
             "Gothic A1",
