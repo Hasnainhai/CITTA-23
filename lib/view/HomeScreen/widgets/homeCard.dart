@@ -33,7 +33,6 @@ class HomeCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          height: 210.0,
           width: MediaQuery.of(context).size.width * 0.43,
           decoration: BoxDecoration(
             color: AppColor.appBarButtonColor,
@@ -127,6 +126,7 @@ class HomeCard extends StatelessWidget {
                     )
                   ],
                 ),
+                const VerticalSpeacing(16),
               ],
             ),
           ),

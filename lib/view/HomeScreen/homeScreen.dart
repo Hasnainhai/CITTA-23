@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,7 +34,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        title: Container(
+        title: SizedBox(
           height: 40.0,
           width: 190.0,
           child: Center(
@@ -126,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 60.0,
                             width: MediaQuery.of(context).size.width * 0.43,
                             child: Center(
@@ -176,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       Stack(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 60.0,
                             width: MediaQuery.of(context).size.width * 0.43,
                             child: Center(
@@ -310,14 +312,22 @@ class HomeScreen extends StatelessWidget {
                               color: AppColor.fontColor),
                         ),
                       ),
-                      Text(
-                        "View All",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.buttonBgColor),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.newitemsscreen,
+                          );
+                        },
+                        child: Text(
+                          "View All",
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.buttonBgColor),
+                          ),
                         ),
                       ),
                     ],
