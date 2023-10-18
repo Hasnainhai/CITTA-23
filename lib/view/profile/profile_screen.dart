@@ -1,3 +1,4 @@
+import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,12 +13,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Text(
-            "menu Screen",
+          child: Column(
+        children: [
+          Container(
+            height: 400.0,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30.0),
+                bottomRight: Radius.circular(30.0),
+                
+              ),
+              color: AppColor.primaryColor,
+            ),
           ),
-        ),
-      ),
+        ],
+      )),
     );
   }
 }
