@@ -5,17 +5,19 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
 class HomeCard extends StatelessWidget {
-  const HomeCard(
-      {super.key,
-      required this.name,
-      required this.categories,
-      required this.price,
-      required this.dPrice,
-      required this.borderColor,
-      required this.fillColor,
-      required this.cartBorder,
-      required this.img,
-      required this.iconColor});
+  const HomeCard({
+    super.key,
+    required this.name,
+    required this.categories,
+    required this.price,
+    required this.dPrice,
+    required this.borderColor,
+    required this.fillColor,
+    required this.cartBorder,
+    required this.img,
+    required this.iconColor,
+    required this.ontap,
+  });
   final String img;
   final String name;
   final String categories;
@@ -25,6 +27,7 @@ class HomeCard extends StatelessWidget {
   final Color fillColor;
   final Color cartBorder;
   final Color iconColor;
+  final Function() ontap;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -44,13 +47,16 @@ class HomeCard extends StatelessWidget {
               children: [
                 const VerticalSpeacing(20.0),
                 Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 100,
-                    width: 100,
-                    child: Center(
-                      child: Image.asset(
-                        img,
+                  child: InkWell(
+                    onTap: ontap,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 100,
+                      width: 100,
+                      child: Center(
+                        child: Image.asset(
+                          img,
+                        ),
                       ),
                     ),
                   ),

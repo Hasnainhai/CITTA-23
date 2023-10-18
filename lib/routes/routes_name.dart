@@ -11,4 +11,5 @@ class RoutesName {
   static const String registerScreen = "/Register_Screen";
   static const String otpscreen = "/OTP_Screen";
   static const String verficationpopup = "/Verification_PopUp";
+  static const String productdetailscreen = "/Product_Detail_screen";
 }

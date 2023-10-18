@@ -6,6 +6,7 @@ import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
+import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
@@ -61,6 +62,10 @@ class Routes {
       case RoutesName.homeScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const HomeScreen(),
+        );
+      case RoutesName.productdetailscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const ProductDetailScreen(),
         );
 
       default:
