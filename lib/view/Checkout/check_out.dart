@@ -89,18 +89,27 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 16.0,
-                      width: 16.0,
-                      child: Checkbox(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        focusColor: AppColor.primaryColor,
-                        activeColor: AppColor.primaryColor,
-                        checkColor: AppColor.whiteColor,
-                        overlayColor:
-                            MaterialStateProperty.all(AppColor.primaryColor),
-                        value: isChecked,
-                        onChanged: onChanged,
+                    MyCheckBox(),
+                    // Checkbox(
+                    //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //   focusColor: AppColor.primaryColor,
+                    //   activeColor: AppColor.primaryColor,
+                    //   checkColor: AppColor.whiteColor,
+                    //   overlayColor:
+                    //       MaterialStateProperty.all(AppColor.primaryColor),
+                    //   value: isChecked,
+                    //   onChanged: onChanged,
+                    // ),
+                    const SizedBox(width: 20.0),
+                    Text(
+                      'Home Address',
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primaryColor,
+                        ),
                       ),
                     ),
                   ],
@@ -110,6 +119,46 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           ],
         ),
       )),
+    );
+  }
+}
+
+class MyCheckBox extends StatefulWidget {
+  @override
+  _MyCheckBoxState createState() => _MyCheckBoxState();
+}
+
+class _MyCheckBoxState extends State<MyCheckBox> {
+  bool isChecked = false;
+
+  void onChanged() {
+    setState(() {
+      isChecked = !isChecked;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onChanged,
+      child: Container(
+        width: 18,
+        height: 18,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isChecked ? AppColor.logoBgColor : AppColor.primaryColor,
+          ),
+        ),
+        child: isChecked
+            ? Center(
+                child: Container(
+                  width: 9.0,
+                  height: 9.0,
+                  color: isChecked ? AppColor.primaryColor : Colors.transparent,
+                ),
+              )
+            : null,
+      ),
     );
   }
 }
