@@ -9,14 +9,15 @@ import 'package:flutter/material.dart';
 
 import '../../Favourite/favourite_list.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class DashBoardScreen extends StatefulWidget {
+  const DashBoardScreen({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class _DashBoardScreenState extends State<DashBoardScreen>
+    with SingleTickerProviderStateMixin {
   TabController? tabController;
   int selectIndex = 0;
   onItemClick(int index) {
@@ -44,11 +45,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           CardScreen(),
           FavouriteList(),
           ProfileScreen(),
-          // DiscoverScreen(),
-          // ChatScreen(),
-          // JobPost(),
-          // NotificationScreen(),
-          // SettingScreen(),
         ],
       ),
       bottomNavigationBar: Stack(

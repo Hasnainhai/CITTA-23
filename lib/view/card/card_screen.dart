@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -165,7 +166,9 @@ class _CardScreenState extends State<CardScreen> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColor.primaryColor),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutesName.checkOutScreen);
+                      },
                       child: Center(
                         child: Text(
                           'Checkout',

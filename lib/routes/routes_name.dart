@@ -15,4 +15,9 @@ class RoutesName {
   static const String newitemsscreen = "/New_Items_Screen";
   static const String popularpackscreen = "/Popular_Pack_screen";
   static const String bundleproductdetail = "/Bundle_Product_Detail";
+  static const String favouriteList = "/favourite_list";
+  static const String cartScreen = "/cart_screen";
+  static const String profileScreen = "/profile_screen";
+  static const String checkOutScreen = "/checkout_screen";
+  static const String dashboardScreen = "/checkout_screen";
 }
