@@ -22,31 +22,39 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Center(
-            child: Container(
-              height: 52,
-              color: AppColor.primaryColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.shopping_bag_outlined,
-                    color: AppColor.buttonTxColor,
-                  ),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  Text(
-                    "Create Own Pack",
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.buttonTxColor,
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  RoutesName.createmyownpackscreen,
+                );
+              },
+              child: Container(
+                height: 52,
+                color: AppColor.primaryColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.shopping_bag_outlined,
+                      color: AppColor.buttonTxColor,
+                    ),
+                    const SizedBox(
+                      width: 14,
+                    ),
+                    Text(
+                      "Create Own Pack",
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.buttonTxColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

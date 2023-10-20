@@ -20,4 +20,5 @@ class RoutesName {
   static const String profileScreen = "/profile_screen";
   static const String checkOutScreen = "/checkout_screen";
   static const String dashboardScreen = "/checkout_screen";
+  static const String createmyownpackscreen = "/Create_My_own_Pack_screen";
 }

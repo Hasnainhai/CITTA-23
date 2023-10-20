@@ -9,6 +9,7 @@ import 'package:citta_23/view/Favourite/favourite_list.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
+import 'package:citta_23/view/HomeScreen/create_myown_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
@@ -101,9 +102,13 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const CheckOutScreen(),
         );
-          case RoutesName.dashboardScreen:
+      case RoutesName.dashboardScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const DashBoardScreen(),
+        );
+      case RoutesName.createmyownpackscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const CreateOwnPackScreen(),
         );
       default:
         return MaterialPageRoute(

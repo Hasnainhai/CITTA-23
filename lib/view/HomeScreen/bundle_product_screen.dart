@@ -617,7 +617,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       height: 52,
                       width: 60,
                       color: const Color(0xffEDBCD4),
-                      child: Icon(
+                      child: const Icon(
                         Icons.shopping_cart_outlined,
                         color: AppColor.fontColor,
                       ),
