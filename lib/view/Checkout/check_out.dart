@@ -1,29 +1,132 @@
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
+import 'widgets/myCheckout.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
+
+  @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
+  bool isChecked = false;
+
+  onChanged(bool? value) {
+    setState(() {
+      isChecked = value!;
+    });
+  }
+  // Color bgColor = AppColor.whiteColor;
+  // Color borderColor = AppColor.grayColor;
+  // Color titleColor = AppColor.blackColor;
+
+  // void changeColors() {
+  //   setState(() {
+  //     // Change the colors when the button is clicked
+  //     bgColor = AppColor.logoBgColor;
+  //     borderColor = AppColor.primaryColor;
+  //     titleColor = AppColor.primaryColor;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Text(
-          'Profile ',
+          'Checkout ',
           style: GoogleFonts.getFont(
             "Gothic A1",
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: AppColor.whiteColor,
+              color: AppColor.blackColor,
             ),
           ),
         ),
         centerTitle: true,
-        leading: const Icon(Icons.arrow_back),
+        leading: const Icon(
+          Icons.arrow_back,
+          color: AppColor.blackColor,
+        ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const VerticalSpeacing(24.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Select delivery address',
+                    style: GoogleFonts.getFont(
+                      "Gothic A1",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Add New',
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const AddressCheckOutWidget(
+                  bgColor: AppColor.logoBgColor,
+                  borderColor: AppColor.primaryColor,
+                  titleColor: AppColor.primaryColor,
+                  title: 'Home Address',
+                  phNo: '(309) 071-9396-939',
+                  address: '1749 Custom Road, Chhastak'),
+              const VerticalSpeacing(20.0),
+              const AddressCheckOutWidget(
+                  bgColor: AppColor.whiteColor,
+                  borderColor: AppColor.grayColor,
+                  titleColor: AppColor.blackColor,
+                  title: 'Office Address',
+                  phNo: '(309)  071-9396-939',
+                  address: '152 Nobab Road, Sylhet'),
+              const VerticalSpeacing(20.0),
+              Text(
+                'Select Payment System',
+                textAlign: TextAlign.start,
+                style: GoogleFonts.getFont(
+                  "Gothic A1",
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+              ),
+              
+               
+            
+            ],
+          ),
+        ),
       ),
     );
   }
