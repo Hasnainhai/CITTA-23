@@ -93,7 +93,12 @@ class HomeScreen extends StatelessWidget {
               color: AppColor.appBarButtonColor,
               child: Center(
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      RoutesName.searchscreen,
+                    );
+                  },
                   icon: const Icon(
                     Icons.search,
                     color: AppColor.menuColor,

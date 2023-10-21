@@ -36,7 +36,9 @@ class _CardScreenState extends State<CardScreen> {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: AppColor.blackColor,
