@@ -52,6 +52,118 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+        height: MediaQuery.of(context).size.height / 7,
+        color: AppColor.primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        color: AppColor.buttonTxColor,
+                        image: DecorationImage(
+                            image: AssetImage(
+                              "images/fruit1.png",
+                            ),
+                            fit: BoxFit.contain),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        color: AppColor.buttonTxColor,
+                        image: DecorationImage(
+                            image: AssetImage(
+                              "images/fruit1.png",
+                            ),
+                            fit: BoxFit.contain),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        color: AppColor.buttonTxColor,
+                        image: DecorationImage(
+                            image: AssetImage(
+                              "images/fruit1.png",
+                            ),
+                            fit: BoxFit.contain),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        color: AppColor.buttonTxColor,
+                        image: DecorationImage(
+                            image: AssetImage(
+                              "images/fruit1.png",
+                            ),
+                            fit: BoxFit.contain),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "\$35.05",
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.buttonTxColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.cartScreen,
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: const BoxDecoration(
+                          color: AppColor.buttonTxColor,
+                        ),
+                        child: const Icon(
+                          Icons.arrow_forward,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
