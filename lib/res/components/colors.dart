@@ -16,7 +16,7 @@ class AppColor {
   static const Color appBarButtonColor = Color(0xffEEEEEE);
   static const Color menuColor = Color(0xff16162E);
   static const Color grayColor = Color(0xff8B8B97);
-  static const Color bannerBgColor = Color(0xffFFDDBF);
+  static const Color bannerBgColor = Color.fromARGB(255, 26, 16, 8);
   static const Color blackColor = Color(0xff000000);
   static const Color categoryLightColor = Color(0xffFFE6F2);
 }
