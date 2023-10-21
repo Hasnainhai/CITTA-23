@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -79,73 +80,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   )
                 ],
               ),
-              // AddressCheckOutWidget(),
+              const AddressCheckOutWidget(
+                  bgColor: AppColor.logoBgColor,
+                  borderColor: AppColor.primaryColor,
+                  titleColor: AppColor.primaryColor,
+                  title: 'Home Address',
+                  phNo: '(309) 071-9396-939',
+                  address: '1749 Custom Road, Chhatak'),
+              const VerticalSpeacing(20.0),
+              const AddressCheckOutWidget(
+                  bgColor: AppColor.whiteColor,
+                  borderColor: AppColor.grayColor,
+                  titleColor: AppColor.blackColor,
+                  title: 'Office Address',
+                  phNo: '(309)  071-9396-939',
+                  address: '152 Nobab Road, Sylhet'),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class AddressCheckOutWidget extends StatelessWidget {
-  const AddressCheckOutWidget({
-    super.key, required this.bgColor, required this.borderColor, required this.titleColor, required this.title, required this.phNo, required this.address,
-  });
-  final Color bgColor;
-  final Color borderColor;
-  final Color titleColor;
-  final String title;
-  final String phNo;
-  final String address;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 92,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          color: AppColor.logoBgColor,
-          border: Border.all(width: 2, color: AppColor.primaryColor)),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MyCheckBox(),
-            const SizedBox(width: 15.0),
-            Text.rich(
-              TextSpan(
-                text: 'Home Address\n ',
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.primaryColor,
-                  ),
-                ),
-                children: const <TextSpan>[
-                  TextSpan(
-                    text: '(309) 071-9396-939\n',
-                    style: TextStyle(
-                      color: AppColor.grayColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  TextSpan(
-                    text: '1749 Custom Road, Chhatak',
-                    style: TextStyle(
-                      color: AppColor.grayColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );
