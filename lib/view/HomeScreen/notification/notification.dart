@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../res/components/colors.dart';
-import '../../../res/components/widgets/togglw_widget.dart';
+import '../../../res/components/widgets/toggle_widget.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
