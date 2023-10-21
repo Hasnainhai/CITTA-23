@@ -8,6 +8,7 @@ import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/Favourite/favourite_list.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
+import 'package:citta_23/view/HomeScreen/Search/search_screen.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/create_myown_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
@@ -109,6 +110,10 @@ class Routes {
       case RoutesName.createmyownpackscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const CreateOwnPackScreen(),
+        );
+      case RoutesName.searchscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const SearchScreen(),
         );
       default:
         return MaterialPageRoute(
