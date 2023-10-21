@@ -127,6 +127,9 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const CheckOutDoneScreen(),
         );
+      case RoutesName.trackOrder:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const TrackOrder());
       case RoutesName.ratingscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => Rating(),
