@@ -1,3 +1,4 @@
+import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
@@ -13,6 +14,9 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
+  bool firstButton = true;
+  bool secondButton = false;
+  bool thirdButton = false;
   bool isChecked = false;
 
   onChanged(bool? value) {
@@ -59,6 +63,17 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const VerticalSpeacing(24.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Select delivery address',
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,42 +104,265 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          color: AppColor.primaryColor,
+                          color: AppColor.blackColor,
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
-              const AddressCheckOutWidget(
-                  bgColor: AppColor.logoBgColor,
-                  borderColor: AppColor.primaryColor,
-                  titleColor: AppColor.primaryColor,
-                  title: 'Home Address',
-                  phNo: '(309) 071-9396-939',
-                  address: '1749 Custom Road, Chhastak'),
-              const VerticalSpeacing(20.0),
-              const AddressCheckOutWidget(
-                  bgColor: AppColor.whiteColor,
-                  borderColor: AppColor.grayColor,
-                  titleColor: AppColor.blackColor,
-                  title: 'Office Address',
-                  phNo: '(309)  071-9396-939',
-                  address: '152 Nobab Road, Sylhet'),
-              const VerticalSpeacing(20.0),
-              Text(
-                'Select Payment System',
-                textAlign: TextAlign.start,
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.fontColor,
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Add New',
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const AddressCheckOutWidget(
+                    bgColor: AppColor.logoBgColor,
+                    borderColor: AppColor.primaryColor,
+                    titleColor: AppColor.primaryColor,
+                    title: 'Home Address',
+                    phNo: '(309) 071-9396-939',
+                    address: '1749 Custom Road, Chhastak'),
+                const VerticalSpeacing(20.0),
+                const AddressCheckOutWidget(
+                    bgColor: AppColor.whiteColor,
+                    borderColor: AppColor.grayColor,
+                    titleColor: AppColor.blackColor,
+                    title: 'Office Address',
+                    phNo: '(309)  071-9396-939',
+                    address: '152 Nobab Road, Sylhet'),
+                const VerticalSpeacing(20.0),
+                Text(
+                  'Select Payment System',
+                  textAlign: TextAlign.start,
+                  style: GoogleFonts.getFont(
+                    "Gothic A1",
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
+                    ),
                   ),
                 ),
+                VerticalSpeacing(20.0),
+                SizedBox(
+                  height: 66,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                firstButton = !firstButton;
+                                secondButton = false;
+                                thirdButton = false;
+                              });
+                            },
+                            child: Center(
+                              child: Container(
+                                height: 66,
+                                width: 135,
+                                decoration: BoxDecoration(
+                                    color: firstButton
+                                        ? AppColor.logoBgColor
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: firstButton
+                                            ? AppColor.primaryColor
+                                            : AppColor.grayColor)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 30.0,
+                                      width: 30.0,
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'images/masterCard.png'),
+                                              fit: BoxFit.contain)),
+                                    ),
+                                    const VerticalSpeacing(5),
+                                    Text(
+                                      "Master Card",
+                                      style: GoogleFonts.getFont(
+                                        "Gothic A1",
+                                        textStyle: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: firstButton
+                                              ? AppColor.fontColor
+                                              : AppColor.fontColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20.0),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                firstButton = false;
+                                secondButton = !secondButton;
+                                thirdButton = false;
+                              });
+                            },
+                            child: Center(
+                              child: Container(
+                                height: 66,
+                                width: 135,
+                                decoration: BoxDecoration(
+                                    color: secondButton
+                                        ? AppColor.logoBgColor
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: secondButton
+                                            ? AppColor.primaryColor
+                                            : AppColor.grayColor)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 30.0,
+                                      width: 30.0,
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'images/paypal.png'),
+                                              fit: BoxFit.contain)),
+                                    ),
+                                    const VerticalSpeacing(5),
+                                    Text(
+                                      "PayPal",
+                                      style: GoogleFonts.getFont(
+                                        "Gothic A1",
+                                        textStyle: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: secondButton
+                                              ? AppColor.fontColor
+                                              : AppColor.fontColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20.0),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                firstButton = false;
+                                secondButton = false;
+                                thirdButton = !thirdButton;
+                              });
+                            },
+                            child: Center(
+                              child: Container(
+                                height: 66,
+                                width: 135,
+                                decoration: BoxDecoration(
+                                    color: thirdButton
+                                        ? AppColor.logoBgColor
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: thirdButton
+                                            ? AppColor.primaryColor
+                                            : AppColor.grayColor)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 30.0,
+                                      width: 30.0,
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image:
+                                                  AssetImage('images/cash.png'),
+                                              fit: BoxFit.contain)),
+                                    ),
+                                    const VerticalSpeacing(5),
+                                    Text(
+                                      "Cash On Delivery",
+                                      style: GoogleFonts.getFont(
+                                        "Gothic A1",
+                                        textStyle: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: thirdButton
+                                              ? AppColor.fontColor
+                                              : AppColor.fontColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const VerticalSpeacing(30.0),
+                const TextFieldCustom(
+                  maxLines: 1,
+                  text: 'Card Name',
+                  hintText: 'Hasnain haider',
+                ),
+                const TextFieldCustom(
+                  maxLines: 1,
+                  text: 'Card Number',
+                  hintText: '71501 90123 **** ****',
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 100,
+                      width: 177,
+                      child: TextFieldCustom(
+                        maxLines: 1,
+                        text: 'Expiry Date',
+                        hintText: '',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100,
+                      width: 177,
+                      child: TextFieldCustom(
+                        maxLines: 2,
+                        text: 'CVV',
+                        hintText: '',
+                      ),
+                    ),
+                  ],
+                ),
+                VerticalSpeacing(50.0),
+              ],
+            ),
               ),
             ],
           ),
