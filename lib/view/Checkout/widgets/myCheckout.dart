@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../res/components/colors.dart';
 
 class MyCheckBox extends StatefulWidget {
+  const MyCheckBox( {
+    super.key,
+  });
   @override
   _MyCheckBoxState createState() => _MyCheckBoxState();
 }

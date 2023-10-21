@@ -20,6 +20,18 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       isChecked = value!;
     });
   }
+  // Color bgColor = AppColor.whiteColor;
+  // Color borderColor = AppColor.grayColor;
+  // Color titleColor = AppColor.blackColor;
+
+  // void changeColors() {
+  //   setState(() {
+  //     // Change the colors when the button is clicked
+  //     bgColor = AppColor.logoBgColor;
+  //     borderColor = AppColor.primaryColor;
+  //     titleColor = AppColor.primaryColor;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +60,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const VerticalSpeacing(24.0),
               Row(
@@ -86,7 +99,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   titleColor: AppColor.primaryColor,
                   title: 'Home Address',
                   phNo: '(309) 071-9396-939',
-                  address: '1749 Custom Road, Chhatak'),
+                  address: '1749 Custom Road, Chhastak'),
               const VerticalSpeacing(20.0),
               const AddressCheckOutWidget(
                   bgColor: AppColor.whiteColor,
@@ -95,6 +108,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   title: 'Office Address',
                   phNo: '(309)  071-9396-939',
                   address: '152 Nobab Road, Sylhet'),
+              const VerticalSpeacing(20.0),
+              Text(
+                'Select Payment System',
+                textAlign: TextAlign.start,
+                style: GoogleFonts.getFont(
+                  "Gothic A1",
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+              ),
+              
+               
+            
             ],
           ),
         ),
