@@ -317,13 +317,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   text: 'Card Number',
                   hintText: '71501 90123 **** ****',
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
                       height: 100,
-                      width: 177,
-                      child: TextFieldCustom(
+                      width: MediaQuery.of(context).size.width * 0.43,
+                      child: const TextFieldCustom(
                         maxLines: 1,
                         text: 'Expiry Date',
                         hintText: '01/04/2028',
@@ -331,8 +331,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                     SizedBox(
                       height: 100,
-                      width: 177,
-                      child: TextFieldCustom(
+                      width: MediaQuery.of(context).size.width * 0.43,
+                      child: const TextFieldCustom(
                         maxLines: 2,
                         text: 'CVV',
                         hintText: '1214',
