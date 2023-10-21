@@ -1,8 +1,10 @@
 import 'package:citta_23/res/components/custom_field.dart';
+import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 
@@ -14,6 +16,7 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
+  bool switchValue = false;
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
@@ -73,34 +76,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   children: [
                     Text(
                       'Select delivery address',
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const VerticalSpeacing(24.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Select delivery address',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.blackColor,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.addressdetailscreen,
-                      );
-                    },
-                    child: Text(
-                      'Add New',
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -111,7 +86,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.addressdetailscreen,
+                        );
+                      },
                       child: Text(
                         'Add New',
                         style: GoogleFonts.getFont(
@@ -123,7 +103,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 const AddressCheckOutWidget(
@@ -346,7 +326,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       child: TextFieldCustom(
                         maxLines: 1,
                         text: 'Expiry Date',
-                        hintText: '',
+                        hintText: '01/04/2028',
                       ),
                     ),
                     SizedBox(
@@ -355,16 +335,47 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       child: TextFieldCustom(
                         maxLines: 2,
                         text: 'CVV',
-                        hintText: '',
+                        hintText: '1214',
                       ),
                     ),
                   ],
                 ),
-                VerticalSpeacing(50.0),
+                const VerticalSpeacing(20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Remember My Card Details",
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                    ),
+                    FlutterSwitch(
+                      value: switchValue,
+                      onToggle: (value) {
+                        setState(() {
+                          switchValue = value;
+                        });
+                      },
+                      width: 50.0, // Adjust the width to make it square
+                      height: 26.0, // Adjust the height to make it square
+                      toggleSize: 28.0, // Adjust the toggle size
+                      activeColor: Colors.pink,
+                      inactiveColor: Colors.grey,
+                      borderRadius: 0.0,
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(20.0),
+                RoundedButton(title: 'Pay Now', onpress: () {}),
+                const VerticalSpeacing(50.0),
               ],
             ),
-              ),
-            ],
           ),
         ),
       ),
