@@ -20,6 +20,7 @@ import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
+import 'package:citta_23/view/trackOrder/track_order.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
 import '../view/HomeScreen/popular_pack_screen.dart';
@@ -126,6 +127,9 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const CheckOutDoneScreen(),
         );
+        case RoutesName.trackOrder:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const TrackOrder(),
       case RoutesName.ratingscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => Rating(),

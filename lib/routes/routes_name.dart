@@ -24,5 +24,6 @@ class RoutesName {
   static const String searchscreen = "/Search_screen";
   static const String addressdetailscreen = "/Address_Details_screen";
   static const String checkoutdonescreen = "/Check_Out_Done_screen";
+  static const String trackOrder = "/trackOrder";
   static const String ratingscreen = "/Rating_screen";
 }
