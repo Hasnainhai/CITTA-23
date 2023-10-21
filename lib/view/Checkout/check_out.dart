@@ -1,9 +1,9 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
-import 'widgets/myCheckout.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
@@ -78,7 +78,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesName.addressdetailscreen,
+                      );
+                    },
                     child: Text(
                       'Add New',
                       style: GoogleFonts.getFont(
@@ -121,9 +126,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ),
                 ),
               ),
-              
-               
-            
             ],
           ),
         ),
