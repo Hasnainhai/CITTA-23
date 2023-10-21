@@ -13,6 +13,7 @@ import 'package:citta_23/view/HomeScreen/Search/search_screen.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/create_myown_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
+import 'package:citta_23/view/HomeScreen/notification/notification.dart';
 import 'package:citta_23/view/HomeScreen/order_details/address_details_screen.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
@@ -134,6 +135,11 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => Rating(),
         );
+      case RoutesName.notificationscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const NotificationScreen(),
+        );
+
       default:
         return MaterialPageRoute(
           builder: (_) {

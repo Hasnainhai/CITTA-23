@@ -10,36 +10,41 @@ class ProfileWidgets extends StatelessWidget {
     required this.icon,
     required this.trIcon,
     required this.title,
+    required this.ontap,
   });
   final Color tColor;
   final Color bColor;
   final IconData icon;
   final IconData trIcon;
   final String title;
+  final Function() ontap;
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Container(
-        height: 40.0,
-        width: 40.0,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [tColor, tColor],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.0, 1.0],
+    return GestureDetector(
+      onTap: ontap,
+      child: ListTile(
+        leading: Container(
+          height: 40.0,
+          width: 40.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [tColor, tColor],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: const [0.0, 1.0],
+            ),
+          ),
+          child: Center(
+            child: Icon(
+              icon,
+              color: AppColor.whiteColor,
+            ),
           ),
         ),
-        child: Center(
-          child: Icon(
-            icon,
-            color: AppColor.whiteColor,
-          ),
-        ),
+        titleAlignment: ListTileTitleAlignment.threeLine,
+        title: Text(title),
+        trailing: Icon(trIcon),
       ),
-      titleAlignment: ListTileTitleAlignment.threeLine,
-      title: Text(title),
-      trailing: Icon(trIcon),
     );
   }
 }
