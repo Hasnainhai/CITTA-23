@@ -1,6 +1,6 @@
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
-import 'package:citta_23/res/components/widgets/togglw_widget.dart';
+import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
