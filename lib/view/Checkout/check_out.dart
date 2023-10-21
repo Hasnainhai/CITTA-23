@@ -73,34 +73,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   children: [
                     Text(
                       'Select delivery address',
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const VerticalSpeacing(24.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Select delivery address',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.blackColor,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.addressdetailscreen,
-                      );
-                    },
-                    child: Text(
-                      'Add New',
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -111,7 +83,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.addressdetailscreen,
+                        );
+                      },
                       child: Text(
                         'Add New',
                         style: GoogleFonts.getFont(
@@ -337,13 +314,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   text: 'Card Number',
                   hintText: '71501 90123 **** ****',
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
                       height: 100,
-                      width: 177,
-                      child: TextFieldCustom(
+                      width: MediaQuery.of(context).size.width * 0.43,
+                      child: const TextFieldCustom(
                         maxLines: 1,
                         text: 'Expiry Date',
                         hintText: '',
@@ -351,8 +328,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                     SizedBox(
                       height: 100,
-                      width: 177,
-                      child: TextFieldCustom(
+                      width: MediaQuery.of(context).size.width * 0.43,
+                      child: const TextFieldCustom(
                         maxLines: 2,
                         text: 'CVV',
                         hintText: '',
@@ -363,8 +340,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 VerticalSpeacing(50.0),
               ],
             ),
-              ),
-            ],
           ),
         ),
       ),
