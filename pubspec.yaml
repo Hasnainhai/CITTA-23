@@ -43,6 +43,7 @@ dependencies:
   pinput: ^3.0.1
   carousel_slider: ^4.2.1
   flutter_switch: ^0.3.2
+  order_tracker: ^0.0.2
 
 dev_dependencies:
   flutter_test:

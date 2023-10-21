@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
+import 'package:citta_23/res/components/widgets/togglw_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
@@ -16,7 +17,7 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
-  bool switchValue = false;
+ 
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
@@ -134,7 +135,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                   ),
                 ),
-                VerticalSpeacing(20.0),
+                const VerticalSpeacing(20.0),
                 SizedBox(
                   height: 66,
                   width: MediaQuery.of(context).size.width,
@@ -341,38 +342,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ],
                 ),
                 const VerticalSpeacing(20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Remember My Card Details",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    FlutterSwitch(
-                      value: switchValue,
-                      onToggle: (value) {
-                        setState(() {
-                          switchValue = value;
-                        });
-                      },
-                      width: 50.0, // Adjust the width to make it square
-                      height: 26.0, // Adjust the height to make it square
-                      toggleSize: 28.0, // Adjust the toggle size
-                      activeColor: Colors.pink,
-                      inactiveColor: Colors.grey,
-                      borderRadius: 0.0,
-                    ),
-                  ],
-                ),
+               const ToggleWidget(title: 'Remember My Card Details',),
                 const VerticalSpeacing(20.0),
-                RoundedButton(title: 'Pay Now', onpress: () {}),
+                RoundedButton(title: 'Pay Now', onpress: () {
+                  Navigator.pushNamed(context, RoutesName.checkoutdonescreen);
+                }),
                 const VerticalSpeacing(50.0),
               ],
             ),

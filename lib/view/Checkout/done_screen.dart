@@ -82,7 +82,9 @@ class CheckOutDoneScreen extends StatelessWidget {
                     );
                   }),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.trackOrder);
+                },
                 child: Text(
                   "Track Order",
                   textAlign: TextAlign.center,
