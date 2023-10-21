@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../routes/routes_name.dart';
+import 'DashBoard/tapBar.dart';
 import 'widgets/homeCard.dart';
 
 class NewItemsScreen extends StatefulWidget {
@@ -23,7 +24,12 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (c) => const DashBoardScreen(),
+              ),
+            );
           },
           icon: const Icon(
             Icons.arrow_back,

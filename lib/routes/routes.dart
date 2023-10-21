@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
 import '../view/HomeScreen/popular_pack_screen.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
+import '../view/review/review.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -124,6 +125,10 @@ class Routes {
       case RoutesName.checkoutdonescreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const CheckOutDoneScreen(),
+        );
+      case RoutesName.ratingscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => Rating(),
         );
       default:
         return MaterialPageRoute(
