@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/profile/widgets/profileCenterBtn.dart';
 import 'package:citta_23/view/profile/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
@@ -178,40 +179,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
-          children: const [
+          children: [
             Column(
               children: [
                 ProfileWidgets(
-                    tColor: Color(0xffCDFF9D),
-                    bColor: Color(0xff40C269),
+                    ontap: () {},
+                    tColor: const Color(0xffCDFF9D),
+                    bColor: const Color(0xff40C269),
                     icon: Icons.person_outline,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'My Profile'),
-                Divider(),
+                const Divider(),
                 ProfileWidgets(
-                    tColor: Color(0xff6DF5FC),
-                    bColor: Color(0xff46C5CA),
+                    ontap: () {
+                      Navigator.pushNamed(
+                          context, RoutesName.notificationscreen);
+                    },
+                    tColor: const Color(0xff6DF5FC),
+                    bColor: const Color(0xff46C5CA),
                     icon: Icons.notifications_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Notification'),
-                Divider(),
+                const Divider(),
                 ProfileWidgets(
-                    tColor: Color(0xffDF9EF5),
-                    bColor: Color(0xffA24ABF),
+                    ontap: () {},
+                    tColor: const Color(0xffDF9EF5),
+                    bColor: const Color(0xffA24ABF),
                     icon: Icons.settings_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Setting'),
-                Divider(),
+                const Divider(),
                 ProfileWidgets(
-                    tColor: Color(0xff9E93F4),
-                    bColor: Color(0xff7465EC),
+                    ontap: () {},
+                    tColor: const Color(0xff9E93F4),
+                    bColor: const Color(0xff7465EC),
                     icon: Icons.wallet_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Payment'),
-                Divider(),
+                const Divider(),
                 ProfileWidgets(
-                    tColor: Color(0xffFF9CCB),
-                    bColor: Color(0xffEC4091),
+                    ontap: () {},
+                    tColor: const Color(0xffFF9CCB),
+                    bColor: const Color(0xffEC4091),
                     icon: Icons.logout_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Log Out'),
