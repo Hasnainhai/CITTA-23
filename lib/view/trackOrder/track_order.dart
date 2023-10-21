@@ -1,11 +1,9 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/view/trackOrder/widgets/productDetailsWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:order_tracker/order_tracker.dart';
-
-import '../Favourite/widgets/favourite_list_cart.dart';
-
 
 class TrackOrder extends StatefulWidget {
   const TrackOrder({super.key});
@@ -15,11 +13,11 @@ class TrackOrder extends StatefulWidget {
 }
 
 class _TrackOrderState extends State<TrackOrder> {
- 
   List<TextDto> orderList = [
     TextDto("Your order has been placed", "Fri, 25th Mar '22 - 10:47pm"),
     TextDto("Seller ha processed your order", "Sun, 27th Mar '22 - 10:19am"),
-    TextDto("Your item has been picked up by courier partner.", "Tue, 29th Mar '22 - 5:00pm"),
+    TextDto("Your item has been picked up by courier partner.",
+        "Tue, 29th Mar '22 - 5:00pm"),
   ];
 
   List<TextDto> shippedList = [
@@ -38,7 +36,7 @@ class _TrackOrderState extends State<TrackOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Text(
@@ -59,28 +57,27 @@ class _TrackOrderState extends State<TrackOrder> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20.0,right: 20.0),
-        child: SingleChildScrollView(
-         scrollDirection: Axis.vertical,
-          child: Container(
-            color: AppColor.whiteColor,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width * 0.9,
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: Container(
+          color: AppColor.whiteColor,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               const VerticalSpeacing(20.0),
-               Text(
-                '   Order id #30398505202',
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
+                const VerticalSpeacing(20.0),
+                Text(
+                  '   Order id #30398505202',
+                  style: GoogleFonts.getFont(
+                    "Gothic A1",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
+                    ),
                   ),
                 ),
-              ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: OrderTracker(
@@ -94,25 +91,92 @@ class _TrackOrderState extends State<TrackOrder> {
                   ),
                 ),
                 Text(
-                '   Product Details',
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
+                  '   Product Details',
+                  style: GoogleFonts.getFont(
+                    "Gothic A1",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
+                    ),
                   ),
                 ),
-              ),
-             const VerticalSpeacing(20.0),
-               // This is not favourite list card but i use it in order track in Prodcut details
-                  FavouristListCart(
-                      img: 'images/orio.png',
-                      title: 'Oreo Biscut',
-                      subTitle: '570 ML',
-                      price: '\$10',
-                      deleteIcon:  Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
+                const VerticalSpeacing(20.0),
+                // This is not favourite list card but i use it in order track in Prodcut details
+                const ProductDetailsWidget(
+                    img: 'images/Arnotts.png',
+                    title: 'Arnotts grans',
+                    subTitle: 'Form The Farmer',
+                    price: '3 KG',
+                    productPrice: '\$30',
+                    procustAverate: '3x'),
+                const VerticalSpeacing(20.0),
+                const ProductDetailsWidget(
+                    img: 'images/cauliflower.png',
+                    title: 'cauliflower',
+                    subTitle: 'Form The Farmer',
+                    price: '5 KG',
+                    productPrice: '\$20',
+                    procustAverate: '6x'),
+                const VerticalSpeacing(20.0),
+                const ProductDetailsWidget(
+                    img: 'images/girlGuide.png',
+                    title: 'girlGuide',
+                    subTitle: 'Form The Farmer',
+                    price: '2 KG',
+                    productPrice: '\$80',
+                    procustAverate: '9x'),
+
+                VerticalSpeacing(30.0),
+                ListTile(
+                  title: Text(
+                    'Total Amount',
+                    style: GoogleFonts.getFont(
+                      "Gothic A1",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                  trailing: Text(
+                    '\$130',
+                    style: GoogleFonts.getFont(
+                      "Gothic A1",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  title: Text(
+                    'Paid From',
+                    style: GoogleFonts.getFont(
+                      "Gothic A1",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                  trailing: Text(
+                    'Credit Card',
+                    style: GoogleFonts.getFont(
+                      "Gothic A1",
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.blackColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const VerticalSpeacing(50.0),
               ],
             ),
           ),
