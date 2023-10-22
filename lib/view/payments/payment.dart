@@ -1,12 +1,21 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import 'package:currency_picker/currency_picker.dart';
 
-class Payment extends StatelessWidget {
+class Payment extends StatefulWidget {
   const Payment({super.key});
 
+  @override
+  State<Payment> createState() => _PaymentState();
+}
+
+bool firstButton = true;
+bool secondButton = false;
+
+class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +63,19 @@ class Payment extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  height: 32.0,
-                  width: 32.0,
-                  color: AppColor.primaryColor,
-                  child: const Center(
-                    child: Icon(
-                      Icons.add,
-                      color: AppColor.whiteColor,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RoutesName.addCardScreen);
+                  },
+                  child: Container(
+                    height: 32.0,
+                    width: 32.0,
+                    color: AppColor.primaryColor,
+                    child: const Center(
+                      child: Icon(
+                        Icons.add,
+                        color: AppColor.whiteColor,
+                      ),
                     ),
                   ),
                 ),
@@ -103,115 +117,135 @@ class Payment extends StatelessWidget {
                   ),
                 ),
                 const VerticalSpeacing(20.0),
-                Container(
-                  height: 85,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: AppColor.primaryColor,
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      firstButton = !firstButton;
+                      secondButton = false;
+                    });
+                  },
+                  child: Container(
+                    height: 85,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.0,
+                        color: firstButton
+                            ? AppColor.primaryColor
+                            : const Color(0xffEEEEEE),
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10.0),
-                      Container(
-                        height: 60.0,
-                        width: 60.0,
-                        color: const Color(0xffEEEEEE),
-                        child: Center(
-                          child: SizedBox(
-                            height: 40.0,
-                            width: 40.0,
-                            child: Image.asset(
-                              'images/paypal.png',
-                              fit: BoxFit.contain,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10.0),
+                        Container(
+                          height: 60.0,
+                          width: 60.0,
+                          color: const Color(0xffEEEEEE),
+                          child: Center(
+                            child: SizedBox(
+                              height: 40.0,
+                              width: 40.0,
+                              child: Image.asset(
+                                'images/paypal.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 25.0),
-                      Text.rich(
-                        TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Paypal   \n',
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColor.fontColor,
+                        const SizedBox(width: 25.0),
+                        Text.rich(
+                          TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Paypal   \n',
+                                style: GoogleFonts.getFont(
+                                  "Gothic A1",
+                                  textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColor.fontColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const TextSpan(
-                              text: 'MyPaypal@gmail.com',
-                              style: TextStyle(
-                                color: AppColor.fontColor,
-                                fontSize: 16.0,
+                              const TextSpan(
+                                text: 'MyPaypal@gmail.com',
+                                style: TextStyle(
+                                  color: AppColor.fontColor,
+                                  fontSize: 16.0,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const VerticalSpeacing(20.0),
-                Container(
-                  height: 85,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: const Color(0xffEEEEEE),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      firstButton = false;
+                      secondButton = !secondButton;
+                    });
+                  },
+                  child: Container(
+                    height: 85,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.0,
+                        color: secondButton
+                            ? AppColor.primaryColor
+                            : const Color(0xffEEEEEE),
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 10.0),
-                      Container(
-                        height: 60.0,
-                        width: 60.0,
-                        color: const Color(0xffEEEEEE),
-                        child: Center(
-                          child: SizedBox(
-                            height: 40.0,
-                            width: 40.0,
-                            child: Image.asset(
-                              'images/cash.png',
-                              fit: BoxFit.contain,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10.0),
+                        Container(
+                          height: 60.0,
+                          width: 60.0,
+                          color: const Color(0xffEEEEEE),
+                          child: Center(
+                            child: SizedBox(
+                              height: 40.0,
+                              width: 40.0,
+                              child: Image.asset(
+                                'images/cash.png',
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 25.0),
-                      Text.rich(
-                        TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Cash On Delivery   \n',
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColor.fontColor,
+                        const SizedBox(width: 25.0),
+                        Text.rich(
+                          TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Cash On Delivery   \n',
+                                style: GoogleFonts.getFont(
+                                  "Gothic A1",
+                                  textStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColor.fontColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                            const TextSpan(
-                              text: 'Pay in Cash',
-                              style: TextStyle(
-                                color: AppColor.fontColor,
-                                fontSize: 16.0,
+                              const TextSpan(
+                                text: 'Pay in Cash',
+                                style: TextStyle(
+                                  color: AppColor.fontColor,
+                                  fontSize: 16.0,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
