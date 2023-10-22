@@ -26,6 +26,7 @@ import 'package:citta_23/view/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
 import '../view/HomeScreen/popular_pack_screen.dart';
+import '../view/HomeScreen/total_reviews/total_reviews.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
 import '../view/review/review.dart';
 import '../view/trackOrder/track_order.dart';
@@ -141,6 +142,9 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const NotificationScreen(),
         );
+      case RoutesName.totalreviewscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const TotalRatingScreen(),
       case RoutesName.paymentScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const Payment(),

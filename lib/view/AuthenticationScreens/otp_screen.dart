@@ -63,7 +63,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Already have account?",
+                              "Did not recieve code?",
                               style: GoogleFonts.getFont(
                                 "Gothic A1",
                                 textStyle: const TextStyle(
@@ -74,7 +74,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: 8,
                             ),
                             GestureDetector(
                               onTap: () {},
