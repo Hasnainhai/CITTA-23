@@ -5,7 +5,6 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 
@@ -17,7 +16,6 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
- 
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
@@ -59,9 +57,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           ),
         ),
         centerTitle: true,
-        leading: const Icon(
-          Icons.arrow_back,
-          color: AppColor.blackColor,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: AppColor.blackColor,
+          ),
         ),
       ),
       body: SafeArea(
@@ -342,11 +345,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ],
                 ),
                 const VerticalSpeacing(20.0),
-               const ToggleWidget(title: 'Remember My Card Details',),
+                const ToggleWidget(
+                  title: 'Remember My Card Details',
+                ),
                 const VerticalSpeacing(20.0),
-                RoundedButton(title: 'Pay Now', onpress: () {
-                  Navigator.pushNamed(context, RoutesName.checkoutdonescreen);
-                }),
+                RoundedButton(
+                    title: 'Pay Now',
+                    onpress: () {
+                      Navigator.pushNamed(
+                          context, RoutesName.checkoutdonescreen);
+                    }),
                 const VerticalSpeacing(50.0),
               ],
             ),
