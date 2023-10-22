@@ -145,6 +145,7 @@ class Routes {
       case RoutesName.totalreviewscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const TotalRatingScreen(),
+        );
       case RoutesName.paymentScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const Payment(),
