@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/colors.dart';
+import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key});
@@ -255,51 +256,59 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const Divider(
                   thickness: 2,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Review",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.arrow_forward_ios_outlined,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      RoutesName.totalreviewscreen,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Review",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
                           ),
                         ),
-                      ],
-                    )
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.arrow_forward_ios_outlined,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const Divider(
                   thickness: 2,
