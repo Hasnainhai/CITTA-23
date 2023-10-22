@@ -58,7 +58,6 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginOrSigninScreen(),
         );
-
       case RoutesName.loginscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginScreen(),
