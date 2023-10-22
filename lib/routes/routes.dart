@@ -20,6 +20,7 @@ import 'package:citta_23/view/card/card_screen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
+import 'package:citta_23/view/payments/payment.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
@@ -138,6 +139,10 @@ class Routes {
       case RoutesName.notificationscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const NotificationScreen(),
+        );
+      case RoutesName.paymentScreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const Payment(),
         );
 
       default:

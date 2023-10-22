@@ -210,7 +210,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Setting'),
                 const Divider(),
                 ProfileWidgets(
-                    ontap: () {},
+                    ontap: () {
+                      Navigator.pushNamed(context, RoutesName.paymentScreen);
+                    },
                     tColor: const Color(0xff9E93F4),
                     bColor: const Color(0xff7465EC),
                     icon: Icons.wallet_outlined,
