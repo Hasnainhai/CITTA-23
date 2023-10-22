@@ -58,7 +58,6 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginOrSigninScreen(),
         );
-
       case RoutesName.loginscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const LoginScreen(),
@@ -145,6 +144,7 @@ class Routes {
       case RoutesName.totalreviewscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const TotalRatingScreen(),
+        );
       case RoutesName.paymentScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const Payment(),
