@@ -17,6 +17,7 @@ import 'package:citta_23/view/HomeScreen/notification/notification.dart';
 import 'package:citta_23/view/HomeScreen/order_details/address_details_screen.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
+import 'package:citta_23/view/myOrder/my_order.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
@@ -167,6 +168,10 @@ class Routes {
       case RoutesName.deliveryAddress:
         return MaterialPageRoute(
           builder: (BuildContext context) => const DeliveryAddress(),
+        );
+      case RoutesName.myOrder:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const MyOrders(),
         );
 
       default:

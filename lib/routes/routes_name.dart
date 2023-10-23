@@ -33,4 +33,5 @@ class RoutesName {
   static const String promosOffer = "/promosOffer";
   static const String couponDetails = "/couponDetails";
   static const String deliveryAddress = "/delivery_Address";
+   static const String myOrder = "/my_order";
 }
