@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/roundedButton.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -190,12 +191,21 @@ class CouponDetail extends StatelessWidget {
               ),
             ),
             const VerticalSpeacing(30.0),
-            RoundedButton(title: 'Redeem Now', onpress: () {}),
+            RoundedButton(
+                title: 'Redeem Now',
+                onpress: () {
+                  Navigator.pop(context);
+                }),
             //  VerticalSpeacing(10.0),
             Align(
                 alignment: Alignment.center,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesName.termsandconditionscreen,
+                      );
+                    },
                     child: Text(
                       'Terms and Conditions',
                       style: GoogleFonts.getFont(

@@ -74,7 +74,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         onPressed: () async {
                           await showDialog(
                             context: context,
-                            builder: (BuildContext context) => FilterPopUp(),
+                            builder: (BuildContext context) =>
+                                const FilterPopUp(),
                           );
                         },
                         icon: const Icon(

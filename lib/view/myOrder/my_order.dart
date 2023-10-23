@@ -37,7 +37,10 @@ class _MyOrdersState extends State<MyOrders>
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, RoutesName.profileScreen);
+            Navigator.pushNamed(
+              context,
+              RoutesName.dashboardScreen,
+            );
           },
           icon: const Icon(
             Icons.arrow_back,
