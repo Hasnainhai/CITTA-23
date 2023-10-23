@@ -38,4 +38,5 @@ class RoutesName {
   static const String termsandconditionscreen = "/Terms_And_Conditions_Screen";
   static const String helpscreen = "/Help_Screen";
   static const String contactusscreen = "/Contact_Screen";
+   static const String myOrder = "/my_order";
 }

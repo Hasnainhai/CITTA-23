@@ -22,6 +22,8 @@ import 'package:citta_23/view/drawer/contact_us.dart';
 import 'package:citta_23/view/drawer/faqs_screen.dart';
 import 'package:citta_23/view/drawer/help_screen.dart';
 import 'package:citta_23/view/drawer/terms_condition_screen.dart';
+
+import 'package:citta_23/view/myOrder/my_order.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
@@ -192,6 +194,9 @@ class Routes {
       case RoutesName.contactusscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const ContactUsScreen(),
+      case RoutesName.myOrder:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const MyOrders(),
         );
 
       default:

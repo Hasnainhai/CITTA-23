@@ -38,32 +38,32 @@ class _TrackOrderState extends State<TrackOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        title: Text(
-          'My Order Details ',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          title: Text(
+            'My Order Details ',
+            style: GoogleFonts.getFont(
+              "Gothic A1",
+              textStyle: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: AppColor.blackColor,
+              ),
             ),
           ),
         ),
-        centerTitle: true,
-        leading: IconButton(
+       
+          centerTitle: true,
+          leading: IconButton(
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                RoutesName.dashboardScreen,
-              );
+              Navigator.pushNamed(context, RoutesName.myOrder);
             },
             icon: const Icon(
               Icons.arrow_back,
               color: AppColor.blackColor,
             )),
-      ),
+      
+         
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: Container(
