@@ -95,7 +95,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
           DrawerOptions(
             icon: Icons.phone,
             title: 'Contact Us',
-            onpress: () {},
+            onpress: () {
+              Navigator.pushNamed(
+                context,
+                RoutesName.contactusscreen,
+              );
+            },
           ),
           const Divider(),
           DrawerOptions(

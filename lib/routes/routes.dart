@@ -18,6 +18,7 @@ import 'package:citta_23/view/HomeScreen/order_details/address_details_screen.da
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
 import 'package:citta_23/view/drawer/about_us_screen.dart';
+import 'package:citta_23/view/drawer/contact_us.dart';
 import 'package:citta_23/view/drawer/faqs_screen.dart';
 import 'package:citta_23/view/drawer/help_screen.dart';
 import 'package:citta_23/view/drawer/terms_condition_screen.dart';
@@ -187,6 +188,10 @@ class Routes {
       case RoutesName.helpscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const HelpScreen(),
+        );
+      case RoutesName.contactusscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const ContactUsScreen(),
         );
 
       default:
