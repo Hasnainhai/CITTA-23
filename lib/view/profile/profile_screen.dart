@@ -14,7 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final double tHeight = 250.0;
+  final double tHeight = 200.0;
   final double top = 130.0;
   @override
   Widget build(BuildContext context) {
@@ -82,17 +82,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Stack(
           children: [
             const CircleAvatar(
-              radius: 60,
+              radius: 40,
               backgroundImage: NetworkImage(
                 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
               ),
             ),
             Positioned(
-              top: 80.0,
+              top: 47.0,
               right: 0,
               child: Container(
-                height: 34.0,
-                width: 34.0,
+                height: 25.0,
+                width: 25.0,
                 decoration: BoxDecoration(
                   color: AppColor.whiteColor,
                   borderRadius: BorderRadius.circular(68),
@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: const Center(
                   child: Icon(
                     Icons.camera_alt_outlined,
-                    size: 20,
+                    size: 16,
                     color: AppColor.primaryColor,
                   ),
                 ),
@@ -131,7 +131,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
-        )
+        ),
+        const SizedBox(width: 50.0),
+        IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.edit_outlined,
+              color: AppColor.whiteColor,
+            ))
       ],
     );
   }
@@ -180,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildProfileFeatures() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.41,
+      height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.9,
       color: AppColor.whiteColor,
       child: Padding(
@@ -209,12 +216,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Notification'),
                 const Divider(),
                 ProfileWidgets(
-                    ontap: () {},
+                    ontap: () {
+                      Navigator.pushNamed(context, RoutesName.restscreen);
+                    },
                     tColor: const Color(0xffDF9EF5),
                     bColor: const Color(0xffA24ABF),
-                    icon: Icons.settings_outlined,
+                    icon: Icons.lock_outline,
                     trIcon: Icons.arrow_forward_ios,
-                    title: 'Setting'),
+                    title: 'Reset Password'),
                 const Divider(),
                 ProfileWidgets(
                     ontap: () {
