@@ -48,7 +48,7 @@ class TermsConditionScreen extends StatelessWidget {
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: AppColor.fontColor,
                     ),
@@ -56,7 +56,7 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(16),
                 Text(
-                  "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.",
+                  "Welcome to www.saydulmoon.info. Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis voluptate cupidatat quis irure irure consequat irure.",
                   textAlign: TextAlign.justify,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
@@ -69,11 +69,11 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(24),
                 Text(
-                  "2. What is refund system?",
+                  "1.Agreement",
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: AppColor.fontColor,
                     ),
@@ -81,7 +81,7 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(16),
                 Text(
-                  "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien.",
+                  "Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis voluptate cupidatat quis irure irure consequat irure.",
                   textAlign: TextAlign.justify,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
@@ -94,7 +94,7 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(24),
                 Text(
-                  "3. What is refund system?",
+                  "2. Account",
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
@@ -106,7 +106,7 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(16),
                 Text(
-                  "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien.",
+                  "Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis voluptate cupidatat quis irure irure consequat irure..",
                   textAlign: TextAlign.justify,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
@@ -119,11 +119,11 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(24),
                 Text(
-                  "4. What is refund system?",
+                  "3. Relationship With Groceries",
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: AppColor.fontColor,
                     ),
@@ -131,7 +131,7 @@ class TermsConditionScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(16),
                 Text(
-                  "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien.",
+                  "Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis voluptate cupidatat quis irure irure consequat irure.Officia irure irure anim nisi exercitation velit cupidatat qui Lorem id ad. Amet quis occaecat quis ",
                   textAlign: TextAlign.justify,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
