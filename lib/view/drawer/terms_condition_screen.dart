@@ -44,7 +44,7 @@ class TermsConditionScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "1. How it will take to delivery?",
+                  "General site usage last revised\nDecember 12-01-2020.?",
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
