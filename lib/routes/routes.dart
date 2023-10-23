@@ -23,6 +23,7 @@ import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:citta_23/view/payments/AddCard/add_new_card.dart';
 import 'package:citta_23/view/payments/payment.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
+import 'package:citta_23/view/promos/offer_promos.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
 import '../view/HomeScreen/popular_pack_screen.dart';
@@ -152,6 +153,10 @@ class Routes {
       case RoutesName.addCardScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const AddCard(),
+        );
+      case RoutesName.promosOffer:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const PromosOffer(),
         );
 
       default:
