@@ -187,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildProfileFeatures() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.47,
       width: MediaQuery.of(context).size.width * 0.9,
       color: AppColor.whiteColor,
       child: Padding(
@@ -236,12 +236,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Payment'),
                 const Divider(),
                 ProfileWidgets(
-                    ontap: () {},
-                    tColor: const Color(0xffFF9CCB),
-                    bColor: const Color(0xffEC4091),
-                    icon: Icons.logout_outlined,
-                    trIcon: Icons.arrow_forward_ios,
-                    title: 'Log Out'),
+                  ontap: () {
+                    Navigator.pushNamed(context, RoutesName.loginscreen);
+                  },
+                  tColor: const Color(0xffFF9CCB),
+                  bColor: const Color(0xffEC4091),
+                  icon: Icons.logout_outlined,
+                  trIcon: Icons.arrow_forward_ios,
+                  title: 'Log Out',
+                ),
               ],
             ),
           ],
