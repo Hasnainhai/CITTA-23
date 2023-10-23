@@ -36,7 +36,9 @@ class _MyOrdersState extends State<MyOrders>
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, RoutesName.profileScreen);
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: AppColor.blackColor,

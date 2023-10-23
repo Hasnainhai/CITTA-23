@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
@@ -94,7 +95,12 @@ class AddCard extends StatelessWidget {
                         title: 'Remember My Card Details',
                       ),
                       const VerticalSpeacing(20.0),
-                      RoundedButton(title: 'Add Card', onpress: () {}),
+                      RoundedButton(
+                          title: 'Add Card',
+                          onpress: () {
+                            Navigator.pushNamed(
+                                context, RoutesName.paymentScreen);
+                          }),
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
 import 'package:citta_23/view/menu/menu.dart';
@@ -90,22 +91,27 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             currentIndex: selectIndex,
             onTap: onItemClick,
           ),
-          // Positioned(
-          //   left: MediaQuery.of(context).size.width / 2 - 30,
-          //   bottom: 0,
-          //   child: Container(
-          //     color: AppColor.primaryColor,
-          //     height: 60,
-          //     width: 60,
-          //     child: const Center(
-          //       child: Icon(
-          //         Icons.shopping_basket_outlined,
-          //         size: 40,
-          //         color: AppColor.whiteColor,
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Positioned(
+            left: MediaQuery.of(context).size.width / 2 - 30,
+            bottom: 0,
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.cartScreen);
+              },
+              child: Container(
+                color: AppColor.primaryColor,
+                height: 60,
+                width: 60,
+                child: const Center(
+                  child: Icon(
+                    Icons.shopping_basket_outlined,
+                    size: 40,
+                    color: AppColor.whiteColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
