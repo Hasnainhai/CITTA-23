@@ -55,7 +55,7 @@ class VerficationPopUp extends StatelessWidget {
                 title: "Browse Home",
                 onpress: () {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, RoutesName.homeScreen, (route) => false);
+                      context, RoutesName.dashboardScreen, (route) => false);
                 }),
             VerticalSpeacing(MediaQuery.of(context).size.height / 20),
           ],
