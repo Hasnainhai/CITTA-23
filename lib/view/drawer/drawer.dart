@@ -84,7 +84,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
           DrawerOptions(
             icon: Icons.help_outline,
             title: 'Help Center',
-            onpress: () {},
+            onpress: () {
+              Navigator.pushNamed(
+                context,
+                RoutesName.helpscreen,
+              );
+            },
           ),
           const Divider(),
           DrawerOptions(

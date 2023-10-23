@@ -19,6 +19,7 @@ import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
 import 'package:citta_23/view/drawer/about_us_screen.dart';
 import 'package:citta_23/view/drawer/faqs_screen.dart';
+import 'package:citta_23/view/drawer/help_screen.dart';
 import 'package:citta_23/view/drawer/terms_condition_screen.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
@@ -182,6 +183,10 @@ class Routes {
       case RoutesName.termsandconditionscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const TermsConditionScreen(),
+        );
+      case RoutesName.helpscreen:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const HelpScreen(),
         );
 
       default:

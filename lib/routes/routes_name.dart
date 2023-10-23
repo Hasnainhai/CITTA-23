@@ -36,4 +36,5 @@ class RoutesName {
   static const String aboutusscreen = "/About_Us_Screen";
   static const String faqsscreen = "/FAQs_Screen";
   static const String termsandconditionscreen = "/Terms_And_Conditions_Screen";
+  static const String helpscreen = "/Help_Screen";
 }
