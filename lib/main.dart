@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutesName.myOrder,
+      initialRoute: RoutesName.dashboardScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
