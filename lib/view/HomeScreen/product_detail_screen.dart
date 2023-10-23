@@ -323,11 +323,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        height: 50,
-                        width: 60,
-                        color: Colors.white,
-                        child: const Icon(Icons.shopping_bag_outlined),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.checkOutScreen,
+                          );
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 60,
+                          color: Colors.white,
+                          child: const Icon(Icons.shopping_bag_outlined),
+                        ),
                       ),
                       const SizedBox(
                         width: 30,

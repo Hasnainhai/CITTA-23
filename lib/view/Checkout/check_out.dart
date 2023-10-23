@@ -4,6 +4,7 @@ import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
+import 'package:citta_23/view/review/review.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -351,9 +352,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 const VerticalSpeacing(20.0),
                 RoundedButton(
                     title: 'Pay Now',
-                    onpress: () {
-                      Navigator.pushNamed(
-                          context, RoutesName.checkoutdonescreen);
+                    onpress: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) => Rating(),
+                      );
                     }),
                 const VerticalSpeacing(50.0),
               ],
