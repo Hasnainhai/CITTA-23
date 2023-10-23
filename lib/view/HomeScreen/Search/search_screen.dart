@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/HomeScreen/Search/widgets/recent_search_tile.dart';
 import 'package:citta_23/view/filter/filter.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,10 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                RoutesName.dashboardScreen,
+              );
             },
             icon: const Icon(
               Icons.arrow_back,

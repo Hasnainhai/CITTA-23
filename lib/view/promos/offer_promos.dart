@@ -27,9 +27,17 @@ class PromosOffer extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        leading: const Icon(
-          Icons.arrow_back,
-          color: AppColor.blackColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              RoutesName.dashboardScreen,
+            );
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColor.blackColor,
+          ),
         ),
       ),
       body: Padding(
