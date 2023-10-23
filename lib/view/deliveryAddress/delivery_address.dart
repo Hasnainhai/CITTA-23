@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/deliveryAddress/widgets/address_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +35,24 @@ class DeliveryAddress extends StatelessWidget {
             ),
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RoutesName.addressdetailscreen);
+              },
+              child: Container(
+                height: 28.0,
+                width: 28.0,
+                color: AppColor.primaryColor,
+                child: const Center(
+                  child: Icon(Icons.add),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),

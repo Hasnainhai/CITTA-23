@@ -1,7 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../res/components/colors.dart';
 import '../../res/components/custom_field.dart';
 import '../../res/components/roundedButton.dart';
@@ -56,7 +55,7 @@ class _RestScreenState extends State<RestScreen> {
                     children: [
                       const VerticalSpeacing(24),
                       Text(
-                        "Rest Your Password",
+                        "Reset Your Password",
                         style: GoogleFonts.getFont(
                           "Gothic A1",
                           textStyle: const TextStyle(
