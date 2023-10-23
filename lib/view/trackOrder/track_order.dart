@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/trackOrder/widgets/productDetailsWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,10 +52,17 @@ class _TrackOrderState extends State<TrackOrder> {
           ),
         ),
         centerTitle: true,
-        leading: const Icon(
-          Icons.arrow_back,
-          color: AppColor.blackColor,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                RoutesName.dashboardScreen,
+              );
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColor.blackColor,
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -127,7 +135,7 @@ class _TrackOrderState extends State<TrackOrder> {
                     productPrice: '\$80',
                     procustAverate: '9x'),
 
-                VerticalSpeacing(30.0),
+                const VerticalSpeacing(30.0),
                 ListTile(
                   title: Text(
                     'Total Amount',
