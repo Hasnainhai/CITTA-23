@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../res/components/colors.dart';
+import '../../../res/components/colors.dart';
 
 class PriceRangeSlider extends StatefulWidget {
   const PriceRangeSlider({super.key});

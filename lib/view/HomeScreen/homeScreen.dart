@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
+import '../drawer/drawer.dart';
 import 'widgets/homeCard.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -11,8 +12,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
     bool isTrue = true;
     return Scaffold(
+      drawer: const DrawerScreen(),
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
@@ -24,7 +29,9 @@ class HomeScreen extends StatelessWidget {
             color: AppColor.appBarButtonColor,
             child: Center(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                },
                 icon: const Icon(
                   Icons.notes,
                   color: AppColor.menuColor,

@@ -1,6 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/Search/widgets/recent_search_tile.dart';
-import 'package:citta_23/view/HomeScreen/filter/filter.dart';
+import 'package:citta_23/view/filter/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -51,6 +51,8 @@ class _TrackOrderState extends State<TrackOrder> {
               ),
             ),
           ),
+        ),
+       
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
@@ -59,8 +61,9 @@ class _TrackOrderState extends State<TrackOrder> {
             icon: const Icon(
               Icons.arrow_back,
               color: AppColor.blackColor,
-            ),
-          )),
+            )),
+      
+         
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: Container(
@@ -132,7 +135,7 @@ class _TrackOrderState extends State<TrackOrder> {
                     productPrice: '\$80',
                     procustAverate: '9x'),
 
-                VerticalSpeacing(30.0),
+                const VerticalSpeacing(30.0),
                 ListTile(
                   title: Text(
                     'Total Amount',

@@ -33,5 +33,10 @@ class RoutesName {
   static const String promosOffer = "/promosOffer";
   static const String couponDetails = "/couponDetails";
   static const String deliveryAddress = "/delivery_Address";
+  static const String aboutusscreen = "/About_Us_Screen";
+  static const String faqsscreen = "/FAQs_Screen";
+  static const String termsandconditionscreen = "/Terms_And_Conditions_Screen";
+  static const String helpscreen = "/Help_Screen";
+  static const String contactusscreen = "/Contact_Screen";
    static const String myOrder = "/my_order";
 }
