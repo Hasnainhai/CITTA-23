@@ -5,20 +5,21 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
 class profileCenterBtns extends StatelessWidget {
-  const profileCenterBtns({
-    super.key,
-    required this.tColor,
-    required this.bColor,
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
+  const profileCenterBtns(
+      {super.key,
+      required this.tColor,
+      required this.bColor,
+      required this.icon,
+      required this.title,
+      required this.subtitle,
+      required this.ontap});
 
   final Color tColor;
   final Color bColor;
   final IconData icon;
   final String title;
   final String subtitle;
+  final Function ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +27,26 @@ class profileCenterBtns extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          height: 40.0,
-          width: 40.0,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [tColor, bColor],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.0, 1.0],
+        InkWell(
+          onTap: () {
+            ontap();
+          },
+          child: Container(
+            height: 40.0,
+            width: 40.0,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [tColor, bColor],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.0, 1.0],
+              ),
             ),
-          ),
-          child: Center(
-            child: Icon(
-              icon,
-              color: AppColor.whiteColor,
+            child: Center(
+              child: Icon(
+                icon,
+                color: AppColor.whiteColor,
+              ),
             ),
           ),
         ),

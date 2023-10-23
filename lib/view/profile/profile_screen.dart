@@ -141,25 +141,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
       height: top,
       width: 350,
       color: AppColor.whiteColor,
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           profileCenterBtns(
-            tColor: Color(0xff6AA9FF),
-            bColor: Color(0xff005AD5),
+            ontap: () {},
+            tColor: const Color(0xff6AA9FF),
+            bColor: const Color(0xff005AD5),
             icon: Icons.local_shipping_outlined,
             title: 'My All',
             subtitle: 'Order',
           ),
           profileCenterBtns(
-            tColor: Color(0xffFF6A9F),
-            bColor: Color(0xffD50059),
+            ontap: () {
+              Navigator.pushNamed(context, RoutesName.promosOffer);
+            },
+            tColor: const Color(0xffFF6A9F),
+            bColor: const Color(0xffD50059),
             icon: Icons.card_giftcard_outlined,
             title: 'Offer &',
             subtitle: 'Promos',
           ),
           profileCenterBtns(
+            ontap: () {},
             tColor: Color(0xff6DF5FC),
             bColor: Color(0xff3CB6BB),
             icon: Icons.home_outlined,
