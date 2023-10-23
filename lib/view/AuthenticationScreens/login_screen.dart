@@ -113,8 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 RoundedButton(
                     title: "Login",
                     onpress: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, RoutesName.homeScreen, (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(context,
+                          RoutesName.dashboardScreen, (route) => false);
                     }),
                 const VerticalSpeacing(30.0),
                 Row(
