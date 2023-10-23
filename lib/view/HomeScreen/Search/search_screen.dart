@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/Search/widgets/recent_search_tile.dart';
+import 'package:citta_23/view/HomeScreen/filter/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -70,7 +71,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     decoration:
                         const BoxDecoration(color: AppColor.primaryColor),
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => FilterPopUp(),
+                          );
+                        },
                         icon: const Icon(
                           Icons.tune_sharp,
                           color: AppColor.buttonTxColor,
