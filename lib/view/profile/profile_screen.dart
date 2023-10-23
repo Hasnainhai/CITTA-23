@@ -164,9 +164,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             subtitle: 'Promos',
           ),
           profileCenterBtns(
-            ontap: () {},
-            tColor: Color(0xff6DF5FC),
-            bColor: Color(0xff3CB6BB),
+            ontap: () {
+              Navigator.pushNamed(context, RoutesName.deliveryAddress);
+            },
+            tColor: const Color(0xff6DF5FC),
+            bColor: const Color(0xff3CB6BB),
             icon: Icons.home_outlined,
             title: 'Delivery',
             subtitle: 'Address',
