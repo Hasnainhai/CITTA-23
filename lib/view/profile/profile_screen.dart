@@ -153,7 +153,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           profileCenterBtns(
-            ontap: () {},
+            ontap: () {
+              Navigator.pushNamed(context, RoutesName.myOrder);
+            },
             tColor: const Color(0xff6AA9FF),
             bColor: const Color(0xff005AD5),
             icon: Icons.local_shipping_outlined,
