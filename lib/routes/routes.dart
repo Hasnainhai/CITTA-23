@@ -194,6 +194,7 @@ class Routes {
       case RoutesName.contactusscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const ContactUsScreen(),
+        );
       case RoutesName.myOrder:
         return MaterialPageRoute(
           builder: (BuildContext context) => const MyOrders(),
