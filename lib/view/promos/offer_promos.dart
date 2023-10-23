@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,16 +51,19 @@ class PromosOffer extends StatelessWidget {
                 ),
               ),
               const VerticalSpeacing(20.0),
-              CouponCard(ontap: (){}, img: 'images/offer1.png'),
-                 const VerticalSpeacing(20.0),
-              CouponCard(ontap: (){}, img: 'images/offer2.png'),
-                 const VerticalSpeacing(20.0),
-              CouponCard(ontap: (){}, img: 'images/offer3.png'),
-                 const VerticalSpeacing(20.0),
-              CouponCard(ontap: (){}, img: 'images/offer4.png'),
-                 const VerticalSpeacing(20.0),
-              CouponCard(ontap: (){}, img: 'images/offer1.png'),
-
+              CouponCard(
+                  ontap: () {
+                    Navigator.pushNamed(context, RoutesName.couponDetails);
+                  },
+                  img: 'images/offer1.png'),
+              const VerticalSpeacing(20.0),
+              CouponCard(ontap: () {}, img: 'images/offer2.png'),
+              const VerticalSpeacing(20.0),
+              CouponCard(ontap: () {}, img: 'images/offer3.png'),
+              const VerticalSpeacing(20.0),
+              CouponCard(ontap: () {}, img: 'images/offer4.png'),
+              const VerticalSpeacing(20.0),
+              CouponCard(ontap: () {}, img: 'images/offer1.png'),
               const VerticalSpeacing(20.0),
             ],
           ),

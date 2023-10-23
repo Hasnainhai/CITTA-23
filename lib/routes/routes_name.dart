@@ -31,4 +31,5 @@ class RoutesName {
   static const String paymentScreen = "/paymentScreen";
   static const String addCardScreen = "/addCardScreen";
   static const String promosOffer = "/promosOffer";
+  static const String couponDetails = "/couponDetails";
 }
