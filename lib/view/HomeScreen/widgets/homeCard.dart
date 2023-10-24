@@ -117,7 +117,7 @@ class HomeCard extends StatelessWidget {
                         color: fillColor,
                         border: Border.all(
                           width: 1.0,
-                          color: borderColor,
+                          color: Colors.transparent,
                         ),
                       ),
                       child: Center(
