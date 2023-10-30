@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
+import 'package:citta_23/res/components/widgets/authButton.dart';
 import 'package:citta_23/res/components/widgets/sigin_buttons.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
@@ -117,23 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           RoutesName.dashboardScreen, (route) => false);
                     }),
                 const VerticalSpeacing(30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SiginButton(
-                      buttonTitle: 'Google',
-                      buttonImage: 'images/google.png',
-                      borderColor: AppColor.googleColor,
-                      ontap: () {},
-                    ),
-                    SiginButton(
-                      buttonTitle: 'Apple',
-                      buttonImage: 'images/apple.png',
-                      borderColor: AppColor.fontColor,
-                      ontap: () {},
-                    ),
-                  ],
-                ),
+                const AuthButton(
+                    color: AppColor.primaryColor, img: 'images/google.png'),
                 const VerticalSpeacing(20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

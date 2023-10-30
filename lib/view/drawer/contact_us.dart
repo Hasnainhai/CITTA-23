@@ -29,8 +29,16 @@ class ContactUsScreen extends StatelessWidget {
             textStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
+              color: AppColor.primaryColor,
             ),
+          ),
+        ),
+        bottom: const PreferredSize(
+          preferredSize:
+              Size.fromHeight(1.0), // Set the height of the bottom border
+          child: Divider(
+            height: 1.0, // Set the height of the Divider line
+            color: AppColor.primaryColor, // Set the color of the Divider line
           ),
         ),
       ),
