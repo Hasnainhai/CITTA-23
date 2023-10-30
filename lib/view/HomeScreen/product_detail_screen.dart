@@ -222,7 +222,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ],
                     ),
-                    IncreaseContainer()
+                    const IncreaseContainer()
                   ],
                 ),
                 const VerticalSpeacing(

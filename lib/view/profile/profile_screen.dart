@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(width: 50.0),
         IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.edit_outlined,
               color: AppColor.whiteColor,
             ))

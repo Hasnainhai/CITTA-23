@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
@@ -60,7 +62,8 @@ class _MyOrdersState extends State<MyOrders>
         ),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(70.0), // Adjust the height as needed
+          preferredSize:
+              const Size.fromHeight(70.0), // Adjust the height as needed
           child: SafeArea(
             child: Column(
               children: <Widget>[

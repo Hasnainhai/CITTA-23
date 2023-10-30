@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +39,7 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MyCheckBox(),
+            const MyCheckBox(),
             const SizedBox(width: 15.0),
             Text.rich(
               TextSpan(

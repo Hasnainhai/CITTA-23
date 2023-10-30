@@ -152,7 +152,7 @@ class _CardScreenState extends State<CardScreen> {
                   const VerticalSpeacing(12.0),
                   const ItemPrizingWidget(title: 'Discount', price: '\$6'),
                   const VerticalSpeacing(12.0),
-                  Container(
+                  SizedBox(
                     height: 1, // Height of the dotted line
                     width: double.infinity, // Infinite width
                     child: CustomPaint(
