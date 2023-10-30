@@ -5,7 +5,11 @@ import '../../HomeScreen/widgets/increase_container.dart';
 
 class CartWidget extends StatelessWidget {
   const CartWidget({
-    super.key, required this.title, required this.subtitle, required this.price, required this.img,
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.price,
+    required this.img,
   });
   final String title;
   final String subtitle;
@@ -41,10 +45,10 @@ class CartWidget extends StatelessWidget {
                           color: AppColor.fontColor,
                         ),
                       ),
-                      children:  <TextSpan>[
+                      children: <TextSpan>[
                         TextSpan(
                           text: subtitle,
-                          style:const TextStyle(
+                          style: const TextStyle(
                             color: AppColor.grayColor,
                             fontSize: 14.0,
                           ),
@@ -54,11 +58,11 @@ class CartWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 9.0),
+              subtitle: const Padding(
+                padding: EdgeInsets.only(top: 9.0),
                 child: Row(
                   children: [
-                    const SizedBox(width: 30.0),
+                    SizedBox(width: 30.0),
                     IncreaseContainer(),
                   ],
                 ),

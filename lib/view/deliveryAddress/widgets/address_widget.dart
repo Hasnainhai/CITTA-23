@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,7 +8,10 @@ import '../../Checkout/widgets/myCheckout.dart';
 
 class address_widget extends StatelessWidget {
   const address_widget({
-    super.key, required this.title, required this.address, required this.phNo,
+    super.key,
+    required this.title,
+    required this.address,
+    required this.phNo,
   });
   final String title;
   final String address;
@@ -27,17 +32,17 @@ class address_widget extends StatelessWidget {
               color: AppColor.fontColor,
             ),
           ),
-          children:  <TextSpan>[
+          children: <TextSpan>[
             TextSpan(
               text: '$address\n',
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColor.grayColor,
                 fontSize: 14.0,
               ),
             ),
             TextSpan(
               text: '$phNo\n',
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppColor.grayColor,
                 fontSize: 14.0,
               ),
