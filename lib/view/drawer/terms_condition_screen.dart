@@ -20,7 +20,7 @@ class TermsConditionScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: AppColor.fontColor,
+              color: AppColor.primaryColor,
             )),
         title: Text(
           "Term & Conditions",
@@ -31,6 +31,14 @@ class TermsConditionScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: AppColor.fontColor,
             ),
+          ),
+        ),
+        bottom: const PreferredSize(
+          preferredSize:
+              Size.fromHeight(1.0), // Set the height of the bottom border
+          child: Divider(
+            height: 1.0, // Set the height of the Divider line
+            color: AppColor.primaryColor, // Set the color of the Divider line
           ),
         ),
       ),

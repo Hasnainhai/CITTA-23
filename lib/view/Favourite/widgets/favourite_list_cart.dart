@@ -47,7 +47,7 @@ class FavouristListCart extends StatelessWidget {
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w800,
                               color: AppColor.fontColor,
                             ),

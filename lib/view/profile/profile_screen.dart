@@ -189,7 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildProfileFeatures() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.47,
+      height: MediaQuery.of(context).size.height * 0.42,
       width: MediaQuery.of(context).size.width * 0.9,
       color: AppColor.whiteColor,
       child: Padding(

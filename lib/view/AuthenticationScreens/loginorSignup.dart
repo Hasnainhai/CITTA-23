@@ -74,16 +74,10 @@ class LoginOrSignUp extends StatelessWidget {
               ),
             ),
             const VerticalSpeacing(50.0),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                AuthButton(color: AppColor.appleColor, img: 'images/apple.png'),
-                AuthButton(
-                    color: AppColor.googleColor, img: 'images/google.png'),
-                AuthButton(
-                    color: AppColor.twitterColor, img: 'images/twitter.png'),
-                AuthButton(color: AppColor.fbColor, img: 'images/fb.png'),
-              ],
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: AuthButton(
+                  color: AppColor.primaryColor, img: 'images/google.png'),
             ),
           ],
         )),
