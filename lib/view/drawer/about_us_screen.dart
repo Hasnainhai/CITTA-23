@@ -14,13 +14,14 @@ class AboutUsScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.fontColor,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColor.primaryColor,
+          ),
+        ),
         title: Text(
           "About Us",
           style: GoogleFonts.getFont(
@@ -30,6 +31,14 @@ class AboutUsScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: AppColor.fontColor,
             ),
+          ),
+        ),
+        bottom: const PreferredSize(
+          preferredSize:
+              Size.fromHeight(1.0), // Set the height of the bottom border
+          child: Divider(
+            height: 1.0, // Set the height of the Divider line
+            color: AppColor.primaryColor, // Set the color of the Divider line
           ),
         ),
       ),
