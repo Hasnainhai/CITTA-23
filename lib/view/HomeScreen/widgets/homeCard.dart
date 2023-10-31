@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
@@ -118,6 +120,7 @@ class HomeCard extends StatelessWidget {
                         border: Border.all(
                           width: 1.0,
                           color: AppColor.primaryColor,
+                          color: Colors.transparent,
                         ),
                       ),
                       child: const Center(

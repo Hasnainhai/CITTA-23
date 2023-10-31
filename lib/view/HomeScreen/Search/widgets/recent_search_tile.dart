@@ -1,5 +1,4 @@
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,7 +32,7 @@ class RecentSearchTile extends StatelessWidget {
             ],
           ),
         ),
-        Divider()
+        const Divider()
       ],
     );
   }

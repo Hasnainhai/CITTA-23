@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import '../../../res/components/colors.dart';
@@ -11,8 +13,8 @@ class DottedLinePainter extends CustomPainter {
       ..strokeWidth = 1.0; // Thickness of the line
 
     // Define the pattern for the dotted line
-    final dashWidth = 5.0; // Width of each dash
-    final dashSpace = 5.0; // Space between dashes
+    const dashWidth = 5.0; // Width of each dash
+    const dashSpace = 5.0; // Space between dashes
 
     // Calculate the number of dashes needed
     final numberOfDashes = size.width / (dashWidth + dashSpace);

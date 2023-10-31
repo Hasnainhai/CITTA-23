@@ -54,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 60,
                     width: (MediaQuery.of(context).size.width) - 90,
                     child: TextFormField(

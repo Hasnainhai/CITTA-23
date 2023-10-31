@@ -200,7 +200,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ],
                     ),
-                    IncreaseContainer()
+                    const IncreaseContainer()
                   ],
                 ),
                 const VerticalSpeacing(30),

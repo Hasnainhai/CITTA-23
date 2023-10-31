@@ -10,7 +10,7 @@ import '../../res/components/custom_field.dart';
 import '../HomeScreen/DashBoard/tapBar.dart';
 
 class Rating extends StatefulWidget {
-  Rating({
+  const Rating({
     Key? key,
   }) : super(key: key);
 
