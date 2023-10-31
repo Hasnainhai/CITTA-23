@@ -18,7 +18,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 100.0,
+            height: 120.0,
             child: DrawerHeader(
               decoration: const BoxDecoration(
                 color: AppColor.primaryColor,

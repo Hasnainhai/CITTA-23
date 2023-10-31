@@ -35,8 +35,8 @@ class HomeCard extends StatelessWidget {
         Container(
           width: MediaQuery.of(context).size.width * 0.43,
           decoration: BoxDecoration(
-            color: AppColor.appBarButtonColor,
-            border: Border.all(width: 1, color: Color(0xffCDCDCD)),
+            color: const Color(0xffF7F7F7),
+            border: Border.all(width: 1, color: AppColor.primaryColor),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -117,10 +117,10 @@ class HomeCard extends StatelessWidget {
                         color: Colors.transparent,
                         border: Border.all(
                           width: 1.0,
-                          color: borderColor,
+                          color: AppColor.primaryColor,
                         ),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(Icons.add, color: AppColor.primaryColor),
                       ),
                     )
