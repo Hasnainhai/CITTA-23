@@ -65,11 +65,9 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   : null,
               fillColor: const Color(0xfff1f1f1),
               enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
                 borderSide: BorderSide(color: Color(0xfff1f1f1)),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
                 borderSide: BorderSide(color: Color(0xfff1f1f1)),
               ),
             ),
