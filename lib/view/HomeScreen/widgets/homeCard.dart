@@ -36,9 +36,9 @@ class HomeCard extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width * 0.43,
-          decoration: BoxDecoration(
-            color: const Color(0xffF7F7F7),
-            border: Border.all(width: 1, color: AppColor.grayColor),
+          decoration: const BoxDecoration(
+            color: Color(0xffF7F7F7),
+            // border: Border.all(width: 1, color: AppColor.grayColor),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15.0),

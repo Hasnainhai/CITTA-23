@@ -27,7 +27,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,32 +43,37 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
             ),
           ),
           const SizedBox(height: 8),
-          TextFormField(
-            keyboardType: widget.keyboardType,
-            obscureText: (widget.obscureText && hidden),
-            style: const TextStyle(fontSize: 15),
-            controller: widget.controller,
-            decoration: InputDecoration(
-              hintText: widget.hintText,
-              filled: true,
-              suffixIcon: widget.obscureText
-                  ? GestureDetector(
-                      onTap: () {
-                        setState(() => hidden = !hidden);
-                      },
-                      child: Icon(
-                        hidden ? Icons.visibility_off : Icons.visibility,
-                        color: hidden ? null : AppColor.primaryColor,
-                        size: 30,
-                      ),
-                    )
-                  : null,
-              fillColor: const Color(0xfff1f1f1),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xfff1f1f1)),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xfff1f1f1)),
+          Container(
+            color: const Color(0xfff1f1f1),
+            child: TextField(
+              keyboardType: widget.keyboardType,
+              obscureText: (widget.obscureText && hidden),
+              style: const TextStyle(fontSize: 15),
+              controller: widget.controller,
+              decoration: InputDecoration(
+                hintText: widget.hintText,
+                filled: true,
+                suffixIcon: widget.obscureText
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() => hidden = !hidden);
+                        },
+                        child: Icon(
+                          hidden ? Icons.visibility_off : Icons.visibility,
+                          color: hidden ? null : AppColor.primaryColor,
+                          size: 30,
+                        ),
+                      )
+                    : null,
+                fillColor: const Color(0xfff1f1f1),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xfff1f1f1)),
+                  borderRadius: BorderRadius.zero,
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xfff1f1f1)),
+                  borderRadius: BorderRadius.zero,
+                ),
               ),
             ),
           ),

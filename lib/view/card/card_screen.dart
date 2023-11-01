@@ -97,7 +97,6 @@ class _CardScreenState extends State<CardScreen> {
                         height: 46,
                         width: MediaQuery.of(context).size.width * 0.55,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
                           border: Border.all(
                             color: Colors.grey,
                             width: 1.0,
