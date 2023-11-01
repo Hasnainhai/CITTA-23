@@ -96,7 +96,10 @@ class _CardScreenState extends State<CardScreen> {
                       Container(
                         height: 46,
                         width: MediaQuery.of(context).size.width * 0.55,
-                        color: AppColor.splashBgColor,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColor.grayColor,width: 1.0),
+                        borderRadius: BorderRadius.zero,
+                        ),
                         child: const TextField(
                           decoration: InputDecoration(
                             hintText: 'Enter Voucher Code',
