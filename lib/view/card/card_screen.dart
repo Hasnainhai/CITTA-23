@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/colors.dart';
+import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
 import 'widgets/item_prizing.dart';
 
@@ -96,12 +97,7 @@ class _CardScreenState extends State<CardScreen> {
                       Container(
                         height: 46,
                         width: MediaQuery.of(context).size.width * 0.55,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 1.0,
-                          ),
-                        ),
+                        color: AppColor.splashBgColor,
                         child: const TextField(
                           decoration: InputDecoration(
                             hintText: 'Enter Voucher Code',
@@ -113,24 +109,7 @@ class _CardScreenState extends State<CardScreen> {
                       SizedBox(
                         height: 46.0,
                         width: MediaQuery.of(context).size.width * 0.3,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColor.primaryColor),
-                          onPressed: () {},
-                          child: Center(
-                            child: Text(
-                              'Apply',
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  color: AppColor.whiteColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        child: RoundedButton(title: 'Apply', onpress: () {}),
                       ),
                     ],
                   ),
@@ -139,7 +118,7 @@ class _CardScreenState extends State<CardScreen> {
                   const VerticalSpeacing(12.0),
                   const ItemPrizingWidget(title: 'Weight', price: '33 Kg'),
                   const VerticalSpeacing(12.0),
-                  Container(
+                  SizedBox(
                     height: 1, // Height of the dotted line
                     width: double.infinity, // Infinite width
                     child: CustomPaint(
@@ -164,26 +143,31 @@ class _CardScreenState extends State<CardScreen> {
                   SizedBox(
                     height: 46.0,
                     width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColor.primaryColor),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutesName.checkOutScreen);
-                      },
-                      child: Center(
-                        child: Text(
-                          'Checkout',
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.whiteColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: RoundedButton(title: 'Checkout', onpress: () 
+                    {
+                      Navigator.pushNamed(context, RoutesName.checkOutScreen);
+                    }),
+                    
+                  //   ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //         backgroundColor: AppColor.primaryColor),
+                  //     onPressed: () {
+                  //       Navigator.pushNamed(context, RoutesName.checkOutScreen);
+                  //     },
+                  //     child: Center(
+                  //       child: Text(
+                  //         'Checkout',
+                  //         style: GoogleFonts.getFont(
+                  //           "Gothic A1",
+                  //           textStyle: const TextStyle(
+                  //             fontSize: 16,
+                  //             fontWeight: FontWeight.w800,
+                  //             color: AppColor.whiteColor,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
                   ),
                   const VerticalSpeacing(30.0),
                 ],
