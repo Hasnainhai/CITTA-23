@@ -11,6 +11,7 @@ class TextFieldCustom extends StatefulWidget {
     this.controller,
     this.keyboardType,
     this.obscureText = false,
+    this.validator,
   }) : super(key: key);
 
   final String text;
@@ -18,6 +19,7 @@ class TextFieldCustom extends StatefulWidget {
   final TextInputType? keyboardType;
   final bool obscureText;
   final String? hintText;
+  final String? Function(String?)? validator;
   @override
   State<TextFieldCustom> createState() => _TextFieldCustomState();
 }
@@ -45,7 +47,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
           const SizedBox(height: 8),
           Container(
             color: const Color(0xfff1f1f1),
-            child: TextField(
+            child: TextFormField(
               keyboardType: widget.keyboardType,
               obscureText: (widget.obscureText && hidden),
               style: const TextStyle(fontSize: 15),
@@ -75,6 +77,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                   borderRadius: BorderRadius.zero,
                 ),
               ),
+              validator: widget.validator,
             ),
           ),
         ],
