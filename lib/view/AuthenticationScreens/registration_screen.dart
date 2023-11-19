@@ -3,6 +3,7 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -31,19 +32,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
     addressController.dispose();
   }
 
+  bool _isLoading = false;
   void _submitFormOnRegister() async {
     final isValid = _formKey.currentState!.validate();
+    setState(() {
+      _isLoading = true;
+    });
     if (isValid) {
       _formKey.currentState!.save();
       try {
         await authInstance.createUserWithEmailAndPassword(
             email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim());
+        Utils.toastMessage('SuccessFully Register');
         print('SuccessFully Register');
+      } on FirebaseException catch (e) {
+        // ignore: use_build_context_synchronously
+        Utils.flushBarErrorMessage('${e.message}', context);
+        print('Error during Register');
+        setState(() {
+          _isLoading = false;
+        });
       } catch (e) {
         // ignore: use_build_context_synchronously
         Utils.flushBarErrorMessage('$e', context);
         print('Error during Register');
+        setState(() {
+          _isLoading = false;
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -170,11 +190,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                           const VerticalSpeacing(30),
-                          RoundedButton(
-                              title: "Register",
-                              onpress: () {
-                                _submitFormOnRegister();
-                              }),
+                          _isLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : RoundedButton(
+                                  title: "Register",
+                                  onpress: () {
+                                    _submitFormOnRegister();
+                                  }),
                           const VerticalSpeacing(30),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

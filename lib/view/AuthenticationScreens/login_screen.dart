@@ -1,13 +1,15 @@
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/authButton.dart';
-import 'package:citta_23/res/components/widgets/sigin_buttons.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/colors.dart';
+import '../../res/consts/firebase_const.dart';
+import '../../utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -24,6 +27,43 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     super.dispose();
     emailController.dispose();
+    passwordController.dispose();
+  }
+
+  bool _isLoading = false;
+  void _submitFormOnLogin() async {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      _formKey.currentState!.save();
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        await authInstance.signInWithEmailAndPassword(
+            email: emailController.text.toLowerCase().trim(),
+            password: passwordController.text.trim());
+        print('SuccessFully Login');
+        Utils.toastMessage('SuccessFully Login');
+      } on FirebaseException catch (e) {
+        // ignore: use_build_context_synchronously
+        Utils.flushBarErrorMessage('${e.message}', context);
+        print('Error during Login');
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (e) {
+        // ignore: use_build_context_synchronously
+        Utils.flushBarErrorMessage('$e', context);
+        print('Error during Register');
+        setState(() {
+          _isLoading = false;
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -73,18 +113,41 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const VerticalSpeacing(80.0),
-                TextFieldCustom(
-                  controller: emailController,
-                  maxLines: 1,
-                  text: 'Email Address',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                TextFieldCustom(
-                  controller: passwordController,
-                  maxLines: 1,
-                  text: 'Your Password',
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: true,
+                Container(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFieldCustom(
+                          controller: emailController,
+                          maxLines: 1,
+                          text: 'Email Address',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value!.isEmpty || !value.contains("@")) {
+                              return "Please enter a valid Email adress";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        TextFieldCustom(
+                          controller: passwordController,
+                          maxLines: 1,
+                          text: 'Your Password',
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 7) {
+                              return "Please enter a valid password";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -111,12 +174,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const VerticalSpeacing(30),
-                RoundedButton(
-                    title: "Login",
-                    onpress: () {
-                      Navigator.pushNamedAndRemoveUntil(context,
-                          RoutesName.dashboardScreen, (route) => false);
-                    }),
+                _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : RoundedButton(
+                        title: "Login",
+                        onpress: () {
+                          _submitFormOnLogin();
+                        }),
                 const VerticalSpeacing(30.0),
                 const AuthButton(
                     color: AppColor.primaryColor, img: 'images/google.png'),
