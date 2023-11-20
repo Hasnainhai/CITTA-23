@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/drawer_options.dart';
@@ -106,7 +110,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
           DrawerOptions(
             icon: Icons.logout_rounded,
             title: 'Logout',
-            onpress: () {},
+            onpress: () async {
+              await authInstance.signOut();
+              Utils.toastMessage('Successfully LogOut');
+              Navigator.pushNamed(context, RoutesName.loginscreen);
+            },
           ),
         ],
       ),
