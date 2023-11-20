@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/colors.dart';
+import '../../res/components/widgets/testAuth.dart';
 import '../../res/consts/firebase_const.dart';
 import '../../utils/utils.dart';
 
@@ -185,8 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _submitFormOnLogin();
                           }),
                   const VerticalSpeacing(30.0),
-                  const AuthButton(
-                      color: AppColor.primaryColor, img: 'images/google.png'),
+                  const AuthButton(),
                   const VerticalSpeacing(20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
