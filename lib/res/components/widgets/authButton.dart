@@ -44,79 +44,8 @@ class _AuthButtonState extends State<AuthButton> {
       } catch (e) {
         Utils.flushBarErrorMessage(e.toString(), context);
       }
-      // if result not null we simply call the MaterialpageRoute,
-      // for go to the HomePage screen
     }
   }
-  // Future<void> signup(BuildContext context) async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn();
-  //   final GoogleSignInAccount? googleSignInAccount =
-  //       await googleSignIn.signIn();
-  //   if (googleSignInAccount != null) {
-  //     final GoogleSignInAuthentication googleSignInAuthentication =
-  //         await googleSignInAccount.authentication;
-  //     final AuthCredential authCredential = GoogleAuthProvider.credential(
-  //         idToken: googleSignInAuthentication.idToken,
-  //         accessToken: googleSignInAuthentication.accessToken);
-
-  //     // Getting users credential
-  //     UserCredential result =
-  //         await authInstance.signInWithCredential(authCredential);
-  //     User? user = result.user;
-
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
-  //     // if result not null we simply call the MaterialpageRoute,
-  //     // for go to the HomePage screen
-  //   }
-  // }
-
-  // Future<void> _googleSignIn(context) async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn();
-  //   final GoogleSignInAccount? googleSignInAccount =
-  //       await googleSignIn.signIn();
-
-  //   if (googleSignInAccount != null) {
-  //     // final googleAuth = await googleSignInAccount.authentication;
-  //     // Utils.toastMessage('Google Account is working,$googleSignInAccount');
-  //     // if (googleAuth.accessToken != null && googleAuth.idToken != null) {
-  //     //   print(googleAuth.accessToken);
-  //     //   print(googleAuth.idToken);
-  //     try {
-  //       final GoogleSignInAuthentication googleSignInAuthentication =
-  //           await googleSignInAccount.authentication;
-  //       final AuthCredential authCredential = GoogleAuthProvider.credential(
-  //           idToken: googleSignInAuthentication.idToken,
-  //           accessToken: googleSignInAuthentication.accessToken);
-
-  //       // Getting users credential
-  //       UserCredential result =
-  //           await authInstance.signInWithCredential(authCredential);
-  //       User? user = result.user;
-  //       // await FirebaseAuth.instance.signInWithCredential(
-  //       //   GoogleAuthProvider.credential(
-  //       //     idToken: googleAuth.idToken,
-  //       //     accessToken: googleAuth.accessToken,
-  //       //   ),
-  //       // );
-  //       if (result != null) {
-  //         Utils.toastMessage('Successfully Google Signin');
-
-  //         Navigator.pushReplacement(context,
-  //             MaterialPageRoute(builder: (context) => const DashBoardScreen()));
-  //       }
-  //     } on FirebaseAuthException catch (e) {
-  //       Utils.flushBarErrorMessage('${e.message}', context);
-  //     } catch (e) {
-  //       Utils.flushBarErrorMessage('$e', context);
-  //     }
-  //   } else {
-  //     Utils.flushBarErrorMessage(
-  //       'Google Sign-In failed. Please try again.',
-  //       context,
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
