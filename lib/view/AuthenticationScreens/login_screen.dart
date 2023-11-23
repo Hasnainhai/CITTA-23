@@ -64,110 +64,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // final FirebaseAuth auth = FirebaseAuth.instance;
-
-  // Future<void> signup(BuildContext context) async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  //   try {
-  //     final GoogleSignInAccount? googleSignInAccount =
-  //         await googleSignIn.signIn();
-
-  //     if (googleSignInAccount != null) {
-  //       final GoogleSignInAuthentication googleSignInAuthentication =
-  //           await googleSignInAccount.authentication;
-
-  //       final AuthCredential authCredential = GoogleAuthProvider.credential(
-  //           idToken: googleSignInAuthentication.idToken,
-  //           accessToken: googleSignInAuthentication.accessToken);
-
-  //       // Getting users credential
-  //       UserCredential result = await authInstance.signInWithCredential(authCredential);
-  //       User? user = result.user;
-  //       print(user);
-
-  //       // ignore: unnecessary_null_comparison
-  //       if (result != null) {
-  //         Navigator.pushReplacement(context,
-  //             MaterialPageRoute(builder: (context) => const DashBoardScreen()));
-  //       }
-  //       // if result not null we simply call the MaterialPageRoute,
-  //       // for go to the HomePage screen
-  //     }
-  //   } catch (error) {
-  //     // Handle the error here
-  //     print("Error during sign up: $error");
-  //     // You might want to show an error message to the user
-  //     // or perform other actions based on the specific error.
-  //   }
-  // }
-//   Future<void> signup(BuildContext context) async {
-//     final GoogleSignIn googleSignIn = GoogleSignIn();
-//     final GoogleSignInAccount? googleSignInAccount =
-//         await googleSignIn.signIn();
-//     if (googleSignInAccount != null) {
-//       final GoogleSignInAuthentication googleSignInAuthentication =
-//           await googleSignInAccount.authentication;
-//       final AuthCredential authCredential = GoogleAuthProvider.credential(
-//           idToken: googleSignInAuthentication.idToken,
-//           accessToken: googleSignInAuthentication.accessToken);
-
-//       // Getting users credential
-//       UserCredential result =
-//           await authInstance.signInWithCredential(authCredential);
-
-// if(result != null){
-//    User? user = result.user;
-//     Navigator.pushReplacement(
-//           context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
-
-// }
-
-//       // if result not null we simply call the MaterialpageRoute,
-//       // for go to the HomePage screen
-//     }
-//   }
-
-  // Future<void> _googleSignIn(context) async {
-  //   try {
-  //     final googleSignIn = GoogleSignIn();
-  //     final googleAccount = await googleSignIn.signIn();
-
-  //     if (googleAccount != null) {
-  //       final googleAuth = await googleAccount.authentication;
-  //       Utils.toastMessage('Google Account is working,$googleAccount');
-  //       if (googleAuth.accessToken != null && googleAuth.idToken != null) {
-  //         print(googleAuth.accessToken);
-  //         print(googleAuth.idToken);
-  //         try {
-  //           await FirebaseAuth.instance.signInWithCredential(
-  //             GoogleAuthProvider.credential(
-  //               idToken: googleAuth.idToken,
-  //               accessToken: googleAuth.accessToken,
-  //             ),
-  //           );
-  //           Utils.toastMessage('Successfully Google Signin');
-  //         } on FirebaseAuthException catch (e) {
-  //           Utils.flushBarErrorMessage('${e.message}', context);
-  //         } catch (e) {
-  //           Utils.flushBarErrorMessage('$e', context);
-  //         }
-  //       } else {
-  //         Utils.flushBarErrorMessage(
-  //           'Google Sign-In failed. Please try again.',
-  //           context,
-  //         );
-  //       }
-  //     } else {
-  //       // User canceled Google Sign-In
-  //       Utils.flushBarErrorMessage('Google Sign-In canceled.', context);
-  //     }
-  //   } catch (error) {
-  //     // Handle other errors if necessary
-  //     Utils.flushBarErrorMessage('$error', context);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -288,9 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _submitFormOnLogin();
                           }),
                   const VerticalSpeacing(30.0),
-                  AuthButton(
-                    
-                  ),
+                  AuthButton(),
                   const VerticalSpeacing(20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
