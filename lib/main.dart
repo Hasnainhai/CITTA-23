@@ -4,7 +4,10 @@ import 'routes/routes.dart';
 import 'routes/routes_name.dart';
 
 void main() async {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 }
 
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutesName.loginscreen,
+      initialRoute: RoutesName.splashScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }

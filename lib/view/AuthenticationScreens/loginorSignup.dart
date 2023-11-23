@@ -8,9 +8,14 @@ import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginOrSignUp extends StatelessWidget {
+class LoginOrSignUp extends StatefulWidget {
   const LoginOrSignUp({super.key});
 
+  @override
+  State<LoginOrSignUp> createState() => _LoginOrSignUpState();
+}
+
+class _LoginOrSignUpState extends State<LoginOrSignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
