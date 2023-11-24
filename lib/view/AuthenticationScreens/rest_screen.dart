@@ -2,6 +2,7 @@
 
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class _RestScreenState extends State<RestScreen> {
             email: emailController.text.toLowerCase());
 
         Utils.toastMessage('An email has been sent to your email address');
+        Navigator.pushNamed(context, RoutesName.loginscreen);
       } on FirebaseException catch (error) {
         Utils.flushBarErrorMessage('${error.message}', context);
 

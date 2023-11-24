@@ -1,6 +1,8 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/profile/widgets/profileCenterBtn.dart';
 import 'package:citta_23/view/profile/widgets/profile_widget.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
-          const VerticalSpeacing(70.0),
+          const VerticalSpeacing(55.0),
           _buildProfileFeatures(),
         ],
       ),
@@ -238,8 +240,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Payment'),
                 const Divider(),
                 ProfileWidgets(
-                  ontap: () {
-                    Navigator.pushNamed(context, RoutesName.loginscreen);
+                  ontap: () async {
+                    authInstance.signOut();
+                    Utils.toastMessage('SuccessFully LogOut');
+                    await Navigator.pushNamed(context, RoutesName.loginscreen);
                   },
                   tColor: const Color(0xffFF9CCB),
                   bColor: const Color(0xffEC4091),

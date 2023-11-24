@@ -6,11 +6,12 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/firebase_const.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -47,8 +48,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await authInstance.createUserWithEmailAndPassword(
             email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim());
-        Utils.toastMessage('SuccessFully Register');
+        final User? user = authInstance.currentUser;
+        final uid = user!.uid;
+        // user.updateDisplayName(nameController.text);
+        // user.reload();
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
+          'id': uid,
+          'name': nameController.text,
+          'email': emailController.text.toLowerCase(),
+          'shipping-address': addressController.text,
+          'userWish': [],
+          'userCart': [],
+          'createdAt': Timestamp.now(),
+        });
         Navigator.pushNamed(context, RoutesName.dashboardScreen);
+        Utils.toastMessage('SuccessFully Register');
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         print('Error during Register');
