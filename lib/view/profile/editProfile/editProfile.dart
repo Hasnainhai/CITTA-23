@@ -1,10 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, use_build_context_synchronously
 import 'dart:io';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../../res/consts/firebase_const.dart';
+import '../../../utils/utils.dart';
 import 'widgets/image_pickerWidget.dart';
 
 class EditProfile extends StatefulWidget {
@@ -24,6 +28,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   File? image;
+  // ignore: unnecessary_string_interpolations
   TextEditingController nameController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
@@ -100,14 +105,6 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ],
                         ),
-                        const VerticalSpeacing(20.0),
-                        Text(
-                          widget.name,
-                          style: const TextStyle(
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.primaryColor),
-                        ),
                       ],
                     ),
                   ],
@@ -128,19 +125,29 @@ class _EditProfileState extends State<EditProfile> {
                 const VerticalSpeacing(24.0),
                 RoundedButton(
                   title: 'Update',
-                  onpress: () {
+                  onpress: () async {
                     if (nameController.text.isEmpty) {
                       nameController.text = widget.name;
                     } else if (emailController.text.isEmpty) {
                       emailController.text = widget.email;
                     } else {
-                      // userAuth.updateUserInformation(
-                      //   name: nameController.text,
-                      //   lastName: lastNameController.text,
-                      //   profilePic: image,
-                      //   phoneNumber: phoneController.text,
-                      //   context: context,
-                      // );
+                      String _uid = user!.uid;
+                      try {
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(_uid)
+                            .update({
+                          'name': nameController.text,
+                          'email': emailController.text,
+                        });
+                        Navigator.pushNamed(context, RoutesName.profileScreen);
+                        setState(() {
+                          widget.name = nameController.text;
+                          widget.email = emailController.text;
+                        });
+                      } catch (err) {
+                        Utils.flushBarErrorMessage(err.toString(), context);
+                      }
                     }
                   },
                 ),
