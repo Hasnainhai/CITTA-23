@@ -53,6 +53,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
               style: const TextStyle(fontSize: 15),
               controller: widget.controller,
               decoration: InputDecoration(
+                // prefixText:  widget.hintText,
                 hintText: widget.hintText,
                 filled: true,
                 suffixIcon: widget.obscureText

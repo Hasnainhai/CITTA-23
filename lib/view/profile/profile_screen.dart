@@ -13,6 +13,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../res/components/loading_manager.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -52,7 +54,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     try {
       String _uid = user!.uid;
-      print('$_uid');
 
       final DocumentSnapshot userDoc =
           await FirebaseFirestore.instance.collection('users').doc(_uid).get();
@@ -143,29 +144,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: const Icon(Icons.arrow_back),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: [
-                _buildCoverBar(),
-                Positioned(
-                  top: 20.0,
-                  left: 0.0,
-                  child: _buildProfile(),
-                ),
-                Positioned(
-                  top: tHeight - top / 2 - 10,
-                  child: _builProfileContainer(),
-                ),
-              ],
-            ),
-            const VerticalSpeacing(55.0),
-            _buildProfileFeatures(),
-          ],
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  _buildCoverBar(),
+                  Positioned(
+                    top: 20.0,
+                    left: 0.0,
+                    child: _buildProfile(),
+                  ),
+                  Positioned(
+                    top: tHeight - top / 2 - 10,
+                    child: _builProfileContainer(),
+                  ),
+                ],
+              ),
+              const VerticalSpeacing(55.0),
+              _buildProfileFeatures(),
+            ],
+          ),
         ),
       ),
     );
