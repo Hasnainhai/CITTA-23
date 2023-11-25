@@ -1,10 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/profile/editProfile/editProfile.dart';
 import 'package:citta_23/view/profile/widgets/profileCenterBtn.dart';
 import 'package:citta_23/view/profile/widgets/profile_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +21,106 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final TextEditingController _addressTextController =
+      TextEditingController(text: "");
+  @override
+  void dispose() {
+    _addressTextController.dispose();
+    super.dispose();
+  }
+
+  String? _email;
+  String? _name;
+  String? address;
+  bool _isLoading = false;
+  final User? user = authInstance.currentUser;
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+  Future<void> getUserData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    if (user == null) {
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
+    try {
+      String _uid = user!.uid;
+      print('$_uid');
+
+      final DocumentSnapshot userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+      if (userDoc == null) {
+        return;
+      } else {
+        _email = userDoc.get('email');
+        _name = userDoc.get('name');
+        address = userDoc.get('shipping-address');
+        _addressTextController.text = userDoc.get('shipping-address');
+      }
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      Utils.flushBarErrorMessage('$error', context);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _showAddressDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Update Address'),
+          content: TextField(
+            // onChanged: (value) {
+            //   print('_addressTextController.text ${_addressTextController.text}');
+            // },
+            controller: _addressTextController,
+            maxLines: 5,
+            decoration: const InputDecoration(hintText: "Your address"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                String _uid = user!.uid;
+                try {
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_uid)
+                      .update({
+                    'shipping-address': _addressTextController.text,
+                  });
+
+                  Navigator.pop(context);
+                  setState(() {
+                    address = _addressTextController.text;
+                  });
+                } catch (err) {
+                  Utils.flushBarErrorMessage(err.toString(), context);
+                }
+              },
+              child: const Text(
+                'Update',
+                style: TextStyle(color: AppColor.primaryColor),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   final double tHeight = 200.0;
   final double top = 130.0;
   @override
@@ -38,27 +143,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: const Icon(Icons.arrow_back),
       ),
-      body: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              _buildCoverBar(),
-              Positioned(
-                top: 20.0,
-                left: 0.0,
-                child: _buildProfile(),
-              ),
-              Positioned(
-                top: tHeight - top / 2 - 10,
-                child: _builProfileContainer(),
-              ),
-            ],
-          ),
-          const VerticalSpeacing(55.0),
-          _buildProfileFeatures(),
-        ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                _buildCoverBar(),
+                Positioned(
+                  top: 20.0,
+                  left: 0.0,
+                  child: _buildProfile(),
+                ),
+                Positioned(
+                  top: tHeight - top / 2 - 10,
+                  child: _builProfileContainer(),
+                ),
+              ],
+            ),
+            const VerticalSpeacing(55.0),
+            _buildProfileFeatures(),
+          ],
+        ),
       ),
     );
   }
@@ -113,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(width: 20.0),
         Text.rich(
           TextSpan(
-            text: 'Luna Ghothic \n',
+            text: '${_name == null ? 'Name' : _name!} \n',
             style: GoogleFonts.getFont(
               "Gothic A1",
               textStyle: const TextStyle(
@@ -122,10 +230,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: AppColor.whiteColor,
               ),
             ),
-            children: const <TextSpan>[
+            children: <TextSpan>[
               TextSpan(
-                text: 'ID : 934556',
-                style: TextStyle(
+                text: _email == null ? 'Email' : _email!,
+                style: const TextStyle(
                   color: AppColor.whiteColor,
                   fontWeight: FontWeight.w200,
                   fontSize: 14.0,
@@ -136,7 +244,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(width: 50.0),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return EditProfile(
+                    profilePic: 'profilePic', name: _name!, email: _email!);
+              }));
+            },
             icon: const Icon(
               Icons.edit_outlined,
               color: AppColor.whiteColor,
@@ -201,12 +314,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Column(
               children: [
                 ProfileWidgets(
-                    ontap: () {},
-                    tColor: const Color(0xffCDFF9D),
-                    bColor: const Color(0xff40C269),
-                    icon: Icons.person_outline,
-                    trIcon: Icons.arrow_forward_ios,
-                    title: 'My Profile'),
+                  ontap: () {
+                    _showAddressDialog();
+                  },
+                  tColor: const Color(0xffCDFF9D),
+                  bColor: const Color(0xff40C269),
+                  icon: Icons.local_shipping_outlined,
+                  trIcon: Icons.arrow_forward_ios,
+                  title: address == null ? 'user' : address!,
+                ),
                 const Divider(),
                 ProfileWidgets(
                     ontap: () {
