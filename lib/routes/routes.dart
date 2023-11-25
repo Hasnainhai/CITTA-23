@@ -22,13 +22,13 @@ import 'package:citta_23/view/drawer/contact_us.dart';
 import 'package:citta_23/view/drawer/faqs_screen.dart';
 import 'package:citta_23/view/drawer/help_screen.dart';
 import 'package:citta_23/view/drawer/terms_condition_screen.dart';
-
 import 'package:citta_23/view/myOrder/my_order.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:citta_23/view/payments/AddCard/add_new_card.dart';
 import 'package:citta_23/view/payments/payment.dart';
+import 'package:citta_23/view/profile/editProfile/editProfile.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
 import 'package:citta_23/view/promos/CouponDetails/coupon_details.dart';
 import 'package:citta_23/view/promos/offer_promos.dart';
