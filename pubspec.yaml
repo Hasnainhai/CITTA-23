@@ -54,6 +54,7 @@ dependencies:
   flutter_plugin_android_lifecycle: ^2.0.0
   cloud_firestore: ^4.13.2
   image_picker: ^1.0.4
+  firebase_storage: ^11.5.2
 
 dev_dependencies:
   flutter_test:

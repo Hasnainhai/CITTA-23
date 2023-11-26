@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../../../res/consts/firebase_const.dart';
 import '../../../utils/utils.dart';
 import 'widgets/image_pickerWidget.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class EditProfile extends StatefulWidget {
   String profilePic;
@@ -46,6 +47,29 @@ class _EditProfileState extends State<EditProfile> {
     super.dispose();
     nameController.dispose();
     emailController.dispose();
+  }
+
+  Future<String> uploadImageToFirestore(File imageFile, String uid) async {
+    try {
+      // Upload image to Firebase Storage
+      final storageRef = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('profile_images/$uid.png');
+      await storageRef.putFile(imageFile);
+
+      // Get download URL
+      final imageUrl = await storageRef.getDownloadURL();
+
+      // Update Firestore document with the new profile image URL
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'profilePic': imageUrl,
+      });
+
+      return imageUrl;
+    } catch (error) {
+      Utils.flushBarErrorMessage('$error', context);
+      return ''; // Return an empty string or handle the error as needed
+    }
   }
 
   @override
@@ -133,6 +157,16 @@ class _EditProfileState extends State<EditProfile> {
                     } else {
                       String _uid = user!.uid;
                       try {
+                        // Upload the picked image to Firestore
+                        if (image != null) {
+                          final imageUrl =
+                              await uploadImageToFirestore(image!, uid);
+                          setState(() {
+                            widget.profilePic = imageUrl;
+                          });
+                        }
+
+                        // Update user data in Firestore
                         await FirebaseFirestore.instance
                             .collection('users')
                             .doc(_uid)
@@ -140,6 +174,7 @@ class _EditProfileState extends State<EditProfile> {
                           'name': nameController.text,
                           'email': emailController.text,
                         });
+
                         Navigator.pushNamed(context, RoutesName.profileScreen);
                         setState(() {
                           widget.name = nameController.text;
