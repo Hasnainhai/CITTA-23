@@ -36,6 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? address;
   bool _isLoading = false;
   final User? user = authInstance.currentUser;
+  String defaultProfile = 'https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg';
   @override
   void initState() {
     getUserData();
@@ -193,33 +194,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Row(
       children: [
         const SizedBox(width: 30.0),
-        Stack(
+         Stack(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 40,
               backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-              ),
+                  defaultProfile ),
             ),
-            Positioned(
-              top: 47.0,
-              right: 0,
-              child: Container(
-                height: 25.0,
-                width: 25.0,
-                decoration: BoxDecoration(
-                  color: AppColor.whiteColor,
-                  borderRadius: BorderRadius.circular(68),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    size: 16,
-                    color: AppColor.primaryColor,
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: 47.0,
+            //   right: 0,
+            //   child: Container(
+            //     height: 25.0,
+            //     width: 25.0,
+            //     decoration: BoxDecoration(
+            //       color: AppColor.whiteColor,
+            //       borderRadius: BorderRadius.circular(68),
+            //     ),
+            //     child: const Center(
+            //       child: Icon(
+            //         Icons.camera_alt_outlined,
+            //         size: 16,
+            //         color: AppColor.primaryColor,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         const SizedBox(width: 20.0),
@@ -251,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditProfile(
-                    profilePic: 'profilePic', name: _name!, email: _email!);
+                    profilePic: defaultProfile, name: _name!, email: _email!);
               }));
             },
             icon: const Icon(
