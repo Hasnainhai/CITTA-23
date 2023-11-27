@@ -34,9 +34,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _email;
   String? _name;
   String? address;
+  String? _pImage;
   bool _isLoading = false;
   final User? user = authInstance.currentUser;
-  String defaultProfile = 'https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg';
+  String defaultProfile =
+      'https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg';
   @override
   void initState() {
     getUserData();
@@ -64,6 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _email = userDoc.get('email');
         _name = userDoc.get('name');
         address = userDoc.get('shipping-address');
+        _pImage = userDoc.get('profilePic');
         _addressTextController.text = userDoc.get('shipping-address');
       }
     } catch (error) {
@@ -194,12 +197,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Row(
       children: [
         const SizedBox(width: 30.0),
-         Stack(
+        Stack(
           children: [
             CircleAvatar(
               radius: 40,
-              backgroundImage: NetworkImage(
-                  defaultProfile ),
+              backgroundImage:
+                  NetworkImage(_pImage == null ? defaultProfile : _pImage!),
             ),
             // Positioned(
             //   top: 47.0,

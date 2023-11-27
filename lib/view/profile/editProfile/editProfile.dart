@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/custom_field.dart';
+import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
@@ -72,6 +73,7 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,114 +84,129 @@ class _EditProfileState extends State<EditProfile> {
           'Edit Profile',
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-        child: ListView(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const VerticalSpeacing(20),
-                    Column(
-                      children: [
-                        Stack(
-                          children: [
-                            CircleAvatar(
-                              radius: 60,
-                              backgroundImage: NetworkImage(
-                                widget.profilePic,
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          child: ListView(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const VerticalSpeacing(20),
+                      Column(
+                        children: [
+                          Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 60,
+                                backgroundImage: NetworkImage(
+                                  widget.profilePic,
+                                ),
+                                foregroundImage: image == null
+                                    ? null
+                                    : FileImage(
+                                        image!,
+                                      ),
                               ),
-                              foregroundImage: image == null
-                                  ? null
-                                  : FileImage(
-                                      image!,
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: CircleAvatar(
+                                  backgroundColor: AppColor.primaryColor,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: AppColor.whiteColor,
                                     ),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: CircleAvatar(
-                                backgroundColor: AppColor.primaryColor,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: AppColor.whiteColor,
+                                    onPressed: () {
+                                      pickImage();
+                                    },
+                                    color: AppColor.splashBgColor,
+                                    iconSize: 20,
                                   ),
-                                  onPressed: () {
-                                    pickImage();
-                                  },
-                                  color: AppColor.splashBgColor,
-                                  iconSize: 20,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(29.0),
+                  TextFieldCustom(
+                    controller: nameController,
+                    text: 'Name',
+                    hintText: widget.name,
+                    maxLines: 2,
+                  ),
+                  TextFieldCustom(
+                    controller: emailController,
+                    text: 'Email',
+                    hintText: widget.email,
+                    maxLines: 2,
+                  ),
+                  const VerticalSpeacing(24.0),
+                  _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : RoundedButton(
+                          title: 'Update',
+                          onpress: () async {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            if (nameController.text.isEmpty) {
+                              nameController.text = widget.name;
+                            } else if (emailController.text.isEmpty) {
+                              emailController.text = widget.email;
+                            } else {
+                              String _uid = user!.uid;
+                              try {
+                                // Upload the picked image to Firestore
+                                if (image != null) {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  final imageUrl = await uploadImageToFirestore(
+                                      image!, _uid);
+                                  setState(() {
+                                    widget.profilePic = imageUrl;
+                                  });
+                                }
+
+                                // Update user data in Firestore
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(_uid)
+                                    .update({
+                                  'name': nameController.text,
+                                  'email': emailController.text,
+                                });
+                                Navigator.pushNamed(
+                                    context, RoutesName.profileScreen);
+                                Utils.toastMessage('SuccessFully Update');
+                                setState(() {
+                                  widget.name = nameController.text;
+                                  widget.email = emailController.text;
+                                });
+                              } catch (err) {
+                                Utils.flushBarErrorMessage(
+                                    err.toString(), context);
+                              }
+                            }
+                          },
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(29.0),
-                TextFieldCustom(
-                  controller: nameController,
-                  text: 'Name',
-                  hintText: widget.name,
-                  maxLines: 2,
-                ),
-                TextFieldCustom(
-                  controller: emailController,
-                  text: 'Email',
-                  hintText: widget.email,
-                  maxLines: 2,
-                ),
-                const VerticalSpeacing(24.0),
-                RoundedButton(
-                  title: 'Update',
-                  onpress: () async {
-                    if (nameController.text.isEmpty) {
-                      nameController.text = widget.name;
-                    } else if (emailController.text.isEmpty) {
-                      emailController.text = widget.email;
-                    } else {
-                      String _uid = user!.uid;
-                      try {
-                        // Upload the picked image to Firestore
-                        if (image != null) {
-                          final imageUrl =
-                              await uploadImageToFirestore(image!, uid);
-                          setState(() {
-                            widget.profilePic = imageUrl;
-                          });
-                        }
-
-                        // Update user data in Firestore
-                        await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(_uid)
-                            .update({
-                          'name': nameController.text,
-                          'email': emailController.text,
-                        });
-
-                        Navigator.pushNamed(context, RoutesName.profileScreen);
-                        setState(() {
-                          widget.name = nameController.text;
-                          widget.email = emailController.text;
-                        });
-                      } catch (err) {
-                        Utils.flushBarErrorMessage(err.toString(), context);
-                      }
-                    }
-                  },
-                ),
-                const VerticalSpeacing(20.0),
-              ],
-            ),
-          ],
+                  const VerticalSpeacing(20.0),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
