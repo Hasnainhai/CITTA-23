@@ -198,6 +198,10 @@ class _EditProfileState extends State<EditProfile> {
                               } catch (err) {
                                 Utils.flushBarErrorMessage(
                                     err.toString(), context);
+                              } finally {
+                                setState(() {
+                                  _isLoading = false;
+                                });
                               }
                             }
                           },
