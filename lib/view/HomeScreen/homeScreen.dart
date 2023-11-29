@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:citta_23/controllers/fetchProducts.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,8 @@ class HomeScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     bool isTrue = true;
+    final Products products = Products();
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: const DrawerScreen(),
       key: scaffoldKey,
@@ -352,43 +355,89 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   const VerticalSpeacing(16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeCard(
-                        ontap: () {},
-                        name: 'Girl Guide',
-                        categories: '1000 GM',
-                        price: '\$10 ',
-                        dPrice: '\$15.99',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: isTrue
-                            ? AppColor.buttonBgColor
-                            : AppColor.appBarButtonColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit3.png',
-                        iconColor: isTrue
-                            ? AppColor.whiteColor
-                            : AppColor.buttonBgColor,
-                      ),
-                      HomeCard(
-                        ontap: () {},
-                        name: 'Tomato',
-                        categories: '1000 GM',
-                        price: '\$5 ',
-                        dPrice: '\$9.99',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: isTrue
-                            ? AppColor.buttonBgColor
-                            : AppColor.appBarButtonColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit4.png',
-                        iconColor: isTrue
-                            ? AppColor.whiteColor
-                            : AppColor.buttonBgColor,
-                      ),
-                    ],
-                  ),
+                  GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      padding: EdgeInsets.zero,
+                      // crossAxisSpacing: 10,
+                      childAspectRatio: size.width / (size.height * 0.73),
+                      children: [
+                        // ListView.builder(
+                        //   itemCount: products,
+                        //   itemBuilder: (BuildContext context, int index){
+                        //   return;
+                        // });
+                        HomeCard(
+                          ontap: () {},
+                          name: 'Girl Guide',
+                          categories: '1000 GM',
+                          price: '\$10 ',
+                          dPrice: '\$15.99',
+                          borderColor: AppColor.buttonBgColor,
+                          fillColor: isTrue
+                              ? AppColor.buttonBgColor
+                              : AppColor.appBarButtonColor,
+                          cartBorder: AppColor.buttonBgColor,
+                          img: 'images/fruit3.png',
+                          iconColor: isTrue
+                              ? AppColor.whiteColor
+                              : AppColor.buttonBgColor,
+                        ),
+                        //   HomeCard(
+                        //   ontap: () {},
+                        //   name: 'Girl Guide',
+                        //   categories: '1000 GM',
+                        //   price: '\$10 ',
+                        //   dPrice: '\$15.99',
+                        //   borderColor: AppColor.buttonBgColor,
+                        //   fillColor: isTrue
+                        //       ? AppColor.buttonBgColor
+                        //       : AppColor.appBarButtonColor,
+                        //   cartBorder: AppColor.buttonBgColor,
+                        //   img: 'images/fruit3.png',
+                        //   iconColor: isTrue
+                        //       ? AppColor.whiteColor
+                        //       : AppColor.buttonBgColor,
+                        // ),
+                      ])
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  // HomeCard(
+                  //   ontap: () {},
+                  //   name: 'Girl Guide',
+                  //   categories: '1000 GM',
+                  //   price: '\$10 ',
+                  //   dPrice: '\$15.99',
+                  //   borderColor: AppColor.buttonBgColor,
+                  //   fillColor: isTrue
+                  //       ? AppColor.buttonBgColor
+                  //       : AppColor.appBarButtonColor,
+                  //   cartBorder: AppColor.buttonBgColor,
+                  //   img: 'images/fruit3.png',
+                  //   iconColor: isTrue
+                  //       ? AppColor.whiteColor
+                  //       : AppColor.buttonBgColor,
+                  // ),
+                  //     HomeCard(
+                  //       ontap: () {},
+                  //       name: 'Tomato',
+                  //       categories: '1000 GM',
+                  //       price: '\$5 ',
+                  //       dPrice: '\$9.99',
+                  //       borderColor: AppColor.buttonBgColor,
+                  //       fillColor: isTrue
+                  //           ? AppColor.buttonBgColor
+                  //           : AppColor.appBarButtonColor,
+                  //       cartBorder: AppColor.buttonBgColor,
+                  //       img: 'images/fruit4.png',
+                  //       iconColor: isTrue
+                  //           ? AppColor.whiteColor
+                  //           : AppColor.buttonBgColor,
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ],
