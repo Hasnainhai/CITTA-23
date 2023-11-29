@@ -17,11 +17,13 @@ class EditProfile extends StatefulWidget {
   String profilePic;
   String name;
   String email;
+  String phNo;
   EditProfile({
     Key? key,
     required this.profilePic,
     required this.name,
     required this.email,
+    required this.phNo,
   }) : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController phNoController = TextEditingController();
 
   void pickImage() async {
     final pickedImage = await pickImageFromGallery(context);
@@ -51,6 +54,9 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<String> uploadImageToFirestore(File imageFile, String uid) async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       // Upload image to Firebase Storage
       final storageRef = firebase_storage.FirebaseStorage.instance
@@ -68,25 +74,32 @@ class _EditProfileState extends State<EditProfile> {
 
       return imageUrl;
     } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
       Utils.flushBarErrorMessage('$error', context);
       return ''; // Return an empty string or handle the error as needed
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        title: const Text(
-          'Edit Profile',
+    return LoadingManager(
+      isLoading: _isLoading,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          centerTitle: true,
+          title: const Text(
+            'Edit Profile',
+          ),
         ),
-      ),
-      body: LoadingManager(
-        isLoading: _isLoading,
-        child: Padding(
+        body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
           child: ListView(
             children: [
@@ -150,6 +163,12 @@ class _EditProfileState extends State<EditProfile> {
                     hintText: widget.email,
                     maxLines: 2,
                   ),
+                  TextFieldCustom(
+                    controller: phNoController,
+                    text: 'Ph No',
+                    hintText: widget.phNo,
+                    maxLines: 2,
+                  ),
                   const VerticalSpeacing(24.0),
                   _isLoading
                       ? const Center(
@@ -163,15 +182,37 @@ class _EditProfileState extends State<EditProfile> {
                             });
                             if (nameController.text.isEmpty) {
                               nameController.text = widget.name;
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              Navigator.pushNamed(
+                                  context, RoutesName.profileScreen);
+                              Utils.toastMessage('SuccessFully Update');
                             } else if (emailController.text.isEmpty) {
                               emailController.text = widget.email;
+                            } else if (phNoController.text.isEmpty) {
+                              phNoController.text = widget.phNo;
+                            } else if (image == null) {
+                              widget.profilePic;
+                              // final imageUrl =
+                              //     await uploadImageToFirestore(image!, uid);
+                              // setState(() {
+                              //   widget.profilePic = imageUrl;
+                              //   _isLoading = false;
+                              // });
+                              // Navigator.pushNamed(
+                              //     context, RoutesName.profileScreen);
+                              // Utils.toastMessage('SuccessFully Update');
+                              // setState(() {
+                              //   _isLoading = false;
+                              // });
                             } else {
                               String _uid = user!.uid;
                               try {
                                 // Upload the picked image to Firestore
                                 if (image != null) {
                                   setState(() {
-                                    _isLoading = false;
+                                    _isLoading = true;
                                   });
                                   final imageUrl = await uploadImageToFirestore(
                                       image!, _uid);
@@ -179,7 +220,6 @@ class _EditProfileState extends State<EditProfile> {
                                     widget.profilePic = imageUrl;
                                   });
                                 }
-
                                 // Update user data in Firestore
                                 await FirebaseFirestore.instance
                                     .collection('users')
@@ -187,6 +227,7 @@ class _EditProfileState extends State<EditProfile> {
                                     .update({
                                   'name': nameController.text,
                                   'email': emailController.text,
+                                  'phNo': phNoController.text,
                                 });
                                 Navigator.pushNamed(
                                     context, RoutesName.profileScreen);
@@ -194,8 +235,12 @@ class _EditProfileState extends State<EditProfile> {
                                 setState(() {
                                   widget.name = nameController.text;
                                   widget.email = emailController.text;
+                                  widget.phNo = phNoController.text;
                                 });
                               } catch (err) {
+                                setState(() {
+                                  _isLoading = false;
+                                });
                                 Utils.flushBarErrorMessage(
                                     err.toString(), context);
                               } finally {

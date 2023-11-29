@@ -26,6 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController phNoController = TextEditingController();
 
   @override
   void dispose() {
@@ -34,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     emailController.dispose();
     nameController.dispose();
     addressController.dispose();
+    phNoController.dispose();
   }
 
   bool _isLoading = false;
@@ -56,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           'id': uid,
           'name': nameController.text,
           'email': emailController.text.toLowerCase(),
+          'phNo': phNoController.text.toLowerCase(),
           'shipping-address': addressController.text,
           'userWish': [],
           'userCart': [],
@@ -177,6 +180,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             ),
                             const VerticalSpeacing(30),
+                            //phone number
+                            TextFieldCustom(
+                              controller: phNoController,
+                              maxLines: 1,
+                              text: "Ph No",
+                              validator: (value) {
+                                if (value!.isEmpty || value.length < 11) {
+                                  return "Please enter a valid PhNo adress";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            const VerticalSpeacing(30),
                             // Password
                             TextFieldCustom(
                               controller: passwordController,
@@ -257,7 +274,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

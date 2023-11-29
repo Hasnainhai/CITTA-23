@@ -12,7 +12,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../res/components/loading_manager.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -35,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? _name;
   String? address;
   String? _pImage;
+  String? _phNo;
   bool _isLoading = false;
   final User? user = authInstance.currentUser;
   String defaultProfile =
@@ -65,8 +65,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       } else {
         _email = userDoc.get('email');
         _name = userDoc.get('name');
+        _phNo = userDoc.get('phNo');
         address = userDoc.get('shipping-address');
         _pImage = userDoc.get('profilePic');
+
         _addressTextController.text = userDoc.get('shipping-address');
       }
     } catch (error) {
@@ -239,7 +241,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             children: <TextSpan>[
               TextSpan(
-                text: _email == null ? 'Email' : _email!,
+                text: '${_email == null ? 'Email' : _email!} \n',
+                style: const TextStyle(
+                  color: AppColor.whiteColor,
+                  fontWeight: FontWeight.w200,
+                  fontSize: 14.0,
+                ),
+              ),
+              TextSpan(
+                text: _phNo == null ? 'PhNo' : _phNo!,
                 style: const TextStyle(
                   color: AppColor.whiteColor,
                   fontWeight: FontWeight.w200,
@@ -254,7 +264,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditProfile(
-                    profilePic: defaultProfile, name: _name!, email: _email!);
+                  profilePic: _pImage == null ? defaultProfile : _pImage!,
+                  name: _name!,
+                  email: _email!,
+                  phNo: _phNo!,
+                );
               }));
             },
             icon: const Icon(
