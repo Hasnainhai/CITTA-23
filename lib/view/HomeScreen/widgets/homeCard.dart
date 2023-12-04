@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 class HomeCard extends StatelessWidget {
   const HomeCard({
     super.key,
     required this.name,
-    required this.categories,
+    // required this.categories,
     required this.price,
     required this.dPrice,
     required this.borderColor,
@@ -21,7 +22,7 @@ class HomeCard extends StatelessWidget {
   });
   final String img;
   final String name;
-  final String categories;
+  // final String categories;
   final String price;
   final String dPrice;
   final Color borderColor;
@@ -45,46 +46,52 @@ class HomeCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const VerticalSpeacing(20.0),
+                const VerticalSpeacing(15.0),
                 Center(
                   child: InkWell(
                     onTap: ontap,
                     child: Container(
-                      alignment: Alignment.center,
                       height: 100,
                       width: 100,
-                      child: Center(
-                        child: Image.asset(
-                          img,
-                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
+                        // image: DecorationImage(
+                        //     image: NetworkImage(
+                        //       '$img',
+                        //     ),
+                        //     fit: BoxFit.fill),
+                      ),
+                      child: FancyShimmerImage(
+                        imageUrl: '$img',
+                        boxFit: BoxFit.fill,
                       ),
                     ),
+                    // Container(
+                    //   alignment: Alignment.center,
+                    //   height: 100,
+                    //   width: 100,
+                    //   child: Center(
+                    //     child: Image.asset(
+                    //       img,
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ),
                 const VerticalSpeacing(6.0),
-                Text.rich(
-                  TextSpan(
-                    text: '$name \n',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: AppColor.fontColor,
-                      ),
+                Text(
+                  '$name',
+                  style: GoogleFonts.getFont(
+                    "Gothic A1",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColor.fontColor,
                     ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: categories,
-                        style: const TextStyle(
-                            color: AppColor.grayColor,
-                            // fontWeight: FontWeight.w100,
-                            fontSize: 14.0),
-                      ),
-                    ],
                   ),
                 ),
-                const VerticalSpeacing(10.0),
+
+                // const VerticalSpeacing(10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -103,7 +110,7 @@ class HomeCard extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: dPrice,
+                            text: '$dPrice',
                             style: const TextStyle(
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough,
@@ -128,7 +135,7 @@ class HomeCard extends StatelessWidget {
                     )
                   ],
                 ),
-                const VerticalSpeacing(16),
+                // const VerticalSpeacing(16),
               ],
             ),
           ),

@@ -416,7 +416,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           );
                         },
                         name: 'Bundle Pack',
-                        categories: 'Onion,Oil,Salt...',
+                        // categories: 'Onion,Oil,Salt...',
                         price: '\$35 ',
                         dPrice: '\$50.32',
                         borderColor: AppColor.buttonBgColor,
@@ -428,7 +428,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                       HomeCard(
                         ontap: () {},
                         name: 'Fruit Pack',
-                        categories: 'Apple,banana...',
+                        // categories: 'Apple,banana...',
                         price: '\$50 ',
                         dPrice: '\$70.32',
                         borderColor: AppColor.buttonBgColor,
@@ -451,7 +451,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           );
                         },
                         name: 'Bundle Pack',
-                        categories: 'Onion,Oil,Salt...',
+                        // categories: 'Onion,Oil,Salt...',
                         price: '\$35 ',
                         dPrice: '\$50.32',
                         borderColor: AppColor.buttonBgColor,
@@ -463,7 +463,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                       HomeCard(
                         ontap: () {},
                         name: 'Fruit Pack',
-                        categories: 'Apple,banana...',
+                        // categories: 'Apple,banana...',
                         price: '\$50 ',
                         dPrice: '\$70.32',
                         borderColor: AppColor.buttonBgColor,
@@ -486,7 +486,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           );
                         },
                         name: 'Bundle Pack',
-                        categories: 'Onion,Oil,Salt...',
+                        // categories: 'Onion,Oil,Salt...',
                         price: '\$35 ',
                         dPrice: '\$50.32',
                         borderColor: AppColor.buttonBgColor,
@@ -498,7 +498,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                       HomeCard(
                         ontap: () {},
                         name: 'Fruit Pack',
-                        categories: 'Apple,banana...',
+                        // categories: 'Apple,banana...',
                         price: '\$50 ',
                         dPrice: '\$70.32',
                         borderColor: AppColor.buttonBgColor,
