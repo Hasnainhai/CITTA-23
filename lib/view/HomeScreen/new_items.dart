@@ -1,9 +1,7 @@
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../routes/routes_name.dart';
 import 'DashBoard/tapBar.dart';
 import 'widgets/homeCard.dart';
@@ -77,51 +75,46 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              const VerticalSpeacing(16),
-              Expanded(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: false,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  itemCount: _products.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10, // Horizontal spacing
-                    mainAxisSpacing: 10, // Vertical spacing
-                  ),
-                  itemBuilder: (_, index) {
-                    // Check if _products is not empty and index is within valid range
-                    if (_products.isNotEmpty && index < _products.length) {
-                      return HomeCard(
-                        ontap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.productdetailscreen,
-                          );
-                        },
-                        name: _products[index]['title'].toString(),
-                        price: _products[index]['price'].toString(),
-                        dPrice: _products[index]['salePrice'].toString(),
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.appBarButtonColor,
-                        cartBorder: isTrue
-                            ? AppColor.appBarButtonColor
-                            : AppColor.buttonBgColor,
-                        img: _products[index]['imageUrl'],
-                        iconColor: AppColor.buttonBgColor,
-                      );
-                    } else {
-                      // Handle the case when the list is empty or index is out of range
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      ); // or some default widget
-                    }
-                  },
-                ),
+          child: Expanded(
+            child: GridView.builder(
+              // physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              itemCount: _products.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 5, // Horizontal spacing
+                mainAxisSpacing: 10, // Vertical spacing
               ),
-            ],
+              itemBuilder: (_, index) {
+                // Check if _products is not empty and index is within valid range
+                if (_products.isNotEmpty && index < _products.length) {
+                  return HomeCard(
+                    ontap: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesName.productdetailscreen,
+                      );
+                    },
+                    name: _products[index]['title'].toString(),
+                    price: _products[index]['price'].toString(),
+                    dPrice: _products[index]['salePrice'].toString(),
+                    borderColor: AppColor.buttonBgColor,
+                    fillColor: AppColor.appBarButtonColor,
+                    cartBorder: isTrue
+                        ? AppColor.appBarButtonColor
+                        : AppColor.buttonBgColor,
+                    img: _products[index]['imageUrl'],
+                    iconColor: AppColor.buttonBgColor,
+                  );
+                } else {
+                  // Handle the case when the list is empty or index is out of range
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  ); // or some default widget
+                }
+              },
+            ),
           ),
         ),
       ),

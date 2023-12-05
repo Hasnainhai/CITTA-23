@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-
 import 'package:citta_23/routes/routes_name.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,13 +13,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  void startTimer() {
+    Timer(const Duration(seconds: 6), () async {
+      if (FirebaseAuth.instance.currentUser != null) {
+        Navigator.pushNamed(context, RoutesName.dashboardScreen);
+      } else {
+        Navigator.pushNamed(context, RoutesName.onboarding1);
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    startTimer();
     // Delay for 5 seconds and then navigate to the next screen
-    Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushNamed(context, RoutesName.onboarding1);
-    });
+    // Future.delayed(const Duration(seconds: 5), () {
+    //   Navigator.pushNamed(context, RoutesName.onboarding1);
+    // });
   }
 
   @override
@@ -44,7 +55,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("images/logo.png"),
-
                   ),
                 ),
               ),
