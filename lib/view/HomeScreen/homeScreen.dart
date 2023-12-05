@@ -1,3 +1,4 @@
+import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +18,35 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List _products = [];
   final _firestoreInstance = FirebaseFirestore.instance;
-
+  bool _isLoading = false;
   fetchProducts() async {
-    QuerySnapshot qn = await _firestoreInstance.collection('products').get();
-    setState(() {
-      for (int i = 0; i < qn.docs.length; i++) {
-        _products.add({
-          'imageUrl': qn.docs[i]['imageUrl'],
-          'title': qn.docs[i]['title'],
-          'price': qn.docs[i]['price'],
-          'salePrice': qn.docs[i]['salePrice'],
-        });
-      }
-    });
-    return qn.docs;
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      QuerySnapshot qn = await _firestoreInstance.collection('products').get();
+
+      setState(() {
+        _products.clear();
+        for (int i = 0; i < qn.docs.length; i++) {
+          _products.add({
+            'imageUrl': qn.docs[i]['imageUrl'],
+            'title': qn.docs[i]['title'],
+            'price': qn.docs[i]['price'],
+            'salePrice': qn.docs[i]['salePrice'],
+          });
+        }
+      });
+      return qn.docs;
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -150,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: ListView(
+          child: Column(
             children: [
               Container(
                 height: 180.0,
@@ -303,79 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const VerticalSpeacing(16.0),
-              // Expanded(
-              //   child: GridView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     shrinkWrap: true,
-              //     itemCount: 2,
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2,
-              //     ),
-              //     itemBuilder: (_, index) {
-              //       // Check if _products is not empty and index is within valid range
-              //       if (_products.isNotEmpty && index < _products.length) {
-              //         return HomeCard(
-              //           ontap: () {
-              //             Navigator.pushNamed(
-              //               context,
-              //               RoutesName.productdetailscreen,
-              //             );
-              //           },
-              //           name: _products[index]['title'].toString(),
-              //           price: _products[index]['price'].toString(),
-              //           dPrice: _products[index]['salePrice'].toString(),
-              //           borderColor: AppColor.buttonBgColor,
-              //           fillColor: AppColor.appBarButtonColor,
-              //           cartBorder: isTrue
-              //               ? AppColor.appBarButtonColor
-              //               : AppColor.buttonBgColor,
-              //           img: _products[index]['imageUrl'],
-              //           iconColor: AppColor.buttonBgColor,
-              //         );
-              //       } else {
-              //         // Handle the case when the list is empty or index is out of range
-              //         return const Center(
-              //           child: CircularProgressIndicator(),
-              //         ); // or some default widget
-              //       }
-              //     },
-              //   ),
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  HomeCard(
-                    ontap: () {},
-                    name: 'Fruit Pack',
-                    // categories: 'Apple,banana...',
-                    price: '\$50 ',
-                    dPrice: '\$70.32',
-                    borderColor: AppColor.buttonBgColor,
-                    fillColor: isTrue
-                        ? AppColor.buttonBgColor
-                        : AppColor.appBarButtonColor,
-                    cartBorder: AppColor.buttonBgColor,
-                    img: 'images/fruit2.png',
-                    iconColor:
-                        isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
-                  ),
-                  HomeCard(
-                    ontap: () {},
-                    name: 'Fruit Pack',
-                    // categories: 'Apple,banana...',
-                    price: '\$50 ',
-                    dPrice: '\$70.32',
-                    borderColor: AppColor.buttonBgColor,
-                    fillColor: isTrue
-                        ? AppColor.buttonBgColor
-                        : AppColor.appBarButtonColor,
-                    cartBorder: AppColor.buttonBgColor,
-                    img: 'images/fruit2.png',
-                    iconColor:
-                        isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
-                  ),
-                ],
-              ),
+             // Popular packs here
               const VerticalSpeacing(20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -414,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
+                  shrinkWrap: false,
                   itemCount: 2,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
