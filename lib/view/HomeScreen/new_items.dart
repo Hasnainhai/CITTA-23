@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,6 +16,31 @@ class NewItemsScreen extends StatefulWidget {
 }
 
 class _NewItemsScreenState extends State<NewItemsScreen> {
+  bool isTrue = true;
+  final List _products = [];
+  final _firestoreInstance = FirebaseFirestore.instance;
+
+  fetchProducts() async {
+    QuerySnapshot qn = await _firestoreInstance.collection('products').get();
+    setState(() {
+      for (int i = 0; i < qn.docs.length; i++) {
+        _products.add({
+          'imageUrl': qn.docs[i]['imageUrl'],
+          'title': qn.docs[i]['title'],
+          'price': qn.docs[i]['price'],
+          'salePrice': qn.docs[i]['salePrice'],
+        });
+      }
+    });
+    return qn.docs;
+  }
+
+  @override
+  initState() {
+    super.initState();
+    fetchProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,153 +76,52 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const VerticalSpeacing(16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HomeCard(
-                      ontap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.productdetailscreen,
-                        );
-                      },
-                      name: 'Perry Ice Cream Banana',
-                      // categories: 'Onion,Oil,Salt...',
-                      price: '\$35 ',
-                      dPrice: '\$50.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit1.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                    HomeCard(
-                      ontap: () {},
-                      name: 'Fruit Pack',
-                      // categories: 'Apple,banana...',
-                      price: '\$50 ',
-                      dPrice: '\$70.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit2.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                  ],
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const VerticalSpeacing(16),
+              Expanded(
+                child: GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: false,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  itemCount: _products.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10, // Horizontal spacing
+                    mainAxisSpacing: 10, // Vertical spacing
+                  ),
+                  itemBuilder: (_, index) {
+                    // Check if _products is not empty and index is within valid range
+                    if (_products.isNotEmpty && index < _products.length) {
+                      return HomeCard(
+                        ontap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.productdetailscreen,
+                          );
+                        },
+                        name: _products[index]['title'].toString(),
+                        price: _products[index]['price'].toString(),
+                        dPrice: _products[index]['salePrice'].toString(),
+                        borderColor: AppColor.buttonBgColor,
+                        fillColor: AppColor.appBarButtonColor,
+                        cartBorder: isTrue
+                            ? AppColor.appBarButtonColor
+                            : AppColor.buttonBgColor,
+                        img: _products[index]['imageUrl'],
+                        iconColor: AppColor.buttonBgColor,
+                      );
+                    } else {
+                      // Handle the case when the list is empty or index is out of range
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      ); // or some default widget
+                    }
+                  },
                 ),
-                const VerticalSpeacing(16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HomeCard(
-                      ontap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.productdetailscreen,
-                        );
-                      },
-                      name: 'Perry Ice Cream Banana',
-                      // categories: 'Onion,Oil,Salt...',
-                      price: '\$35 ',
-                      dPrice: '\$50.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit1.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                    HomeCard(
-                      ontap: () {},
-                      name: 'Fruit Pack',
-                      // categories: 'Apple,banana...',
-                      price: '\$50 ',
-                      dPrice: '\$70.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit2.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HomeCard(
-                      ontap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.productdetailscreen,
-                        );
-                      },
-                      name: 'Perry Ice Cream Banana',
-                      // categories: 'Onion,Oil,Salt...',
-                      price: '\$35 ',
-                      dPrice: '\$50.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit1.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                    HomeCard(
-                      ontap: () {},
-                      name: 'Fruit Pack',
-                      // categories: 'Apple,banana...',
-                      price: '\$50 ',
-                      dPrice: '\$70.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit2.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HomeCard(
-                      ontap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.productdetailscreen,
-                        );
-                      },
-                      name: 'Perry Ice Cream Banana',
-                      // categories: 'Onion,Oil,Salt...',
-                      price: '\$35 ',
-                      dPrice: '\$50.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit1.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                    HomeCard(
-                      ontap: () {},
-                      name: 'Fruit Pack',
-                      // categories: 'Apple,banana...',
-                      price: '\$50 ',
-                      dPrice: '\$70.32',
-                      borderColor: AppColor.buttonBgColor,
-                      fillColor: AppColor.buttonBgColor,
-                      cartBorder: AppColor.buttonBgColor,
-                      img: 'images/fruit2.png',
-                      iconColor: AppColor.appBarButtonColor,
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(16),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

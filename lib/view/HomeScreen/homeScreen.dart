@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-import 'package:citta_23/controllers/fetchProducts.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List _products = [];
-  var _firestoreInstance = FirebaseFirestore.instance;
+  final List _products = [];
+  final _firestoreInstance = FirebaseFirestore.instance;
 
   fetchProducts() async {
     QuerySnapshot qn = await _firestoreInstance.collection('products').get();
@@ -47,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     bool isTrue = true;
     // final Products products = Products();
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: const DrawerScreen(),
       key: scaffoldKey,
@@ -152,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: Column(
+          child: ListView(
             children: [
               Container(
                 height: 180.0,
@@ -164,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const VerticalSpeacing(50.0),
+              const VerticalSpeacing(20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -270,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const VerticalSpeacing(50.0),
+              const VerticalSpeacing(20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -305,66 +303,80 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const VerticalSpeacing(16.0),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: false,
-                  itemCount: 2,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemBuilder: (_, index) {
-                    // Check if _products is not empty and index is within valid range
-                    if (_products.isNotEmpty && index < _products.length) {
-                      return HomeCard(
-                        ontap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.productdetailscreen,
-                          );
-                        },
-                        name: _products[index]['title'].toString(),
-                        price: _products[index]['price'].toString(),
-                        dPrice: _products[index]['salePrice'].toString(),
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.appBarButtonColor,
-                        cartBorder: isTrue
-                            ? AppColor.appBarButtonColor
-                            : AppColor.buttonBgColor,
-                        img: _products[index]['imageUrl'],
-                        iconColor: AppColor.buttonBgColor,
-                      );
-                    } else {
-                      // Handle the case when the list is empty or index is out of range
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      ); // or some default widget
-                    }
-                  },
-                ),
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-
-              //     HomeCard(
-              //       ontap: () {},
-              //       name: 'Fruit Pack',
-              //       categories: 'Apple,banana...',
-              //       price: '\$50 ',
-              //       dPrice: '\$70.32',
-              //       borderColor: AppColor.buttonBgColor,
-              //       fillColor: isTrue
-              //           ? AppColor.buttonBgColor
-              //           : AppColor.appBarButtonColor,
-              //       cartBorder: AppColor.buttonBgColor,
-              //       img: 'images/fruit2.png',
-              //       iconColor: isTrue
-              //           ? AppColor.whiteColor
-              //           : AppColor.buttonBgColor,
+              // Expanded(
+              //   child: GridView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     itemCount: 2,
+              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //       crossAxisCount: 2,
               //     ),
-              //   ],
+              //     itemBuilder: (_, index) {
+              //       // Check if _products is not empty and index is within valid range
+              //       if (_products.isNotEmpty && index < _products.length) {
+              //         return HomeCard(
+              //           ontap: () {
+              //             Navigator.pushNamed(
+              //               context,
+              //               RoutesName.productdetailscreen,
+              //             );
+              //           },
+              //           name: _products[index]['title'].toString(),
+              //           price: _products[index]['price'].toString(),
+              //           dPrice: _products[index]['salePrice'].toString(),
+              //           borderColor: AppColor.buttonBgColor,
+              //           fillColor: AppColor.appBarButtonColor,
+              //           cartBorder: isTrue
+              //               ? AppColor.appBarButtonColor
+              //               : AppColor.buttonBgColor,
+              //           img: _products[index]['imageUrl'],
+              //           iconColor: AppColor.buttonBgColor,
+              //         );
+              //       } else {
+              //         // Handle the case when the list is empty or index is out of range
+              //         return const Center(
+              //           child: CircularProgressIndicator(),
+              //         ); // or some default widget
+              //       }
+              //     },
+              //   ),
               // ),
-              const VerticalSpeacing(16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HomeCard(
+                    ontap: () {},
+                    name: 'Fruit Pack',
+                    // categories: 'Apple,banana...',
+                    price: '\$50 ',
+                    dPrice: '\$70.32',
+                    borderColor: AppColor.buttonBgColor,
+                    fillColor: isTrue
+                        ? AppColor.buttonBgColor
+                        : AppColor.appBarButtonColor,
+                    cartBorder: AppColor.buttonBgColor,
+                    img: 'images/fruit2.png',
+                    iconColor:
+                        isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
+                  ),
+                  HomeCard(
+                    ontap: () {},
+                    name: 'Fruit Pack',
+                    // categories: 'Apple,banana...',
+                    price: '\$50 ',
+                    dPrice: '\$70.32',
+                    borderColor: AppColor.buttonBgColor,
+                    fillColor: isTrue
+                        ? AppColor.buttonBgColor
+                        : AppColor.appBarButtonColor,
+                    cartBorder: AppColor.buttonBgColor,
+                    img: 'images/fruit2.png',
+                    iconColor:
+                        isTrue ? AppColor.whiteColor : AppColor.buttonBgColor,
+                  ),
+                ],
+              ),
+              const VerticalSpeacing(20.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -399,6 +411,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const VerticalSpeacing(16.0),
+              Expanded(
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 2,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (_, index) {
+                    // Check if _products is not empty and index is within valid range
+                    if (_products.isNotEmpty && index < _products.length) {
+                      return HomeCard(
+                        ontap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.productdetailscreen,
+                          );
+                        },
+                        name: _products[index]['title'].toString(),
+                        price: _products[index]['price'].toString(),
+                        dPrice: _products[index]['salePrice'].toString(),
+                        borderColor: AppColor.buttonBgColor,
+                        fillColor: AppColor.appBarButtonColor,
+                        cartBorder: isTrue
+                            ? AppColor.appBarButtonColor
+                            : AppColor.buttonBgColor,
+                        img: _products[index]['imageUrl'],
+                        iconColor: AppColor.buttonBgColor,
+                      );
+                    } else {
+                      // Handle the case when the list is empty or index is out of range
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      ); // or some default widget
+                    }
+                  },
+                ),
+              ),
               // GridView.count(
               //     shrinkWrap: true,
               //     physics: const NeverScrollableScrollPhysics(),
