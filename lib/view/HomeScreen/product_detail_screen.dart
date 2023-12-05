@@ -1,7 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/widgets/increase_container.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +9,21 @@ import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+  const ProductDetailScreen(
+      {super.key,
+      required this.title,
+      required this.imageUrl,
+      required this.price,
+      required this.salePrice,
+      required this.weight,
+      required this.detail});
+
+  final String title;
+  final String imageUrl;
+  final String price;
+  final String salePrice;
+  final String weight;
+  final String detail;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -17,17 +31,17 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool like = false;
-  int currentIndex = 0;
-  final List<String> imgList = [
-    "images/fruit1.png",
-    "images/fruit2.png",
-    "images/purepng.png",
-  ];
-  List<Color> colors = [
-    AppColor.primaryColor,
-    AppColor.primaryColor,
-    AppColor.primaryColor
-  ];
+  // int currentIndex = 0;
+  // final List<String> imgList = [
+  //   "images/fruit1.png",
+  //   "images/fruit2.png",
+  //   "images/purepng.png",
+  // ];
+  // List<Color> colors = [
+  //   AppColor.primaryColor,
+  //   AppColor.primaryColor,
+  //   AppColor.primaryColor
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -108,63 +122,73 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ],
                         ),
-                        CarouselSlider(
-                          items: imgList
-                              .map((items) => Center(
-                                    child: Image.asset(
-                                      items,
-                                      height: 200,
-                                    ),
-                                  ))
-                              .toList(),
-                          options: CarouselOptions(
-                              enlargeCenterPage: true,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  currentIndex = index % colors.length;
-                                });
-                              }),
+                        Center(
+                          child: SizedBox(
+                            height: 250,
+                            width: 250,
+                            child: FancyShimmerImage(
+                              imageUrl: widget.imageUrl,
+                              boxFit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                        const VerticalSpeacing(40),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 18,
-                              height: 5,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                color:
-                                    currentIndex == 0 ? colors[0] : Colors.grey,
-                              ),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 5,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                color:
-                                    currentIndex == 1 ? colors[1] : Colors.grey,
-                              ),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 5,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                color:
-                                    currentIndex == 2 ? colors[2] : Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // CarouselSlider(
+                        //   items: imgList
+                        //       .map((items) => Center(
+                        //             child: Image.asset(
+                        //               items,
+                        //               height: 200,
+                        //             ),
+                        //           ))
+                        //       .toList(),
+                        //   options: CarouselOptions(
+                        //       enlargeCenterPage: true,
+                        //       onPageChanged: (index, reason) {
+                        //         setState(() {
+                        //           currentIndex = index % colors.length;
+                        //         });
+                        //       }),
+                        // ),
+                        // const VerticalSpeacing(40),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       width: 18,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 0 ? colors[0] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 10,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 1 ? colors[1] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 10,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 2 ? colors[2] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 const VerticalSpeacing(30),
                 Text(
-                  "Cauliflower Bangladeshi",
+                  widget.title,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
@@ -176,7 +200,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 const VerticalSpeacing(16),
                 Text(
-                  "Weight: 5kg",
+                  "Weight: ${widget.weight}",
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
@@ -195,7 +219,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Row(
                       children: [
                         Text(
-                          "\$30",
+                          widget.price,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -210,7 +234,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           width: 10,
                         ),
                         Text(
-                          "\$20",
+                          widget.salePrice,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -243,7 +267,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   8,
                 ),
                 Text(
-                  "Duis aute veniam veniam qui aliquip irure duis sint magna occaecat dolore nisi culpa do. Est nisi incididunt aliquip  commodo aliqua tempor.",
+                  widget.detail,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(

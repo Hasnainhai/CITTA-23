@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../routes/routes_name.dart';
 import 'DashBoard/tapBar.dart';
+import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
 class NewItemsScreen extends StatefulWidget {
@@ -27,6 +28,8 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           'title': qn.docs[i]['title'],
           'price': qn.docs[i]['price'],
           'salePrice': qn.docs[i]['salePrice'],
+          'detail': qn.docs[i]['detail'],
+          'weight': qn.docs[i]['weight'],
         });
       }
     });
@@ -91,10 +94,16 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                 if (_products.isNotEmpty && index < _products.length) {
                   return HomeCard(
                     ontap: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.productdetailscreen,
-                      );
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return ProductDetailScreen(
+                            title: _products[index]['title'].toString(),
+                            imageUrl: _products[index]['imageUrl'],
+                            price: _products[index]['price'].toString(),
+                            salePrice: _products[index]['salePrice'].toString(),
+                            weight: _products[index]['weight'].toString(),
+                            detail: _products[index]['detail'].toString());
+                      }));
                     },
                     name: _products[index]['title'].toString(),
                     price: _products[index]['price'].toString(),
