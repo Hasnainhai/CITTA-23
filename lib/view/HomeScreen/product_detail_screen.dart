@@ -31,17 +31,6 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool like = false;
-  // int currentIndex = 0;
-  // final List<String> imgList = [
-  //   "images/fruit1.png",
-  //   "images/fruit2.png",
-  //   "images/purepng.png",
-  // ];
-  // List<Color> colors = [
-  //   AppColor.primaryColor,
-  //   AppColor.primaryColor,
-  //   AppColor.primaryColor
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -132,56 +121,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ),
                         ),
-                        // CarouselSlider(
-                        //   items: imgList
-                        //       .map((items) => Center(
-                        //             child: Image.asset(
-                        //               items,
-                        //               height: 200,
-                        //             ),
-                        //           ))
-                        //       .toList(),
-                        //   options: CarouselOptions(
-                        //       enlargeCenterPage: true,
-                        //       onPageChanged: (index, reason) {
-                        //         setState(() {
-                        //           currentIndex = index % colors.length;
-                        //         });
-                        //       }),
-                        // ),
-                        // const VerticalSpeacing(40),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Container(
-                        //       width: 18,
-                        //       height: 5,
-                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
-                        //       decoration: BoxDecoration(
-                        //         color:
-                        //             currentIndex == 0 ? colors[0] : Colors.grey,
-                        //       ),
-                        //     ),
-                        //     Container(
-                        //       width: 10,
-                        //       height: 5,
-                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
-                        //       decoration: BoxDecoration(
-                        //         color:
-                        //             currentIndex == 1 ? colors[1] : Colors.grey,
-                        //       ),
-                        //     ),
-                        //     Container(
-                        //       width: 10,
-                        //       height: 5,
-                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
-                        //       decoration: BoxDecoration(
-                        //         color:
-                        //             currentIndex == 2 ? colors[2] : Colors.grey,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),

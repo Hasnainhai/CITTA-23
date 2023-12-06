@@ -2,7 +2,6 @@ import 'package:citta_23/res/components/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../routes/routes_name.dart';
 import 'DashBoard/tapBar.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
@@ -80,7 +79,6 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Expanded(
             child: GridView.builder(
-              // physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               itemCount: _products.length,

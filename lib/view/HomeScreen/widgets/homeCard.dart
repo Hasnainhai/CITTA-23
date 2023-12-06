@@ -10,7 +10,6 @@ class HomeCard extends StatelessWidget {
   const HomeCard({
     super.key,
     required this.name,
-    // required this.categories,
     required this.price,
     required this.dPrice,
     required this.borderColor,
@@ -22,7 +21,6 @@ class HomeCard extends StatelessWidget {
   });
   final String img;
   final String name;
-  // final String categories;
   final String price;
   final String dPrice;
   final Color borderColor;
@@ -39,7 +37,6 @@ class HomeCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.43,
           decoration: const BoxDecoration(
             color: Color(0xffF7F7F7),
-            // border: Border.all(width: 1, color: AppColor.grayColor),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15.0),
@@ -50,37 +47,19 @@ class HomeCard extends StatelessWidget {
                 Center(
                   child: InkWell(
                     onTap: ontap,
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        // image: DecorationImage(
-                        //     image: NetworkImage(
-                        //       '$img',
-                        //     ),
-                        //     fit: BoxFit.fill),
-                      ),
+                    child: SizedBox(
+                      height: 86,
+                      width: 86,
                       child: FancyShimmerImage(
-                        imageUrl: '$img',
+                        imageUrl: img,
                         boxFit: BoxFit.fill,
                       ),
                     ),
-                    // Container(
-                    //   alignment: Alignment.center,
-                    //   height: 100,
-                    //   width: 100,
-                    //   child: Center(
-                    //     child: Image.asset(
-                    //       img,
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                 ),
                 const VerticalSpeacing(6.0),
                 Text(
-                  '$name',
+                  name,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
@@ -90,8 +69,6 @@ class HomeCard extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // const VerticalSpeacing(10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -110,7 +87,7 @@ class HomeCard extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: '$dPrice',
+                            text: dPrice,
                             style: const TextStyle(
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough,
@@ -135,7 +112,6 @@ class HomeCard extends StatelessWidget {
                     )
                   ],
                 ),
-                // const VerticalSpeacing(16),
               ],
             ),
           ),

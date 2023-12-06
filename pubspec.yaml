@@ -47,6 +47,7 @@ dependencies:
   currency_picker: ^2.0.14
   flutter_spinkit: ^5.2.0
   fancy_shimmer_image: ^2.0.3
+  shimmer_animation: ^2.1.0+1
 
   #Firebase Stuff
   firebase_core: ^2.22.0
