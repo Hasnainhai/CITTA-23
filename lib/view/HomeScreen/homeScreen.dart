@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List _products = [];
-  final List _popularPacks = [];
+
   final _firestoreInstance = FirebaseFirestore.instance;
   bool _isLoading = false;
   fetchProducts() async {
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  final List _popularPacks = [];
   fetchPopularPack() async {
     try {
       setState(() {
@@ -63,15 +65,36 @@ class _HomeScreenState extends State<HomeScreen> {
           await _firestoreInstance.collection('bundle pack').get();
 
       setState(() {
-        // _newItems.clear();
+        _popularPacks.clear();
         for (int i = 0; i < qn.docs.length; i++) {
           _popularPacks.add({
+            //for popular packs details screen
+            'amount1': qn.docs[i]['product1']['amount'],
+            'image1': qn.docs[i]['product1']['image'],
+            'title1': qn.docs[i]['product1']['title'],
+            'amount2': qn.docs[i]['product2']['amount'],
+            'image2': qn.docs[i]['product2']['image'],
+            'title2': qn.docs[i]['product2']['title'],
+            'amount3': qn.docs[i]['product3']['amount'],
+            'image3': qn.docs[i]['product3']['image'],
+            'title3': qn.docs[i]['product3']['title'],
+            'amount4': qn.docs[i]['product4']['amount'],
+            'image4': qn.docs[i]['product4']['image'],
+            'title4': qn.docs[i]['product4']['title'],
+            'amount5': qn.docs[i]['product5']['amount'],
+            'image5': qn.docs[i]['product5']['image'],
+            'title5': qn.docs[i]['product5']['title'],
+            'amount6': qn.docs[i]['product6']['amount'],
+            'image6': qn.docs[i]['product6']['image'],
+            'title6': qn.docs[i]['product6']['title'],
+            //simple card
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
             'salePrice': qn.docs[i]['salePrice'],
             'detail': qn.docs[i]['detail'],
-            // 'weight': qn.docs[i]['weight'],
+            'weight': qn.docs[i]['weight'],
+            'size': qn.docs[i]['size'],
           });
         }
       });
@@ -99,84 +122,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     bool isTrue = true;
-    return Scaffold(
-      drawer: const DrawerScreen(),
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: 40.0,
-            width: 40.0,
-            color: AppColor.appBarButtonColor,
-            child: Center(
-              child: IconButton(
-                onPressed: () {
-                  scaffoldKey.currentState?.openDrawer();
-                },
-                icon: const Icon(
-                  Icons.notes,
-                  color: AppColor.menuColor,
-                ),
-              ),
-            ),
-          ),
-        ),
-        // title: SizedBox(
-        //   height: 40.0,
-        //   width: 190.0,
-        //   child: Center(
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //       children: [
-        //         IconButton(
-        //           onPressed: () {},
-        //           icon: const Icon(
-        //             Icons.location_on,
-        //             color: AppColor.menuColor,
-        //           ),
-        //         ),
-        //         Column(
-        //           children: [
-        //             Text.rich(
-        //               TextSpan(
-        //                 text: 'Current Location \n',
-        //                 style: GoogleFonts.getFont(
-        //                   "Gothic A1",
-        //                   textStyle: const TextStyle(
-        //                     fontSize: 14,
-        //                     fontWeight: FontWeight.w400,
-        //                     color: AppColor.fontColor,
-        //                   ),
-        //                 ),
-        //                 children: const <TextSpan>[
-        //                   TextSpan(
-        //                     text: 'Chhatak,Syhlet',
-        //                     style: TextStyle(
-        //                       color: AppColor.grayColor,
-        //                       fontWeight: FontWeight.w200,
-        //                       fontSize: 12.0,
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //         const Icon(
-        //           Icons.expand_more,
-        //           color: AppColor.buttonBgColor,
-        //           size: 30,
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // centerTitle: true,
-        actions: [
-          Padding(
+    return LoadingManager(
+      isLoading: _isLoading,
+      child: Scaffold(
+        drawer: const DrawerScreen(),
+        key: scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               height: 40.0,
@@ -185,24 +139,93 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Center(
                 child: IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      RoutesName.searchscreen,
-                    );
+                    scaffoldKey.currentState?.openDrawer();
                   },
                   icon: const Icon(
-                    Icons.search,
+                    Icons.notes,
                     color: AppColor.menuColor,
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
-      body: LoadingManager(
-        isLoading: _isLoading,
-        child: Padding(
+          // title: SizedBox(
+          //   height: 40.0,
+          //   width: 190.0,
+          //   child: Center(
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       children: [
+          //         IconButton(
+          //           onPressed: () {},
+          //           icon: const Icon(
+          //             Icons.location_on,
+          //             color: AppColor.menuColor,
+          //           ),
+          //         ),
+          //         Column(
+          //           children: [
+          //             Text.rich(
+          //               TextSpan(
+          //                 text: 'Current Location \n',
+          //                 style: GoogleFonts.getFont(
+          //                   "Gothic A1",
+          //                   textStyle: const TextStyle(
+          //                     fontSize: 14,
+          //                     fontWeight: FontWeight.w400,
+          //                     color: AppColor.fontColor,
+          //                   ),
+          //                 ),
+          //                 children: const <TextSpan>[
+          //                   TextSpan(
+          //                     text: 'Chhatak,Syhlet',
+          //                     style: TextStyle(
+          //                       color: AppColor.grayColor,
+          //                       fontWeight: FontWeight.w200,
+          //                       fontSize: 12.0,
+          //                     ),
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         const Icon(
+          //           Icons.expand_more,
+          //           color: AppColor.buttonBgColor,
+          //           size: 30,
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 40.0,
+                width: 40.0,
+                color: AppColor.appBarButtonColor,
+                child: Center(
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesName.searchscreen,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      color: AppColor.menuColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: Padding(
           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
           child: ListView(
             children: [
@@ -380,16 +403,52 @@ class _HomeScreenState extends State<HomeScreen> {
                               index < _popularPacks.length) {
                             return HomeCard(
                               ontap: () {
-                                // Navigator.push(context,
-                                //     MaterialPageRoute(builder: (context) {
-                                //   return ProductDetailScreen(
-                                //       title: _products[index]['title'].toString(),
-                                //       imageUrl: _products[index]['imageUrl'],
-                                //       price: _products[index]['price'].toString(),
-                                //       salePrice: _products[index]['salePrice'].toString(),
-                                //       weight: _products[index]['weight'].toString(),
-                                //       detail: _products[index]['detail'].toString());
-                                // }));
+                                Map<String, dynamic> product1 =
+                                    _popularPacks[index]['product1'] ?? {};
+                                Map<String, dynamic> product2 =
+                                    _popularPacks[index]['product2'] ?? {};
+                                Map<String, dynamic> product3 =
+                                    _popularPacks[index]['product3'] ?? {};
+                                Map<String, dynamic> product4 =
+                                    _popularPacks[index]['product4'] ?? {};
+                                Map<String, dynamic> product5 =
+                                    _popularPacks[index]['product5'] ?? {};
+                                Map<String, dynamic> product6 =
+                                    _popularPacks[index]['product6'] ?? {};
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return BundleProductScreen(
+                                    imageUrl:
+                                        _popularPacks[index]['imageUrl'] ?? '',
+                                    title: _popularPacks[index]['title'] ?? '',
+                                    price: _popularPacks[index]['price'] ?? '',
+                                    saleprice:
+                                        _popularPacks[index]['salePrice'] ?? '',
+                                    detail:
+                                        _popularPacks[index]['detail'] ?? '',
+                                    weight:
+                                        _popularPacks[index]['weight'] ?? '',
+                                    size: _popularPacks[index]['size'] ?? '',
+                                    img1: product1['image'] ?? '',
+                                    title1: product1['title'] ?? '',
+                                    amount1: product1['amount'] ?? '',
+                                    img2: product2['image'] ?? '',
+                                    title2: product2['title'] ?? '',
+                                    amount2: product2['amount'] ?? '',
+                                    img3: product3['image'] ?? '',
+                                    title3: product3['title'] ?? '',
+                                    amount3: product3['amount'] ?? '',
+                                    img4: product4['image'] ?? '',
+                                    title4: product4['title'] ?? '',
+                                    amount4: product4['amount'] ?? '',
+                                    img5: product5['image'] ?? '',
+                                    title5: product5['title'] ?? '',
+                                    amount5: product5['amount'] ?? '',
+                                    img6: product6['image'] ?? '',
+                                    title6: product6['title'] ?? '',
+                                    amount6: product6['amount'] ?? '',
+                                  );
+                                }));
                               },
                               name: _popularPacks[index]['title'].toString(),
                               price: _popularPacks[index]['price'].toString(),
@@ -405,19 +464,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           } else {
                             // Handle the case when the list is empty or index is out of range
-                            return Shimmer(
-                              duration:
-                                  const Duration(seconds: 3), //Default value
-                              interval: const Duration(
-                                  seconds:
-                                      5), //Default value: Duration(seconds: 0)
-                              color: AppColor.primaryColor, //Default value
-                              colorOpacity: 0, //Default value
-                              enabled: true, //Default value
-                              direction: const ShimmerDirection
-                                  .fromLTRB(), //Default Value
-                              child: Container(
-                                color: AppColor.primaryColor,
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Shimmer(
+                                duration:
+                                    const Duration(seconds: 3), //Default value
+                                interval: const Duration(
+                                    seconds:
+                                        5), //Default value: Duration(seconds: 0)
+                                color: AppColor.grayColor
+                                    .withOpacity(0.2), //Default value
+                                colorOpacity: 0.2, //Default value
+                                enabled: true, //Default value
+                                direction: const ShimmerDirection
+                                    .fromLTRB(), //Default Value
+                                child: Container(
+                                  height: 100,
+                                  width: 150,
+                                  color: AppColor.grayColor.withOpacity(0.2),
+                                ),
                               ),
                             );
                           }
@@ -502,25 +567,31 @@ class _HomeScreenState extends State<HomeScreen> {
                               fillColor: AppColor.appBarButtonColor,
                               cartBorder: isTrue
                                   ? AppColor.appBarButtonColor
-                                  : AppColor.buttonBgColor,
+                                  : const Color.fromRGBO(203, 1, 102, 1),
                               img: _products[index]['imageUrl'],
                               iconColor: AppColor.buttonBgColor,
                             );
                           } else {
                             // Handle the case when the list is empty or index is out of range
-                            return Shimmer(
-                              duration:
-                                  const Duration(seconds: 3), //Default value
-                              interval: const Duration(
-                                  seconds:
-                                      5), //Default value: Duration(seconds: 0)
-                              color: AppColor.primaryColor, //Default value
-                              colorOpacity: 0, //Default value
-                              enabled: true, //Default value
-                              direction: const ShimmerDirection
-                                  .fromLTRB(), //Default Value
-                              child: Container(
-                                color: AppColor.primaryColor,
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Shimmer(
+                                duration:
+                                    const Duration(seconds: 3), //Default value
+                                interval: const Duration(
+                                    seconds:
+                                        5), //Default value: Duration(seconds: 0)
+                                color: AppColor.grayColor
+                                    .withOpacity(0.2), //Default value
+                                colorOpacity: 0.2, //Default value
+                                enabled: true, //Default value
+                                direction: const ShimmerDirection
+                                    .fromLTRB(), //Default Value
+                                child: Container(
+                                  height: 100,
+                                  width: 150,
+                                  color: AppColor.grayColor.withOpacity(0.2),
+                                ),
                               ),
                             );
                           }

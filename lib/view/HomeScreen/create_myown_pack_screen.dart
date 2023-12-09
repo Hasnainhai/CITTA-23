@@ -1,6 +1,9 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
@@ -14,6 +17,33 @@ class CreateOwnPackScreen extends StatefulWidget {
 }
 
 class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
+  final List _products = [];
+  final _firestoreInstance = FirebaseFirestore.instance;
+  bool isTrue = true;
+
+  fetchProducts() async {
+    QuerySnapshot qn = await _firestoreInstance.collection('products').get();
+    setState(() {
+      for (int i = 0; i < qn.docs.length; i++) {
+        _products.add({
+          'imageUrl': qn.docs[i]['imageUrl'],
+          'title': qn.docs[i]['title'],
+          'price': qn.docs[i]['price'],
+          'salePrice': qn.docs[i]['salePrice'],
+          'detail': qn.docs[i]['detail'],
+          'weight': qn.docs[i]['weight'],
+        });
+      }
+    });
+    return qn.docs;
+  }
+
+  @override
+  initState() {
+    super.initState();
+    fetchProducts();
+  }
+
   bool firstButton = true;
   bool secondButton = false;
 
@@ -165,355 +195,436 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
         ),
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
-              ),
-              height: 60,
-              width: MediaQuery.of(context).size.width,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  hintText: "Search Here",
-                  helperStyle: TextStyle(color: AppColor.grayColor),
-                  filled: true,
-                  border: InputBorder.none,
-                  suffixIcon: Icon(
-                    Icons.search,
+          child: ListView(
+        children: [
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  left: 20,
+                  right: 20,
+                ),
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "Search Here",
+                    helperStyle: TextStyle(color: AppColor.grayColor),
+                    filled: true,
+                    border: InputBorder.none,
+                    suffixIcon: Icon(
+                      Icons.search,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const VerticalSpeacing(18),
-            SizedBox(
-              height: 66,
-              width: MediaQuery.of(context).size.width,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        firstButton = !firstButton;
-                        secondButton = false;
-                        thirdButton = false;
-                        fourthButton = false;
-                        fifthButton = false;
-                        sixButton = false;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 20, top: 20),
-                      height: 30,
-                      width: 100,
-                      color: firstButton
-                          ? AppColor.primaryColor
-                          : Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "Vegetables",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: firstButton
-                                  ? AppColor.buttonTxColor
-                                  : AppColor.grayColor,
+              const VerticalSpeacing(18),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Expanded(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    itemCount: _products.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5, // Horizontal spacing
+                      mainAxisSpacing: 10, // Vertical spacing
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (_, index) {
+                      // Check if _products is not empty and index is within valid range
+                      if (_products.isNotEmpty && index < _products.length) {
+                        return HomeCard(
+                          ontap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ProductDetailScreen(
+                                      title:
+                                          _products[index]['title'].toString(),
+                                      imageUrl: _products[index]['imageUrl'],
+                                      price:
+                                          _products[index]['price'].toString(),
+                                      salePrice: _products[index]['salePrice']
+                                          .toString(),
+                                      weight:
+                                          _products[index]['weight'].toString(),
+                                      detail: _products[index]['detail']
+                                          .toString());
+                                },
+                              ),
+                            );
+                          },
+                          name: _products[index]['title'].toString(),
+                          price: _products[index]['price'].toString(),
+                          dPrice: _products[index]['salePrice'].toString(),
+                          borderColor: AppColor.buttonBgColor,
+                          fillColor: AppColor.appBarButtonColor,
+                          cartBorder: isTrue
+                              ? AppColor.appBarButtonColor
+                              : AppColor.buttonBgColor,
+                          img: _products[index]['imageUrl'],
+                          iconColor: AppColor.buttonBgColor,
+                        );
+                      } else {
+                        // Handle the case when the list is empty or index is out of range
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Shimmer(
+                            duration:
+                                const Duration(seconds: 3), //Default value
+                            interval: const Duration(
+                                seconds:
+                                    5), //Default value: Duration(seconds: 0)
+                            color: AppColor.grayColor
+                                .withOpacity(0.2), //Default value
+                            colorOpacity: 0.2, //Default value
+                            enabled: true, //Default value
+                            direction: const ShimmerDirection
+                                .fromLTRB(), //Default Value
+                            child: Container(
+                              height: 100,
+                              width: 150,
+                              color: AppColor.grayColor.withOpacity(0.2),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        fifthButton = false;
-                        firstButton = false;
-                        secondButton = !fourthButton;
-                        thirdButton = false;
-                        fourthButton = false;
-                      });
+                        ); // or some default widget
+                      }
                     },
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                        left: 20,
-                        top: 20,
-                      ),
-                      height: 20,
-                      width: 100,
-                      color: secondButton
-                          ? AppColor.primaryColor
-                          : Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "Meat & Fish",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: secondButton
-                                  ? AppColor.buttonTxColor
-                                  : AppColor.grayColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        fifthButton = false;
-                        firstButton = false;
-                        secondButton = false;
-                        thirdButton = !thirdButton;
-                        fourthButton = false;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 20, top: 20),
-                      height: 20,
-                      width: 100,
-                      color: thirdButton
-                          ? AppColor.primaryColor
-                          : Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "Medicine",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: thirdButton
-                                  ? AppColor.buttonTxColor
-                                  : AppColor.grayColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        fifthButton = false;
-                        firstButton = false;
-                        secondButton = false;
-                        thirdButton = false;
-                        fourthButton = !fourthButton;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 20, top: 20),
-                      height: 20,
-                      width: 100,
-                      color: fourthButton
-                          ? AppColor.primaryColor
-                          : Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "Baby Care",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: fourthButton
-                                  ? AppColor.buttonTxColor
-                                  : AppColor.grayColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        fifthButton = !fifthButton;
-                        firstButton = false;
-                        secondButton = false;
-                        thirdButton = false;
-                        fourthButton = false;
-                      });
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 20, top: 20),
-                      height: 20,
-                      width: 100,
-                      color: fifthButton
-                          ? AppColor.primaryColor
-                          : Colors.transparent,
-                      child: Center(
-                        child: Text(
-                          "Fruits",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: fifthButton
-                                  ? AppColor.buttonTxColor
-                                  : AppColor.grayColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, top: 20),
-                    height: 30,
-                    width: 100,
-                    color:
-                        sixButton ? AppColor.primaryColor : Colors.transparent,
-                    child: Center(
-                      child: Text(
-                        "Vegetables",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: sixButton
-                                ? AppColor.buttonTxColor
-                                : AppColor.grayColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 20,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeCard(
-                        ontap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.productdetailscreen,
-                          );
-                        },
-                        name: 'Bundle Pack',
-                        // categories: 'Onion,Oil,Salt...',
-                        price: '\$35 ',
-                        dPrice: '\$50.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.buttonBgColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit1.png',
-                        iconColor: AppColor.appBarButtonColor,
-                      ),
-                      HomeCard(
-                        ontap: () {},
-                        name: 'Fruit Pack',
-                        // categories: 'Apple,banana...',
-                        price: '\$50 ',
-                        dPrice: '\$70.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.buttonBgColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit2.png',
-                        iconColor: AppColor.whiteColor,
-                      ),
-                    ],
-                  ),
-                  const VerticalSpeacing(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeCard(
-                        ontap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.productdetailscreen,
-                          );
-                        },
-                        name: 'Bundle Pack',
-                        // categories: 'Onion,Oil,Salt...',
-                        price: '\$35 ',
-                        dPrice: '\$50.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.buttonBgColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit1.png',
-                        iconColor: AppColor.appBarButtonColor,
-                      ),
-                      HomeCard(
-                        ontap: () {},
-                        name: 'Fruit Pack',
-                        // categories: 'Apple,banana...',
-                        price: '\$50 ',
-                        dPrice: '\$70.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.buttonBgColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit2.png',
-                        iconColor: AppColor.whiteColor,
-                      ),
-                    ],
-                  ),
-                  const VerticalSpeacing(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HomeCard(
-                        ontap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.productdetailscreen,
-                          );
-                        },
-                        name: 'Bundle Pack',
-                        // categories: 'Onion,Oil,Salt...',
-                        price: '\$35 ',
-                        dPrice: '\$50.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.buttonBgColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit1.png',
-                        iconColor: AppColor.appBarButtonColor,
-                      ),
-                      HomeCard(
-                        ontap: () {},
-                        name: 'Fruit Pack',
-                        // categories: 'Apple,banana...',
-                        price: '\$50 ',
-                        dPrice: '\$70.32',
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.buttonBgColor,
-                        cartBorder: AppColor.buttonBgColor,
-                        img: 'images/fruit2.png',
-                        iconColor: AppColor.whiteColor,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+              // SizedBox(
+              //   height: 66,
+              //   width: MediaQuery.of(context).size.width,
+              //   child: ListView(
+              //     scrollDirection: Axis.horizontal,
+              //     children: [
+              //       InkWell(
+              //         onTap: () {
+              //           setState(() {
+              //             firstButton = !firstButton;
+              //             secondButton = false;
+              //             thirdButton = false;
+              //             fourthButton = false;
+              //             fifthButton = false;
+              //             sixButton = false;
+              //           });
+              //         },
+              //         child: Container(
+              //           margin: const EdgeInsets.only(left: 20, top: 20),
+              //           height: 30,
+              //           width: 100,
+              //           color: firstButton
+              //               ? AppColor.primaryColor
+              //               : Colors.transparent,
+              //           child: Center(
+              //             child: Text(
+              //               "Vegetables",
+              //               style: GoogleFonts.getFont(
+              //                 "Gothic A1",
+              //                 textStyle: TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: firstButton
+              //                       ? AppColor.buttonTxColor
+              //                       : AppColor.grayColor,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       InkWell(
+              //         onTap: () {
+              //           setState(() {
+              //             fifthButton = false;
+              //             firstButton = false;
+              //             secondButton = !fourthButton;
+              //             thirdButton = false;
+              //             fourthButton = false;
+              //           });
+              //         },
+              //         child: Container(
+              //           margin: const EdgeInsets.only(
+              //             left: 20,
+              //             top: 20,
+              //           ),
+              //           height: 20,
+              //           width: 100,
+              //           color: secondButton
+              //               ? AppColor.primaryColor
+              //               : Colors.transparent,
+              //           child: Center(
+              //             child: Text(
+              //               "Meat & Fish",
+              //               style: GoogleFonts.getFont(
+              //                 "Gothic A1",
+              //                 textStyle: TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: secondButton
+              //                       ? AppColor.buttonTxColor
+              //                       : AppColor.grayColor,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       InkWell(
+              //         onTap: () {
+              //           setState(() {
+              //             fifthButton = false;
+              //             firstButton = false;
+              //             secondButton = false;
+              //             thirdButton = !thirdButton;
+              //             fourthButton = false;
+              //           });
+              //         },
+              //         child: Container(
+              //           margin: const EdgeInsets.only(left: 20, top: 20),
+              //           height: 20,
+              //           width: 100,
+              //           color: thirdButton
+              //               ? AppColor.primaryColor
+              //               : Colors.transparent,
+              //           child: Center(
+              //             child: Text(
+              //               "Medicine",
+              //               style: GoogleFonts.getFont(
+              //                 "Gothic A1",
+              //                 textStyle: TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: thirdButton
+              //                       ? AppColor.buttonTxColor
+              //                       : AppColor.grayColor,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       InkWell(
+              //         onTap: () {
+              //           setState(() {
+              //             fifthButton = false;
+              //             firstButton = false;
+              //             secondButton = false;
+              //             thirdButton = false;
+              //             fourthButton = !fourthButton;
+              //           });
+              //         },
+              //         child: Container(
+              //           margin: const EdgeInsets.only(left: 20, top: 20),
+              //           height: 20,
+              //           width: 100,
+              //           color: fourthButton
+              //               ? AppColor.primaryColor
+              //               : Colors.transparent,
+              //           child: Center(
+              //             child: Text(
+              //               "Baby Care",
+              //               style: GoogleFonts.getFont(
+              //                 "Gothic A1",
+              //                 textStyle: TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: fourthButton
+              //                       ? AppColor.buttonTxColor
+              //                       : AppColor.grayColor,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       InkWell(
+              //         onTap: () {
+              //           setState(() {
+              //             fifthButton = !fifthButton;
+              //             firstButton = false;
+              //             secondButton = false;
+              //             thirdButton = false;
+              //             fourthButton = false;
+              //           });
+              //         },
+              //         child: Container(
+              //           margin: const EdgeInsets.only(left: 20, top: 20),
+              //           height: 20,
+              //           width: 100,
+              //           color: fifthButton
+              //               ? AppColor.primaryColor
+              //               : Colors.transparent,
+              //           child: Center(
+              //             child: Text(
+              //               "Fruits",
+              //               style: GoogleFonts.getFont(
+              //                 "Gothic A1",
+              //                 textStyle: TextStyle(
+              //                   fontSize: 14,
+              //                   fontWeight: FontWeight.w400,
+              //                   color: fifthButton
+              //                       ? AppColor.buttonTxColor
+              //                       : AppColor.grayColor,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         margin: const EdgeInsets.only(left: 20, top: 20),
+              //         height: 30,
+              //         width: 100,
+              //         color:
+              //             sixButton ? AppColor.primaryColor : Colors.transparent,
+              //         child: Center(
+              //           child: Text(
+              //             "Vegetables",
+              //             style: GoogleFonts.getFont(
+              //               "Gothic A1",
+              //               textStyle: TextStyle(
+              //                 fontSize: 14,
+              //                 fontWeight: FontWeight.w400,
+              //                 color: sixButton
+              //                     ? AppColor.buttonTxColor
+              //                     : AppColor.grayColor,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       const SizedBox(
+              //         width: 40,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.only(
+              //     left: 20,
+              //     right: 20,
+              //     top: 20,
+              //   ),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           HomeCard(
+              //             ontap: () {
+              //               Navigator.pushNamed(
+              //                 context,
+              //                 RoutesName.productdetailscreen,
+              //               );
+              //             },
+              //             name: 'Bundle Pack',
+              //             // categories: 'Onion,Oil,Salt...',
+              //             price: '\$35 ',
+              //             dPrice: '\$50.32',
+              //             borderColor: AppColor.buttonBgColor,
+              //             fillColor: AppColor.buttonBgColor,
+              //             cartBorder: AppColor.buttonBgColor,
+              //             img: 'images/fruit1.png',
+              //             iconColor: AppColor.appBarButtonColor,
+              //           ),
+              //           HomeCard(
+              //             ontap: () {},
+              //             name: 'Fruit Pack',
+              //             // categories: 'Apple,banana...',
+              //             price: '\$50 ',
+              //             dPrice: '\$70.32',
+              //             borderColor: AppColor.buttonBgColor,
+              //             fillColor: AppColor.buttonBgColor,
+              //             cartBorder: AppColor.buttonBgColor,
+              //             img: 'images/fruit2.png',
+              //             iconColor: AppColor.whiteColor,
+              //           ),
+              //         ],
+              //       ),
+              //       const VerticalSpeacing(20),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           HomeCard(
+              //             ontap: () {
+              //               Navigator.pushNamed(
+              //                 context,
+              //                 RoutesName.productdetailscreen,
+              //               );
+              //             },
+              //             name: 'Bundle Pack',
+              //             // categories: 'Onion,Oil,Salt...',
+              //             price: '\$35 ',
+              //             dPrice: '\$50.32',
+              //             borderColor: AppColor.buttonBgColor,
+              //             fillColor: AppColor.buttonBgColor,
+              //             cartBorder: AppColor.buttonBgColor,
+              //             img: 'images/fruit1.png',
+              //             iconColor: AppColor.appBarButtonColor,
+              //           ),
+              //           HomeCard(
+              //             ontap: () {},
+              //             name: 'Fruit Pack',
+              //             // categories: 'Apple,banana...',
+              //             price: '\$50 ',
+              //             dPrice: '\$70.32',
+              //             borderColor: AppColor.buttonBgColor,
+              //             fillColor: AppColor.buttonBgColor,
+              //             cartBorder: AppColor.buttonBgColor,
+              //             img: 'images/fruit2.png',
+              //             iconColor: AppColor.whiteColor,
+              //           ),
+              //         ],
+              //       ),
+              //       const VerticalSpeacing(20),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           HomeCard(
+              //             ontap: () {
+              //               Navigator.pushNamed(
+              //                 context,
+              //                 RoutesName.productdetailscreen,
+              //               );
+              //             },
+              //             name: 'Bundle Pack',
+              //             // categories: 'Onion,Oil,Salt...',
+              //             price: '\$35 ',
+              //             dPrice: '\$50.32',
+              //             borderColor: AppColor.buttonBgColor,
+              //             fillColor: AppColor.buttonBgColor,
+              //             cartBorder: AppColor.buttonBgColor,
+              //             img: 'images/fruit1.png',
+              //             iconColor: AppColor.appBarButtonColor,
+              //           ),
+              //           HomeCard(
+              //             ontap: () {},
+              //             name: 'Fruit Pack',
+              //             // categories: 'Apple,banana...',
+              //             price: '\$50 ',
+              //             dPrice: '\$70.32',
+              //             borderColor: AppColor.buttonBgColor,
+              //             fillColor: AppColor.buttonBgColor,
+              //             cartBorder: AppColor.buttonBgColor,
+              //             img: 'images/fruit2.png',
+              //             iconColor: AppColor.whiteColor,
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
+        ],
       )),
     );
   }
