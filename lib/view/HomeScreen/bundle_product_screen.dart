@@ -1,5 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,7 +7,65 @@ import '../../res/components/colors.dart';
 import 'widgets/increase_container.dart';
 
 class BundleProductScreen extends StatefulWidget {
-  const BundleProductScreen({super.key});
+  const BundleProductScreen({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.price,
+    required this.saleprice,
+    required this.detail,
+    required this.weight,
+    required this.size,
+    required this.img1,
+    required this.title1,
+    required this.amount1,
+    required this.img2,
+    required this.title2,
+    required this.amount2,
+    required this.img3,
+    required this.title3,
+    required this.amount3,
+    required this.img4,
+    required this.title4,
+    required this.amount4,
+    required this.img5,
+    required this.title5,
+    required this.amount5,
+    required this.img6,
+    required this.title6,
+    required this.amount6,
+  });
+  final String imageUrl;
+  final String title;
+  final String price;
+  final String saleprice;
+  final String detail;
+  final String weight;
+  final String size;
+  //bundle 1
+  final String img1;
+  final String title1;
+  final String amount1;
+  //bundle 2
+  final String img2;
+  final String title2;
+  final String amount2;
+  //bundle 3
+  final String img3;
+  final String title3;
+  final String amount3;
+  //bundle 4
+  final String img4;
+  final String title4;
+  final String amount4;
+  //bundle 5
+  final String img5;
+  final String title5;
+  final String amount5;
+  //bundle 6
+  final String img6;
+  final String title6;
+  final String amount6;
 
   @override
   State<BundleProductScreen> createState() => _BundleProductScreenState();
@@ -16,16 +74,23 @@ class BundleProductScreen extends StatefulWidget {
 class _BundleProductScreenState extends State<BundleProductScreen> {
   bool like = false;
   int currentIndex = 0;
-  final List<String> imgList = [
-    "images/fruit1.png",
-    "images/fruit2.png",
-    "images/purepng.png",
-  ];
-  List<Color> colors = [
-    AppColor.primaryColor,
-    AppColor.primaryColor,
-    AppColor.primaryColor
-  ];
+
+  // List<Color> colors = [
+  //   AppColor.primaryColor,
+  //   AppColor.primaryColor,
+  //   AppColor.primaryColor
+  // ];
+  // late List<String?> imgList;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   imgList = [
+  //     widget.img1,
+  //     widget.img2,
+  //     widget.img3,
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -100,63 +165,76 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             ),
                           ],
                         ),
-                        CarouselSlider(
-                          items: imgList
-                              .map((items) => Center(
-                                    child: Image.asset(
-                                      items,
-                                      height: 200,
-                                    ),
-                                  ))
-                              .toList(),
-                          options: CarouselOptions(
-                              enlargeCenterPage: true,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  currentIndex = index % colors.length;
-                                });
-                              }),
+                        Center(
+                          child: SizedBox(
+                            height: 250,
+                            width: 250,
+                            child: FancyShimmerImage(
+                              imageUrl: widget.imageUrl,
+                              boxFit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                        const VerticalSpeacing(40),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 18,
-                              height: 5,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                color:
-                                    currentIndex == 0 ? colors[0] : Colors.grey,
-                              ),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 5,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                color:
-                                    currentIndex == 1 ? colors[1] : Colors.grey,
-                              ),
-                            ),
-                            Container(
-                              width: 10,
-                              height: 5,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                color:
-                                    currentIndex == 2 ? colors[2] : Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // CarouselSlider(
+                        //   items: imgList
+                        //       .where((item) =>
+                        //           item != null) // Filter out null values
+                        //       .map((item) => Center(
+                        //             child: Image.network(
+                        //               item!,
+                        //               height: 200,
+                        //             ),
+                        //           ))
+                        //       .toList(),
+                        //   options: CarouselOptions(
+                        //     enlargeCenterPage: true,
+                        //     onPageChanged: (index, reason) {
+                        //       setState(() {
+                        //         currentIndex = index % colors.length;
+                        //       });
+                        //     },
+                        //   ),
+                        // ),
+                        // const VerticalSpeacing(40),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       width: 18,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 0 ? colors[0] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 10,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 1 ? colors[1] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 10,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 2 ? colors[2] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 const VerticalSpeacing(30),
                 Text(
-                  "Cauliflower Bangladeshi",
+                  widget.title,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
@@ -173,7 +251,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     Row(
                       children: [
                         Text(
-                          "\$30",
+                          widget.price,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -188,7 +266,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           width: 10,
                         ),
                         Text(
-                          "\$20",
+                          widget.saleprice,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -210,7 +288,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     Column(
                       children: [
                         Text(
-                          "25 Kg",
+                          widget.weight,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -236,7 +314,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     Column(
                       children: [
                         Text(
-                          "Medum",
+                          widget.size,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -299,24 +377,33 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ),
                   ),
                 ),
+
                 const VerticalSpeacing(20),
+                // first bundle product
                 Row(
                   children: [
                     Container(
                       height: 40,
                       width: 40,
                       color: AppColor.buttonTxColor,
-                      child: Image.asset(
-                        "images/fruit1.png",
-                        height: 26,
-                        // fit: BoxFit.contain,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FancyShimmerImage(
+                          imageUrl: widget.img1,
+                          boxFit: BoxFit.fill,
+                        ),
                       ),
+                      //  Image.asset(
+                      //   "images/fruit1.png",
+                      //   height: 26,
+                      //   // fit: BoxFit.contain,
+                      // ),
                     ),
                     const SizedBox(
                       width: 12,
                     ),
                     Text(
-                      "Cabbage",
+                      widget.title1,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -330,7 +417,54 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       width: 70,
                     ),
                     Text(
-                      "2 Kg",
+                      widget.amount1,
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const VerticalSpeacing(10),
+                // second bundle product
+                Row(
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      color: AppColor.buttonTxColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FancyShimmerImage(
+                          imageUrl: widget.img2,
+                          boxFit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Text(
+                      widget.title2,
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 70,
+                    ),
+                    Text(
+                      widget.amount2,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -343,23 +477,26 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                   ],
                 ),
                 const VerticalSpeacing(10),
+                // third bundle product
                 Row(
                   children: [
                     Container(
                       height: 40,
                       width: 40,
                       color: AppColor.buttonTxColor,
-                      child: Image.asset(
-                        "images/fruit1.png",
-                        height: 26,
-                        // fit: BoxFit.contain,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FancyShimmerImage(
+                          imageUrl: widget.img3,
+                          boxFit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 12,
                     ),
                     Text(
-                      "Cabbage",
+                      widget.title3,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -373,7 +510,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       width: 70,
                     ),
                     Text(
-                      "2 Kg",
+                      widget.amount3,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -386,23 +523,26 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                   ],
                 ),
                 const VerticalSpeacing(10),
+                // fourth Bundle product
                 Row(
                   children: [
                     Container(
                       height: 40,
                       width: 40,
                       color: AppColor.buttonTxColor,
-                      child: Image.asset(
-                        "images/fruit1.png",
-                        height: 26,
-                        // fit: BoxFit.contain,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FancyShimmerImage(
+                          imageUrl: widget.img4,
+                          boxFit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 12,
                     ),
                     Text(
-                      "Cabbage",
+                      widget.title4,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -416,7 +556,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       width: 70,
                     ),
                     Text(
-                      "2 Kg",
+                      widget.amount4,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -429,23 +569,26 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                   ],
                 ),
                 const VerticalSpeacing(10),
+                // fifth Bundle product detail
                 Row(
                   children: [
                     Container(
                       height: 40,
                       width: 40,
                       color: AppColor.buttonTxColor,
-                      child: Image.asset(
-                        "images/fruit1.png",
-                        height: 26,
-                        // fit: BoxFit.contain,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FancyShimmerImage(
+                          imageUrl: widget.img5,
+                          boxFit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 12,
                     ),
                     Text(
-                      "Cabbage",
+                      widget.title5,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -459,7 +602,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       width: 70,
                     ),
                     Text(
-                      "2 Kg",
+                      widget.amount5,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -472,23 +615,26 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                   ],
                 ),
                 const VerticalSpeacing(10),
+                // sixth Bundle product
                 Row(
                   children: [
                     Container(
                       height: 40,
                       width: 40,
                       color: AppColor.buttonTxColor,
-                      child: Image.asset(
-                        "images/fruit1.png",
-                        height: 26,
-                        // fit: BoxFit.contain,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: FancyShimmerImage(
+                          imageUrl: widget.img6,
+                          boxFit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 12,
                     ),
                     Text(
-                      "Cabbage",
+                      widget.title6,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -502,50 +648,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       width: 70,
                     ),
                     Text(
-                      "2 Kg",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(10),
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Image.asset(
-                        "images/fruit1.png",
-                        height: 26,
-                        // fit: BoxFit.contain,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Text(
-                      "Cabbage",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      "2 Kg",
+                      widget.amount6,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(

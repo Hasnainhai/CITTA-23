@@ -100,10 +100,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const PopularPackScreen(),
         );
-      case RoutesName.bundleproductdetail:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const BundleProductScreen(),
-        );
+      // case RoutesName.bundleproductdetail:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const BundleProductScreen(),
+      //   );
       case RoutesName.favouriteList:
         return MaterialPageRoute(
           builder: (BuildContext context) => const FavouriteList(),

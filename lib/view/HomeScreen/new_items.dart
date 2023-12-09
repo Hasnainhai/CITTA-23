@@ -2,6 +2,7 @@ import 'package:citta_23/res/components/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'DashBoard/tapBar.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
@@ -116,8 +117,24 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                   );
                 } else {
                   // Handle the case when the list is empty or index is out of range
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Shimmer(
+                      duration: const Duration(seconds: 3), //Default value
+                      interval: const Duration(
+                          seconds: 5), //Default value: Duration(seconds: 0)
+                      color:
+                          AppColor.grayColor.withOpacity(0.2), //Default value
+                      colorOpacity: 0.2, //Default value
+                      enabled: true, //Default value
+                      direction:
+                          const ShimmerDirection.fromLTRB(), //Default Value
+                      child: Container(
+                        height: 100,
+                        width: 150,
+                        color: AppColor.grayColor.withOpacity(0.2),
+                      ),
+                    ),
                   ); // or some default widget
                 }
               },

@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void startTimer() {
-    Timer(const Duration(seconds: 6), () async {
+    Timer(const Duration(seconds: 3), () async {
       if (FirebaseAuth.instance.currentUser != null) {
         Navigator.pushNamed(context, RoutesName.dashboardScreen);
       } else {
