@@ -59,7 +59,7 @@ class HomeCard extends StatelessWidget {
                 ),
                 const VerticalSpeacing(6.0),
                 Text(
-                  name,
+                  name.length > 8 ? '${name.substring(0, 8)}...' : name,
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(

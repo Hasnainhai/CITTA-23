@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,12 +16,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void startTimer() {
-    Timer(const Duration(seconds: 3), () async {
-      if (FirebaseAuth.instance.currentUser != null) {
-        Navigator.pushNamed(context, RoutesName.dashboardScreen);
-      } else {
-        Navigator.pushNamed(context, RoutesName.onboarding1);
+  void startTimer() async {
+    await Future.delayed(const Duration(seconds: 5), () async {
+      try {
+        await Firebase.initializeApp();
+        if (FirebaseAuth.instance.currentUser != null) {
+          await Navigator.pushNamed(context, RoutesName.dashboardScreen);
+        } else {
+          await Navigator.pushNamed(context, RoutesName.onboarding1);
+        }
+      } catch (e) {
+        print("Error initializing Firebase: $e");
+        // Handle Firebase initialization error
       }
     });
   }

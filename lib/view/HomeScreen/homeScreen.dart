@@ -1,5 +1,8 @@
+// ignore_for_file: equal_keys_in_map
+
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  final List _popularPacks = [];
+  final List<Map<String, dynamic>> _popularPacks = [];
   fetchPopularPack() async {
     try {
       setState(() {
@@ -67,26 +70,45 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _popularPacks.clear();
         for (int i = 0; i < qn.docs.length; i++) {
+          // Access individual products in the bundle
+          Map<String, dynamic> product1 = qn.docs[i]['product1'] ?? {};
+          Map<String, dynamic> product2 = qn.docs[i]['product2'] ?? {};
+          Map<String, dynamic> product3 = qn.docs[i]['product3'] ?? {};
+          Map<String, dynamic> product4 = qn.docs[i]['product4'] ?? {};
+          Map<String, dynamic> product5 = qn.docs[i]['product5'] ?? {};
+          Map<String, dynamic> product6 = qn.docs[i]['product6'] ?? {};
           _popularPacks.add({
             //for popular packs details screen
-            'amount1': qn.docs[i]['product1']['amount'],
-            'image1': qn.docs[i]['product1']['image'],
-            'title1': qn.docs[i]['product1']['title'],
-            'amount2': qn.docs[i]['product2']['amount'],
-            'image2': qn.docs[i]['product2']['image'],
-            'title2': qn.docs[i]['product2']['title'],
-            'amount3': qn.docs[i]['product3']['amount'],
-            'image3': qn.docs[i]['product3']['image'],
-            'title3': qn.docs[i]['product3']['title'],
-            'amount4': qn.docs[i]['product4']['amount'],
-            'image4': qn.docs[i]['product4']['image'],
-            'title4': qn.docs[i]['product4']['title'],
-            'amount5': qn.docs[i]['product5']['amount'],
-            'image5': qn.docs[i]['product5']['image'],
-            'title5': qn.docs[i]['product5']['title'],
-            'amount6': qn.docs[i]['product6']['amount'],
-            'image6': qn.docs[i]['product6']['image'],
-            'title6': qn.docs[i]['product6']['title'],
+            'product1': {
+              'amount': product1['amount'] ?? '',
+              'image': product1['image'] ?? '',
+              'title': product1['title'] ?? '',
+            },
+            'product2': {
+              'amount': product2['amount'] ?? '',
+              'image': product2['image'] ?? '',
+              'title': product2['title'] ?? '',
+            },
+            'product3': {
+              'amount': product3['amount'] ?? '',
+              'image': product3['image'] ?? '',
+              'title': product3['title'] ?? '',
+            },
+            'product4': {
+              'amount': product4['amount'] ?? '',
+              'image': product4['image'] ?? '',
+              'title': product4['title'] ?? '',
+            },
+            'product5': {
+              'amount': product5['amount'] ?? '',
+              'image': product5['image'] ?? '',
+              'title': product5['title'] ?? '',
+            },
+            'product6': {
+              'amount': product6['amount'] ?? '',
+              'image': product6['image'] ?? '',
+              'title': product6['title'] ?? '',
+            },
             //simple card
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
@@ -403,52 +425,93 @@ class _HomeScreenState extends State<HomeScreen> {
                               index < _popularPacks.length) {
                             return HomeCard(
                               ontap: () {
-                                Map<String, dynamic> product1 =
-                                    _popularPacks[index]['product1'] ?? {};
-                                Map<String, dynamic> product2 =
-                                    _popularPacks[index]['product2'] ?? {};
-                                Map<String, dynamic> product3 =
-                                    _popularPacks[index]['product3'] ?? {};
-                                Map<String, dynamic> product4 =
-                                    _popularPacks[index]['product4'] ?? {};
-                                Map<String, dynamic> product5 =
-                                    _popularPacks[index]['product5'] ?? {};
-                                Map<String, dynamic> product6 =
-                                    _popularPacks[index]['product6'] ?? {};
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return BundleProductScreen(
-                                    imageUrl:
-                                        _popularPacks[index]['imageUrl'] ?? '',
-                                    title: _popularPacks[index]['title'] ?? '',
-                                    price: _popularPacks[index]['price'] ?? '',
-                                    saleprice:
-                                        _popularPacks[index]['salePrice'] ?? '',
-                                    detail:
-                                        _popularPacks[index]['detail'] ?? '',
-                                    weight:
-                                        _popularPacks[index]['weight'] ?? '',
-                                    size: _popularPacks[index]['size'] ?? '',
-                                    img1: product1['image'] ?? '',
-                                    title1: product1['title'] ?? '',
-                                    amount1: product1['amount'] ?? '',
-                                    img2: product2['image'] ?? '',
-                                    title2: product2['title'] ?? '',
-                                    amount2: product2['amount'] ?? '',
-                                    img3: product3['image'] ?? '',
-                                    title3: product3['title'] ?? '',
-                                    amount3: product3['amount'] ?? '',
-                                    img4: product4['image'] ?? '',
-                                    title4: product4['title'] ?? '',
-                                    amount4: product4['amount'] ?? '',
-                                    img5: product5['image'] ?? '',
-                                    title5: product5['title'] ?? '',
-                                    amount5: product5['amount'] ?? '',
-                                    img6: product6['image'] ?? '',
-                                    title6: product6['title'] ?? '',
-                                    amount6: product6['amount'] ?? '',
-                                  );
-                                }));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      // Check if _popularPacks is not null and index is within bounds
+                                      if (_popularPacks.isNotEmpty &&
+                                          index >= 0 &&
+                                          index < _popularPacks.length) {
+                                        Map<String, dynamic> selectedPack =
+                                            _popularPacks[index];
+
+                                        return BundleProductScreen(
+                                          imageUrl:
+                                              selectedPack['imageUrl'] ?? '',
+                                          title: selectedPack['title'] ?? '',
+                                          price: selectedPack['price'] ?? '',
+                                          saleprice:
+                                              selectedPack['salePrice'] ?? '',
+                                          detail: selectedPack['detail'] ?? '',
+                                          weight: selectedPack['weight'] ?? '',
+                                          size: selectedPack['size'] ?? '',
+                                          img1: selectedPack['product1']
+                                                  ?['image'] ??
+                                              '',
+                                          title1: selectedPack['product1']
+                                                  ?['title'] ??
+                                              '',
+                                          amount1: selectedPack['product1']
+                                                  ?['amount'] ??
+                                              '',
+                                          img2: selectedPack['product2']
+                                                  ?['image'] ??
+                                              '',
+                                          title2: selectedPack['product2']
+                                                  ?['title'] ??
+                                              '',
+                                          amount2: selectedPack['product2']
+                                                  ?['amount'] ??
+                                              '',
+                                          img3: selectedPack['product3']
+                                                  ?['image'] ??
+                                              '',
+                                          title3: selectedPack['product3']
+                                                  ?['title'] ??
+                                              '',
+                                          amount3: selectedPack['product3']
+                                                  ?['amount'] ??
+                                              '',
+                                          img4: selectedPack['product4']
+                                                  ?['image'] ??
+                                              '',
+                                          title4: selectedPack['product4']
+                                                  ?['title'] ??
+                                              '',
+                                          amount4: selectedPack['product4']
+                                                  ?['amount'] ??
+                                              '',
+                                          img5: selectedPack['product5']
+                                                  ?['image'] ??
+                                              '',
+                                          title5: selectedPack['product5']
+                                                  ?['title'] ??
+                                              '',
+                                          amount5: selectedPack['product5']
+                                                  ?['amount'] ??
+                                              '',
+                                          img6: selectedPack['product6']
+                                                  ?['image'] ??
+                                              '',
+                                          title6: selectedPack['product6']
+                                                  ?['title'] ??
+                                              '',
+                                          amount6: selectedPack['product6']
+                                                  ?['amount'] ??
+                                              '',
+                                        );
+                                      } else {
+                                        // Handle the case where _popularPacks is null or index is out of bounds
+                                        // You can navigate to an error screen or display a message
+                                        Utils.flushBarErrorMessage(
+                                            'error occure while fetching bundle products',
+                                            context);
+                                      }
+                                      return Container();
+                                    },
+                                  ),
+                                );
                               },
                               name: _popularPacks[index]['title'].toString(),
                               price: _popularPacks[index]['price'].toString(),

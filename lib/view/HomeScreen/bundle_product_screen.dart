@@ -94,6 +94,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        '........................................${widget.title1}............................');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -393,38 +395,42 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           boxFit: BoxFit.fill,
                         ),
                       ),
-                      //  Image.asset(
-                      //   "images/fruit1.png",
-                      //   height: 26,
-                      //   // fit: BoxFit.contain,
-                      // ),
                     ),
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      widget.title1,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      widget.amount1,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.title1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height:
+                                4, // Adjust spacing between title and amount
+                          ),
+                          Text(
+                            widget.amount1,
+                            // widget.amount1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -449,29 +455,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      widget.title2,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      widget.amount2,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.title2,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height:
+                                4, // Adjust spacing between title and amount
+                          ),
+                          Text(
+                            widget.amount2,
+                            // widget.amount1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -495,29 +510,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      widget.title3,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      widget.amount3,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.title3,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height:
+                                4, // Adjust spacing between title and amount
+                          ),
+                          Text(
+                            widget.amount3,
+                            // widget.amount1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -541,29 +565,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      widget.title4,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      widget.amount4,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.title4,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height:
+                                4, // Adjust spacing between title and amount
+                          ),
+                          Text(
+                            widget.amount4,
+                            // widget.amount1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -587,29 +620,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      widget.title5,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      widget.amount5,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.title5,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height:
+                                4, // Adjust spacing between title and amount
+                          ),
+                          Text(
+                            widget.amount5,
+                            // widget.amount1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -633,29 +675,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     const SizedBox(
                       width: 12,
                     ),
-                    Text(
-                      widget.title6,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 70,
-                    ),
-                    Text(
-                      widget.amount6,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.fontColor,
-                        ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget.title6,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height:
+                                4, // Adjust spacing between title and amount
+                          ),
+                          Text(
+                            widget.amount6,
+                            // widget.amount1,
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
