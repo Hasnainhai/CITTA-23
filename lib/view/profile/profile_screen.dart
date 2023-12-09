@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
@@ -90,9 +89,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return AlertDialog(
           title: const Text('Update Address'),
           content: TextField(
-            // onChanged: (value) {
-            //   print('_addressTextController.text ${_addressTextController.text}');
-            // },
             controller: _addressTextController,
             maxLines: 5,
             decoration: const InputDecoration(hintText: "Your address"),
@@ -206,25 +202,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               backgroundImage:
                   NetworkImage(_pImage == null ? defaultProfile : _pImage!),
             ),
-            // Positioned(
-            //   top: 47.0,
-            //   right: 0,
-            //   child: Container(
-            //     height: 25.0,
-            //     width: 25.0,
-            //     decoration: BoxDecoration(
-            //       color: AppColor.whiteColor,
-            //       borderRadius: BorderRadius.circular(68),
-            //     ),
-            //     child: const Center(
-            //       child: Icon(
-            //         Icons.camera_alt_outlined,
-            //         size: 16,
-            //         color: AppColor.primaryColor,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
         const SizedBox(width: 20.0),

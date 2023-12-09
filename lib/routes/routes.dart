@@ -10,12 +10,10 @@ import 'package:citta_23/view/Favourite/favourite_list.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 import 'package:citta_23/view/HomeScreen/Search/search_screen.dart';
-import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/create_myown_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/notification/notification.dart';
 import 'package:citta_23/view/HomeScreen/order_details/address_details_screen.dart';
-import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
 import 'package:citta_23/view/drawer/about_us_screen.dart';
 import 'package:citta_23/view/drawer/contact_us.dart';
@@ -28,7 +26,6 @@ import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
 import 'package:citta_23/view/payments/AddCard/add_new_card.dart';
 import 'package:citta_23/view/payments/payment.dart';
-import 'package:citta_23/view/profile/editProfile/editProfile.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
 import 'package:citta_23/view/promos/CouponDetails/coupon_details.dart';
 import 'package:citta_23/view/promos/offer_promos.dart';
@@ -145,7 +142,7 @@ class Routes {
             builder: (BuildContext context) => const TrackOrder());
       case RoutesName.ratingscreen:
         return MaterialPageRoute(
-          builder: (BuildContext context) => Rating(),
+          builder: (BuildContext context) => const Rating(),
         );
       case RoutesName.notificationscreen:
         return MaterialPageRoute(
