@@ -11,7 +11,6 @@ import 'widgets/homeCard.dart';
 
 class PopularPackScreen extends StatefulWidget {
   const PopularPackScreen({super.key});
-
   @override
   State<PopularPackScreen> createState() => _PopularPackScreenState();
 }
