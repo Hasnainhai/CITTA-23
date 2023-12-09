@@ -85,8 +85,8 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
               itemCount: _products.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 5, // Horizontal spacing
-                mainAxisSpacing: 10, // Vertical spacing
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 10,
               ),
               itemBuilder: (_, index) {
                 // Check if _products is not empty and index is within valid range
@@ -116,7 +116,6 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                     iconColor: AppColor.buttonBgColor,
                   );
                 } else {
-                  // Handle the case when the list is empty or index is out of range
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Shimmer(

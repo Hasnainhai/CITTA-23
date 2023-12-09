@@ -502,8 +502,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                               '',
                                         );
                                       } else {
-                                        // Handle the case where _popularPacks is null or index is out of bounds
-                                        // You can navigate to an error screen or display a message
                                         Utils.flushBarErrorMessage(
                                             'error occure while fetching bundle products',
                                             context);
