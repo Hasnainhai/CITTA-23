@@ -1,5 +1,4 @@
 // ignore_for_file: equal_keys_in_map
-
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -11,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
+import '../../res/consts/vars.dart';
 import '../drawer/drawer.dart';
 import 'widgets/homeCard.dart';
 
@@ -22,8 +22,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var categoryType = CategoryType.food;
   final List _products = [];
+  final List _fashionProducts = [];
 
+  bool isFoodSelected = true;
   final _firestoreInstance = FirebaseFirestore.instance;
   bool _isLoading = false;
   fetchProducts() async {
@@ -132,11 +135,43 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  fetchFashionProducts() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      QuerySnapshot qn = await _firestoreInstance.collection('fashion').get();
+
+      setState(() {
+        _fashionProducts.clear();
+        for (int i = 0; i < qn.docs.length; i++) {
+          _fashionProducts.add({
+            'imageUrl': qn.docs[i]['imageUrl'],
+            'title': qn.docs[i]['title'],
+            'price': qn.docs[i]['price'],
+            // 'salePrice': qn.docs[i]['salePrice'],
+            'detail': qn.docs[i]['detail'],
+          });
+        }
+      });
+      return qn.docs;
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   initState() {
     super.initState();
     fetchProducts();
     fetchPopularPack();
+    fetchFashionProducts();
   }
 
   @override
@@ -264,402 +299,605 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const VerticalSpeacing(20.0),
+                  // Row(
+                  //   children: [
+                  //     TabsWidget(
+                  //       text: 'food',
+                  //       ontap: () {
+                  //         if (categoryType == CategoryType.food) {
+                  //           return;
+                  //         }
+
+                  //         setState(() {
+                  //           categoryType = CategoryType.food;
+                  //         });
+                  //       },
+                  //       fontSize: categoryType == CategoryType.food ? 22 : 14,
+                  //     ),
+                  //     const SizedBox(width: 20.0),
+                  //     TabsWidget(
+                  //       text: 'fashion',
+                  //       ontap: () {
+                  //         if (categoryType == CategoryType.fashion) {
+                  //           return;
+                  //         }
+                  //         setState(() {
+                  //           categoryType = CategoryType.fashion;
+                  //         });
+                  //       },
+                  //       fontSize:
+                  //           categoryType == CategoryType.fashion ? 22 : 14,
+                  //     ),
+                  //   ],
+                  // ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Stack(
-                        children: [
-                          SizedBox(
-                            height: 60.0,
-                            width: MediaQuery.of(context).size.width * 0.43,
-                            child: Center(
-                              child: Container(
-                                height: 45.0,
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                color: AppColor.buttonBgColor,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Container(
-                                      height: 33.0,
-                                      width: 63.0,
-                                      color: AppColor.categoryLightColor,
-                                    ),
-                                    Text(
-                                      'Food',
-                                      style: GoogleFonts.getFont(
-                                        "Gothic A1",
-                                        textStyle: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.whiteColor),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 25,
-                            top: 0,
-                            bottom: 5.0,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Image.asset(
-                                'images/foodimg.png',
-                                height: 59.0,
-                                width: 59.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Stack(
-                        children: [
-                          SizedBox(
-                            height: 60.0,
-                            width: MediaQuery.of(context).size.width * 0.43,
-                            child: Center(
-                              child: Container(
-                                height: 45.0,
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 1,
-                                        color: AppColor.buttonBgColor)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Container(
-                                      height: 33.0,
-                                      width: 63.0,
-                                      color: AppColor.categoryLightColor,
-                                    ),
-                                    Text(
-                                      'Fashion',
-                                      style: GoogleFonts.getFont(
-                                        "Gothic A1",
-                                        textStyle: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColor.buttonBgColor),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 30,
-                            top: 0,
-                            bottom: 12.0,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Image.asset(
-                                'images/fashionimg.png',
-                                height: 56.0,
-                                width: 42.0,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const VerticalSpeacing(20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Popular Pack",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor),
-                        ),
-                      ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.popularpackscreen,
-                          );
+                          if (categoryType == CategoryType.food) {
+                            return;
+                          }
+                          setState(() {
+                            categoryType = CategoryType.food;
+                          });
                         },
-                        child: Text(
-                          "View All",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.buttonBgColor),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const VerticalSpeacing(16.0),
-                  // Popular packs here
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 4,
-                    child: Expanded(
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 2,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemBuilder: (_, index) {
-                          // Check if _products is not empty and index is within valid range
-                          if (_popularPacks.isNotEmpty &&
-                              index < _popularPacks.length) {
-                            return HomeCard(
-                              ontap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      // Check if _popularPacks is not null and index is within bounds
-                                      if (_popularPacks.isNotEmpty &&
-                                          index >= 0 &&
-                                          index < _popularPacks.length) {
-                                        Map<String, dynamic> selectedPack =
-                                            _popularPacks[index];
-
-                                        return BundleProductScreen(
-                                          imageUrl:
-                                              selectedPack['imageUrl'] ?? '',
-                                          title: selectedPack['title'] ?? '',
-                                          price: selectedPack['price'] ?? '',
-                                          saleprice:
-                                              selectedPack['salePrice'] ?? '',
-                                          detail: selectedPack['detail'] ?? '',
-                                          weight: selectedPack['weight'] ?? '',
-                                          size: selectedPack['size'] ?? '',
-                                          img1: selectedPack['product1']
-                                                  ?['image'] ??
-                                              '',
-                                          title1: selectedPack['product1']
-                                                  ?['title'] ??
-                                              '',
-                                          amount1: selectedPack['product1']
-                                                  ?['amount'] ??
-                                              '',
-                                          img2: selectedPack['product2']
-                                                  ?['image'] ??
-                                              '',
-                                          title2: selectedPack['product2']
-                                                  ?['title'] ??
-                                              '',
-                                          amount2: selectedPack['product2']
-                                                  ?['amount'] ??
-                                              '',
-                                          img3: selectedPack['product3']
-                                                  ?['image'] ??
-                                              '',
-                                          title3: selectedPack['product3']
-                                                  ?['title'] ??
-                                              '',
-                                          amount3: selectedPack['product3']
-                                                  ?['amount'] ??
-                                              '',
-                                          img4: selectedPack['product4']
-                                                  ?['image'] ??
-                                              '',
-                                          title4: selectedPack['product4']
-                                                  ?['title'] ??
-                                              '',
-                                          amount4: selectedPack['product4']
-                                                  ?['amount'] ??
-                                              '',
-                                          img5: selectedPack['product5']
-                                                  ?['image'] ??
-                                              '',
-                                          title5: selectedPack['product5']
-                                                  ?['title'] ??
-                                              '',
-                                          amount5: selectedPack['product5']
-                                                  ?['amount'] ??
-                                              '',
-                                          img6: selectedPack['product6']
-                                                  ?['image'] ??
-                                              '',
-                                          title6: selectedPack['product6']
-                                                  ?['title'] ??
-                                              '',
-                                          amount6: selectedPack['product6']
-                                                  ?['amount'] ??
-                                              '',
-                                        );
-                                      } else {
-                                        Utils.flushBarErrorMessage(
-                                            'error occure while fetching bundle products',
-                                            context);
-                                      }
-                                      return Container();
-                                    },
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: 60.0,
+                              width: MediaQuery.of(context).size.width * 0.43,
+                              child: Center(
+                                child: Container(
+                                  height: 45.0,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  decoration: BoxDecoration(
+                                      color: categoryType == CategoryType.food
+                                          ? AppColor.buttonBgColor
+                                          : Colors.transparent,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: AppColor.buttonBgColor)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        height: 33.0,
+                                        width: 63.0,
+                                        color: AppColor.categoryLightColor,
+                                      ),
+                                      Text(
+                                        'Food',
+                                        style: GoogleFonts.getFont(
+                                          "Gothic A1",
+                                          textStyle: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: categoryType ==
+                                                    CategoryType.food
+                                                ? AppColor.whiteColor
+                                                : AppColor.buttonBgColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
-                              name: _popularPacks[index]['title'].toString(),
-                              price: _popularPacks[index]['price'].toString(),
-                              dPrice:
-                                  _popularPacks[index]['salePrice'].toString(),
-                              borderColor: AppColor.buttonBgColor,
-                              fillColor: AppColor.appBarButtonColor,
-                              cartBorder: isTrue
-                                  ? AppColor.appBarButtonColor
-                                  : AppColor.buttonBgColor,
-                              img: _popularPacks[index]['imageUrl'],
-                              iconColor: AppColor.buttonBgColor,
-                            );
-                          } else {
-                            // Handle the case when the list is empty or index is out of range
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Shimmer(
-                                duration:
-                                    const Duration(seconds: 3), //Default value
-                                interval: const Duration(
-                                    seconds:
-                                        5), //Default value: Duration(seconds: 0)
-                                color: AppColor.grayColor
-                                    .withOpacity(0.2), //Default value
-                                colorOpacity: 0.2, //Default value
-                                enabled: true, //Default value
-                                direction: const ShimmerDirection
-                                    .fromLTRB(), //Default Value
-                                child: Container(
-                                  height: 100,
-                                  width: 150,
-                                  color: AppColor.grayColor.withOpacity(0.2),
                                 ),
                               ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-
-                  const VerticalSpeacing(20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Our New Item",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor),
+                            ),
+                            Positioned(
+                              left: 25,
+                              top: 0,
+                              bottom: 5.0,
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Image.asset(
+                                  'images/foodimg.png',
+                                  height: 59.0,
+                                  width: 59.0,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.newitemsscreen,
-                          );
+                          if (categoryType == CategoryType.fashion) {
+                            return;
+                          }
+                          setState(() {
+                            categoryType = CategoryType.fashion;
+                          });
                         },
-                        child: Text(
-                          "View All",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.buttonBgColor),
-                          ),
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: 60.0,
+                              width: MediaQuery.of(context).size.width * 0.43,
+                              child: Center(
+                                child: Container(
+                                  height: 45.0,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  decoration: BoxDecoration(
+                                      color:
+                                          categoryType == CategoryType.fashion
+                                              ? AppColor.buttonBgColor
+                                              : Colors.transparent,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: AppColor.buttonBgColor)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        height: 33.0,
+                                        width: 63.0,
+                                        color: AppColor.categoryLightColor,
+                                      ),
+                                      Text(
+                                        'Fashion',
+                                        style: GoogleFonts.getFont(
+                                          "Gothic A1",
+                                          textStyle: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: categoryType ==
+                                                    CategoryType.fashion
+                                                ? AppColor.whiteColor
+                                                : AppColor.buttonBgColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 30,
+                              top: 0,
+                              bottom: 12.0,
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Image.asset(
+                                  'images/fashionimg.png',
+                                  height: 56.0,
+                                  width: 42.0,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(16.0),
-                  // Our New Items
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 4,
-                    child: Expanded(
-                      child: GridView.builder(
-                        // physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 2,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemBuilder: (_, index) {
-                          // Check if _products is not empty and index is within valid range
-                          if (_products.isNotEmpty &&
-                              index < _products.length) {
-                            return HomeCard(
-                              ontap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return ProductDetailScreen(
-                                      title:
-                                          _products[index]['title'].toString(),
-                                      imageUrl: _products[index]['imageUrl'],
-                                      price:
-                                          _products[index]['price'].toString(),
-                                      salePrice: _products[index]['salePrice']
-                                          .toString(),
-                                      weight:
-                                          _products[index]['weight'].toString(),
-                                      detail: _products[index]['detail']
-                                          .toString());
-                                }));
-                              },
-                              name: _products[index]['title'].toString(),
-                              price: _products[index]['price'].toString(),
-                              dPrice: _products[index]['salePrice'].toString(),
-                              borderColor: AppColor.buttonBgColor,
-                              fillColor: AppColor.appBarButtonColor,
-                              cartBorder: isTrue
-                                  ? AppColor.appBarButtonColor
-                                  : const Color.fromRGBO(203, 1, 102, 1),
-                              img: _products[index]['imageUrl'],
-                              iconColor: AppColor.buttonBgColor,
-                            );
-                          } else {
-                            // Handle the case when the list is empty or index is out of range
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Shimmer(
-                                duration:
-                                    const Duration(seconds: 3), //Default value
-                                interval: const Duration(
-                                    seconds:
-                                        5), //Default value: Duration(seconds: 0)
-                                color: AppColor.grayColor
-                                    .withOpacity(0.2), //Default value
-                                colorOpacity: 0.2, //Default value
-                                enabled: true, //Default value
-                                direction: const ShimmerDirection
-                                    .fromLTRB(), //Default Value
-                                child: Container(
-                                  height: 100,
-                                  width: 150,
-                                  color: AppColor.grayColor.withOpacity(0.2),
+                  categoryType == CategoryType.food
+                      ? Column(
+                          children: [
+                            const VerticalSpeacing(20.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Popular Pack",
+                                  style: GoogleFonts.getFont(
+                                    "Gothic A1",
+                                    textStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.fontColor),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      RoutesName.popularpackscreen,
+                                    );
+                                  },
+                                  child: Text(
+                                    "View All",
+                                    style: GoogleFonts.getFont(
+                                      "Gothic A1",
+                                      textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.buttonBgColor),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const VerticalSpeacing(16.0),
+                            // Popular packs here
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 4,
+                              child: Expanded(
+                                child: GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: 2,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemBuilder: (_, index) {
+                                    // Check if _products is not empty and index is within valid range
+                                    if (_popularPacks.isNotEmpty &&
+                                        index < _popularPacks.length) {
+                                      return HomeCard(
+                                        ontap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                // Check if _popularPacks is not null and index is within bounds
+                                                if (_popularPacks.isNotEmpty &&
+                                                    index >= 0 &&
+                                                    index <
+                                                        _popularPacks.length) {
+                                                  Map<String, dynamic>
+                                                      selectedPack =
+                                                      _popularPacks[index];
+
+                                                  return BundleProductScreen(
+                                                    imageUrl: selectedPack[
+                                                            'imageUrl'] ??
+                                                        '',
+                                                    title:
+                                                        selectedPack['title'] ??
+                                                            '',
+                                                    price:
+                                                        selectedPack['price'] ??
+                                                            '',
+                                                    saleprice: selectedPack[
+                                                            'salePrice'] ??
+                                                        '',
+                                                    detail: selectedPack[
+                                                            'detail'] ??
+                                                        '',
+                                                    weight: selectedPack[
+                                                            'weight'] ??
+                                                        '',
+                                                    size:
+                                                        selectedPack['size'] ??
+                                                            '',
+                                                    img1:
+                                                        selectedPack['product1']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title1:
+                                                        selectedPack['product1']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount1:
+                                                        selectedPack['product1']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img2:
+                                                        selectedPack['product2']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title2:
+                                                        selectedPack['product2']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount2:
+                                                        selectedPack['product2']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img3:
+                                                        selectedPack['product3']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title3:
+                                                        selectedPack['product3']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount3:
+                                                        selectedPack['product3']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img4:
+                                                        selectedPack['product4']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title4:
+                                                        selectedPack['product4']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount4:
+                                                        selectedPack['product4']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img5:
+                                                        selectedPack['product5']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title5:
+                                                        selectedPack['product5']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount5:
+                                                        selectedPack['product5']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img6:
+                                                        selectedPack['product6']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title6:
+                                                        selectedPack['product6']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount6:
+                                                        selectedPack['product6']
+                                                                ?['amount'] ??
+                                                            '',
+                                                  );
+                                                } else {
+                                                  Utils.flushBarErrorMessage(
+                                                      'error occure while fetching bundle products',
+                                                      context);
+                                                }
+                                                return Container();
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        name: _popularPacks[index]['title']
+                                            .toString(),
+                                        price: _popularPacks[index]['price']
+                                            .toString(),
+                                        dPrice: _popularPacks[index]
+                                                ['salePrice']
+                                            .toString(),
+                                        borderColor: AppColor.buttonBgColor,
+                                        fillColor: AppColor.appBarButtonColor,
+                                        cartBorder: isTrue
+                                            ? AppColor.appBarButtonColor
+                                            : AppColor.buttonBgColor,
+                                        img: _popularPacks[index]['imageUrl'],
+                                        iconColor: AppColor.buttonBgColor,
+                                      );
+                                    } else {
+                                      // Handle the case when the list is empty or index is out of range
+                                      return Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Shimmer(
+                                          duration: const Duration(
+                                              seconds: 3), //Default value
+                                          interval: const Duration(
+                                              seconds:
+                                                  5), //Default value: Duration(seconds: 0)
+                                          color: AppColor.grayColor
+                                              .withOpacity(0.2), //Default value
+                                          colorOpacity: 0.2, //Default value
+                                          enabled: true, //Default value
+                                          direction: const ShimmerDirection
+                                              .fromLTRB(), //Default Value
+                                          child: Container(
+                                            height: 100,
+                                            width: 150,
+                                            color: AppColor.grayColor
+                                                .withOpacity(0.2),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ),
+                            ),
+
+                            const VerticalSpeacing(20.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Our New Item",
+                                  style: GoogleFonts.getFont(
+                                    "Gothic A1",
+                                    textStyle: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.fontColor),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      RoutesName.newitemsscreen,
+                                    );
+                                  },
+                                  child: Text(
+                                    "View All",
+                                    style: GoogleFonts.getFont(
+                                      "Gothic A1",
+                                      textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.buttonBgColor),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const VerticalSpeacing(16.0),
+                            // Our New Items
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 4,
+                              child: Expanded(
+                                child: GridView.builder(
+                                  // physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: 2,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemBuilder: (_, index) {
+                                    // Check if _products is not empty and index is within valid range
+                                    if (_products.isNotEmpty &&
+                                        index < _products.length) {
+                                      return HomeCard(
+                                        ontap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return ProductDetailScreen(
+                                                title: _products[index]['title']
+                                                    .toString(),
+                                                imageUrl: _products[index]
+                                                    ['imageUrl'],
+                                                price: _products[index]['price']
+                                                    .toString(),
+                                                salePrice: _products[index]
+                                                        ['salePrice']
+                                                    .toString(),
+                                                weight: _products[index]
+                                                        ['weight']
+                                                    .toString(),
+                                                detail: _products[index]
+                                                        ['detail']
+                                                    .toString());
+                                          }));
+                                        },
+                                        name: _products[index]['title']
+                                            .toString(),
+                                        price: _products[index]['price']
+                                            .toString(),
+                                        dPrice: _products[index]['salePrice']
+                                            .toString(),
+                                        borderColor: AppColor.buttonBgColor,
+                                        fillColor: AppColor.appBarButtonColor,
+                                        cartBorder: isTrue
+                                            ? AppColor.appBarButtonColor
+                                            : const Color.fromRGBO(
+                                                203, 1, 102, 1),
+                                        img: _products[index]['imageUrl'],
+                                        iconColor: AppColor.buttonBgColor,
+                                      );
+                                    } else {
+                                      // Handle the case when the list is empty or index is out of range
+                                      return Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Shimmer(
+                                          duration: const Duration(
+                                              seconds: 3), //Default value
+                                          interval: const Duration(
+                                              seconds:
+                                                  5), //Default value: Duration(seconds: 0)
+                                          color: AppColor.grayColor
+                                              .withOpacity(0.2), //Default value
+                                          colorOpacity: 0.2, //Default value
+                                          enabled: true, //Default value
+                                          direction: const ShimmerDirection
+                                              .fromLTRB(), //Default Value
+                                          child: Container(
+                                            height: 100,
+                                            width: 150,
+                                            color: AppColor.grayColor
+                                                .withOpacity(0.2),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Expanded(
+                            child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 10),
+                              itemCount: _fashionProducts.length ?? 2,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 10,
+                              ),
+                              itemBuilder: (_, index) {
+                                // Check if _products is not empty and index is within valid range
+                                if (_fashionProducts.isNotEmpty &&
+                                    index < _fashionProducts.length) {
+                                  return HomeCard(
+                                    ontap: () {
+                                      // Navigator.push(context,
+                                      //     MaterialPageRoute(builder: (context) {
+                                      //   return ProductDetailScreen(
+                                      //       title: _products[index]['title']
+                                      //           .toString(),
+                                      //       imageUrl: _products[index]
+                                      //           ['imageUrl'],
+                                      //       price: _products[index]['price']
+                                      //           .toString(),
+                                      //       salePrice: _products[index]
+                                      //               ['salePrice']
+                                      //           .toString(),
+                                      //       weight: _products[index]['weight']
+                                      //           .toString(),
+                                      //       detail: _products[index]['detail']
+                                      //           .toString());
+                                      // }));
+                                    },
+                                    name: _fashionProducts[index]['title']
+                                        .toString(),
+                                    price: _fashionProducts[index]['price']
+                                        .toString(),
+                                    dPrice: '',
+                                    borderColor: AppColor.buttonBgColor,
+                                    fillColor: AppColor.appBarButtonColor,
+                                    cartBorder: isTrue
+                                        ? AppColor.appBarButtonColor
+                                        : AppColor.buttonBgColor,
+                                    img: _fashionProducts[index]['imageUrl'],
+                                    iconColor: AppColor.buttonBgColor,
+                                  );
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Shimmer(
+                                      duration: const Duration(
+                                          seconds: 3), //Default value
+                                      interval: const Duration(
+                                          seconds:
+                                              5), //Default value: Duration(seconds: 0)
+                                      color: AppColor.grayColor
+                                          .withOpacity(0.2), //Default value
+                                      colorOpacity: 0.2, //Default value
+                                      enabled: true, //Default value
+                                      direction: const ShimmerDirection
+                                          .fromLTRB(), //Default Value
+                                      child: Container(
+                                        height: 100,
+                                        width: 150,
+                                        color:
+                                            AppColor.grayColor.withOpacity(0.2),
+                                      ),
+                                    ),
+                                  ); // or some default widget
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ],
