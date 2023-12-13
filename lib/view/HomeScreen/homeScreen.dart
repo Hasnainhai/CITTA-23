@@ -3,6 +3,7 @@ import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
+import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -299,38 +300,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const VerticalSpeacing(20.0),
-                  // Row(
-                  //   children: [
-                  //     TabsWidget(
-                  //       text: 'food',
-                  //       ontap: () {
-                  //         if (categoryType == CategoryType.food) {
-                  //           return;
-                  //         }
-
-                  //         setState(() {
-                  //           categoryType = CategoryType.food;
-                  //         });
-                  //       },
-                  //       fontSize: categoryType == CategoryType.food ? 22 : 14,
-                  //     ),
-                  //     const SizedBox(width: 20.0),
-                  //     TabsWidget(
-                  //       text: 'fashion',
-                  //       ontap: () {
-                  //         if (categoryType == CategoryType.fashion) {
-                  //           return;
-                  //         }
-                  //         setState(() {
-                  //           categoryType = CategoryType.fashion;
-                  //         });
-                  //       },
-                  //       fontSize:
-                  //           categoryType == CategoryType.fashion ? 22 : 14,
-                  //     ),
-                  //   ],
-                  // ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -819,85 +788,89 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         )
                       : Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Expanded(
-                            child: GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 10),
-                              itemCount: _fashionProducts.length ?? 2,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 10,
-                              ),
-                              itemBuilder: (_, index) {
-                                // Check if _products is not empty and index is within valid range
-                                if (_fashionProducts.isNotEmpty &&
-                                    index < _fashionProducts.length) {
-                                  return HomeCard(
-                                    ontap: () {
-                                      // Navigator.push(context,
-                                      //     MaterialPageRoute(builder: (context) {
-                                      //   return ProductDetailScreen(
-                                      //       title: _products[index]['title']
-                                      //           .toString(),
-                                      //       imageUrl: _products[index]
-                                      //           ['imageUrl'],
-                                      //       price: _products[index]['price']
-                                      //           .toString(),
-                                      //       salePrice: _products[index]
-                                      //               ['salePrice']
-                                      //           .toString(),
-                                      //       weight: _products[index]['weight']
-                                      //           .toString(),
-                                      //       detail: _products[index]['detail']
-                                      //           .toString());
-                                      // }));
-                                    },
-                                    name: _fashionProducts[index]['title']
-                                        .toString(),
-                                    price: _fashionProducts[index]['price']
-                                        .toString(),
-                                    dPrice: '',
-                                    borderColor: AppColor.buttonBgColor,
-                                    fillColor: AppColor.appBarButtonColor,
-                                    cartBorder: isTrue
-                                        ? AppColor.appBarButtonColor
-                                        : AppColor.buttonBgColor,
-                                    img: _fashionProducts[index]['imageUrl'],
-                                    iconColor: AppColor.buttonBgColor,
-                                  );
-                                } else {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Shimmer(
-                                      duration: const Duration(
-                                          seconds: 3), //Default value
-                                      interval: const Duration(
-                                          seconds:
-                                              5), //Default value: Duration(seconds: 0)
-                                      color: AppColor.grayColor
-                                          .withOpacity(0.2), //Default value
-                                      colorOpacity: 0.2, //Default value
-                                      enabled: true, //Default value
-                                      direction: const ShimmerDirection
-                                          .fromLTRB(), //Default Value
-                                      child: Container(
-                                        height: 100,
-                                        width: 150,
-                                        color:
-                                            AppColor.grayColor.withOpacity(0.2),
-                                      ),
-                                    ),
-                                  ); // or some default widget
-                                }
-                              },
+                        padding: const EdgeInsets.all(2.0),
+                        child: Expanded(
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 1, vertical: 10),
+                            itemCount: _fashionProducts.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
                             ),
+                            itemBuilder: (_, index) {
+                              // Check if _products is not empty and index is within valid range
+                              if (_fashionProducts.isNotEmpty &&
+                                  index < _fashionProducts.length) {
+                                return HomeCard(
+                                  ontap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(
+                                            builder: (context) {
+                                      return FashionDetail(
+                                          title: _fashionProducts[index]
+                                                  ['title']
+                                              .toString(),
+                                          imageUrl: _fashionProducts[index]
+                                              ['imageUrl'],
+                                          // price: _fashionProducts[index]
+                                          //         ['price']
+                                          //     .toString(),
+                                          salePrice: _fashionProducts[index]
+                                              ['price'],
+                                          // .toString(),
+                                          // weight: _products[index]['weight']
+                                          //     .toString(),
+                                          detail: _fashionProducts[index]
+                                                  ['detail']
+                                              .toString());
+                                    }));
+                                  },
+                                  name: _fashionProducts[index]['title']
+                                      .toString(),
+                                  price: _fashionProducts[index]['price']
+                                      .toString(),
+                                  dPrice: '',
+                                  borderColor: AppColor.buttonBgColor,
+                                  fillColor: AppColor.appBarButtonColor,
+                                  cartBorder: isTrue
+                                      ? AppColor.appBarButtonColor
+                                      : AppColor.buttonBgColor,
+                                  img: _fashionProducts[index]['imageUrl'],
+                                  iconColor: AppColor.buttonBgColor,
+                                );
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Shimmer(
+                                    duration: const Duration(
+                                        seconds: 3), //Default value
+                                    interval: const Duration(
+                                        seconds:
+                                            5), //Default value: Duration(seconds: 0)
+                                    color: AppColor.grayColor
+                                        .withOpacity(0.2), //Default value
+                                    colorOpacity: 0.2, //Default value
+                                    enabled: true, //Default value
+                                    direction: const ShimmerDirection
+                                        .fromLTRB(), //Default Value
+                                    child: Container(
+                                      height: 100,
+                                      width: 150,
+                                      color: AppColor.grayColor
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                ); // or some default widget
+                              }
+                            },
                           ),
                         ),
+                      ),
                 ],
               ),
             ],
