@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
@@ -55,10 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return;
     }
     try {
-      String _uid = user!.uid;
-
+      String uid = user!.uid;
       final DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
       if (userDoc == null) {
         return;
       } else {

@@ -1,4 +1,5 @@
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,22 +19,36 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
   bool isTrue = true;
   final List _products = [];
   final _firestoreInstance = FirebaseFirestore.instance;
+  bool _isLoading = false;
 
   fetchProducts() async {
-    QuerySnapshot qn = await _firestoreInstance.collection('products').get();
-    setState(() {
-      for (int i = 0; i < qn.docs.length; i++) {
-        _products.add({
-          'imageUrl': qn.docs[i]['imageUrl'],
-          'title': qn.docs[i]['title'],
-          'price': qn.docs[i]['price'],
-          'salePrice': qn.docs[i]['salePrice'],
-          'detail': qn.docs[i]['detail'],
-          'weight': qn.docs[i]['weight'],
-        });
-      }
-    });
-    return qn.docs;
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      QuerySnapshot qn = await _firestoreInstance.collection('products').get();
+      setState(() {
+        for (int i = 0; i < qn.docs.length; i++) {
+          _products.add({
+            'imageUrl': qn.docs[i]['imageUrl'],
+            'title': qn.docs[i]['title'],
+            'price': qn.docs[i]['price'],
+            'salePrice': qn.docs[i]['salePrice'],
+            'detail': qn.docs[i]['detail'],
+            'weight': qn.docs[i]['weight'],
+          });
+        }
+      });
+      return qn.docs;
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -75,10 +90,11 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Expanded(
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
             child: GridView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),

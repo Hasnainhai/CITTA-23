@@ -184,142 +184,140 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Expanded(
-                  child: GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    itemCount: _popularPacks.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5, // Horizontal spacing
-                      mainAxisSpacing: 10, // Vertical spacing
-                    ),
-                    itemBuilder: (_, index) {
-                      // Check if _products is not empty and index is within valid range
-                      if (_popularPacks.isNotEmpty &&
-                          index < _popularPacks.length) {
-                        return HomeCard(
-                          ontap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  // Check if _popularPacks is not null and index is within bounds
-                                  if (_popularPacks.isNotEmpty &&
-                                      index >= 0 &&
-                                      index < _popularPacks.length) {
-                                    Map<String, dynamic> selectedPack =
-                                        _popularPacks[index];
-                                    return BundleProductScreen(
-                                      imageUrl: selectedPack['imageUrl'] ?? '',
-                                      title: selectedPack['title'] ?? '',
-                                      price: selectedPack['price'] ?? '',
-                                      saleprice:
-                                          selectedPack['salePrice'] ?? '',
-                                      detail: selectedPack['detail'] ?? '',
-                                      weight: selectedPack['weight'] ?? '',
-                                      size: selectedPack['size'] ?? '',
-                                      img1: selectedPack['product1']
-                                              ?['image'] ??
-                                          '',
-                                      title1: selectedPack['product1']
-                                              ?['title'] ??
-                                          '',
-                                      amount1: selectedPack['product1']
-                                              ?['amount'] ??
-                                          '',
-                                      img2: selectedPack['product2']
-                                              ?['image'] ??
-                                          '',
-                                      title2: selectedPack['product2']
-                                              ?['title'] ??
-                                          '',
-                                      amount2: selectedPack['product2']
-                                              ?['amount'] ??
-                                          '',
-                                      img3: selectedPack['product3']
-                                              ?['image'] ??
-                                          '',
-                                      title3: selectedPack['product3']
-                                              ?['title'] ??
-                                          '',
-                                      amount3: selectedPack['product3']
-                                              ?['amount'] ??
-                                          '',
-                                      img4: selectedPack['product4']
-                                              ?['image'] ??
-                                          '',
-                                      title4: selectedPack['product4']
-                                              ?['title'] ??
-                                          '',
-                                      amount4: selectedPack['product4']
-                                              ?['amount'] ??
-                                          '',
-                                      img5: selectedPack['product5']
-                                              ?['image'] ??
-                                          '',
-                                      title5: selectedPack['product5']
-                                              ?['title'] ??
-                                          '',
-                                      amount5: selectedPack['product5']
-                                              ?['amount'] ??
-                                          '',
-                                      img6: selectedPack['product6']
-                                              ?['image'] ??
-                                          '',
-                                      title6: selectedPack['product6']
-                                              ?['title'] ??
-                                          '',
-                                      amount6: selectedPack['product6']
-                                              ?['amount'] ??
-                                          '',
-                                    );
-                                  } else {
-                                    Utils.flushBarErrorMessage(
-                                        'error occure while fetching bundle products',
-                                        context);
-                                  }
-                                  return Container();
-                                },
-                              ),
-                            );
-                          },
-                          name: _popularPacks[index]['title'].toString(),
-                          price: _popularPacks[index]['price'].toString(),
-                          dPrice: _popularPacks[index]['salePrice'].toString(),
-                          borderColor: AppColor.buttonBgColor,
-                          fillColor: AppColor.appBarButtonColor,
-                          cartBorder: isTrue
-                              ? AppColor.appBarButtonColor
-                              : AppColor.buttonBgColor,
-                          img: _popularPacks[index]['imageUrl'],
-                          iconColor: AppColor.buttonBgColor,
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor
-                                .withOpacity(0.2), //Default value
-                            colorOpacity: 0.2, //Default value
-                            enabled: true, //Default value
-                            direction: const ShimmerDirection
-                                .fromLTRB(), //Default Value
-                            child: Container(
-                              height: 100,
-                              width: 150,
-                              color: AppColor.grayColor.withOpacity(0.2),
-                            ),
-                          ),
-                        );
-                      }
-                    },
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  itemCount: _popularPacks.length,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5, // Horizontal spacing
+                    mainAxisSpacing: 10, // Vertical spacing
                   ),
+                  itemBuilder: (_, index) {
+                    // Check if _products is not empty and index is within valid range
+                    if (_popularPacks.isNotEmpty &&
+                        index < _popularPacks.length) {
+                      return HomeCard(
+                        ontap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                // Check if _popularPacks is not null and index is within bounds
+                                if (_popularPacks.isNotEmpty &&
+                                    index >= 0 &&
+                                    index < _popularPacks.length) {
+                                  Map<String, dynamic> selectedPack =
+                                      _popularPacks[index];
+                                  return BundleProductScreen(
+                                    imageUrl: selectedPack['imageUrl'] ?? '',
+                                    title: selectedPack['title'] ?? '',
+                                    price: selectedPack['price'] ?? '',
+                                    saleprice:
+                                        selectedPack['salePrice'] ?? '',
+                                    detail: selectedPack['detail'] ?? '',
+                                    weight: selectedPack['weight'] ?? '',
+                                    size: selectedPack['size'] ?? '',
+                                    img1: selectedPack['product1']
+                                            ?['image'] ??
+                                        '',
+                                    title1: selectedPack['product1']
+                                            ?['title'] ??
+                                        '',
+                                    amount1: selectedPack['product1']
+                                            ?['amount'] ??
+                                        '',
+                                    img2: selectedPack['product2']
+                                            ?['image'] ??
+                                        '',
+                                    title2: selectedPack['product2']
+                                            ?['title'] ??
+                                        '',
+                                    amount2: selectedPack['product2']
+                                            ?['amount'] ??
+                                        '',
+                                    img3: selectedPack['product3']
+                                            ?['image'] ??
+                                        '',
+                                    title3: selectedPack['product3']
+                                            ?['title'] ??
+                                        '',
+                                    amount3: selectedPack['product3']
+                                            ?['amount'] ??
+                                        '',
+                                    img4: selectedPack['product4']
+                                            ?['image'] ??
+                                        '',
+                                    title4: selectedPack['product4']
+                                            ?['title'] ??
+                                        '',
+                                    amount4: selectedPack['product4']
+                                            ?['amount'] ??
+                                        '',
+                                    img5: selectedPack['product5']
+                                            ?['image'] ??
+                                        '',
+                                    title5: selectedPack['product5']
+                                            ?['title'] ??
+                                        '',
+                                    amount5: selectedPack['product5']
+                                            ?['amount'] ??
+                                        '',
+                                    img6: selectedPack['product6']
+                                            ?['image'] ??
+                                        '',
+                                    title6: selectedPack['product6']
+                                            ?['title'] ??
+                                        '',
+                                    amount6: selectedPack['product6']
+                                            ?['amount'] ??
+                                        '',
+                                  );
+                                } else {
+                                  Utils.flushBarErrorMessage(
+                                      'error occure while fetching bundle products',
+                                      context);
+                                }
+                                return Container();
+                              },
+                            ),
+                          );
+                        },
+                        name: _popularPacks[index]['title'].toString(),
+                        price: _popularPacks[index]['price'].toString(),
+                        dPrice: _popularPacks[index]['salePrice'].toString(),
+                        borderColor: AppColor.buttonBgColor,
+                        fillColor: AppColor.appBarButtonColor,
+                        cartBorder: isTrue
+                            ? AppColor.appBarButtonColor
+                            : AppColor.buttonBgColor,
+                        img: _popularPacks[index]['imageUrl'],
+                        iconColor: AppColor.buttonBgColor,
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Shimmer(
+                          duration: const Duration(seconds: 3),
+                          interval: const Duration(seconds: 5),
+                          color: AppColor.grayColor
+                              .withOpacity(0.2), //Default value
+                          colorOpacity: 0.2, //Default value
+                          enabled: true, //Default value
+                          direction: const ShimmerDirection
+                              .fromLTRB(), //Default Value
+                          child: Container(
+                            height: 100,
+                            width: 150,
+                            color: AppColor.grayColor.withOpacity(0.2),
+                          ),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ],
