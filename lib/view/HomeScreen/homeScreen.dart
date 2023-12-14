@@ -1,4 +1,4 @@
-// ignore_for_file: equal_keys_in_map
+// ignore_for_file: equal_keys_in_map, dead_code
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -26,8 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var categoryType = CategoryType.food;
   final List _products = [];
   final List _fashionProducts = [];
-
-  bool isFoodSelected = true;
   final _firestoreInstance = FirebaseFirestore.instance;
   bool _isLoading = false;
   fetchProducts() async {
@@ -489,181 +487,171 @@ class _HomeScreenState extends State<HomeScreen> {
                             // Popular packs here
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 4,
-                              child: Expanded(
-                                child: GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: 2,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                  ),
-                                  itemBuilder: (_, index) {
-                                    // Check if _products is not empty and index is within valid range
-                                    if (_popularPacks.isNotEmpty &&
-                                        index < _popularPacks.length) {
-                                      return HomeCard(
-                                        ontap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                // Check if _popularPacks is not null and index is within bounds
-                                                if (_popularPacks.isNotEmpty &&
-                                                    index >= 0 &&
-                                                    index <
-                                                        _popularPacks.length) {
-                                                  Map<String, dynamic>
-                                                      selectedPack =
-                                                      _popularPacks[index];
-
-                                                  return BundleProductScreen(
-                                                    imageUrl: selectedPack[
-                                                            'imageUrl'] ??
-                                                        '',
-                                                    title:
-                                                        selectedPack['title'] ??
-                                                            '',
-                                                    price:
-                                                        selectedPack['price'] ??
-                                                            '',
-                                                    saleprice: selectedPack[
-                                                            'salePrice'] ??
-                                                        '',
-                                                    detail: selectedPack[
-                                                            'detail'] ??
-                                                        '',
-                                                    weight: selectedPack[
-                                                            'weight'] ??
-                                                        '',
-                                                    size:
-                                                        selectedPack['size'] ??
-                                                            '',
-                                                    img1:
-                                                        selectedPack['product1']
-                                                                ?['image'] ??
-                                                            '',
-                                                    title1:
-                                                        selectedPack['product1']
-                                                                ?['title'] ??
-                                                            '',
-                                                    amount1:
-                                                        selectedPack['product1']
-                                                                ?['amount'] ??
-                                                            '',
-                                                    img2:
-                                                        selectedPack['product2']
-                                                                ?['image'] ??
-                                                            '',
-                                                    title2:
-                                                        selectedPack['product2']
-                                                                ?['title'] ??
-                                                            '',
-                                                    amount2:
-                                                        selectedPack['product2']
-                                                                ?['amount'] ??
-                                                            '',
-                                                    img3:
-                                                        selectedPack['product3']
-                                                                ?['image'] ??
-                                                            '',
-                                                    title3:
-                                                        selectedPack['product3']
-                                                                ?['title'] ??
-                                                            '',
-                                                    amount3:
-                                                        selectedPack['product3']
-                                                                ?['amount'] ??
-                                                            '',
-                                                    img4:
-                                                        selectedPack['product4']
-                                                                ?['image'] ??
-                                                            '',
-                                                    title4:
-                                                        selectedPack['product4']
-                                                                ?['title'] ??
-                                                            '',
-                                                    amount4:
-                                                        selectedPack['product4']
-                                                                ?['amount'] ??
-                                                            '',
-                                                    img5:
-                                                        selectedPack['product5']
-                                                                ?['image'] ??
-                                                            '',
-                                                    title5:
-                                                        selectedPack['product5']
-                                                                ?['title'] ??
-                                                            '',
-                                                    amount5:
-                                                        selectedPack['product5']
-                                                                ?['amount'] ??
-                                                            '',
-                                                    img6:
-                                                        selectedPack['product6']
-                                                                ?['image'] ??
-                                                            '',
-                                                    title6:
-                                                        selectedPack['product6']
-                                                                ?['title'] ??
-                                                            '',
-                                                    amount6:
-                                                        selectedPack['product6']
-                                                                ?['amount'] ??
-                                                            '',
-                                                  );
-                                                } else {
-                                                  Utils.flushBarErrorMessage(
-                                                      'error occure while fetching bundle products',
-                                                      context);
-                                                }
-                                                return Container();
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        name: _popularPacks[index]['title']
-                                            .toString(),
-                                        price: _popularPacks[index]['price']
-                                            .toString(),
-                                        dPrice: _popularPacks[index]
-                                                ['salePrice']
-                                            .toString(),
-                                        borderColor: AppColor.buttonBgColor,
-                                        fillColor: AppColor.appBarButtonColor,
-                                        cartBorder: isTrue
-                                            ? AppColor.appBarButtonColor
-                                            : AppColor.buttonBgColor,
-                                        img: _popularPacks[index]['imageUrl'],
-                                        iconColor: AppColor.buttonBgColor,
-                                      );
-                                    } else {
-                                      // Handle the case when the list is empty or index is out of range
-                                      return Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Shimmer(
-                                          duration: const Duration(
-                                              seconds: 3), //Default value
-                                          interval: const Duration(
-                                              seconds:
-                                                  5), //Default value: Duration(seconds: 0)
-                                          color: AppColor.grayColor
-                                              .withOpacity(0.2), //Default value
-                                          colorOpacity: 0.2, //Default value
-                                          enabled: true, //Default value
-                                          direction: const ShimmerDirection
-                                              .fromLTRB(), //Default Value
-                                          child: Container(
-                                            height: 100,
-                                            width: 150,
-                                            color: AppColor.grayColor
-                                                .withOpacity(0.2),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
+                              child: GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: 2,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
                                 ),
+                                itemBuilder: (_, index) {
+                                  // Check if _products is not empty and index is within valid range
+                                  if (_popularPacks.isNotEmpty &&
+                                      index < _popularPacks.length) {
+                                    return HomeCard(
+                                      ontap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              // Check if _popularPacks is not null and index is within bounds
+                                              if (_popularPacks.isNotEmpty &&
+                                                  index >= 0 &&
+                                                  index <
+                                                      _popularPacks.length) {
+                                                Map<String, dynamic>
+                                                    selectedPack =
+                                                    _popularPacks[index];
+
+                                                return BundleProductScreen(
+                                                  imageUrl: selectedPack[
+                                                          'imageUrl'] ??
+                                                      '',
+                                                  title:
+                                                      selectedPack['title'] ??
+                                                          '',
+                                                  price:
+                                                      selectedPack['price'] ??
+                                                          '',
+                                                  saleprice: selectedPack[
+                                                          'salePrice'] ??
+                                                      '',
+                                                  detail:
+                                                      selectedPack['detail'] ??
+                                                          '',
+                                                  weight:
+                                                      selectedPack['weight'] ??
+                                                          '',
+                                                  size: selectedPack['size'] ??
+                                                      '',
+                                                  img1: selectedPack['product1']
+                                                          ?['image'] ??
+                                                      '',
+                                                  title1:
+                                                      selectedPack['product1']
+                                                              ?['title'] ??
+                                                          '',
+                                                  amount1:
+                                                      selectedPack['product1']
+                                                              ?['amount'] ??
+                                                          '',
+                                                  img2: selectedPack['product2']
+                                                          ?['image'] ??
+                                                      '',
+                                                  title2:
+                                                      selectedPack['product2']
+                                                              ?['title'] ??
+                                                          '',
+                                                  amount2:
+                                                      selectedPack['product2']
+                                                              ?['amount'] ??
+                                                          '',
+                                                  img3: selectedPack['product3']
+                                                          ?['image'] ??
+                                                      '',
+                                                  title3:
+                                                      selectedPack['product3']
+                                                              ?['title'] ??
+                                                          '',
+                                                  amount3:
+                                                      selectedPack['product3']
+                                                              ?['amount'] ??
+                                                          '',
+                                                  img4: selectedPack['product4']
+                                                          ?['image'] ??
+                                                      '',
+                                                  title4:
+                                                      selectedPack['product4']
+                                                              ?['title'] ??
+                                                          '',
+                                                  amount4:
+                                                      selectedPack['product4']
+                                                              ?['amount'] ??
+                                                          '',
+                                                  img5: selectedPack['product5']
+                                                          ?['image'] ??
+                                                      '',
+                                                  title5:
+                                                      selectedPack['product5']
+                                                              ?['title'] ??
+                                                          '',
+                                                  amount5:
+                                                      selectedPack['product5']
+                                                              ?['amount'] ??
+                                                          '',
+                                                  img6: selectedPack['product6']
+                                                          ?['image'] ??
+                                                      '',
+                                                  title6:
+                                                      selectedPack['product6']
+                                                              ?['title'] ??
+                                                          '',
+                                                  amount6:
+                                                      selectedPack['product6']
+                                                              ?['amount'] ??
+                                                          '',
+                                                );
+                                              } else {
+                                                Utils.flushBarErrorMessage(
+                                                    'error occure while fetching bundle products',
+                                                    context);
+                                              }
+                                              return Container();
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      name: _popularPacks[index]['title']
+                                          .toString(),
+                                      price: _popularPacks[index]['price']
+                                          .toString(),
+                                      dPrice: _popularPacks[index]['salePrice']
+                                          .toString(),
+                                      borderColor: AppColor.buttonBgColor,
+                                      fillColor: AppColor.appBarButtonColor,
+                                      cartBorder: isTrue
+                                          ? AppColor.appBarButtonColor
+                                          : AppColor.buttonBgColor,
+                                      img: _popularPacks[index]['imageUrl'],
+                                      iconColor: AppColor.buttonBgColor,
+                                    );
+                                  } else {
+                                    // Handle the case when the list is empty or index is out of range
+                                    return Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Shimmer(
+                                        duration: const Duration(
+                                            seconds: 3), //Default value
+                                        interval: const Duration(
+                                            seconds:
+                                                5), //Default value: Duration(seconds: 0)
+                                        color: AppColor.grayColor
+                                            .withOpacity(0.2), //Default value
+                                        colorOpacity: 0.2, //Default value
+                                        enabled: true, //Default value
+                                        direction: const ShimmerDirection
+                                            .fromLTRB(), //Default Value
+                                        child: Container(
+                                          height: 100,
+                                          width: 150,
+                                          color: AppColor.grayColor
+                                              .withOpacity(0.2),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
 
@@ -705,102 +693,98 @@ class _HomeScreenState extends State<HomeScreen> {
                             // Our New Items
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 4,
-                              child: Expanded(
-                                child: GridView.builder(
-                                  // physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: 2,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                  ),
-                                  itemBuilder: (_, index) {
-                                    // Check if _products is not empty and index is within valid range
-                                    if (_products.isNotEmpty &&
-                                        index < _products.length) {
-                                      return HomeCard(
-                                        ontap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return ProductDetailScreen(
-                                                title: _products[index]['title']
-                                                    .toString(),
-                                                imageUrl: _products[index]
-                                                    ['imageUrl'],
-                                                price: _products[index]['price']
-                                                    .toString(),
-                                                salePrice: _products[index]
-                                                        ['salePrice']
-                                                    .toString(),
-                                                weight: _products[index]
-                                                        ['weight']
-                                                    .toString(),
-                                                detail: _products[index]
-                                                        ['detail']
-                                                    .toString());
-                                          }));
-                                        },
-                                        name: _products[index]['title']
-                                            .toString(),
-                                        price: _products[index]['price']
-                                            .toString(),
-                                        dPrice: _products[index]['salePrice']
-                                            .toString(),
-                                        borderColor: AppColor.buttonBgColor,
-                                        fillColor: AppColor.appBarButtonColor,
-                                        cartBorder: isTrue
-                                            ? AppColor.appBarButtonColor
-                                            : const Color.fromRGBO(
-                                                203, 1, 102, 1),
-                                        img: _products[index]['imageUrl'],
-                                        iconColor: AppColor.buttonBgColor,
-                                      );
-                                    } else {
-                                      // Handle the case when the list is empty or index is out of range
-                                      return Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Shimmer(
-                                          duration: const Duration(
-                                              seconds: 3), //Default value
-                                          interval: const Duration(
-                                              seconds:
-                                                  5), //Default value: Duration(seconds: 0)
-                                          color: AppColor.grayColor
-                                              .withOpacity(0.2), //Default value
-                                          colorOpacity: 0.2, //Default value
-                                          enabled: true, //Default value
-                                          direction: const ShimmerDirection
-                                              .fromLTRB(), //Default Value
-                                          child: Container(
-                                            height: 100,
-                                            width: 150,
-                                            color: AppColor.grayColor
-                                                .withOpacity(0.2),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
+                              child: GridView.builder(
+                                // physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: 2,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
                                 ),
+                                itemBuilder: (_, index) {
+                                  // Check if _products is not empty and index is within valid range
+                                  if (_products.isNotEmpty &&
+                                      index < _products.length) {
+                                    return HomeCard(
+                                      ontap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return ProductDetailScreen(
+                                              title: _products[index]['title']
+                                                  .toString(),
+                                              imageUrl: _products[index]
+                                                  ['imageUrl'],
+                                              price: _products[index]['price']
+                                                  .toString(),
+                                              salePrice: _products[index]
+                                                      ['salePrice']
+                                                  .toString(),
+                                              weight: _products[index]['weight']
+                                                  .toString(),
+                                              detail: _products[index]['detail']
+                                                  .toString());
+                                        }));
+                                      },
+                                      name:
+                                          _products[index]['title'].toString(),
+                                      price:
+                                          _products[index]['price'].toString(),
+                                      dPrice: _products[index]['salePrice']
+                                          .toString(),
+                                      borderColor: AppColor.buttonBgColor,
+                                      fillColor: AppColor.appBarButtonColor,
+                                      cartBorder: isTrue
+                                          ? AppColor.appBarButtonColor
+                                          : const Color.fromRGBO(
+                                              203, 1, 102, 1),
+                                      img: _products[index]['imageUrl'],
+                                      iconColor: AppColor.buttonBgColor,
+                                    );
+                                  } else {
+                                    // Handle the case when the list is empty or index is out of range
+                                    return Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Shimmer(
+                                        duration: const Duration(
+                                            seconds: 3), //Default value
+                                        interval: const Duration(
+                                            seconds:
+                                                5), //Default value: Duration(seconds: 0)
+                                        color: AppColor.grayColor
+                                            .withOpacity(0.2), //Default value
+                                        colorOpacity: 0.2, //Default value
+                                        enabled: true, //Default value
+                                        direction: const ShimmerDirection
+                                            .fromLTRB(), //Default Value
+                                        child: Container(
+                                          height: 100,
+                                          width: 150,
+                                          color: AppColor.grayColor
+                                              .withOpacity(0.2),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ],
                         )
                       : Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Expanded(
+                          padding:
+                              const EdgeInsets.only(top: 20.0, bottom: 10.0),
                           child: GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 1, vertical: 10),
+                            // padding: const EdgeInsets.symmetric(
+                            //     horizontal: 10, vertical: 10),
                             itemCount: _fashionProducts.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
+                              mainAxisSpacing: 16,
                             ),
                             itemBuilder: (_, index) {
                               // Check if _products is not empty and index is within valid range
@@ -809,8 +793,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return HomeCard(
                                   ontap: () {
                                     Navigator.push(context,
-                                        MaterialPageRoute(
-                                            builder: (context) {
+                                        MaterialPageRoute(builder: (context) {
                                       return FashionDetail(
                                           title: _fashionProducts[index]
                                                   ['title']
@@ -861,8 +844,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Container(
                                       height: 100,
                                       width: 150,
-                                      color: AppColor.grayColor
-                                          .withOpacity(0.2),
+                                      color:
+                                          AppColor.grayColor.withOpacity(0.2),
                                     ),
                                   ),
                                 ); // or some default widget
@@ -870,7 +853,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                         ),
-                      ),
                 ],
               ),
             ],
