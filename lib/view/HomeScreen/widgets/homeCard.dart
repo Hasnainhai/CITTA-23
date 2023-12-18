@@ -77,6 +77,13 @@ class HomeCard extends StatelessWidget {
                         children: <TextSpan>[
                           TextSpan(
                             text: price,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                          TextSpan(
+                            text: dPrice,
                             style: GoogleFonts.getFont(
                               "Gothic A1",
                               textStyle: const TextStyle(
@@ -84,13 +91,6 @@ class HomeCard extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                                 color: AppColor.fontColor,
                               ),
-                            ),
-                          ),
-                          TextSpan(
-                            text: dPrice,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              decoration: TextDecoration.lineThrough,
                             ),
                           ),
                         ],

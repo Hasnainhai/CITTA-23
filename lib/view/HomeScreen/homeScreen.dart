@@ -1,7 +1,6 @@
 // ignore_for_file: equal_keys_in_map, dead_code
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
-import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
@@ -602,10 +601,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ?['amount'] ??
                                                           '',
                                                 );
-                                              } else {
-                                                Utils.flushBarErrorMessage(
-                                                    'error occure while fetching bundle products',
-                                                    context);
+                                              } else if (_popularPacks
+                                                  .isEmpty) {
+                                                return const Center(
+                                                  child: Text('No Products...'),
+                                                );
                                               }
                                               return Container();
                                             },
@@ -741,6 +741,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       img: _products[index]['imageUrl'],
                                       iconColor: AppColor.buttonBgColor,
                                     );
+                                  } else if (_products.isEmpty) {
+                                    return const Center(
+                                      child: Text('No Products...'),
+                                    );
                                   } else {
                                     // Handle the case when the list is empty or index is out of range
                                     return Padding(
@@ -815,9 +819,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   name: _fashionProducts[index]['title']
                                       .toString(),
-                                  price: _fashionProducts[index]['price']
+                                  price: '',
+                                  dPrice: _fashionProducts[index]['price']
                                       .toString(),
-                                  dPrice: '',
                                   borderColor: AppColor.buttonBgColor,
                                   fillColor: AppColor.appBarButtonColor,
                                   cartBorder: isTrue
@@ -825,6 +829,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       : AppColor.buttonBgColor,
                                   img: _fashionProducts[index]['imageUrl'],
                                   iconColor: AppColor.buttonBgColor,
+                                );
+                              } else if (_fashionProducts.isEmpty) {
+                                return const Center(
+                                  child: Text('No Products...'),
                                 );
                               } else {
                                 return Padding(

@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/loading_manager.dart';
-import 'DashBoard/tapBar.dart';
 
 class AllFashionProd extends StatefulWidget {
   const AllFashionProd({super.key});
@@ -67,12 +66,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (c) => const DashBoardScreen(),
-              ),
-            );
+            Navigator.pop(context);
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -132,8 +126,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
                         }));
                       },
                       name: _fashionProducts[index]['title'].toString(),
-                      price: _fashionProducts[index]['price'].toString(),
-                      dPrice: '',
+                      price: '',
+                      dPrice: _fashionProducts[index]['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
                       cartBorder: isTrue
@@ -141,6 +135,10 @@ class _AllFashionProdState extends State<AllFashionProd> {
                           : AppColor.buttonBgColor,
                       img: _fashionProducts[index]['imageUrl'],
                       iconColor: AppColor.buttonBgColor,
+                    );
+                  } else if (_fashionProducts.isEmpty) {
+                    return const Center(
+                      child: Text('No Products...'),
                     );
                   } else {
                     return Padding(
