@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
@@ -129,7 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                   ),
-                  Card(
+                  Container(
+                    color: AppColor.grayColor.withOpacity(0.2),
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 20,

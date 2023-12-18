@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../res/components/loading_manager.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -28,6 +29,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _addressTextController.dispose();
     super.dispose();
   }
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   String? _email;
   String? _name;
@@ -53,32 +56,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _isLoading = false;
       });
       return;
-    }
-    try {
-      String uid = user!.uid;
-      final DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      if (userDoc == null) {
-        return;
-      } else {
-        _email = userDoc.get('email');
-        _name = userDoc.get('name');
-        _phNo = userDoc.get('phNo');
-        address = userDoc.get('shipping-address');
-        _pImage = userDoc.get('profilePic');
+    } else {
+      try {
+        String _uid = user!.uid;
+        final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_uid)
+            .get();
+        // ... existing code ...
+        if (userDoc != null || userDoc.data() != null) {
+          _email = userDoc.get('email');
+          _name = userDoc.get('name');
+          _phNo = userDoc.get('phNo');
+          address = userDoc.get('shipping-address');
+          _pImage = userDoc.get('profilePic');
 
-        _addressTextController.text = userDoc.get('shipping-address');
+          _addressTextController.text = userDoc.get('shipping-address');
+          GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+          if (googleUser != null) {
+            _name = googleUser.displayName;
+            _email = googleUser.email;
+            _pImage = googleUser.photoUrl ?? defaultProfile;
+            // Assuming you don't have a phone number for Google sign-in
+            // _phNo = 'Default Phone Number';
+          }
+        } else {
+          Utils.flushBarErrorMessage('User data not found', context);
+        }
+      } catch (error) {
+        setState(() {
+          _isLoading = false;
+        });
+        // Utils.flushBarErrorMessage('$error', context);
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
-    } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
-      Utils.flushBarErrorMessage('$error', context);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
     }
+    //   try {
+    // String _uid = user!.uid;
+    // final DocumentSnapshot userDoc =
+    //     await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    //     if (userDoc == null) {
+    //       return;
+    //     } else {
+    //       _email = userDoc.get('email');
+    //       _name = userDoc.get('name');
+    //       _phNo = userDoc.get('phNo');
+    //       address = userDoc.get('shipping-address');
+    //       _pImage = userDoc.get('profilePic');
+
+    //       _addressTextController.text = userDoc.get('shipping-address');
+    //     }
+    //   } catch (error) {
+    //     setState(() {
+    //       _isLoading = false;
+    //     });
+    //     Utils.flushBarErrorMessage('$error', context);
+    //   } finally {
+    //     setState(() {
+    //       _isLoading = false;
+    //     });
+    //   }
   }
 
   Future<void> _showAddressDialog() async {
@@ -235,22 +275,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
-        const SizedBox(width: 50.0),
+        const SizedBox(width: 5.0),
         IconButton(
-            onPressed: () {
+          onPressed: () async {
+            GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+            if (googleUser != null) {
+              // Fetch user details from Google Sign-In
+              setState(() {
+                _name = googleUser.displayName;
+                _email = googleUser.email;
+                _pImage = googleUser.photoUrl ?? defaultProfile;
+                // Assuming you don't have a phone number for Google sign-in
+                _phNo = 'Default Phone Number';
+              });
+
+              // Navigate to EditProfile with the fetched details
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditProfile(
-                  profilePic: _pImage == null ? defaultProfile : _pImage!,
-                  name: _name!,
-                  email: _email!,
-                  phNo: _phNo!,
+                  profilePic: _pImage ?? defaultProfile,
+                  name: _name ?? 'Default Name',
+                  email: _email ?? 'Default Email',
+                  phNo: _phNo ?? 'Default Phone Number',
                 );
               }));
-            },
-            icon: const Icon(
-              Icons.edit_outlined,
-              color: AppColor.whiteColor,
-            ))
+            } else {
+              // Handle the case where Google Sign-In failed or user is not signed in with Google
+              if (_name != null && _email != null && _phNo != null) {
+                // Navigate to EditProfile with existing user details
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditProfile(
+                    profilePic: _pImage ?? defaultProfile,
+                    name: _name ?? 'Default Name',
+                    email: _email ?? 'Default Email',
+                    phNo: _phNo ?? 'Default Phone Number',
+                  );
+                }));
+              } else {
+                Utils.flushBarErrorMessage('Error occurred', context);
+                // Handle the case where one or more variables are null.
+              }
+            }
+          },
+          icon: const Icon(
+            Icons.edit_outlined,
+            color: AppColor.whiteColor,
+          ),
+        )
       ],
     );
   }
