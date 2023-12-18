@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
-import '../../res/consts/firebase_const.dart';
 import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -51,7 +50,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'title': widget.title.toString(),
         'price': widget.price.toString(),
         'imageUrl': widget.imageUrl.toString(),
-        'isLike': like
+        // 'isLike': like,
       });
       Utils.toastMessage('SuccessFully add to favourite');
       // Display a success message or perform any other action
@@ -158,16 +157,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               onTap: () {
                                 // Toggle the value of like
                                 setState(() {
-                                  if (widget.title.isNotEmpty) {
-                                    setState(() {
-                                      like = true;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      like = false;
-                                    });
-                                  }
-                                  // like = !like;
+                                  like = !like;
 
                                   if (like) {
                                     // Add to favorites
