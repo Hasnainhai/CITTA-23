@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'DashBoard/tapBar.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
@@ -66,12 +65,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (c) => const DashBoardScreen(),
-              ),
-            );
+            Navigator.pop(context);
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -130,6 +124,10 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                         : AppColor.buttonBgColor,
                     img: _products[index]['imageUrl'],
                     iconColor: AppColor.buttonBgColor,
+                  );
+                } else if (_products.isEmpty) {
+                  return const Center(
+                    child: Text('No Products...'),
                   );
                 } else {
                   return Padding(
