@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,40 +46,48 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
   }
 
   void addAddress() async {
-    final _uuid = const Uuid().v1();
+    final isValid = _formKey.currentState!.validate();
+
+    final uuid = const Uuid().v1();
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    try {
-      setState(() {
-        isLoading = true;
-      });
-      Map<String, dynamic> addressMap = {
-        'id': userId,
-        'name': phoneController.text,
-        'phone': phoneController.text,
-        'address1': address1Controller.text,
-        "address2": address2Controller.text,
-        'city': cityController.text,
-        'state': stateController.text,
-        'zipcode': zipCodeController.text,
-      };
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("my_Address")
-          .doc(_uuid)
-          .set(addressMap);
-      Fluttertoast.showToast(msg: "Address has been added");
-    } catch (error) {
-      Fluttertoast.showToast(
-        msg: error.toString(),
-      );
-      setState(() {
-        isLoading = false;
-      });
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+    if (isValid) {
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        Map<String, dynamic> addressMap = {
+          'id': userId,
+          'name': phoneController.text,
+          'phone': phoneController.text,
+          'address1': address1Controller.text,
+          "address2": address2Controller.text,
+          'city': cityController.text,
+          'state': stateController.text,
+          'zipcode': zipCodeController.text,
+        };
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("my_Address")
+            .doc(uuid)
+            .set(addressMap);
+        Utils.flushBarErrorMessage('Address has been added', context);
+      } on FirebaseException catch (e) {
+        Utils.flushBarErrorMessage('${e.message}', context);
+        setState(() {
+          isLoading = false;
+        });
+      } catch (error) {
+        Utils.flushBarErrorMessage('$error', context);
+
+        setState(() {
+          isLoading = false;
+        });
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -92,6 +103,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
