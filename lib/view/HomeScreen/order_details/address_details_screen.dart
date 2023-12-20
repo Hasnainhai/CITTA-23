@@ -57,7 +57,8 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
         });
         Map<String, dynamic> addressMap = {
           'id': userId,
-          'name': phoneController.text,
+          'uuid': uuid,
+          'name': nameController.text,
           'phone': phoneController.text,
           'address1': address1Controller.text,
           "address2": address2Controller.text,
@@ -72,7 +73,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
             .doc(uuid)
             .set(addressMap);
         clearForm();
-        Utils.flushBarErrorMessage('Address has been added', context);
+        Fluttertoast.showToast(msg: "Address has been added");
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {

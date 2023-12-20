@@ -1,6 +1,8 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/deliveryAddress/widgets/address_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -47,7 +49,10 @@ class DeliveryAddress extends StatelessWidget {
                 width: 28.0,
                 color: AppColor.primaryColor,
                 child: const Center(
-                  child: Icon(Icons.add),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -56,46 +61,53 @@ class DeliveryAddress extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(
-          children: [
-            const VerticalSpeacing(30.0),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              width: double.infinity,
-              color: AppColor.whiteColor,
-              child: const Padding(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Column(
-                  children: [
-                    VerticalSpeacing(30.0),
-                    address_widget(
-                        title: 'Puraton Custom, Chhatak',
-                        address: '216/c East Road',
-                        phNo: '+8801710071000'),
-                    Divider(),
-                    VerticalSpeacing(20.0),
-                    address_widget(
-                        title: 'Thana Ghat Road, Chhatak',
-                        address: '216/c East Road',
-                        phNo: '+8801710071000'),
-                    Divider(),
-                    VerticalSpeacing(20.0),
-                    address_widget(
-                        title: 'Bus Stand, Chhatak',
-                        address: '216/c East Road',
-                        phNo: '+8801710071000'),
-                    Divider(),
-                    VerticalSpeacing(20.0),
-                    address_widget(
-                        title: 'Thana Ghat Road, Chhatak',
-                        address: '216/c East Road',
-                        phNo: '+8801710071000'),
-                    Divider(),
-                  ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const VerticalSpeacing(30.0),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                width: double.infinity,
+                color: AppColor.whiteColor,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .collection('my_Address')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      return ListView(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                              document.data() as Map<String, dynamic>;
+                          return address_widget(
+                            title: data['city'],
+                            address: data['address2'],
+                            phNo: data['phone'],
+                            uuid: data['uuid'],
+                          );
+                        }).toList(),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
