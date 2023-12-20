@@ -99,6 +99,10 @@ class DeliveryAddress extends StatelessWidget {
                             address: data['address2'],
                             phNo: data['phone'],
                             uuid: data['uuid'],
+                            address1: data['address1'],
+                            zipcode: data['zipcode'],
+                            name: data['name'],
+                            state: data['state'],
                           );
                         }).toList(),
                       );
