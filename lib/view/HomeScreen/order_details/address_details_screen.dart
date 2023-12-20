@@ -145,26 +145,61 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                               maxLines: 1,
                               text: "Full Name",
                               controller: nameController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your name";
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                             TextFieldCustom(
                               maxLines: 1,
                               text: "Phone Number",
                               controller: phoneController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your Phone Number";
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                             TextFieldCustom(
                               maxLines: 1,
                               text: "Address Link 1",
                               controller: address1Controller,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your Address";
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                             TextFieldCustom(
                               maxLines: 1,
                               text: "Address Link 2",
                               controller: address2Controller,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your Address";
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                             TextFieldCustom(
                               maxLines: 1,
                               text: "City",
                               controller: cityController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your City name";
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,6 +213,13 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                                     text: 'State',
                                     hintText: '',
                                     controller: stateController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter your State name";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
                                   ),
                                 ),
                                 SizedBox(
@@ -189,6 +231,13 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                                     text: 'Zip Code',
                                     hintText: '',
                                     controller: zipCodeController,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please enter your Zipe Code";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
                                   ),
                                 ),
                               ],
