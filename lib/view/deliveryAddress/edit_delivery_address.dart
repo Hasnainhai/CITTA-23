@@ -9,7 +9,6 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,14 +16,31 @@ import 'package:uuid/uuid.dart';
 
 import '../../../res/components/colors.dart';
 
-class AddressDetailSceen extends StatefulWidget {
-  const AddressDetailSceen({super.key});
-
+class EditAddressScreen extends StatefulWidget {
+  const EditAddressScreen({
+    super.key,
+    required this.name,
+    required this.phoneNumber,
+    required this.address1,
+    required this.address2,
+    required this.city,
+    required this.state,
+    required this.zipCode,
+    required this.uuid,
+  });
+  final String name;
+  final String phoneNumber;
+  final String address1;
+  final String address2;
+  final String city;
+  final String state;
+  final String zipCode;
+  final String uuid;
   @override
-  State<AddressDetailSceen> createState() => _AddressDetailSceenState();
+  State<EditAddressScreen> createState() => _EditAddressSceenState();
 }
 
-class _AddressDetailSceenState extends State<AddressDetailSceen> {
+class _EditAddressSceenState extends State<EditAddressScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -45,10 +61,27 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
     zipCodeController.clear();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() {
+    setState(() {
+      nameController.text = widget.name;
+      phoneController.text = widget.phoneNumber;
+      address1Controller.text = widget.address1;
+      address2Controller.text = widget.address2;
+      cityController.text = widget.city;
+      stateController.text = widget.state;
+      zipCodeController.text = widget.zipCode;
+    });
+  }
+
   void addAddress() async {
     final isValid = _formKey.currentState!.validate();
 
-    final uuid = const Uuid().v1();
     final userId = FirebaseAuth.instance.currentUser!.uid;
     if (isValid) {
       try {
@@ -57,7 +90,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
         });
         Map<String, dynamic> addressMap = {
           'id': userId,
-          'uuid': uuid,
+          'uuid': widget.uuid,
           'name': nameController.text,
           'phone': phoneController.text,
           'address1': address1Controller.text,
@@ -70,10 +103,10 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection("my_Address")
-            .doc(uuid)
+            .doc(widget.uuid)
             .set(addressMap);
         clearForm();
-        Fluttertoast.showToast(msg: "Address has been added");
+        Fluttertoast.showToast(msg: "Address has been Edited");
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {
