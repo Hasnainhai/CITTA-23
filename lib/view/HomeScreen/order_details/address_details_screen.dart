@@ -71,6 +71,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
             .collection("my_Address")
             .doc(uuid)
             .set(addressMap);
+        clearForm();
         Utils.flushBarErrorMessage('Address has been added', context);
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
@@ -278,6 +279,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                             RoundedButton(
                                 title: "Save Address",
                                 onpress: () {
+                                  addAddress();
                                   Navigator.pushNamed(
                                     context,
                                     RoutesName.checkOutScreen,
