@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
@@ -52,12 +54,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'imageUrl': widget.imageUrl.toString(),
         // 'isLike': like,
       });
-      Utils.toastMessage('SuccessFully add to favourite');
       // Display a success message or perform any other action
+      Utils.toastMessage('SuccessFully add to favourite');
     } catch (e) {
       // Handle errors
       Utils.flushBarErrorMessage('Error adding to favorites: $e', context);
-      // print('Error adding to favorites: $e');
     }
   }
 
@@ -158,13 +159,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 // Toggle the value of like
                                 setState(() {
                                   like = !like;
-
                                   if (like) {
                                     // Add to favorites
                                     addToFavorites();
+                                    like = true;
                                   } else {
                                     // Remove from favorites
                                     removeFromFavorites();
+                                    like = false;
                                   }
                                 });
                               },

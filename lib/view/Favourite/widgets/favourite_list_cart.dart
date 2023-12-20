@@ -8,7 +8,6 @@ class FavouristListCart extends StatelessWidget {
     super.key,
     required this.img,
     required this.title,
-    required this.subTitle,
     required this.price,
     required this.deleteIcon,
     required this.shoppingIcon,
@@ -16,7 +15,6 @@ class FavouristListCart extends StatelessWidget {
 
   final String img;
   final String title;
-  final String subTitle;
   final String price;
   final IconData deleteIcon;
   final IconData shoppingIcon;
@@ -53,14 +51,7 @@ class FavouristListCart extends StatelessWidget {
                             ),
                           ),
                           children: <TextSpan>[
-                            TextSpan(
-                              text: '$subTitle \n \n',
-                              style: const TextStyle(
-                                color: AppColor.grayColor,
-                                // fontWeight: FontWeight.w100,
-                                fontSize: 14.0,
-                              ),
-                            ),
+                          
                             TextSpan(
                               text: price,
                               style: const TextStyle(
