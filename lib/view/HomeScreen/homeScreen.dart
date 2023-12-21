@@ -512,7 +512,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Map<String, dynamic>
                                                     selectedPack =
                                                     _popularPacks[index];
-
                                                 return BundleProductScreen(
                                                   imageUrl: selectedPack[
                                                           'imageUrl'] ??

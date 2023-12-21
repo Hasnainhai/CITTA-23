@@ -1,4 +1,5 @@
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+// ignore_for_file: use_build_context_synchronously
+import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,13 +16,14 @@ class FavouriteList extends StatefulWidget {
 }
 
 class _FavouriteListState extends State<FavouriteList> {
+  bool _isLoading = true;
   final _firestoreInstance = FirebaseFirestore.instance;
   //fetch user favourite data
   Future<List<Map<String, dynamic>?>> getUserFavorites() async {
     try {
       // Get the user's UID
       String uid = FirebaseAuth.instance.currentUser!.uid;
-
+      print('UID: $uid');
       // Retrieve the favorite list for the current user
       QuerySnapshot<Map<String, dynamic>> snapshot = await _firestoreInstance
           .collection('favoriteList')
@@ -44,8 +46,38 @@ class _FavouriteListState extends State<FavouriteList> {
     }
   }
 
+  List<Map<String, dynamic>> favoritesList = [];
+  Future<void> fetchUserFavorites() async {
+    try {
+      List<Map<String, dynamic>?> userFavorites = await getUserFavorites();
+      userFavorites.removeWhere((favorite) => favorite == null);
+
+      setState(() {
+        favoritesList = userFavorites.map((favorite) => favorite!).toList();
+        _isLoading = false; // Set isLoading to false after data is loaded
+      });
+
+      print('this is favourite list $favoritesList');
+    } catch (e) {
+      Utils.flushBarErrorMessage(
+          'Error while fetching user favourite $e', context);
+      setState(() {
+        _isLoading = false; // Set isLoading to false in case of an error
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserFavorites();
+    fetchUserFavorites();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('this is favourite list ${favoritesList}');
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
@@ -64,72 +96,31 @@ class _FavouriteListState extends State<FavouriteList> {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: AppColor.blackColor,
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-          child: ListView(
-            children: const [
-              Column(
-                children: [
-                  VerticalSpeacing(25.0),
-                  FavouristListCart(
-                      img: 'images/orio.png',
-                      title: 'Oreo Biscut',
-                      price: '\$10',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/sulpherfree.png',
-                      title: 'Sulphuerfree Bura',
-                      price: '\$5',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/cauliflower.png',
-                      title: 'Cauliflower',
-                      price: '\$13',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/tomato.png',
-                      title: '2 Kg',
-                      price: '\$26',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/girlGuide.png',
-                      title: 'Girl Guide Biscuit',
-                      price: '\$18',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/Arnotts.png',
-                      title: "Arnott's",
-                      price: '\$15',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/orio.png',
-                      title: 'Oreo Biscut',
-                      price: '\$10',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                  FavouristListCart(
-                      img: 'images/cauliflower.png',
-                      title: 'Cauliflower',
-                      price: '\$13',
-                      deleteIcon: Icons.delete_outline,
-                      shoppingIcon: Icons.shopping_cart_outlined),
-                ],
-              ),
-            ],
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            child: ListView(
+              children: favoritesList.map((favorite) {
+                return FavouristListCart(
+                  img: favorite['imageUrl'],
+                  title: favorite['title'],
+                  price: favorite['salePrice'],
+                  deleteIcon: Icons.delete_outline,
+                  shoppingIcon: Icons.shopping_cart_outlined,
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),
