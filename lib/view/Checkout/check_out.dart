@@ -92,25 +92,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.addressdetailscreen,
-                        );
-                      },
-                      child: Text(
-                        'Add New',
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
                 SizedBox(
@@ -148,17 +129,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   phNo: data['phone'],
                                   address: data['address1'],
                                 ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
+                                const VerticalSpeacing(20.0),
                               ],
                             );
                           }).toList(),
                         );
                       }),
                 ),
-                const VerticalSpeacing(20.0),
-                const VerticalSpeacing(20.0),
                 Text(
                   'Select Payment System',
                   textAlign: TextAlign.start,
