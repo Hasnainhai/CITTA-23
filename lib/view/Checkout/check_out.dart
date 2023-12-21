@@ -5,6 +5,8 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:citta_23/view/review/review.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -111,21 +113,51 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     ),
                   ],
                 ),
-                const AddressCheckOutWidget(
-                    bgColor: AppColor.logoBgColor,
-                    borderColor: AppColor.primaryColor,
-                    titleColor: AppColor.primaryColor,
-                    title: 'Home Address',
-                    phNo: '(309) 071-9396-939',
-                    address: '1749 Custom Road, Chhastak'),
+                SizedBox(
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection('my_Address')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                        return ListView(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: snapshot.data!.docs
+                              .map((DocumentSnapshot document) {
+                            Map<String, dynamic> data =
+                                document.data() as Map<String, dynamic>;
+                            return Column(
+                              children: [
+                                AddressCheckOutWidget(
+                                  bgColor: AppColor.whiteColor,
+                                  borderColor: AppColor.grayColor,
+                                  titleColor: AppColor.blackColor,
+                                  title: data['address2'],
+                                  phNo: data['phone'],
+                                  address: data['address1'],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        );
+                      }),
+                ),
                 const VerticalSpeacing(20.0),
-                const AddressCheckOutWidget(
-                    bgColor: AppColor.whiteColor,
-                    borderColor: AppColor.grayColor,
-                    titleColor: AppColor.blackColor,
-                    title: 'Office Address',
-                    phNo: '(309)  071-9396-939',
-                    address: '152 Nobab Road, Sylhet'),
                 const VerticalSpeacing(20.0),
                 Text(
                   'Select Payment System',
