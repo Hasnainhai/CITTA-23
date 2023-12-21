@@ -14,7 +14,6 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
    CategoryType? categoryType;
-  // var categoryType = CategoryType.fashion;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

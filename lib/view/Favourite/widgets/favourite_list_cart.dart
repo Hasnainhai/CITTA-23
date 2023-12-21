@@ -12,6 +12,8 @@ class FavouristListCart extends StatelessWidget {
     required this.price,
     required this.deleteIcon,
     required this.shoppingIcon,
+    required this.ontap,
+    required this.ontap2,
   });
 
   final String img;
@@ -19,6 +21,8 @@ class FavouristListCart extends StatelessWidget {
   final String price;
   final IconData deleteIcon;
   final IconData shoppingIcon;
+  final Function ontap;
+  final Function ontap2;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -70,18 +74,28 @@ class FavouristListCart extends StatelessWidget {
                   ),
                 ],
               ),
-              trailing: const Column(
+              trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.delete_outline,
-                    color: AppColor.fontColor,
-                    size: 24,
+                  InkWell(
+                    onTap: () {
+                      ontap();
+                    },
+                    child: Icon(
+                      Icons.delete_outline,
+                      color: AppColor.fontColor,
+                      size: 24,
+                    ),
                   ),
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    color: AppColor.fontColor,
-                    size: 24,
+                  InkWell(
+                    onTap: () {
+                      ontap2();
+                    },
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: AppColor.fontColor,
+                      size: 24,
+                    ),
                   ),
                 ],
               ),

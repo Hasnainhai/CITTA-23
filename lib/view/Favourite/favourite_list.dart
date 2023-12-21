@@ -47,6 +47,7 @@ class _FavouriteListState extends State<FavouriteList> {
   }
 
   List<Map<String, dynamic>> favoritesList = [];
+  //fetch user favourite
   Future<void> fetchUserFavorites() async {
     try {
       List<Map<String, dynamic>?> userFavorites = await getUserFavorites();
@@ -56,8 +57,6 @@ class _FavouriteListState extends State<FavouriteList> {
         favoritesList = userFavorites.map((favorite) => favorite!).toList();
         _isLoading = false; // Set isLoading to false after data is loaded
       });
-
-      print('this is favourite list $favoritesList');
     } catch (e) {
       Utils.flushBarErrorMessage(
           'Error while fetching user favourite $e', context);
@@ -66,7 +65,38 @@ class _FavouriteListState extends State<FavouriteList> {
       });
     }
   }
+ void removeFromFavorites() async {
+    try {
+      // Get the user's UID
+      String uid = FirebaseAuth
+          .instance.currentUser!.uid; // You need to implement this function
 
+      // Query the 'favoriteList' collection to find the document to delete
+      QuerySnapshot querySnapshot = await _firestoreInstance
+          .collection('favoriteList')
+          .doc(uid)
+          .collection('favorites')
+          .where('title')
+          .get();
+
+      // Delete the document
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        await _firestoreInstance
+            .collection('favoriteList')
+            .doc(uid)
+            .collection('favorites')
+            .doc(doc.id)
+            .delete();
+      }
+
+      // Display a success message or perform any other action
+      Utils.toastMessage('SuccessFully removed from favourite');
+    } catch (e) {
+      // Handle errors
+      Utils.flushBarErrorMessage('Error removing from favorites: $e', context);
+      // print('Error removing from favorites: $e');
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -118,6 +148,10 @@ class _FavouriteListState extends State<FavouriteList> {
                   price: favorite['salePrice'],
                   deleteIcon: Icons.delete_outline,
                   shoppingIcon: Icons.shopping_cart_outlined,
+                   ontap: (){
+                     removeFromFavorites();
+                   },
+                    ontap2: (){},
                 );
               }).toList(),
             ),
