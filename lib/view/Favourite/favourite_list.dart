@@ -107,7 +107,6 @@ class _FavouriteListState extends State<FavouriteList> {
 
   @override
   Widget build(BuildContext context) {
-    print('this is favourite list ${favoritesList}');
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
