@@ -512,6 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Map<String, dynamic>
                                                     selectedPack =
                                                     _popularPacks[index];
+
                                                 return BundleProductScreen(
                                                   imageUrl: selectedPack[
                                                           'imageUrl'] ??
@@ -624,7 +625,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           : AppColor.buttonBgColor,
                                       img: _popularPacks[index]['imageUrl'],
                                       iconColor: AppColor.buttonBgColor,
-                                      addCart: () {  },
                                     );
                                   } else {
                                     // Handle the case when the list is empty or index is out of range
@@ -739,7 +739,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           : const Color.fromRGBO(
                                               203, 1, 102, 1),
                                       img: _products[index]['imageUrl'],
-                                      iconColor: AppColor.buttonBgColor, addCart: () {  },
+                                      iconColor: AppColor.buttonBgColor,
                                     );
                                   } else if (_products.isEmpty) {
                                     return const Center(
@@ -828,7 +828,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ? AppColor.appBarButtonColor
                                       : AppColor.buttonBgColor,
                                   img: _fashionProducts[index]['imageUrl'],
-                                  iconColor: AppColor.buttonBgColor, addCart: () {  },
+                                  iconColor: AppColor.buttonBgColor,
                                 );
                               } else if (_fashionProducts.isEmpty) {
                                 return const Center(

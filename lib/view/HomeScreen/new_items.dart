@@ -123,7 +123,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                         ? AppColor.appBarButtonColor
                         : AppColor.buttonBgColor,
                     img: _products[index]['imageUrl'],
-                    iconColor: AppColor.buttonBgColor, addCart: () {  },
+                    iconColor: AppColor.buttonBgColor,
                   );
                 } else if (_products.isEmpty) {
                   return const Center(

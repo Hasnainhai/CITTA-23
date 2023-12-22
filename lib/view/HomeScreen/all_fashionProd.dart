@@ -134,7 +134,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
                           ? AppColor.appBarButtonColor
                           : AppColor.buttonBgColor,
                       img: _fashionProducts[index]['imageUrl'],
-                      iconColor: AppColor.buttonBgColor, addCart: () {  },
+                      iconColor: AppColor.buttonBgColor,
                     );
                   } else if (_fashionProducts.isEmpty) {
                     return const Center(
