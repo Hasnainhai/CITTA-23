@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
+// ignore: camel_case_types
 class myOrderCard extends StatelessWidget {
   const myOrderCard({
     super.key,
