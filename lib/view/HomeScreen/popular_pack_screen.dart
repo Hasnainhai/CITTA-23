@@ -295,7 +295,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                             ? AppColor.appBarButtonColor
                             : AppColor.buttonBgColor,
                         img: _popularPacks[index]['imageUrl'],
-                        iconColor: AppColor.buttonBgColor,
+                        iconColor: AppColor.buttonBgColor, addCart: () {  },
                       );
                     } else {
                       return Padding(
