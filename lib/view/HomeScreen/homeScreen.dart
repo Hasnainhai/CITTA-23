@@ -1,10 +1,13 @@
 // ignore_for_file: equal_keys_in_map, dead_code
 import 'package:citta_23/res/components/loading_manager.dart';
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -44,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             'salePrice': qn.docs[i]['salePrice'],
             'detail': qn.docs[i]['detail'],
             'weight': qn.docs[i]['weight'],
+            'id': qn.docs[i]['id']
           });
         }
       });
@@ -162,6 +166,34 @@ class _HomeScreenState extends State<HomeScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  // Add to Cart code
+  void addToCart(
+    // String uid,
+    // Map<String, dynamic> product,
+    String img,
+    String title,
+    String dPrice,
+  ) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Add the product to the cart as a new document
+    await cartCollectionRef.add({
+      // 'productId': product['id'],
+      // 'productName': product['name'],
+      // 'productPrice': product['price'],
+      'id': userId,
+      'imageUrl': img,
+      'title': title,
+      'salePrice': dPrice,
+      // Add other product details as needed
+    });
   }
 
   @override
@@ -624,7 +656,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                           : AppColor.buttonBgColor,
                                       img: _popularPacks[index]['imageUrl'],
                                       iconColor: AppColor.buttonBgColor,
-                                      addCart: () {  },
+                                      // add to cart logic
+                                      addCart: () {
+                                        if (_popularPacks.isNotEmpty &&
+                                            index >= 0 &&
+                                            index < _popularPacks.length) {
+                                          addToCart(
+                                            _popularPacks[index]['imageUrl'],
+                                            _popularPacks[index]['title'],
+                                            _popularPacks[index]['salePrice'],
+                                          );
+                                          print(
+                                              '...................$uid.....................');
+                                          Utils.toastMessage(
+                                              'SuccessFully added to cart');
+                                        }
+                                      },
                                     );
                                   } else {
                                     // Handle the case when the list is empty or index is out of range
@@ -739,7 +786,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           : const Color.fromRGBO(
                                               203, 1, 102, 1),
                                       img: _products[index]['imageUrl'],
-                                      iconColor: AppColor.buttonBgColor, addCart: () {  },
+                                      iconColor: AppColor.buttonBgColor,
+                                      addCart: () {
+                                        print(
+                                            '....................ontap working...................');
+                                      },
                                     );
                                   } else if (_products.isEmpty) {
                                     return const Center(
@@ -828,7 +879,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ? AppColor.appBarButtonColor
                                       : AppColor.buttonBgColor,
                                   img: _fashionProducts[index]['imageUrl'],
-                                  iconColor: AppColor.buttonBgColor, addCart: () {  },
+                                  iconColor: AppColor.buttonBgColor,
+                                  addCart: () {},
                                 );
                               } else if (_fashionProducts.isEmpty) {
                                 return const Center(
