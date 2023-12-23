@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,6 +11,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
@@ -28,6 +32,48 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     setState(() {
       isChecked = value!;
     });
+  }
+
+  Future<void> initPayment(
+      {required String email, required String amount}) async {
+    try {
+      final response = await http.post(
+          Uri.parse(
+              "https://us-central1-citta-23-2b5be.cloudfunctions.net/stripePaymentIntentRequest"),
+          body: {
+            'email': email,
+            'amount': amount,
+          });
+      final jsonRespone = jsonDecode(
+        response.body,
+      );
+      debugPrint(jsonRespone.toString());
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: jsonRespone['paymentIntent'],
+        merchantDisplayName: 'Groccery',
+        customerId: jsonRespone['customerId'],
+        customerEphemeralKeySecret: jsonRespone['aphemeralKey'],
+      ));
+      await Stripe.instance.presentPaymentSheet();
+      Fluttertoast.showToast(msg: "Payment is successful");
+    } catch (e) {
+      if (e is StripeException) {
+        debugPrint(
+          "This error of stripe ${e.toString()}",
+        );
+        Fluttertoast.showToast(
+          msg: e.toString(),
+        );
+      } else {
+        debugPrint(
+          "This error of code ${e.toString()}",
+        );
+        Fluttertoast.showToast(
+          msg: e.toString(),
+        );
+      }
+    }
   }
   // Color bgColor = AppColor.whiteColor;
   // Color borderColor = AppColor.grayColor;
@@ -362,10 +408,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 RoundedButton(
                     title: 'Pay Now',
                     onpress: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (BuildContext context) => Rating(),
-                      );
+                      initPayment(
+                          email: "basitalyshah51214@gmail.com", amount: "50.0");
+                      // await showDialog(
+                      //   context: context,
+                      //   builder: (BuildContext context) => Rating(),
+                      // );
                     }),
                 const VerticalSpeacing(50.0),
               ],
