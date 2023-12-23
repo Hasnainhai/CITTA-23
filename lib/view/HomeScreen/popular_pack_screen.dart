@@ -243,6 +243,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                       _popularPacks[index];
                                   return BundleProductScreen(
                                     imageUrl: selectedPack['imageUrl'] ?? '',
+                                    id: selectedPack['id'] ?? "",
+                                    productId: selectedPack['sellerId'] ?? '',
                                     title: selectedPack['title'] ?? '',
                                     price: selectedPack['price'] ?? '',
                                     saleprice: selectedPack['salePrice'] ?? '',
