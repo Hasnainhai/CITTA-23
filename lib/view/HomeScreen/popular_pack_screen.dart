@@ -190,8 +190,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                   itemCount: _popularPacks.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 5, // Horizontal spacing
                     mainAxisSpacing: 10, // Vertical spacing
@@ -214,15 +213,15 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                       _popularPacks[index];
                                   return BundleProductScreen(
                                     imageUrl: selectedPack['imageUrl'] ?? '',
+                                    id: selectedPack['id'] ?? "",
+                                    productId: selectedPack['sellerId'] ?? '',
                                     title: selectedPack['title'] ?? '',
                                     price: selectedPack['price'] ?? '',
-                                    saleprice:
-                                        selectedPack['salePrice'] ?? '',
+                                    saleprice: selectedPack['salePrice'] ?? '',
                                     detail: selectedPack['detail'] ?? '',
                                     weight: selectedPack['weight'] ?? '',
                                     size: selectedPack['size'] ?? '',
-                                    img1: selectedPack['product1']
-                                            ?['image'] ??
+                                    img1: selectedPack['product1']?['image'] ??
                                         '',
                                     title1: selectedPack['product1']
                                             ?['title'] ??
@@ -230,8 +229,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                     amount1: selectedPack['product1']
                                             ?['amount'] ??
                                         '',
-                                    img2: selectedPack['product2']
-                                            ?['image'] ??
+                                    img2: selectedPack['product2']?['image'] ??
                                         '',
                                     title2: selectedPack['product2']
                                             ?['title'] ??
@@ -239,8 +237,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                     amount2: selectedPack['product2']
                                             ?['amount'] ??
                                         '',
-                                    img3: selectedPack['product3']
-                                            ?['image'] ??
+                                    img3: selectedPack['product3']?['image'] ??
                                         '',
                                     title3: selectedPack['product3']
                                             ?['title'] ??
@@ -248,8 +245,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                     amount3: selectedPack['product3']
                                             ?['amount'] ??
                                         '',
-                                    img4: selectedPack['product4']
-                                            ?['image'] ??
+                                    img4: selectedPack['product4']?['image'] ??
                                         '',
                                     title4: selectedPack['product4']
                                             ?['title'] ??
@@ -257,8 +253,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                     amount4: selectedPack['product4']
                                             ?['amount'] ??
                                         '',
-                                    img5: selectedPack['product5']
-                                            ?['image'] ??
+                                    img5: selectedPack['product5']?['image'] ??
                                         '',
                                     title5: selectedPack['product5']
                                             ?['title'] ??
@@ -266,8 +261,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                                     amount5: selectedPack['product5']
                                             ?['amount'] ??
                                         '',
-                                    img6: selectedPack['product6']
-                                            ?['image'] ??
+                                    img6: selectedPack['product6']?['image'] ??
                                         '',
                                     title6: selectedPack['product6']
                                             ?['title'] ??
@@ -307,8 +301,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                               .withOpacity(0.2), //Default value
                           colorOpacity: 0.2, //Default value
                           enabled: true, //Default value
-                          direction: const ShimmerDirection
-                              .fromLTRB(), //Default Value
+                          direction:
+                              const ShimmerDirection.fromLTRB(), //Default Value
                           child: Container(
                             height: 100,
                             width: 150,

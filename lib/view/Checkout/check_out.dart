@@ -19,7 +19,18 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen({super.key});
+  const CheckOutScreen(
+      {super.key,
+      required this.tile,
+      required this.price,
+      required this.img,
+      required this.id,
+      required this.customerId});
+  final String tile;
+  final String price;
+  final String img;
+  final String id;
+  final String customerId;
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();

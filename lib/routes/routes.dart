@@ -114,10 +114,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const ProfileScreen(),
         );
-      case RoutesName.checkOutScreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const CheckOutScreen(),
-        );
+      // case RoutesName.checkOutScreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const CheckOutScreen(),
+      //   );
       case RoutesName.dashboardScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const DashBoardScreen(),

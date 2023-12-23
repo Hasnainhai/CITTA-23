@@ -106,12 +106,15 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return ProductDetailScreen(
-                            title: _products[index]['title'].toString(),
-                            imageUrl: _products[index]['imageUrl'],
-                            price: _products[index]['price'].toString(),
-                            salePrice: _products[index]['salePrice'].toString(),
-                            weight: _products[index]['weight'].toString(),
-                            detail: _products[index]['detail'].toString());
+                          title: _products[index]['title'].toString(),
+                          imageUrl: _products[index]['imageUrl'],
+                          price: _products[index]['price'].toString(),
+                          salePrice: _products[index]['salePrice'].toString(),
+                          weight: _products[index]['weight'].toString(),
+                          detail: _products[index]['detail'].toString(),
+                          id: _products[index]['id'].toString(),
+                          sallerId: _products[index]['sellerId'].toString(),
+                        );
                       }));
                     },
                     name: _products[index]['title'].toString(),

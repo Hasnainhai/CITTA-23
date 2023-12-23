@@ -13,14 +13,17 @@ import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen(
-      {super.key,
-      required this.title,
-      required this.imageUrl,
-      required this.price,
-      required this.salePrice,
-      required this.weight,
-      required this.detail});
+  const ProductDetailScreen({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+    required this.price,
+    required this.salePrice,
+    required this.weight,
+    required this.detail,
+    required this.id,
+    required this.sallerId,
+  });
 
   final String title;
   final String imageUrl;
@@ -28,6 +31,8 @@ class ProductDetailScreen extends StatefulWidget {
   final String salePrice;
   final String weight;
   final String detail;
+  final String id;
+  final String sallerId;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
