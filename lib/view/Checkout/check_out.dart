@@ -8,6 +8,7 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
+import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   void saveDetail() {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     var fireStore = FirebaseFirestore.instance;
-    var uid = Uuid().v1();
+    var uid = const Uuid().v1();
     fireStore
         .collection('users')
         .doc(userId)
