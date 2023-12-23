@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const stripe = require("stripe")(
-    "secerat key here",
+    "sk_test_51MqJ7aSDFxQSCBeqQM7eh52dvMSKJxSiFgWNDG3hJ9VNtt4J6uxnIsvwBkIOtjg9PAStb2q7lDPzyIEyNzabpFhn00key2zWb4",
 );
 
 exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) => {
@@ -18,13 +18,13 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
       customerId = customerList.data[0].id;
     } else {
       const customer = await stripe.customers.create({
-        name: "Jenny Rosen",
+        name: req.body.name,
         address: {
-          line1: "510 Townsend St",
-          postal_code: "98140",
-          city: "San Francisco",
-          state: "CA",
-          country: "US",
+          line1: req.body.line1,
+          postal_code: req.body.postal_code,
+          city: req.body.city,
+          state: req.body.state,
+          country: "IND",
         },
       });
       customerId = customer.data.id;
@@ -40,17 +40,17 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
     const paymentIntent = await stripe.paymentIntents.create({
       description: "Buying groccery from citta",
       shipping: {
-        name: "Jenny Rosen",
+        name: req.body.name,
         address: {
-          line1: "510 Townsend St",
-          postal_code: "98140",
-          city: "San Francisco",
-          state: "CA",
-          country: "US",
+          line1: req.body.line1S,
+          postal_code: req.body.postal_code,
+          city: req.body.city,
+          state: req.body.state,
+          country: "IND",
         },
       },
       amount: parseInt(req.body.amount),
-      currency: "usd",
+      currency: "inr",
       payment_method_types: ["card"],
     });
 

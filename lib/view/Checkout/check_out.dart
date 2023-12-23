@@ -27,6 +27,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   bool secondButton = false;
   bool thirdButton = false;
   bool isChecked = false;
+  String? address;
+  String? postalCode;
+  String? city;
+  String? state;
+  String? name;
 
   onChanged(bool? value) {
     setState(() {
@@ -34,8 +39,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     });
   }
 
-  Future<void> initPayment(
-      {required String email, required String amount}) async {
+  Future<void> initPayment({
+    required String email,
+    required String amount,
+  }) async {
     try {
       final response = await http.post(
           Uri.parse(
@@ -43,6 +50,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           body: {
             'email': email,
             'amount': amount,
+            'address': address,
+            'postal_code': postalCode,
+            'city': city,
+            'state': state,
+            'name': name,
           });
       final jsonRespone = jsonDecode(
         response.body,
@@ -165,6 +177,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               .map((DocumentSnapshot document) {
                             Map<String, dynamic> data =
                                 document.data() as Map<String, dynamic>;
+                            address = data['address2'];
+                            name = data['name'];
+                            city = data['city'];
+                            postalCode = data['zipcode'];
+                            state = data['state'];
+
                             return Column(
                               children: [
                                 AddressCheckOutWidget(
@@ -377,29 +395,29 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   text: 'Card Number',
                   hintText: '71501 90123 **** ****',
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.43,
-                      child: const TextFieldCustom(
-                        maxLines: 1,
-                        text: 'Expiry Date',
-                        hintText: '01/04/2028',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width * 0.43,
-                      child: const TextFieldCustom(
-                        maxLines: 2,
-                        text: 'CVV',
-                        hintText: '1214',
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     SizedBox(
+                //       height: 100,
+                //       width: MediaQuery.of(context).size.width * 0.43,
+                //       child: const TextFieldCustom(
+                //         maxLines: 1,
+                //         text: 'Expiry Date',
+                //         hintText: '01/04/2028',
+                //       ),
+                //     ),
+                //     SizedBox(
+                //       height: 100,
+                //       width: MediaQuery.of(context).size.width * 0.43,
+                //       child: const TextFieldCustom(
+                //         maxLines: 2,
+                //         text: 'CVV',
+                //         hintText: '1214',
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const VerticalSpeacing(20.0),
                 const ToggleWidget(
                   title: 'Remember My Card Details',
@@ -408,8 +426,21 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 RoundedButton(
                     title: 'Pay Now',
                     onpress: () async {
-                      initPayment(
-                          email: "basitalyshah51214@gmail.com", amount: "50.0");
+                      debugPrint("press");
+                      if (name != null &&
+                          postalCode != null &&
+                          city != null &&
+                          state != null &&
+                          address != null) {
+                        print("this is the name of customer:$name");
+                        initPayment(
+                            email: "basitalyshah51214@gmail.com",
+                            amount: "50.0");
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Please enter address details");
+                      }
+
                       // await showDialog(
                       //   context: context,
                       //   builder: (BuildContext context) => Rating(),
