@@ -1,11 +1,7 @@
-// ignore_for_file: use_build_context_synchronously
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/widgets/increase_container.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -30,65 +26,6 @@ class FashionDetail extends StatefulWidget {
 
 class _FashionDetailState extends State<FashionDetail> {
   bool like = false;
-  final _firestoreInstance = FirebaseFirestore.instance;
-
-  void addToFavorites() async {
-    try {
-      // Get the user's UID
-      String uid = FirebaseAuth
-          .instance.currentUser!.uid; // You need to implement this function
-
-      // Add the item to the 'favoriteList' collection
-      await _firestoreInstance
-          .collection('favoriteList')
-          .doc(uid)
-          .collection('favorites')
-          .add({
-        'title': widget.title,
-        'salePrice': widget.salePrice,
-        'imageUrl': widget.imageUrl,
-        // 'isLike': like,
-      });
-      // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully add to favourite');
-    } catch (e) {
-      // Handle errors
-      Utils.flushBarErrorMessage('Error adding to favorites: $e', context);
-    }
-  }
-
-  void removeFromFavorites() async {
-    try {
-      // Get the user's UID
-      String uid = FirebaseAuth
-          .instance.currentUser!.uid; // You need to implement this function
-
-      // Query the 'favoriteList' collection to find the document to delete
-      QuerySnapshot querySnapshot = await _firestoreInstance
-          .collection('favoriteList')
-          .doc(uid)
-          .collection('favorites')
-          .where('title', isEqualTo: widget.title.toString())
-          .get();
-
-      // Delete the document
-      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-        await _firestoreInstance
-            .collection('favoriteList')
-            .doc(uid)
-            .collection('favorites')
-            .doc(doc.id)
-            .delete();
-      }
-
-      // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully removed from favourite');
-    } catch (e) {
-      // Handle errors
-      Utils.flushBarErrorMessage('Error removing from favorites: $e', context);
-      // print('Error removing from favorites: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,18 +88,8 @@ class _FashionDetailState extends State<FashionDetail> {
                           children: [
                             InkWell(
                               onTap: () {
-                                // Toggle the value of like
                                 setState(() {
-                                  like = !like;
-                                  if (like) {
-                                    // Add to favorites
-                                    addToFavorites();
-                                    like = true;
-                                  } else {
-                                    // Remove from favorites
-                                    removeFromFavorites();
-                                    like = false;
-                                  }
+                                  like = !like; // Toggle the value of like
                                 });
                               },
                               child: Container(
@@ -206,6 +133,7 @@ class _FashionDetailState extends State<FashionDetail> {
                   ),
                 ),
                 const VerticalSpeacing(16),
+              
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -222,6 +150,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             ),
                           ),
                         ),
+                      
                       ],
                     ),
                     const IncreaseContainer()

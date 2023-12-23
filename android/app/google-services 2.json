@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1098406014436",
+    "project_id": "citta-23-2b5be",
+    "storage_bucket": "citta-23-2b5be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098406014436:android:5d011ad58d690ed4b86bf1",
+        "android_client_info": {
+          "package_name": "com.example.citta_23"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbDVu885-0DMxYZ_9eE6_y7-KU7tqogoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

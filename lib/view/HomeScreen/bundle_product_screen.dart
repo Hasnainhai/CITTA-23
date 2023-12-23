@@ -1,10 +1,5 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/utils/utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -80,68 +75,27 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
   bool like = false;
   int currentIndex = 0;
 
-  final _firestoreInstance = FirebaseFirestore.instance;
+  // List<Color> colors = [
+  //   AppColor.primaryColor,
+  //   AppColor.primaryColor,
+  //   AppColor.primaryColor
+  // ];
+  // late List<String?> imgList;
 
-  void addToFavorites() async {
-    try {
-      // Get the user's UID
-      String uid = FirebaseAuth
-          .instance.currentUser!.uid; // You need to implement this function
-
-      // Add the item to the 'favoriteList' collection
-      await _firestoreInstance
-          .collection('favoriteList')
-          .doc(uid)
-          .collection('favorites')
-          .add({
-        'title': widget.title.toString(),
-        'salePrice': widget.saleprice.toString(),
-        'imageUrl': widget.imageUrl.toString(),
-        // 'isLike': like,
-      });
-      // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully add to favourite');
-    } catch (e) {
-      // Handle errors
-      Utils.flushBarErrorMessage('Error adding to favorites: $e', context);
-    }
-  }
-
-  void removeFromFavorites() async {
-    try {
-      // Get the user's UID
-      String uid = FirebaseAuth
-          .instance.currentUser!.uid; // You need to implement this function
-
-      // Query the 'favoriteList' collection to find the document to delete
-      QuerySnapshot querySnapshot = await _firestoreInstance
-          .collection('favoriteList')
-          .doc(uid)
-          .collection('favorites')
-          .where('title', isEqualTo: widget.title.toString())
-          .get();
-
-      // Delete the document
-      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-        await _firestoreInstance
-            .collection('favoriteList')
-            .doc(uid)
-            .collection('favorites')
-            .doc(doc.id)
-            .delete();
-      }
-
-      // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully removed from favourite');
-    } catch (e) {
-      // Handle errors
-      Utils.flushBarErrorMessage('Error removing from favorites: $e', context);
-      // print('Error removing from favorites: $e');
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   imgList = [
+  //     widget.img1,
+  //     widget.img2,
+  //     widget.img3,
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print(
+        '........................................${widget.title1}............................');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -195,18 +149,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                // Toggle the value of like
                                 setState(() {
-                                  like = !like;
-                                  if (like) {
-                                    // Add to favorites
-                                    addToFavorites();
-                                    like = true;
-                                  } else {
-                                    // Remove from favorites
-                                    removeFromFavorites();
-                                    like = false;
-                                  }
+                                  like = !like; // Toggle the value of like
                                 });
                               },
                               child: Container(
@@ -233,6 +177,59 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             ),
                           ),
                         ),
+                        // CarouselSlider(
+                        //   items: imgList
+                        //       .where((item) =>
+                        //           item != null) // Filter out null values
+                        //       .map((item) => Center(
+                        //             child: Image.network(
+                        //               item!,
+                        //               height: 200,
+                        //             ),
+                        //           ))
+                        //       .toList(),
+                        //   options: CarouselOptions(
+                        //     enlargeCenterPage: true,
+                        //     onPageChanged: (index, reason) {
+                        //       setState(() {
+                        //         currentIndex = index % colors.length;
+                        //       });
+                        //     },
+                        //   ),
+                        // ),
+                        // const VerticalSpeacing(40),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       width: 18,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 0 ? colors[0] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 10,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 1 ? colors[1] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 10,
+                        //       height: 5,
+                        //       margin: const EdgeInsets.symmetric(horizontal: 3),
+                        //       decoration: BoxDecoration(
+                        //         color:
+                        //             currentIndex == 2 ? colors[2] : Colors.grey,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

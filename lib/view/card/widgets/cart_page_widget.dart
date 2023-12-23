@@ -1,4 +1,3 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
@@ -8,10 +7,12 @@ class CartWidget extends StatelessWidget {
   const CartWidget({
     super.key,
     required this.title,
+    required this.subtitle,
     required this.price,
     required this.img,
   });
   final String title;
+  final String subtitle;
   final String price;
   final String img;
   @override
@@ -28,17 +29,14 @@ class CartWidget extends StatelessWidget {
               leading: SizedBox(
                 height: 80.0,
                 width: 58.0,
-                child: FancyShimmerImage(
-                  imageUrl: img,
-                  boxFit: BoxFit.fill,
-                ),
+                child: Image.asset(img),
               ),
               title: Row(
                 children: [
                   const SizedBox(width: 30.0),
                   Text.rich(
                     TextSpan(
-                      text: title,
+                      text: '$title \n',
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -47,6 +45,15 @@ class CartWidget extends StatelessWidget {
                           color: AppColor.fontColor,
                         ),
                       ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: subtitle,
+                          style: const TextStyle(
+                            color: AppColor.grayColor,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
