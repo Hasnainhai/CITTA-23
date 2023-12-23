@@ -12,7 +12,7 @@ import '../../res/components/colors.dart';
 import 'widgets/increase_container.dart';
 
 class BundleProductScreen extends StatefulWidget {
-  const BundleProductScreen({
+  BundleProductScreen({
     super.key,
     required this.imageUrl,
     required this.title,
@@ -45,7 +45,7 @@ class BundleProductScreen extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String price;
-  final String saleprice;
+  String saleprice;
   final String detail;
   final String weight;
   final String size;
@@ -287,7 +287,14 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ],
                     ),
-                    const IncreaseContainer()
+                    IncreaseContainer(
+                      price: widget.saleprice,
+                      onPriceChanged: (updatedPrice) {
+                        setState(() {
+                          widget.saleprice = updatedPrice.toString();
+                        });
+                      },
+                    ),
                   ],
                 ),
                 const VerticalSpeacing(30),

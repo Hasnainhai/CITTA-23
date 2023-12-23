@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class IncreaseContainer extends StatefulWidget {
-  const IncreaseContainer({super.key});
-
+  const IncreaseContainer(
+      {super.key, required this.onPriceChanged, required this.price});
+  final Function(int) onPriceChanged;
+  final String price;
   @override
   State<IncreaseContainer> createState() => _IncreaseContainerState();
 }
-
 class _IncreaseContainerState extends State<IncreaseContainer> {
   int amount = 1;
 
@@ -18,10 +19,19 @@ class _IncreaseContainerState extends State<IncreaseContainer> {
     });
   }
 
-  decreasement() {
-    setState(() {
-      amount--;
-    });
+  void decreasement() {
+    if (amount > 1) {
+      setState(() {
+        amount--;
+        updatePrice();
+      });
+    }
+  }
+
+  void updatePrice() {
+    final intPrice = int.parse(widget.price);
+    final updatedPrice = (intPrice ~/ amount).toString();
+    widget.onPriceChanged(int.parse(updatedPrice));
   }
 
   @override

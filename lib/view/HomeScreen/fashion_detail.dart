@@ -12,7 +12,7 @@ import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
 class FashionDetail extends StatefulWidget {
-  const FashionDetail(
+  FashionDetail(
       {super.key,
       required this.title,
       required this.imageUrl,
@@ -21,7 +21,7 @@ class FashionDetail extends StatefulWidget {
 
   final String title;
   final String imageUrl;
-  final String salePrice;
+  String salePrice;
   final String detail;
 
   @override
@@ -224,7 +224,14 @@ class _FashionDetailState extends State<FashionDetail> {
                         ),
                       ],
                     ),
-                    const IncreaseContainer()
+                    IncreaseContainer(
+                      price: widget.salePrice,
+                      onPriceChanged: (updatedPrice) {
+                        setState(() {
+                          widget.salePrice = updatedPrice.toString();
+                        });
+                      },
+                    ),
                   ],
                 ),
                 const VerticalSpeacing(

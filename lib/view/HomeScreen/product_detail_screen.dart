@@ -14,6 +14,15 @@ import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
+  ProductDetailScreen(
+      {super.key,
+      required this.title,
+      required this.imageUrl,
+      required this.price,
+      required this.salePrice,
+      required this.weight,
+      required this.detail});
+
   const ProductDetailScreen({
     super.key,
     required this.title,
@@ -29,7 +38,7 @@ class ProductDetailScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String price;
-  final String salePrice;
+  String salePrice;
   final String weight;
   final String detail;
   final String id;
@@ -264,7 +273,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ],
                     ),
-                    const IncreaseContainer()
+                    IncreaseContainer(
+                      price: widget.salePrice,
+                      onPriceChanged: (updatedPrice) {
+                        setState(() {
+                          widget.salePrice = updatedPrice.toString();
+                        });
+                      },
+                    ),
                   ],
                 ),
                 const VerticalSpeacing(

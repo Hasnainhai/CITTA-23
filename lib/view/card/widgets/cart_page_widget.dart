@@ -4,16 +4,25 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../HomeScreen/widgets/increase_container.dart';
 
-class CartWidget extends StatelessWidget {
-  const CartWidget({
+// ignore: must_be_immutable
+class CartWidget extends StatefulWidget {
+  CartWidget({
     super.key,
     required this.title,
     required this.price,
     required this.img,
+    required this.onDelete,
   });
   final String title;
-  final String price;
+  String price;
   final String img;
+  final Function() onDelete;
+
+  @override
+  State<CartWidget> createState() => _CartWidgetState();
+}
+
+class _CartWidgetState extends State<CartWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,7 +38,7 @@ class CartWidget extends StatelessWidget {
                 height: 80.0,
                 width: 58.0,
                 child: FancyShimmerImage(
-                  imageUrl: img,
+                  imageUrl: widget.img,
                   boxFit: BoxFit.fill,
                 ),
               ),
@@ -38,7 +47,7 @@ class CartWidget extends StatelessWidget {
                   const SizedBox(width: 30.0),
                   Text.rich(
                     TextSpan(
-                      text: title,
+                      text: widget.title,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -51,25 +60,37 @@ class CartWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              subtitle: const Padding(
-                padding: EdgeInsets.only(top: 9.0),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 9.0),
                 child: Row(
                   children: [
-                    SizedBox(width: 30.0),
-                    IncreaseContainer(),
+                    const SizedBox(width: 30.0),
+                    IncreaseContainer(
+                      price: widget.price,
+                      onPriceChanged: (updatedPrice) {
+                        setState(() {
+                          widget.price = updatedPrice.toString();
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.delete_outline,
-                    color: AppColor.fontColor,
-                    size: 24,
+                  InkWell(
+                    onTap: () {
+                      widget.onDelete();
+                    },
+                    child: const Icon(
+                      Icons.delete_outline,
+                      color: AppColor.fontColor,
+                      size: 24,
+                    ),
                   ),
                   Text(
-                    price,
+                    widget.price,
                     style: GoogleFonts.getFont(
                       "Gothic A1",
                       textStyle: const TextStyle(
