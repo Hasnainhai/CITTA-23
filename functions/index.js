@@ -38,7 +38,7 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
 
     // Creates a new payment intent with amount passed in from the client
     const paymentIntent = await stripe.paymentIntents.create({
-      description: "Software development services",
+      description: "Buying groccery from citta",
       shipping: {
         name: "Jenny Rosen",
         address: {

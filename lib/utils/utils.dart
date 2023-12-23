@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:another_flushbar/flushbar.dart';
+
+import 'package:image_picker/image_picker.dart';
 
 class Utils {
   static void focusNode(
@@ -55,5 +59,23 @@ class Utils {
         ),
       ),
     );
+  }
+
+  Future<File?> pickImageFromGallery(
+    BuildContext context,
+  ) async {
+    File? image;
+    try {
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        image = File(
+          pickedImage.path,
+        );
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+    }
+    return image;
   }
 }
