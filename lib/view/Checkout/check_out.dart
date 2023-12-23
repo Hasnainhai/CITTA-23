@@ -410,10 +410,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     onpress: () async {
                       initPayment(
                           email: "basitalyshah51214@gmail.com", amount: "50.0");
-                      await showDialog(
-                        context: context,
-                        builder: (BuildContext context) => Rating(),
-                      );
+                      // await showDialog(
+                      //   context: context,
+                      //   builder: (BuildContext context) => Rating(),
+                      // );
                     }),
                 const VerticalSpeacing(50.0),
               ],
