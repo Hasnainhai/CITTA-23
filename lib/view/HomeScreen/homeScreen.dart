@@ -911,7 +911,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                       : AppColor.buttonBgColor,
                                   img: _fashionProducts[index]['imageUrl'],
                                   iconColor: AppColor.buttonBgColor,
-                                  addCart: () {},
+                                  addCart: () {
+                                    if (_fashionProducts.isNotEmpty &&
+                                        index >= 0 &&
+                                        index < _fashionProducts.length) {
+                                      addToCart(
+                                        _fashionProducts[index]['imageUrl'],
+                                        _fashionProducts[index]['title'],
+                                        _fashionProducts[index]['price'],
+                                      );
+                                    }
+                                  },
                                 );
                               } else if (_fashionProducts.isEmpty) {
                                 return const Center(
