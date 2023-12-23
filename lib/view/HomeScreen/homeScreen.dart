@@ -1,6 +1,5 @@
 // ignore_for_file: equal_keys_in_map, dead_code
 import 'package:citta_23/res/components/loading_manager.dart';
-import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
