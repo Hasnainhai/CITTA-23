@@ -2,6 +2,7 @@
 
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/widgets/increase_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,12 +23,26 @@ class ProductDetailScreen extends StatefulWidget {
       required this.weight,
       required this.detail});
 
+  const ProductDetailScreen({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+    required this.price,
+    required this.salePrice,
+    required this.weight,
+    required this.detail,
+    required this.id,
+    required this.sallerId,
+  });
+
   final String title;
   final String imageUrl;
   final String price;
   String salePrice;
   final String weight;
   final String detail;
+  final String id;
+  final String sallerId;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -368,9 +383,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   RoutesName.checkOutScreen,
+                          // );
+                          print(widget.sallerId);
+                          Navigator.push(
                             context,
-                            RoutesName.checkOutScreen,
+                            MaterialPageRoute(
+                              builder: (c) => CheckOutScreen(
+                                tile: widget.title,
+                                price: widget.price,
+                                img: widget.imageUrl,
+                                id: widget.id,
+                                customerId: widget.sallerId,
+                              ),
+                            ),
                           );
                         },
                         child: Container(

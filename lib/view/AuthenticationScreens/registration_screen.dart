@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:io';
+
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/profile/editProfile/widgets/image_pickerWidget.dart';
+import 'package:citta_23/view/profile/widgets/common_firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController phNoController = TextEditingController();
+  File? image;
 
   @override
   void dispose() {
@@ -53,6 +58,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         final uid = user!.uid;
         // user.updateDisplayName(nameController.text);
         // user.reload();
+        String profileUrl =
+            'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg';
+        if (image != null) {
+          CommonFirebaseStorage commonStorage = CommonFirebaseStorage();
+
+          profileUrl = await commonStorage.storeFileFileToFirebase(
+              'profile/$uid', image!);
+        }
         await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'id': uid,
           'name': nameController.text,
@@ -62,6 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           'userWish': [],
           'userCart': [],
           'createdAt': Timestamp.now(),
+          'profilePic': profileUrl,
         });
         Navigator.pushNamed(context, RoutesName.dashboardScreen);
         Utils.toastMessage('SuccessFully Register');
@@ -82,6 +96,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
         });
       }
     }
+  }
+
+  void pickImage() async {
+    final pickedImage = await pickImageFromGallery(context);
+
+    setState(() {
+      image = pickedImage;
+    });
   }
 
   @override
@@ -151,6 +173,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
+                            Center(
+                              child: Stack(
+                                alignment: AlignmentDirectional.bottomCenter,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundColor: AppColor.buttonBgColor,
+                                      foregroundImage: image == null
+                                          ? null
+                                          : FileImage(
+                                              image!,
+                                            ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                        height: 28,
+                                        width: 28,
+                                        color: Colors.white,
+                                        child: const Icon(Icons.add)),
+                                    onTap: () {
+                                      pickImage();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             const VerticalSpeacing(30),
                             // Name
                             TextFieldCustom(

@@ -14,6 +14,8 @@ class ProductDetailsWidget extends StatelessWidget {
     required this.price,
     required this.productPrice,
     required this.procustAverate,
+    required this.productId,
+    required this.id,
   });
 
   final String img;
@@ -22,6 +24,8 @@ class ProductDetailsWidget extends StatelessWidget {
   final String price;
   final String productPrice;
   final String procustAverate;
+  final String productId;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return SizedBox(

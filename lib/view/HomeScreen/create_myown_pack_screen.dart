@@ -252,6 +252,9 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                                           _products[index]['price'].toString(),
                                       salePrice: _products[index]['salePrice']
                                           .toString(),
+                                      id: _products[index]['id'].toString(),
+                                      sallerId: _products[index]['sellerId']
+                                          .toString(),
                                       weight:
                                           _products[index]['weight'].toString(),
                                       detail: _products[index]['detail']

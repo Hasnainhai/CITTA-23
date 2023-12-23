@@ -7,7 +7,8 @@ import 'routes/routes_name.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Stripe.publishableKey = "";
+  Stripe.publishableKey =
+      "pk_test_51MqJ7aSDFxQSCBeqlY6oQU8xdJEsaAiESLWghEUnYHUHYnCjJrbJMaIpSyVopiqfnyym9H4Gcvg5kNmiHcUThznT00QSiE5jbT";
   Stripe.instance.applySettings();
   runApp(
     const MyApp(),
