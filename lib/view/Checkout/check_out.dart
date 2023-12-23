@@ -13,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -54,6 +55,35 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   bool _isLoading = false;
+  void saveDetail() {
+    var userId = FirebaseAuth.instance.currentUser!.uid;
+    var fireStore = FirebaseFirestore.instance;
+    var uid = Uuid().v1();
+    fireStore
+        .collection('users')
+        .doc(userId)
+        .collection('my_orders')
+        .doc(uid)
+        .set({
+      'title': widget.tile,
+      'imgurl': widget.img,
+      'productId': widget.id,
+      'sallerId': widget.id,
+      'price': widget.price,
+    });
+    fireStore
+        .collection('Saller')
+        .doc(widget.customerId)
+        .collection('my_orders')
+        .doc(uid)
+        .set({
+      'title': widget.tile,
+      'imgurl': widget.img,
+      'productId': widget.id,
+      'buyyerId': userId,
+      'price': widget.price,
+    });
+  }
 
   Future<void> initPayment({
     required String email,
@@ -88,7 +118,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ));
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
-
+      saveDetail();
       await showDialog(
         context: context,
         builder: (BuildContext context) => const Rating(),

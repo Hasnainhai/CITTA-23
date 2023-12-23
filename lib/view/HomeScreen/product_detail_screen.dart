@@ -2,6 +2,7 @@
 
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/widgets/increase_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -366,9 +367,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   RoutesName.checkOutScreen,
+                          // );
+                          print(widget.sallerId);
+                          Navigator.push(
                             context,
-                            RoutesName.checkOutScreen,
+                            MaterialPageRoute(
+                              builder: (c) => CheckOutScreen(
+                                tile: widget.title,
+                                price: widget.price,
+                                img: widget.imageUrl,
+                                id: widget.id,
+                                customerId: widget.sallerId,
+                              ),
+                            ),
                           );
                         },
                         child: Container(
