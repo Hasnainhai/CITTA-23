@@ -1,20 +1,28 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../HomeScreen/widgets/increase_container.dart';
 
-class CartWidget extends StatelessWidget {
-  const CartWidget({
+// ignore: must_be_immutable
+class CartWidget extends StatefulWidget {
+  CartWidget({
     super.key,
     required this.title,
-    required this.subtitle,
     required this.price,
     required this.img,
+    required this.onDelete,
   });
   final String title;
-  final String subtitle;
-  final String price;
+  String price;
   final String img;
+  final Function() onDelete;
+
+  @override
+  State<CartWidget> createState() => _CartWidgetState();
+}
+
+class _CartWidgetState extends State<CartWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,14 +37,17 @@ class CartWidget extends StatelessWidget {
               leading: SizedBox(
                 height: 80.0,
                 width: 58.0,
-                child: Image.asset(img),
+                child: FancyShimmerImage(
+                  imageUrl: widget.img,
+                  boxFit: BoxFit.fill,
+                ),
               ),
               title: Row(
                 children: [
                   const SizedBox(width: 30.0),
                   Text.rich(
                     TextSpan(
-                      text: '$title \n',
+                      text: widget.title,
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -45,38 +56,41 @@ class CartWidget extends StatelessWidget {
                           color: AppColor.fontColor,
                         ),
                       ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: subtitle,
-                          style: const TextStyle(
-                            color: AppColor.grayColor,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ],
               ),
-              subtitle: const Padding(
-                padding: EdgeInsets.only(top: 9.0),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 9.0),
                 child: Row(
                   children: [
-                    SizedBox(width: 30.0),
-                    IncreaseContainer(),
+                    const SizedBox(width: 30.0),
+                    IncreaseContainer(
+                      price: widget.price,
+                      onPriceChanged: (updatedPrice) {
+                        setState(() {
+                          widget.price = updatedPrice.toString();
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.delete_outline,
-                    color: AppColor.fontColor,
-                    size: 24,
+                  InkWell(
+                    onTap: () {
+                      widget.onDelete();
+                    },
+                    child: const Icon(
+                      Icons.delete_outline,
+                      color: AppColor.fontColor,
+                      size: 24,
+                    ),
                   ),
                   Text(
-                    price,
+                    widget.price,
                     style: GoogleFonts.getFont(
                       "Gothic A1",
                       textStyle: const TextStyle(

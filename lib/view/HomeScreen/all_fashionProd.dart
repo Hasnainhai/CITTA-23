@@ -1,8 +1,10 @@
 // ignore_for_file: unused_field
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -50,7 +52,34 @@ class _AllFashionProdState extends State<AllFashionProd> {
       });
     }
   }
+ void addToCart(String img, String title, String dPrice) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
 
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      await cartCollectionRef.add({
+        'imageUrl': img,
+        'title': title,
+        'price': dPrice,
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -134,7 +163,18 @@ class _AllFashionProdState extends State<AllFashionProd> {
                           ? AppColor.appBarButtonColor
                           : AppColor.buttonBgColor,
                       img: _fashionProducts[index]['imageUrl'],
-                      iconColor: AppColor.buttonBgColor,
+                      iconColor: AppColor.buttonBgColor,  // add to cart logic
+                                      addCart: () {
+                                        if (_fashionProducts.isNotEmpty &&
+                                            index >= 0 &&
+                                            index < _fashionProducts.length) {
+                                          addToCart(
+                                            _fashionProducts[index]['imageUrl'],
+                                            _fashionProducts[index]['title'],
+                                            _fashionProducts[index]['price'],
+                                          );
+                                        }
+                                      },
                     );
                   } else if (_fashionProducts.isEmpty) {
                     return const Center(

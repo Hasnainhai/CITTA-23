@@ -269,7 +269,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                               ? AppColor.appBarButtonColor
                               : AppColor.buttonBgColor,
                           img: _products[index]['imageUrl'],
-                          iconColor: AppColor.buttonBgColor,
+                          iconColor: AppColor.buttonBgColor, addCart: () {  },
                         );
                       } else {
                         return Padding(

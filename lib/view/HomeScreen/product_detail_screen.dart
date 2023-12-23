@@ -13,7 +13,7 @@ import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen(
+  ProductDetailScreen(
       {super.key,
       required this.title,
       required this.imageUrl,
@@ -25,7 +25,7 @@ class ProductDetailScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String price;
-  final String salePrice;
+  String salePrice;
   final String weight;
   final String detail;
 
@@ -50,7 +50,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           .collection('favorites')
           .add({
         'title': widget.title.toString(),
-        'price': widget.price.toString(),
+        'salePrice': widget.salePrice.toString(),
         'imageUrl': widget.imageUrl.toString(),
         // 'isLike': like,
       });
@@ -258,7 +258,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ],
                     ),
-                    const IncreaseContainer()
+                    IncreaseContainer(
+                      price: widget.salePrice,
+                      onPriceChanged: (updatedPrice) {
+                        setState(() {
+                          widget.salePrice = updatedPrice.toString();
+                        });
+                      },
+                    ),
                   ],
                 ),
                 const VerticalSpeacing(
