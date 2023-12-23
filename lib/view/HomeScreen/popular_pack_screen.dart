@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../res/components/colors.dart';
 import 'widgets/homeCard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PopularPackScreen extends StatefulWidget {
   const PopularPackScreen({super.key});
@@ -92,6 +93,35 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  void addToCart(String img, String title, String dPrice) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      await cartCollectionRef.add({
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
     }
   }
 
@@ -290,6 +320,18 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                             : AppColor.buttonBgColor,
                         img: _popularPacks[index]['imageUrl'],
                         iconColor: AppColor.buttonBgColor,
+                        // add to cart logic
+                        addCart: () {
+                          if (_popularPacks.isNotEmpty &&
+                              index >= 0 &&
+                              index < _popularPacks.length) {
+                            addToCart(
+                              _popularPacks[index]['imageUrl'],
+                              _popularPacks[index]['title'],
+                              _popularPacks[index]['salePrice'],
+                            );
+                          }
+                        },
                       );
                     } else {
                       return Padding(

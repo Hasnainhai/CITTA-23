@@ -56,7 +56,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           .collection('favorites')
           .add({
         'title': widget.title.toString(),
-        'price': widget.price.toString(),
+        'salePrice': widget.salePrice.toString(),
         'imageUrl': widget.imageUrl.toString(),
         // 'isLike': like,
       });

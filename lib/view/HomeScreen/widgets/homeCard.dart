@@ -17,7 +17,7 @@ class HomeCard extends StatelessWidget {
     required this.cartBorder,
     required this.img,
     required this.iconColor,
-    required this.ontap,
+    required this.ontap, required this.addCart,
   });
   final String img;
   final String name;
@@ -28,6 +28,7 @@ class HomeCard extends StatelessWidget {
   final Color cartBorder;
   final Color iconColor;
   final Function() ontap;
+  final Function() addCart;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -96,18 +97,23 @@ class HomeCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                      height: 28.0,
-                      width: 28.0,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        border: Border.all(
-                          width: 1.0,
-                          color: AppColor.primaryColor,
+                    InkWell(
+                      onTap: (){
+                        addCart();
+                      },
+                      child: Container(
+                        height: 28.0,
+                        width: 28.0,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(
+                            width: 1.0,
+                            color: AppColor.primaryColor,
+                          ),
                         ),
-                      ),
-                      child: const Center(
-                        child: Icon(Icons.add, color: AppColor.primaryColor),
+                        child: const Center(
+                          child: Icon(Icons.add, color: AppColor.primaryColor),
+                        ),
                       ),
                     )
                   ],

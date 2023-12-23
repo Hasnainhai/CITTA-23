@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
@@ -9,12 +8,10 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
-
 import '../../../res/components/colors.dart';
 
 class AddressDetailSceen extends StatefulWidget {

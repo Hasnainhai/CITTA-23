@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: currency_picker
-      sha256: "5b87c259dbdb4e032c6b9abd22158782868505b5217b453c6c36445612a3d34c"
+      sha256: eb75deb7bc92e3f31e1b8ad4efacf71371e8e49d7a0eebd1c1a8e9fae58cc23d
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.19"
+    version: "2.0.20"
   fake_async:
     dependency: transitive
     description:
