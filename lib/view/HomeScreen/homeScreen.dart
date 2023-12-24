@@ -35,9 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _isLoading = true;
       });
       QuerySnapshot qn = await _firestoreInstance.collection('products').get();
-
       setState(() {
-        _products.clear();
         for (int i = 0; i < qn.docs.length; i++) {
           _products.add({
             'imageUrl': qn.docs[i]['imageUrl'],
@@ -46,8 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
             'salePrice': qn.docs[i]['salePrice'],
             'detail': qn.docs[i]['detail'],
             'weight': qn.docs[i]['weight'],
-            'sellerId': qn.docs[i]['sallerId'],
-            'id': qn.docs[i]['id']
           });
         }
       });
@@ -771,7 +767,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 4,
                               child: GridView.builder(
-                                // physics: const NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: 2,
                                 gridDelegate:
@@ -784,9 +780,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       index < _products.length) {
                                     return HomeCard(
                                       ontap: () {
-                                        debugPrint('this is product widget');
-                                        debugPrint(
-                                            _products[index]['id'].toString());
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
