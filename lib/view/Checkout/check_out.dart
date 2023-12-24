@@ -78,6 +78,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'salePrice': widget.salePrice,
       'weight': widget.weight,
       'date': date,
+      'status': "pending",
       'address': {
         "address": address,
         "postalCode": postalCode,
@@ -100,6 +101,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'salePrice': widget.salePrice,
       'weight': widget.weight,
       'date': date,
+      'status': "pending",
       'address': {
         "address": address,
         "postalCode": postalCode,
@@ -250,21 +252,26 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 .map((DocumentSnapshot document) {
                               Map<String, dynamic> data =
                                   document.data() as Map<String, dynamic>;
-                              address = data['address2'];
-                              name = data['name'];
-                              city = data['city'];
-                              postalCode = data['zipcode'];
-                              state = data['state'];
 
                               return Column(
                                 children: [
-                                  AddressCheckOutWidget(
-                                    bgColor: AppColor.whiteColor,
-                                    borderColor: AppColor.grayColor,
-                                    titleColor: AppColor.blackColor,
-                                    title: data['address2'],
-                                    phNo: data['phone'],
-                                    address: data['address1'],
+                                  InkWell(
+                                    onTap: () {
+                                      debugPrint('address one is selected');
+                                      address = data['address2'];
+                                      name = data['name'];
+                                      city = data['city'];
+                                      postalCode = data['zipcode'];
+                                      state = data['state'];
+                                    },
+                                    child: AddressCheckOutWidget(
+                                      bgColor: AppColor.whiteColor,
+                                      borderColor: AppColor.grayColor,
+                                      titleColor: AppColor.blackColor,
+                                      title: data['address2'],
+                                      phNo: data['phone'],
+                                      address: data['address1'],
+                                    ),
                                   ),
                                   const VerticalSpeacing(20.0),
                                 ],
