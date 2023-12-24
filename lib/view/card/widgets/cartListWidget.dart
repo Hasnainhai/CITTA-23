@@ -9,6 +9,7 @@ import 'cart_page_widget.dart';
 
 class CartItemList extends StatelessWidget {
   const CartItemList({super.key});
+  
 // get items from userCart
   Future<List<QueryDocumentSnapshot>> getCartItems() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -18,6 +19,7 @@ class CartItemList extends StatelessWidget {
         .collection('cart');
 
     QuerySnapshot cartSnapshot = await cartCollectionRef.get();
+   
     return cartSnapshot.docs;
   }
 
@@ -30,6 +32,31 @@ class CartItemList extends StatelessWidget {
     } catch (e) {
       // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage('Error deleting product: $e', context);
+    }
+  }
+
+  final int newQuantity = 1;
+
+  Future<void> updateQuantityAndPrice(
+      DocumentReference documentReference, int newQuantity) async {
+    try {
+      DocumentSnapshot documentSnapshot = await documentReference.get();
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+
+      if (data != null && data.containsKey('salePrice')) {
+        // Convert 'salePrice' to int
+        int currentSalePrice = int.tryParse(data['salePrice'].toString()) ?? 0;
+
+        // Perform the update
+        await documentReference.update({
+          'salePrice': newQuantity * currentSalePrice,
+        });
+      } else {
+        print('Error: Document data is missing or salePrice is not available.');
+      }
+    } catch (e) {
+      print('Error updating quantity and price: $e');
     }
   }
 
@@ -60,6 +87,7 @@ class CartItemList extends StatelessWidget {
           return ListView.builder(
             itemCount: cartItems.length,
             itemBuilder: (context, index) {
+              int quantity = newQuantity;
               var item = cartItems[index].data() as Map<String, dynamic>;
               var documentReference = cartItems[index].reference;
               return Padding(
@@ -72,9 +100,15 @@ class CartItemList extends StatelessWidget {
                   onDelete: () {
                     deleteCartItem(documentReference, context);
                   },
-                  items: '4',
-                  onIncrease: () {},
-                  onDecrease: () {},
+                  items: quantity.toString(),
+                  onIncrease: () {
+                    updateQuantityAndPrice(documentReference, quantity + 1);
+                  },
+                  onDecrease: () {
+                    if (quantity > 1) {
+                      updateQuantityAndPrice(documentReference, quantity - 1);
+                    }
+                  },
                 ),
               );
             },
