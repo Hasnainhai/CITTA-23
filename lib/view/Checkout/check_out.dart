@@ -8,6 +8,7 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
+import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,23 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen(
-      {super.key,
-      required this.tile,
-      required this.price,
-      required this.img,
-      required this.id,
-      required this.customerId});
+  const CheckOutScreen({
+    super.key,
+    required this.tile,
+    required this.price,
+    required this.img,
+    required this.id,
+    required this.customerId,
+    required this.weight,
+    required this.salePrice,
+  });
   final String tile;
   final String price;
   final String img;
   final String id;
   final String customerId;
+  final String weight;
+  final String salePrice;
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -57,7 +63,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   void saveDetail() {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     var fireStore = FirebaseFirestore.instance;
-    var uid = Uuid().v1();
+    var uid = const Uuid().v1();
+    var date = DateTime.now();
     fireStore
         .collection('users')
         .doc(userId)
@@ -69,9 +76,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'productId': widget.id,
       'sallerId': widget.id,
       'price': widget.price,
+      'salePrice': widget.salePrice,
+      'weight': widget.weight,
+      'date': date,
+      'address': {
+        "address": address,
+        "postalCode": postalCode,
+        'city': city,
+        'state': state,
+        'name': name,
+      }
     });
     fireStore
-        .collection('Saller')
+        .collection('saller')
         .doc(widget.customerId)
         .collection('my_orders')
         .doc(uid)
@@ -81,6 +98,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'productId': widget.id,
       'buyyerId': userId,
       'price': widget.price,
+      'salePrice': widget.salePrice,
+      'weight': widget.weight,
+      'date': date,
+      'address': {
+        "address": address,
+        "postalCode": postalCode,
+        'city': city,
+        'state': state,
+        'name': name,
+      }
     });
   }
 

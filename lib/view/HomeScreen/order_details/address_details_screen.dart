@@ -278,10 +278,6 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                                 title: "Save Address",
                                 onpress: () {
                                   addAddress();
-                                  Navigator.pushNamed(
-                                    context,
-                                    RoutesName.checkOutScreen,
-                                  );
                                 }),
                             const VerticalSpeacing(40),
                           ],
