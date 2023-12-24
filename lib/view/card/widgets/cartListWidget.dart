@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import '../../../res/components/colors.dart';
 import '../../../utils/utils.dart';
 import 'cart_page_widget.dart';
@@ -50,9 +49,8 @@ class CartItemList extends StatelessWidget {
         } else {
           List<QueryDocumentSnapshot> cartItems =
               snapshot.data as List<QueryDocumentSnapshot>;
-
+          // Display a message when cart is Empty
           if (cartItems.isEmpty) {
-            // Display a center text when there are no items in the cart
             return const Center(
               child: EmptyCart(),
             );
@@ -74,6 +72,9 @@ class CartItemList extends StatelessWidget {
                   onDelete: () {
                     deleteCartItem(documentReference, context);
                   },
+                  items: '4',
+                  onIncrease: () {},
+                  onDecrease: () {},
                 ),
               );
             },
