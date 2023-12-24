@@ -381,6 +381,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 img: widget.imageUrl,
                                 id: widget.id,
                                 customerId: widget.sallerId,
+                                weight: widget.weight,
+                                salePrice: widget.salePrice,
                               ),
                             ),
                           );

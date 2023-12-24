@@ -20,18 +20,23 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen(
-      {super.key,
-      required this.tile,
-      required this.price,
-      required this.img,
-      required this.id,
-      required this.customerId});
+  const CheckOutScreen({
+    super.key,
+    required this.tile,
+    required this.price,
+    required this.img,
+    required this.id,
+    required this.customerId,
+    required this.weight,
+    required this.salePrice,
+  });
   final String tile;
   final String price;
   final String img;
   final String id;
   final String customerId;
+  final String weight;
+  final String salePrice;
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -59,6 +64,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     var fireStore = FirebaseFirestore.instance;
     var uid = const Uuid().v1();
+    var date = DateTime.now();
     fireStore
         .collection('users')
         .doc(userId)
@@ -70,6 +76,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'productId': widget.id,
       'sallerId': widget.id,
       'price': widget.price,
+      'salePrice': widget.salePrice,
+      'weight': widget.weight,
+      'date': date,
     });
     fireStore
         .collection('Saller')
@@ -82,6 +91,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'productId': widget.id,
       'buyyerId': userId,
       'price': widget.price,
+      'salePrice': widget.salePrice,
+      'weight': widget.weight,
+      'date': date,
     });
   }
 
