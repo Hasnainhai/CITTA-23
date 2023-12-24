@@ -32,6 +32,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           'salePrice': qn.docs[i]['salePrice'],
           'detail': qn.docs[i]['detail'],
           'weight': qn.docs[i]['weight'],
+          
         });
       }
     });

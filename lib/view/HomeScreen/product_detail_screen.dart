@@ -14,16 +14,7 @@ import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  ProductDetailScreen(
-      {super.key,
-      required this.title,
-      required this.imageUrl,
-      required this.price,
-      required this.salePrice,
-      required this.weight,
-      required this.detail});
-
-  const ProductDetailScreen({
+  ProductDetailScreen({
     super.key,
     required this.title,
     required this.imageUrl,
