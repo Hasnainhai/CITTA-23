@@ -65,7 +65,8 @@ class _FavouriteListState extends State<FavouriteList> {
       });
     }
   }
- void removeFromFavorites() async {
+
+  void removeFromFavorites() async {
     try {
       // Get the user's UID
       String uid = FirebaseAuth
@@ -97,9 +98,9 @@ class _FavouriteListState extends State<FavouriteList> {
       // print('Error removing from favorites: $e');
     }
   }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUserFavorites();
     fetchUserFavorites();
@@ -147,10 +148,10 @@ class _FavouriteListState extends State<FavouriteList> {
                   price: favorite['salePrice'],
                   deleteIcon: Icons.delete_outline,
                   shoppingIcon: Icons.shopping_cart_outlined,
-                   ontap: (){
-                     removeFromFavorites();
-                   },
-                    ontap2: (){},
+                  ontap: () {
+                    removeFromFavorites();
+                  },
+                  ontap2: () {},
                 );
               }).toList(),
             ),
