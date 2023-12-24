@@ -79,9 +79,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'salePrice': widget.salePrice,
       'weight': widget.weight,
       'date': date,
+      'address': {
+        "address": address,
+        "postalCode": postalCode,
+        'city': city,
+        'state': state,
+        'name': name,
+      }
     });
     fireStore
-        .collection('Saller')
+        .collection('saller')
         .doc(widget.customerId)
         .collection('my_orders')
         .doc(uid)
@@ -94,6 +101,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'salePrice': widget.salePrice,
       'weight': widget.weight,
       'date': date,
+      'address': {
+        "address": address,
+        "postalCode": postalCode,
+        'city': city,
+        'state': state,
+        'name': name,
+      }
     });
   }
 
