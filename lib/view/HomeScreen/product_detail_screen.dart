@@ -366,51 +366,47 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const VerticalSpeacing(
                   28,
                 ),
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  color: AppColor.primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Navigator.pushNamed(
-                          //   context,
-                          //   RoutesName.checkOutScreen,
-                          // );
-                          print(widget.sellerId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (c) => CheckOutScreen(
-                                tile: widget.title,
-                                price: widget.price,
-                                img: widget.imageUrl,
-                                id: widget.productId,
-                                customerId: widget.sellerId,
-                                weight: widget.weight,
-                                salePrice: widget.salePrice,
-                              ),
+                InkWell(
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    color: AppColor.primaryColor,
+                    child: InkWell(
+                      onTap: () {
+                        // Navigator.pushNamed(
+                        //   context,
+                        //   RoutesName.checkOutScreen,
+                        // );
+                        print(widget.sellerId);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => CheckOutScreen(
+                              tile: widget.title,
+                              price: widget.price,
+                              img: widget.imageUrl,
+                              id: widget.productId,
+                              customerId: widget.sellerId,
+                              weight: widget.weight,
+                              salePrice: widget.salePrice,
                             ),
-                          );
-                        },
+                          ),
+                        );
+                      },
+                      child: Center(
                         child: Text(
                           "Buy Now",
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 const VerticalSpeacing(
