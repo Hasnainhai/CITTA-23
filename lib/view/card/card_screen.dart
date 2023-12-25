@@ -1,13 +1,16 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
-import 'widgets/cartListWidget.dart';
 import 'widgets/dottedLineWidget.dart';
+import 'widgets/emptyCartWidget.dart';
 import 'widgets/item_prizing.dart';
 
 class CardScreen extends StatefulWidget {
@@ -19,18 +22,6 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   int totalItems = 0;
-  Future<List<QueryDocumentSnapshot>> getCartItems() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    CollectionReference cartCollectionRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('cart');
-
-    QuerySnapshot cartSnapshot = await cartCollectionRef.get();
-
-    return cartSnapshot.docs;
-  }
-
   Future<void> refreshCartItems() async {
     try {
       List<QueryDocumentSnapshot> cartItems = await getCartItems();
@@ -46,12 +37,56 @@ class _CardScreenState extends State<CardScreen> {
   @override
   void initState() {
     super.initState();
-    refreshCartItems();
+    // refreshCartItems();
 
     getCartItems().then((cartItems) {
       setState(() {
         totalItems = cartItems.length;
       });
+    });
+  }
+
+  // other stuff
+  Future<List<QueryDocumentSnapshot>> getCartItems() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    QuerySnapshot cartSnapshot = await cartCollectionRef.get();
+
+    return cartSnapshot.docs;
+  }
+
+  // delete items from userCart
+  Future<void> deleteCartItem(
+      DocumentReference documentReference, BuildContext context) async {
+    try {
+      // Get the productId before deleting the item
+      DocumentSnapshot snapshot = await documentReference.get();
+      String productId = snapshot['id'];
+
+      // Delete the item
+      await documentReference.delete();
+
+      // Show a message in the UI that the item is deleted
+      Utils.toastMessage('Item Successfully Deleted');
+    } catch (e) {
+      // Show an error message if deletion fails
+      Utils.flushBarErrorMessage('Error deleting product: $e', context);
+    }
+  }
+
+  Future<void> refreshData() async {
+    // Call your getCartItems function or any other logic to fetch updated data
+    // ...
+
+    // Example: Fetch cart items again
+    await getCartItems();
+    setState(() {
+      // Update the state with the new data
+      // ...
     });
   }
 
@@ -93,11 +128,66 @@ class _CardScreenState extends State<CardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // cart widget stuff
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.5,
                     width: double.infinity,
-                    child: RefreshIndicator(
-                        onRefresh: refreshCartItems, child: const CartItemList()),
+                    child: FutureBuilder(
+                      future: getCartItems(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: SpinKitFadingFour(
+                              color: AppColor.primaryColor,
+                            ),
+                          ); // Loading indicator while fetching data
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          List<QueryDocumentSnapshot> cartItems =
+                              snapshot.data as List<QueryDocumentSnapshot>;
+                          // Display a message when cart is Empty
+                          if (cartItems.isEmpty) {
+                            return const Center(
+                              child: EmptyCart(),
+                            );
+                          }
+
+                          // Build the UI using the cart items
+                          return RefreshIndicator(
+                            onRefresh: refreshData,
+                            child: ListView.builder(
+                              itemCount: cartItems.length,
+                              itemBuilder: (context, index) {
+                                var item = cartItems[index].data()
+                                    as Map<String, dynamic>;
+                                var documentReference =
+                                    cartItems[index].reference;
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: CartWidget(
+                                    sellerId: item['sellerId'],
+                                    productId: item['id'],
+                                    title: item[
+                                        'title'], // You can customize this based on your data
+                                    price: item['salePrice'],
+                                    img: item['imageUrl'],
+                                    onDelete: () {
+                                      deleteCartItem(
+                                          documentReference, context);
+                                    },
+                                    items: '',
+                                    onIncrease: () {},
+                                    onDecrease: () {},
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   const VerticalSpeacing(30.0),
                   Text(
@@ -168,7 +258,8 @@ class _CardScreenState extends State<CardScreen> {
                     child: RoundedButton(
                         title: 'Checkout',
                         onpress: () {
-                          Navigator.pushNamed(context, RoutesName.checkOutScreen);
+                          Navigator.pushNamed(
+                              context, RoutesName.checkOutScreen);
                         }),
                   ),
                   const VerticalSpeacing(30.0),
@@ -181,3 +272,120 @@ class _CardScreenState extends State<CardScreen> {
     );
   }
 }
+
+
+// class CartItemList extends StatefulWidget {
+//   const CartItemList({super.key});
+
+//   @override
+//   State<CartItemList> createState() => _CartItemListState();
+// }
+
+// class _CartItemListState extends State<CartItemList> {
+// // get items from userCart
+//   Future<List<QueryDocumentSnapshot>> getCartItems() async {
+//     final userId = FirebaseAuth.instance.currentUser!.uid;
+//     CollectionReference cartCollectionRef = FirebaseFirestore.instance
+//         .collection('users')
+//         .doc(userId)
+//         .collection('cart');
+
+//     QuerySnapshot cartSnapshot = await cartCollectionRef.get();
+
+//     return cartSnapshot.docs;
+//   }
+
+//   // delete items from userCart
+//   Future<void> deleteCartItem(
+//       DocumentReference documentReference, BuildContext context) async {
+//     try {
+//       // Get the productId before deleting the item
+//       DocumentSnapshot snapshot = await documentReference.get();
+//       String productId = snapshot['id'];
+
+//       // Delete the item
+//       await documentReference.delete();
+
+//       // Show a message in the UI that the item is deleted
+//       Utils.toastMessage('Item Successfully Deleted');
+
+//       // Trigger a refresh in the UI (you can call a function to reload the data)
+//       // For example, if you have a function called refreshData(), you can call it here.
+//       // refreshData();
+//     } catch (e) {
+//       // Show an error message if deletion fails
+//       Utils.flushBarErrorMessage('Error deleting product: $e', context);
+//     }
+//   }
+
+//   Future<void> refreshData() async {
+//     // Call your getCartItems function or any other logic to fetch updated data
+//     // ...
+
+//     // Example: Fetch cart items again
+//     await getCartItems();
+//     setState(() {
+//       // Update the state with the new data
+//       // ...
+//     });
+//   }
+
+ 
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder(
+//       future: getCartItems(),
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return const Center(
+//             child: SpinKitFadingFour(
+//               color: AppColor.primaryColor,
+//             ),
+//           ); // Loading indicator while fetching data
+//         } else if (snapshot.hasError) {
+//           return Text('Error: ${snapshot.error}');
+//         } else {
+//           List<QueryDocumentSnapshot> cartItems =
+//               snapshot.data as List<QueryDocumentSnapshot>;
+//           // Display a message when cart is Empty
+//           if (cartItems.isEmpty) {
+//             return const Center(
+//               child: EmptyCart(),
+//             );
+//           }
+
+//           // Build the UI using the cart items
+//           return RefreshIndicator(
+//             onRefresh: refreshData,
+//             child: ListView.builder(
+//               itemCount: cartItems.length,
+//               itemBuilder: (context, index) {
+//                 var item = cartItems[index].data() as Map<String, dynamic>;
+//                 var documentReference = cartItems[index].reference;
+//                 return Padding(
+//                   padding: const EdgeInsets.only(top: 5.0),
+//                   child: CartWidget(
+//                     sellerId: item['sellerId'],
+//                     productId: item['id'],
+//                     title: item[
+//                         'title'], // You can customize this based on your data
+//                     price: item['salePrice'],
+//                     img: item['imageUrl'],
+//                     onDelete: () {
+//                       deleteCartItem(documentReference, context);
+//                     },
+//                     items: quantity.toString(),
+//                     onIncrease: () {},
+//                     onDecrease: () { },
+//                   ),
+//                 );
+//               },
+//             ),
+//           );
+//         }
+//       },
+//     );
+//   }
+// }

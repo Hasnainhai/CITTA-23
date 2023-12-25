@@ -14,11 +14,15 @@ class CartWidget extends StatefulWidget {
     required this.items,
     required this.onIncrease,
     required this.onDecrease,
+    required this.sellerId,
+    required this.productId,
   });
   final String title;
   String price;
   final String img;
   final String items;
+  final String sellerId;
+  final String productId;
   final Function() onDelete;
   final Function() onIncrease;
   final Function() onDecrease;
