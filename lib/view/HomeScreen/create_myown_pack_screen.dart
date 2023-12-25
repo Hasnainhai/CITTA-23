@@ -290,7 +290,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                                           .toString(),
                                       productId:
                                           _products[index]['id'].toString(),
-                                      sallerId: _products[index]['sellerId']
+                                      sellerId: _products[index]['sellerId']
                                           .toString(),
                                       weight:
                                           _products[index]['weight'].toString(),

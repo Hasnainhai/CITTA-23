@@ -149,7 +149,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                           weight: _products[index]['weight'].toString(),
                           detail: _products[index]['detail'].toString(),
                           productId: _products[index]['id'].toString(),
-                          sallerId: _products[index]['sellerId'].toString(),
+                          sellerId: _products[index]['sellerId'].toString(),
                         );
                       }));
                     },
@@ -175,7 +175,6 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                           _products[index]['salePrice'],
                           _products[index]['sellerId'],
                           _products[index]['id'],
-
                         );
                       }
                     },

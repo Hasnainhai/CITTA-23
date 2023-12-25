@@ -582,7 +582,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   imageUrl: selectedPack[
                                                           'imageUrl'] ??
                                                       '',
-                                                  id: selectedPack[
+                                                  sellerId: selectedPack[
                                                           'sellerId'] ??
                                                       "",
                                                   productId:
