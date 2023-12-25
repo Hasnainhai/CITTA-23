@@ -58,6 +58,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'title': widget.title.toString(),
         'salePrice': widget.salePrice.toString(),
         'imageUrl': widget.imageUrl.toString(),
+        'id': widget.productId.toString(),
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -79,7 +80,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           .collection('favoriteList')
           .doc(uid)
           .collection('favorites')
-          .where('title', isEqualTo: widget.title.toString())
+          .where('id', isEqualTo: widget.productId.toString())
           .get();
 
       // Delete the document

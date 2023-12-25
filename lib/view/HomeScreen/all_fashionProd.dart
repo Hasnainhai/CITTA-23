@@ -55,7 +55,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
     }
   }
 
-  void addToCart(String img, String title, String dPrice) async {
+  void addToCart(String img, String title, String dPrice, String productId,
+      String sellerId) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -75,6 +76,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
     } else {
       // Product is not in the cart, add it
       await cartCollectionRef.add({
+        'id': productId,
+        'sellerId': sellerId,
         'imageUrl': img,
         'title': title,
         'price': dPrice,
@@ -180,6 +183,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
                             _fashionProducts[index]['imageUrl'],
                             _fashionProducts[index]['title'],
                             _fashionProducts[index]['price'],
+                            _fashionProducts[index]['id'],
+                            _fashionProducts[index]['sellerId'],
                           );
                         }
                       },
