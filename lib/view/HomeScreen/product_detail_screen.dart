@@ -395,26 +395,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           );
                         },
-                        child: Container(
-                          height: 50,
-                          width: 60,
-                          color: Colors.white,
-                          child: const Icon(Icons.shopping_bag_outlined),
+                        child: Text(
+                          "Buy Now",
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(
                         width: 30,
-                      ),
-                      Text(
-                        "Buy Now",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
                       ),
                     ],
                   ),

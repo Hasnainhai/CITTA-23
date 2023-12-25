@@ -39,7 +39,7 @@ class BundleProductScreen extends StatefulWidget {
     required this.img6,
     required this.title6,
     required this.amount6,
-    required this.id,
+    required this.sellerId,
     required this.productId,
   });
   final String imageUrl;
@@ -49,7 +49,7 @@ class BundleProductScreen extends StatefulWidget {
   final String detail;
   final String weight;
   final String size;
-  final String id;
+  final String sellerId;
   final String productId;
   //bundle 1
   final String img1;
