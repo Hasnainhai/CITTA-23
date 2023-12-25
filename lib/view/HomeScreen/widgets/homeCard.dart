@@ -17,7 +17,7 @@ class HomeCard extends StatelessWidget {
     required this.cartBorder,
     required this.img,
     required this.iconColor,
-    required this.ontap, required this.addCart,
+    required this.ontap, required this.addCart, required this.productId, required this.sellerId,
   });
   final String img;
   final String name;
@@ -29,6 +29,8 @@ class HomeCard extends StatelessWidget {
   final Color iconColor;
   final Function() ontap;
   final Function() addCart;
+  final String productId;
+  final String sellerId;
   @override
   Widget build(BuildContext context) {
     return Row(

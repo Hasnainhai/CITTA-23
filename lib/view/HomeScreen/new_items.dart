@@ -31,6 +31,8 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
       setState(() {
         for (int i = 0; i < qn.docs.length; i++) {
           _products.add({
+            'id': qn.docs[i]['id'],
+            'sellerId': qn.docs[i]['sellerId'],
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
@@ -52,7 +54,8 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
     }
   }
 
-  void addToCart(String img, String title, String dPrice) async {
+  void addToCart(String img, String title, String dPrice, String sellerId,
+      String productId) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -75,6 +78,8 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
+        'id': productId,
+        'sellerId': sellerId,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -143,11 +148,13 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                           salePrice: _products[index]['salePrice'].toString(),
                           weight: _products[index]['weight'].toString(),
                           detail: _products[index]['detail'].toString(),
-                          id: _products[index]['id'].toString(),
+                          productId: _products[index]['id'].toString(),
                           sallerId: _products[index]['sellerId'].toString(),
                         );
                       }));
                     },
+                    productId: _products[index]['id'].toString(),
+                    sellerId: _products[index]['sellerId'].toString(),
                     name: _products[index]['title'].toString(),
                     price: _products[index]['price'].toString(),
                     dPrice: _products[index]['salePrice'].toString(),
@@ -166,6 +173,9 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                           _products[index]['imageUrl'],
                           _products[index]['title'],
                           _products[index]['salePrice'],
+                          _products[index]['sellerId'],
+                          _products[index]['id'],
+
                         );
                       }
                     },

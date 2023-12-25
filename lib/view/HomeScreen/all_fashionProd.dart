@@ -33,6 +33,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
         _fashionProducts.clear();
         for (int i = 0; i < qn.docs.length; i++) {
           _fashionProducts.add({
+            'id': qn.docs[i]['id'],
+            'sellerId': qn.docs[i]['sellerId'],
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
@@ -52,7 +54,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
       });
     }
   }
- void addToCart(String img, String title, String dPrice) async {
+
+  void addToCart(String img, String title, String dPrice) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -80,6 +83,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
       Utils.toastMessage('Successfully added to cart');
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -140,20 +144,24 @@ class _AllFashionProdState extends State<AllFashionProd> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return FashionDetail(
-                              title:
-                                  _fashionProducts[index]['title'].toString(),
-                              imageUrl: _fashionProducts[index]['imageUrl'],
-                              // price: _fashionProducts[index]
-                              //         ['price']
-                              //     .toString(),
-                              salePrice: _fashionProducts[index]['price'],
-                              // .toString(),
-                              // weight: _products[index]['weight']
-                              //     .toString(),
-                              detail:
-                                  _fashionProducts[index]['detail'].toString());
+                            title: _fashionProducts[index]['title'].toString(),
+                            imageUrl: _fashionProducts[index]['imageUrl'],
+                            // price: _fashionProducts[index]
+                            //         ['price']
+                            //     .toString(),
+                            salePrice: _fashionProducts[index]['price'],
+                            // .toString(),
+                            // weight: _products[index]['weight']
+                            //     .toString(),
+                            detail:
+                                _fashionProducts[index]['detail'].toString(),
+                            sellerId: _fashionProducts[index]['sellerId'],
+                            productId: _fashionProducts[index]['id'],
+                          );
                         }));
                       },
+                      sellerId: _fashionProducts[index]['sellerId'],
+                      productId: _fashionProducts[index]['id'],
                       name: _fashionProducts[index]['title'].toString(),
                       price: '',
                       dPrice: _fashionProducts[index]['price'].toString(),
@@ -163,18 +171,18 @@ class _AllFashionProdState extends State<AllFashionProd> {
                           ? AppColor.appBarButtonColor
                           : AppColor.buttonBgColor,
                       img: _fashionProducts[index]['imageUrl'],
-                      iconColor: AppColor.buttonBgColor,  // add to cart logic
-                                      addCart: () {
-                                        if (_fashionProducts.isNotEmpty &&
-                                            index >= 0 &&
-                                            index < _fashionProducts.length) {
-                                          addToCart(
-                                            _fashionProducts[index]['imageUrl'],
-                                            _fashionProducts[index]['title'],
-                                            _fashionProducts[index]['price'],
-                                          );
-                                        }
-                                      },
+                      iconColor: AppColor.buttonBgColor, // add to cart logic
+                      addCart: () {
+                        if (_fashionProducts.isNotEmpty &&
+                            index >= 0 &&
+                            index < _fashionProducts.length) {
+                          addToCart(
+                            _fashionProducts[index]['imageUrl'],
+                            _fashionProducts[index]['title'],
+                            _fashionProducts[index]['price'],
+                          );
+                        }
+                      },
                     );
                   } else if (_fashionProducts.isEmpty) {
                     return const Center(
