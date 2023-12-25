@@ -49,7 +49,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
-        .collection('cart');
+        .collection('myOwnPack');
 
     // Check if the product is already in the cart
     QuerySnapshot cartSnapshot = await cartCollectionRef
@@ -118,118 +118,235 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height / 7,
-        color: AppColor.primaryColor,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColor.buttonTxColor,
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "images/fruit1.png",
-                            ),
-                            fit: BoxFit.contain),
+      // bottomNavigationBar: Container(
+      //   height: MediaQuery.of(context).size.height / 7,
+      //   color: AppColor.primaryColor,
+      //   child: Padding(
+      //     padding: const EdgeInsets.only(left: 20, right: 20),
+      //     child: Center(
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         children: [
+      //           SizedBox(
+      //             width: MediaQuery.of(context).size.width * 0.6,
+      //             child: SingleChildScrollView(
+      //               scrollDirection: Axis.horizontal,
+      //               child: Row(
+      //                 children: [
+      //                   Container(
+      //                     height: 50,
+      //                     width: 50,
+      //                     decoration: const BoxDecoration(
+      //                       color: AppColor.buttonTxColor,
+      //                       image: DecorationImage(
+      //                           image: AssetImage(
+      //                             "images/fruit1.png",
+      //                           ),
+      //                           fit: BoxFit.contain),
+      //                     ),
+      //                   ),
+      //                   const SizedBox(
+      //                     width: 4,
+      //                   ),
+      //                   Container(
+      //                     height: 50,
+      //                     width: 50,
+      //                     decoration: const BoxDecoration(
+      //                       color: AppColor.buttonTxColor,
+      //                       image: DecorationImage(
+      //                           image: AssetImage(
+      //                             "images/fruit1.png",
+      //                           ),
+      //                           fit: BoxFit.contain),
+      //                     ),
+      //                   ),
+      //                   const SizedBox(
+      //                     width: 4,
+      //                   ),
+      //                   Container(
+      //                     height: 50,
+      //                     width: 50,
+      //                     decoration: const BoxDecoration(
+      //                       color: AppColor.buttonTxColor,
+      //                       image: DecorationImage(
+      //                           image: AssetImage(
+      //                             "images/fruit1.png",
+      //                           ),
+      //                           fit: BoxFit.contain),
+      //                     ),
+      //                   ),
+      //                   const SizedBox(
+      //                     width: 4,
+      //                   ),
+      //                   Container(
+      //                     height: 50,
+      //                     width: 50,
+      //                     decoration: const BoxDecoration(
+      //                       color: AppColor.buttonTxColor,
+      //                       image: DecorationImage(
+      //                           image: AssetImage(
+      //                             "images/fruit1.png",
+      //                           ),
+      //                           fit: BoxFit.contain),
+      //                     ),
+      //                   ),
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //           Row(
+      //             children: [
+      //               Text(
+      //                 "\$35.05",
+      //                 style: GoogleFonts.getFont(
+      //                   "Gothic A1",
+      //                   textStyle: const TextStyle(
+      //                     fontSize: 18,
+      //                     fontWeight: FontWeight.w400,
+      //                     color: AppColor.buttonTxColor,
+      //                   ),
+      //                 ),
+      //               ),
+      //               const SizedBox(
+      //                 width: 4,
+      //               ),
+      //               InkWell(
+      //                 onTap: () {
+      //                   Navigator.pushNamed(
+      //                     context,
+      //                     RoutesName.cartScreen,
+      //                   );
+      //                 },
+      //                 child: Container(
+      //                   height: 50,
+      //                   width: 50,
+      //                   decoration: const BoxDecoration(
+      //                     color: AppColor.buttonTxColor,
+      //                   ),
+      //                   child: const Icon(
+      //                     Icons.arrow_forward,
+      //                     color: AppColor.primaryColor,
+      //                   ),
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      bottomNavigationBar: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('myOwnPack')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<DocumentSnapshot> cartItems = snapshot.data!.docs;
+            double totalPrice = 0;
+            for (var item in cartItems) {
+              totalPrice += double.parse(item['salePrice']);
+            }
+
+            return Container(
+              height: MediaQuery.of(context).size.height / 9,
+              color: AppColor.primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 0, right: 10),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: cartItems.length,
+                          itemBuilder: (context, index) {
+                            var item = cartItems[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 8.0,bottom: 8.0,right: 4.0),
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color: AppColor.buttonTxColor,
+                                  image: DecorationImage(
+                                    image: NetworkImage(item['imageUrl']),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColor.buttonTxColor,
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "images/fruit1.png",
+                      Row(
+                        children: [
+                          Text(
+                            "\$${totalPrice.toStringAsFixed(1)}", // Display total price
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.buttonTxColor,
+                              ),
                             ),
-                            fit: BoxFit.contain),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColor.buttonTxColor,
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "images/fruit1.png",
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                RoutesName.cartScreen,
+                              );
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: const BoxDecoration(
+                                color: AppColor.buttonTxColor,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_forward,
+                                color: AppColor.primaryColor,
+                              ),
                             ),
-                            fit: BoxFit.contain),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColor.buttonTxColor,
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "images/fruit1.png",
-                            ),
-                            fit: BoxFit.contain),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "\$35.05",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.buttonTxColor,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.cartScreen,
-                        );
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                          color: AppColor.buttonTxColor,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_forward,
-                          color: AppColor.primaryColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+              ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Shimmer(
+                duration: const Duration(seconds: 3), //Default value
+                interval: const Duration(
+                    seconds: 5), //Default value: Duration(seconds: 0)
+                color: AppColor.grayColor.withOpacity(0.2), //Default value
+                colorOpacity: 0.2, //Default value
+                enabled: true, //Default value
+                direction: const ShimmerDirection.fromLTRB(), //Default Value
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  color: AppColor.grayColor.withOpacity(0.2),
+                ),
+              ),
+            );
+          }
+        },
       ),
+
       body: SafeArea(
           child: ListView(
         children: [
