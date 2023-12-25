@@ -23,7 +23,7 @@ class ProductDetailScreen extends StatefulWidget {
     required this.weight,
     required this.detail,
     required this.productId,
-    required this.sallerId,
+    required this.sellerId,
   });
 
   final String title;
@@ -33,7 +33,7 @@ class ProductDetailScreen extends StatefulWidget {
   final String weight;
   final String detail;
   final String productId;
-  final String sallerId;
+  final String sellerId;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -379,7 +379,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           //   context,
                           //   RoutesName.checkOutScreen,
                           // );
-                          print(widget.sallerId);
+                          print(widget.sellerId);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -388,7 +388,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 price: widget.price,
                                 img: widget.imageUrl,
                                 id: widget.productId,
-                                customerId: widget.sallerId,
+                                customerId: widget.sellerId,
                                 weight: widget.weight,
                                 salePrice: widget.salePrice,
                               ),

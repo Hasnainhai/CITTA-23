@@ -801,7 +801,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .toString(),
                                               productId: _products[index]['id']
                                                   .toString(),
-                                              sallerId: _products[index]
+                                              sellerId: _products[index]
                                                       ['sellerId']
                                                   .toString(),
                                               imageUrl: _products[index]
