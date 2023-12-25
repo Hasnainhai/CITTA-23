@@ -22,7 +22,7 @@ class ProductDetailScreen extends StatefulWidget {
     required this.salePrice,
     required this.weight,
     required this.detail,
-    required this.id,
+    required this.productId,
     required this.sallerId,
   });
 
@@ -32,7 +32,7 @@ class ProductDetailScreen extends StatefulWidget {
   String salePrice;
   final String weight;
   final String detail;
-  final String id;
+  final String productId;
   final String sallerId;
 
   @override
@@ -386,7 +386,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 tile: widget.title,
                                 price: widget.price,
                                 img: widget.imageUrl,
-                                id: widget.id,
+                                id: widget.productId,
                                 customerId: widget.sallerId,
                                 weight: widget.weight,
                                 salePrice: widget.salePrice,

@@ -17,12 +17,16 @@ class FashionDetail extends StatefulWidget {
       required this.title,
       required this.imageUrl,
       required this.salePrice,
-      required this.detail});
+      required this.detail,
+      required this.sellerId,
+      required this.productId});
 
   final String title;
   final String imageUrl;
   String salePrice;
   final String detail;
+  final String sellerId;
+  final String productId;
 
   @override
   State<FashionDetail> createState() => _FashionDetailState();

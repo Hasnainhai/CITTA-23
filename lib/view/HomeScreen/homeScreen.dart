@@ -38,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         for (int i = 0; i < qn.docs.length; i++) {
           _products.add({
+            'sellerId': qn.docs[i]['sellerId'],
+            'id': qn.docs[i]['id'],
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
@@ -118,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
             'detail': qn.docs[i]['detail'],
             'weight': qn.docs[i]['weight'],
             'size': qn.docs[i]['size'],
+            'sellerId': qn.docs[i]['sellerId'],
             'id': qn.docs[i]['id'],
           });
         }
@@ -145,6 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _fashionProducts.clear();
         for (int i = 0; i < qn.docs.length; i++) {
           _fashionProducts.add({
+            'sellerId': qn.docs[i]['sellerId'],
+            'id': qn.docs[i]['id'],
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
@@ -165,7 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void addToCart(String img, String title, String dPrice) async {
+  void addToCart(String img, String title, String dPrice, String sellerId,
+      String productId) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -185,6 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       // Product is not in the cart, add it
       await cartCollectionRef.add({
+        'id': productId,
+        'sellerId': sellerId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
@@ -673,6 +681,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         );
                                       },
+                                      productId: _popularPacks[index]['id'],
+                                      sellerId: _popularPacks[index]
+                                          ['sellerId'],
                                       name: _popularPacks[index]['title']
                                           .toString(),
                                       price: _popularPacks[index]['price']
@@ -692,10 +703,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             index >= 0 &&
                                             index < _popularPacks.length) {
                                           addToCart(
-                                            _popularPacks[index]['imageUrl'],
-                                            _popularPacks[index]['title'],
-                                            _popularPacks[index]['salePrice'],
-                                          );
+                                              _popularPacks[index]['imageUrl'],
+                                              _popularPacks[index]['title'],
+                                              _popularPacks[index]['salePrice'],
+                                              _popularPacks[index]['id'],
+                                              _popularPacks[index]['sellerId']);
                                         }
                                       },
                                     );
@@ -786,7 +798,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           return ProductDetailScreen(
                                               title: _products[index]['title']
                                                   .toString(),
-                                              id: _products[index]['id']
+                                              productId: _products[index]['id']
                                                   .toString(),
                                               sallerId: _products[index]
                                                       ['sellerId']
@@ -804,6 +816,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .toString());
                                         }));
                                       },
+                                      productId: _products[index]['id'],
+                                      sellerId: _products[index]['sellerId'],
                                       name:
                                           _products[index]['title'].toString(),
                                       price:
@@ -823,10 +837,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             index >= 0 &&
                                             index < _products.length) {
                                           addToCart(
-                                            _products[index]['imageUrl'],
-                                            _products[index]['title'],
-                                            _products[index]['salePrice'],
-                                          );
+                                              _products[index]['imageUrl'],
+                                              _products[index]['title'],
+                                              _products[index]['salePrice'],
+                                              _products[index]['id'],
+                                              _products[index]['sellerId']);
                                         }
                                       },
                                     );
@@ -888,6 +903,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return FashionDetail(
+                                          sellerId: _fashionProducts[index]
+                                              ['sellerId'],
+                                          productId: _fashionProducts[index]
+                                              ['id'],
                                           title: _fashionProducts[index]
                                                   ['title']
                                               .toString(),
@@ -906,6 +925,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .toString());
                                     }));
                                   },
+                                  sellerId: _fashionProducts[index]['sellerId'],
+                                  productId: _fashionProducts[index]['id'],
                                   name: _fashionProducts[index]['title']
                                       .toString(),
                                   price: '',
@@ -923,10 +944,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         index >= 0 &&
                                         index < _fashionProducts.length) {
                                       addToCart(
-                                        _fashionProducts[index]['imageUrl'],
-                                        _fashionProducts[index]['title'],
-                                        _fashionProducts[index]['price'],
-                                      );
+                                          _fashionProducts[index]['imageUrl'],
+                                          _fashionProducts[index]['title'],
+                                          _fashionProducts[index]['price'],
+                                          _fashionProducts[index]['id'],
+                                          _fashionProducts[index]['sellerId']);
                                     }
                                   },
                                 );

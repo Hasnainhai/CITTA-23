@@ -43,6 +43,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
           Map<String, dynamic> product6 = qn.docs[i]['product6'] ?? {};
           _popularPacks.add({
             //for popular packs details screen
+
             'product1': {
               'amount': product1['amount'] ?? '',
               'image': product1['image'] ?? '',
@@ -74,6 +75,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
               'title': product6['title'] ?? '',
             },
             //simple card
+            'sellerId': qn.docs[i]['sellerId'],
+            'id': qn.docs[i]['id'],
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
@@ -96,7 +99,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
     }
   }
 
-  void addToCart(String img, String title, String dPrice) async {
+  void addToCart(String img, String title, String dPrice, String sellerId,
+      String productId) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -116,6 +120,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
     } else {
       // Product is not in the cart, add it
       await cartCollectionRef.add({
+        'sellerId': sellerId,
+        'id': productId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
@@ -310,6 +316,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                             ),
                           );
                         },
+                        sellerId: _popularPacks[index]['sellerId'].toString(),
+                        productId: _popularPacks[index]['id'].toString(),
                         name: _popularPacks[index]['title'].toString(),
                         price: _popularPacks[index]['price'].toString(),
                         dPrice: _popularPacks[index]['salePrice'].toString(),
@@ -326,6 +334,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                               index >= 0 &&
                               index < _popularPacks.length) {
                             addToCart(
+                              _popularPacks[index]['sellerId'],
+                              _popularPacks[index]['id'],
                               _popularPacks[index]['imageUrl'],
                               _popularPacks[index]['title'],
                               _popularPacks[index]['salePrice'],

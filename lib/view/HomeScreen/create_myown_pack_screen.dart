@@ -1,6 +1,8 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -26,17 +28,50 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
     setState(() {
       for (int i = 0; i < qn.docs.length; i++) {
         _products.add({
+          'id': qn.docs[i]['id'],
+          'sellerId': qn.docs[i]['sellerId'],
           'imageUrl': qn.docs[i]['imageUrl'],
           'title': qn.docs[i]['title'],
           'price': qn.docs[i]['price'],
           'salePrice': qn.docs[i]['salePrice'],
           'detail': qn.docs[i]['detail'],
           'weight': qn.docs[i]['weight'],
-          
         });
       }
     });
     return qn.docs;
+  }
+
+  void addToCart(String img, String title, String dPrice, String sellerId,
+      String productId) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      await cartCollectionRef.add({
+        'id': productId,
+        'sellerId': sellerId,
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
+    }
   }
 
   @override
@@ -253,7 +288,8 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                                           _products[index]['price'].toString(),
                                       salePrice: _products[index]['salePrice']
                                           .toString(),
-                                      id: _products[index]['id'].toString(),
+                                      productId:
+                                          _products[index]['id'].toString(),
                                       sallerId: _products[index]['sellerId']
                                           .toString(),
                                       weight:
@@ -264,6 +300,8 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                               ),
                             );
                           },
+                          sellerId: _products[index]['sellerId'],
+                          productId: _products[index]['id'],
                           name: _products[index]['title'].toString(),
                           price: _products[index]['price'].toString(),
                           dPrice: _products[index]['salePrice'].toString(),
@@ -273,7 +311,19 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                               ? AppColor.appBarButtonColor
                               : AppColor.buttonBgColor,
                           img: _products[index]['imageUrl'],
-                          iconColor: AppColor.buttonBgColor, addCart: () {  },
+                          iconColor: AppColor.buttonBgColor,
+                          addCart: () {
+                            if (_products.isNotEmpty &&
+                                index >= 0 &&
+                                index < _products.length) {
+                              addToCart(
+                                  _products[index]['imageUrl'],
+                                  _products[index]['title'],
+                                  _products[index]['salePrice'],
+                                  _products[index]['id'],
+                                  _products[index]['sellerId']);
+                            }
+                          },
                         );
                       } else {
                         return Padding(

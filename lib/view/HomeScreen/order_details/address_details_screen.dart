@@ -3,7 +3,6 @@ import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
