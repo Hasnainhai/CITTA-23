@@ -101,6 +101,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         'title': widget.title.toString(),
         'salePrice': widget.saleprice.toString(),
         'imageUrl': widget.imageUrl.toString(),
+        'id': widget.productId.toString(),
         // 'isLike': like,
       });
       // Display a success message or perform any other action

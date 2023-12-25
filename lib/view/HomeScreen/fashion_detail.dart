@@ -51,6 +51,8 @@ class _FashionDetailState extends State<FashionDetail> {
         'title': widget.title,
         'salePrice': widget.salePrice,
         'imageUrl': widget.imageUrl,
+        'id': widget.productId,
+        'sellerId': widget.sellerId
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -72,7 +74,7 @@ class _FashionDetailState extends State<FashionDetail> {
           .collection('favoriteList')
           .doc(uid)
           .collection('favorites')
-          .where('title', isEqualTo: widget.title.toString())
+          .where('id', isEqualTo: widget.productId.toString())
           .get();
 
       // Delete the document

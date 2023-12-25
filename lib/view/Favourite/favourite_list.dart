@@ -18,55 +18,114 @@ class FavouriteList extends StatefulWidget {
 class _FavouriteListState extends State<FavouriteList> {
   bool _isLoading = true;
   final _firestoreInstance = FirebaseFirestore.instance;
-  //fetch user favourite data
-  Future<List<Map<String, dynamic>?>> getUserFavorites() async {
-    try {
-      // Get the user's UID
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-      print('UID: $uid');
-      // Retrieve the favorite list for the current user
-      QuerySnapshot<Map<String, dynamic>> snapshot = await _firestoreInstance
-          .collection('favoriteList')
-          .doc(uid)
-          .collection('favorites')
-          .get();
+  // //fetch user favourite data
+  // Future<List<Map<String, dynamic>?>> getUserFavorites() async {
+  //   try {
+  //     // Get the user's UID
+  //     String uid = FirebaseAuth.instance.currentUser!.uid;
+  //     print('UID: $uid');
+  //     // Retrieve the favorite list for the current user
+  //     QuerySnapshot<Map<String, dynamic>> snapshot = await _firestoreInstance
+  //         .collection('favoriteList')
+  //         .doc(uid)
+  //         .collection('favorites')
+  //         .get();
 
-      // Convert the snapshot data to a list of maps
-      List<Map<String, dynamic>?> favoritesList = snapshot.docs
-          .map((DocumentSnapshot<Map<String, dynamic>> doc) => doc.data())
-          .toList();
+  //     // Convert the snapshot data to a list of maps
+  //     List<Map<String, dynamic>?> favoritesList = snapshot.docs
+  //         .map((DocumentSnapshot<Map<String, dynamic>> doc) => doc.data())
+  //         .toList();
 
-      return favoritesList;
-    } catch (e) {
-      // Handle errors
-      Utils.flushBarErrorMessage(
-          'Error while fetching user favourite $e', context);
-      // print('Error fetching user favorites: $e');
-      return [];
-    }
+  //     return favoritesList;
+  //   } catch (e) {
+  //     // Handle errors
+  //     Utils.flushBarErrorMessage(
+  //         'Error while fetching user favourite $e', context);
+  //     // print('Error fetching user favorites: $e');
+  //     return [];
+  //   }
+  // }
+
+  // List<Map<String, dynamic>> favoritesList = [];
+  // //fetch user favourite
+  // Future<void> fetchUserFavorites() async {
+  //   try {
+  //     List<Map<String, dynamic>?> userFavorites = await getUserFavorites();
+  //     userFavorites.removeWhere((favorite) => favorite == null);
+
+  //     setState(() {
+  //       favoritesList = userFavorites.map((favorite) => favorite!).toList();
+  //       _isLoading = false; // Set isLoading to false after data is loaded
+  //     });
+  //   } catch (e) {
+  //     Utils.flushBarErrorMessage(
+  //         'Error while fetching user favourite $e', context);
+  //     setState(() {
+  //       _isLoading = false; // Set isLoading to false in case of an error
+  //     });
+  //   }
+  // }
+
+  // void removeFromFavorites() async {
+  //   try {
+  //     // Get the user's UID
+  //     String uid = FirebaseAuth
+  //         .instance.currentUser!.uid; // You need to implement this function
+
+  //     // Query the 'favoriteList' collection to find the document to delete
+  //     QuerySnapshot querySnapshot = await _firestoreInstance
+  //         .collection('favoriteList')
+  //         .doc(uid)
+  //         .collection('favorites')
+  //         .where('title')
+  //         .get();
+
+  //     // Delete the document
+  //     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+  //       await _firestoreInstance
+  //           .collection('favoriteList')
+  //           .doc(uid)
+  //           .collection('favorites')
+  //           .doc(doc.id)
+  //           .delete();
+  //     }
+
+  //     // Display a success message or perform any other action
+  //     Utils.toastMessage('SuccessFully removed from favourite');
+  //   } catch (e) {
+  //     // Handle errors
+  //     Utils.flushBarErrorMessage('Error removing from favorites: $e', context);
+  //     // print('Error removing from favorites: $e');
+  //   }
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getUserFavorites();
+  //   fetchUserFavorites();
+  // }
+  late Stream<List<Map<String, dynamic>?>> favoriteItemsStream;
+
+  // ...
+
+  Stream<List<Map<String, dynamic>?>> getFavoriteItemsStream() {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    return _firestoreInstance
+        .collection('favoriteList')
+        .doc(uid)
+        .collection('favorites')
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => doc.data(),
+              )
+              .toList(),
+        );
   }
 
-  List<Map<String, dynamic>> favoritesList = [];
-  //fetch user favourite
-  Future<void> fetchUserFavorites() async {
-    try {
-      List<Map<String, dynamic>?> userFavorites = await getUserFavorites();
-      userFavorites.removeWhere((favorite) => favorite == null);
-
-      setState(() {
-        favoritesList = userFavorites.map((favorite) => favorite!).toList();
-        _isLoading = false; // Set isLoading to false after data is loaded
-      });
-    } catch (e) {
-      Utils.flushBarErrorMessage(
-          'Error while fetching user favourite $e', context);
-      setState(() {
-        _isLoading = false; // Set isLoading to false in case of an error
-      });
-    }
-  }
-
-  void removeFromFavorites() async {
+  void removeFromFavorites(String img,) async {
     try {
       // Get the user's UID
       String uid = FirebaseAuth
@@ -77,7 +136,7 @@ class _FavouriteListState extends State<FavouriteList> {
           .collection('favoriteList')
           .doc(uid)
           .collection('favorites')
-          .where('title')
+          .where('imageUrl', isEqualTo: img.toString(),)
           .get();
 
       // Delete the document
@@ -102,8 +161,22 @@ class _FavouriteListState extends State<FavouriteList> {
   @override
   void initState() {
     super.initState();
-    getUserFavorites();
-    fetchUserFavorites();
+    favoriteItemsStream = getFavoriteItemsStream();
+
+    // Set _isLoading to false once the stream is loaded
+    favoriteItemsStream.listen(
+      (_) {
+        setState(() {
+          _isLoading = false;
+        });
+      },
+      onError: (error) {
+        Utils.flushBarErrorMessage('Error loading favorites: $error', context);
+        setState(() {
+          _isLoading = false;
+        });
+      },
+    );
   }
 
   @override
@@ -140,20 +213,46 @@ class _FavouriteListState extends State<FavouriteList> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: ListView(
-              children: favoritesList.map((favorite) {
-                return FavouristListCart(
-                  img: favorite['imageUrl'],
-                  title: favorite['title'],
-                  price: favorite['salePrice'],
-                  deleteIcon: Icons.delete_outline,
-                  shoppingIcon: Icons.shopping_cart_outlined,
-                  ontap: () {
-                    removeFromFavorites();
-                  },
-                  ontap2: () {},
-                );
-              }).toList(),
+            child: StreamBuilder<List<Map<String, dynamic>?>>(
+              stream: favoriteItemsStream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  List<Map<String, dynamic>?> favoriteItems =
+                      snapshot.data ?? [];
+
+                  if (favoriteItems.isEmpty) {
+                    return const Center(
+                      child: Text('Your favorite list is empty.'),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: favoriteItems.length,
+                    itemBuilder: (context, index) {
+                      var favorite = favoriteItems[index];
+                      return FavouristListCart(
+                        img: favorite!['imageUrl'],
+                        title: favorite['title'],
+                        price: favorite['salePrice'],
+                        deleteIcon: Icons.delete_outline,
+                        shoppingIcon: Icons.shopping_cart_outlined,
+                        ontap: () {
+                          removeFromFavorites(
+                            favorite['imageUrl'],
+                          );
+                        },
+                        ontap2: () {},
+                      );
+                    },
+                  );
+                }
+              },
             ),
           ),
         ),
