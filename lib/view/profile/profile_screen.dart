@@ -278,18 +278,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(width: 5.0),
         IconButton(
           onPressed: () async {
-            GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-            if (googleUser != null) {
-              // Fetch user details from Google Sign-In
-              setState(() {
-                _name = googleUser.displayName;
-                _email = googleUser.email;
-                _pImage = googleUser.photoUrl ?? defaultProfile;
-                // Assuming you don't have a phone number for Google sign-in
-                _phNo = 'Default Phone Number';
-              });
-
-              // Navigate to EditProfile with the fetched details
+            // Navigate to EditProfile with the fetched details
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return EditProfile(
+            //     profilePic: _pImage ?? defaultProfile,
+            //     name: _name ?? 'Default Name',
+            //     email: _email ?? 'Default Email',
+            //     phNo: _phNo ?? 'Default Phone Number',
+            //   );
+            // }));
+            if (_name != null && _email != null && _phNo != null) {
+              // Navigate to EditProfile with existing user details
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditProfile(
                   profilePic: _pImage ?? defaultProfile,
@@ -299,21 +298,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }));
             } else {
-              // Handle the case where Google Sign-In failed or user is not signed in with Google
-              if (_name != null && _email != null && _phNo != null) {
-                // Navigate to EditProfile with existing user details
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return EditProfile(
-                    profilePic: _pImage ?? defaultProfile,
-                    name: _name ?? 'Default Name',
-                    email: _email ?? 'Default Email',
-                    phNo: _phNo ?? 'Default Phone Number',
-                  );
-                }));
-              } else {
-                Utils.flushBarErrorMessage('Error occurred', context);
-                // Handle the case where one or more variables are null.
-              }
+              Utils.flushBarErrorMessage('Error occurred', context);
+              // Handle the case where one or more variables are null.
             }
           },
           icon: const Icon(
