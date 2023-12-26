@@ -72,14 +72,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _pImage = userDoc.get('profilePic');
 
           _addressTextController.text = userDoc.get('shipping-address');
-          GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-          if (googleUser != null) {
-            _name = googleUser.displayName;
-            _email = googleUser.email;
-            _pImage = googleUser.photoUrl ?? defaultProfile;
-            // Assuming you don't have a phone number for Google sign-in
-            // _phNo = 'Default Phone Number';
-          }
+          // GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+          // if (googleUser != null) {
+          //   _name = googleUser.displayName;
+          //   _email = googleUser.email;
+          //   _pImage = googleUser.photoUrl ?? defaultProfile;
+          //   // Assuming you don't have a phone number for Google sign-in
+          //   // _phNo = 'Default Phone Number';
+          // }
         } else {
           Utils.flushBarErrorMessage('User data not found', context);
         }

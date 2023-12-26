@@ -299,42 +299,43 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           const SizedBox(
                             width: 4,
                           ),
-                          ListView.builder(
-                            itemBuilder: (context, index) {
-                              var product = _products[index];
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CheckOutScreen(
-                                        tile: product['title'].toString(),
-                                        price: product['price'].toString(),
-                                        img: product['imageUrl'],
-                                        id: product['id'].toString(),
-                                        customerId:
-                                            product['sellerId'].toString(),
-                                        weight: product['weight'].toString(),
-                                        salePrice:
-                                            product['salePrice'].toString(),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: const BoxDecoration(
-                                    color: AppColor.buttonTxColor,
-                                  ),
-                                  child: const Icon(
-                                    Icons.arrow_forward,
-                                    color: AppColor.primaryColor,
-                                  ),
-                                ),
-                              );
-                            },
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                              color: AppColor.buttonTxColor,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: AppColor.primaryColor,
+                            ),
                           ),
+                          // ListView.builder(
+                          //   itemBuilder: (context, index) {
+                          //     var product = _products[index];
+                          //     return InkWell(
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //             builder: (context) => CheckOutScreen(
+                          //               tile: product['title'].toString(),
+                          //               price: product['price'].toString(),
+                          //               img: product['imageUrl'],
+                          //               id: product['id'].toString(),
+                          //               customerId:
+                          //                   product['sellerId'].toString(),
+                          //               weight: product['weight'].toString(),
+                          //               salePrice:
+                          //                   product['salePrice'].toString(),
+                          //             ),
+                          //           ),
+                          //         );
+                          //       },
+                          //       child:
+                          //     );
+                          //   },
+                          // ),
                         ],
                       ),
                     ],
@@ -392,98 +393,91 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
               const VerticalSpeacing(18),
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Expanded(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    itemCount: _products.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5, // Horizontal spacing
-                      mainAxisSpacing: 10, // Vertical spacing
-                    ),
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      // Check if _products is not empty and index is within valid range
-                      if (_products.isNotEmpty && index < _products.length) {
-                        return HomeCard(
-                          ontap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return ProductDetailScreen(
-                                      title:
-                                          _products[index]['title'].toString(),
-                                      imageUrl: _products[index]['imageUrl'],
-                                      price:
-                                          _products[index]['price'].toString(),
-                                      salePrice: _products[index]['salePrice']
-                                          .toString(),
-                                      productId:
-                                          _products[index]['id'].toString(),
-                                      sellerId: _products[index]['sellerId']
-                                          .toString(),
-                                      weight:
-                                          _products[index]['weight'].toString(),
-                                      detail: _products[index]['detail']
-                                          .toString());
-                                },
-                              ),
-                            );
-                          },
-                          sellerId: _products[index]['sellerId'],
-                          productId: _products[index]['id'],
-                          name: _products[index]['title'].toString(),
-                          price: _products[index]['price'].toString(),
-                          dPrice: _products[index]['salePrice'].toString(),
-                          borderColor: AppColor.buttonBgColor,
-                          fillColor: AppColor.appBarButtonColor,
-                          cartBorder: isTrue
-                              ? AppColor.appBarButtonColor
-                              : AppColor.buttonBgColor,
-                          img: _products[index]['imageUrl'],
-                          iconColor: AppColor.buttonBgColor,
-                          addCart: () {
-                            if (_products.isNotEmpty &&
-                                index >= 0 &&
-                                index < _products.length) {
-                              addToCart(
-                                  _products[index]['imageUrl'],
-                                  _products[index]['title'],
-                                  _products[index]['salePrice'],
-                                  _products[index]['id'],
-                                  _products[index]['sellerId']);
-                            }
-                          },
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Shimmer(
-                            duration:
-                                const Duration(seconds: 3), //Default value
-                            interval: const Duration(
-                                seconds:
-                                    5), //Default value: Duration(seconds: 0)
-                            color: AppColor.grayColor
-                                .withOpacity(0.2), //Default value
-                            colorOpacity: 0.2, //Default value
-                            enabled: true, //Default value
-                            direction: const ShimmerDirection
-                                .fromLTRB(), //Default Value
-                            child: Container(
-                              height: 100,
-                              width: 150,
-                              color: AppColor.grayColor.withOpacity(0.2),
-                            ),
-                          ),
-                        ); // or some default widget
-                      }
-                    },
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  itemCount: _products.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5, // Horizontal spacing
+                    mainAxisSpacing: 10, // Vertical spacing
                   ),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    // Check if _products is not empty and index is within valid range
+                    if (_products.isNotEmpty && index < _products.length) {
+                      return HomeCard(
+                        ontap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ProductDetailScreen(
+                                    title: _products[index]['title'].toString(),
+                                    imageUrl: _products[index]['imageUrl'],
+                                    price: _products[index]['price'].toString(),
+                                    salePrice: _products[index]['salePrice']
+                                        .toString(),
+                                    productId:
+                                        _products[index]['id'].toString(),
+                                    sellerId:
+                                        _products[index]['sellerId'].toString(),
+                                    weight:
+                                        _products[index]['weight'].toString(),
+                                    detail:
+                                        _products[index]['detail'].toString());
+                              },
+                            ),
+                          );
+                        },
+                        sellerId: _products[index]['sellerId'],
+                        productId: _products[index]['id'],
+                        name: _products[index]['title'].toString(),
+                        price: _products[index]['price'].toString(),
+                        dPrice: _products[index]['salePrice'].toString(),
+                        borderColor: AppColor.buttonBgColor,
+                        fillColor: AppColor.appBarButtonColor,
+                        cartBorder: isTrue
+                            ? AppColor.appBarButtonColor
+                            : AppColor.buttonBgColor,
+                        img: _products[index]['imageUrl'],
+                        iconColor: AppColor.buttonBgColor,
+                        addCart: () {
+                          if (_products.isNotEmpty &&
+                              index >= 0 &&
+                              index < _products.length) {
+                            addToCart(
+                                _products[index]['imageUrl'],
+                                _products[index]['title'],
+                                _products[index]['salePrice'],
+                                _products[index]['id'],
+                                _products[index]['sellerId']);
+                          }
+                        },
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Shimmer(
+                          duration: const Duration(seconds: 3), //Default value
+                          interval: const Duration(
+                              seconds: 5), //Default value: Duration(seconds: 0)
+                          color: AppColor.grayColor
+                              .withOpacity(0.2), //Default value
+                          colorOpacity: 0.2, //Default value
+                          enabled: true, //Default value
+                          direction:
+                              const ShimmerDirection.fromLTRB(), //Default Value
+                          child: Container(
+                            height: 100,
+                            width: 150,
+                            color: AppColor.grayColor.withOpacity(0.2),
+                          ),
+                        ),
+                      ); // or some default widget
+                    }
+                  },
                 ),
               ),
             ],
