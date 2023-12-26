@@ -1,16 +1,13 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
-import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
-import 'widgets/emptyCartWidget.dart';
 import 'widgets/item_prizing.dart';
 
 class CardScreen extends StatefulWidget {
@@ -23,6 +20,12 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   int? index;
+  int totalPrice = 0;
+
+  CollectionReference _productsCollection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("cart");
 
   Future<void> getDocumentIndex() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -35,12 +38,35 @@ class _CardScreenState extends State<CardScreen> {
     });
   }
 
+  void _fetchData() {
+    _productsCollection.get().then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        int sum = 0;
+
+        querySnapshot.docs.forEach((QueryDocumentSnapshot document) {
+          // Assuming each product has a 'price' field
+          String priceString = document['salePrice'];
+          int priceInt = int.tryParse(priceString) ?? 0;
+          sum += priceInt;
+        });
+
+        setState(() {
+          totalPrice = sum;
+        });
+        debugPrint(
+          "this is the total price${totalPrice.toString()}",
+        );
+      }
+    });
+  }
+
   // other stuff
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getDocumentIndex();
+    _fetchData();
   }
 
   @override
@@ -210,7 +236,7 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                const ItemPrizingWidget(title: 'Total Price', price: '₹66'),
+                ItemPrizingWidget(title: 'Total Price', price: '₹$totalPrice'),
 
                 const VerticalSpeacing(30.0),
                 SizedBox(
