@@ -1,3 +1,4 @@
+import 'package:citta_23/utils/utils.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,26 +13,45 @@ class CartWidget extends StatefulWidget {
     required this.img,
     required this.onDelete,
     required this.items,
-    required this.onIncrease,
-    required this.onDecrease,
     required this.sellerId,
     required this.productId,
+    required this.index,
   });
   final String title;
   String price;
   final String img;
-  final String items;
+  int items;
   final String sellerId;
   final String productId;
   final Function() onDelete;
-  final Function() onIncrease;
-  final Function() onDecrease;
-
+  final String index;
   @override
   State<CartWidget> createState() => _CartWidgetState();
 }
 
 class _CartWidgetState extends State<CartWidget> {
+  int? newPrice;
+  String? addPrice;
+  void increment() {
+    setState(() {
+      widget.items++;
+      int price = int.parse(widget.price);
+      newPrice = (newPrice ?? int.parse(widget.price)) + price;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (widget.items > 1) {
+        widget.items--;
+        int price = int.parse(widget.price);
+        newPrice = (newPrice ?? int.parse(widget.price)) - price;
+      } else {
+        Utils.flushBarErrorMessage("Fixed Limit", context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -77,7 +97,7 @@ class _CartWidgetState extends State<CartWidget> {
                     const SizedBox(width: 30.0),
                     InkWell(
                       onTap: () {
-                        widget.onDecrease();
+                        decrement();
                       },
                       child: Container(
                           height: 34,
@@ -100,7 +120,7 @@ class _CartWidgetState extends State<CartWidget> {
                       width: 18,
                     ),
                     Text(
-                      widget.items,
+                      widget.items.toString(),
                       style: GoogleFonts.getFont(
                         "Gothic A1",
                         textStyle: const TextStyle(
@@ -115,7 +135,7 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                     InkWell(
                       onTap: () {
-                        widget.onIncrease();
+                        increment();
                       },
                       child: Container(
                         height: 34,
@@ -148,7 +168,7 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                   ),
                   Text(
-                    widget.price,
+                    newPrice == null ? widget.price : newPrice.toString(),
                     style: GoogleFonts.getFont(
                       "Gothic A1",
                       textStyle: const TextStyle(
