@@ -1,14 +1,13 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-
 import '../../res/components/colors.dart';
-import '../../routes/routes_name.dart';
 import 'widgets/homeCard.dart';
 
 class CreateOwnPackScreen extends StatefulWidget {
@@ -267,7 +266,8 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           itemBuilder: (context, index) {
                             var item = cartItems[index];
                             return Padding(
-                              padding: const EdgeInsets.only(top: 8.0,bottom: 8.0,right: 4.0),
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, bottom: 8.0, right: 4.0),
                               child: Container(
                                 height: 50,
                                 width: 50,
@@ -299,24 +299,41 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           const SizedBox(
                             width: 4,
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                RoutesName.cartScreen,
+                          ListView.builder(
+                            itemBuilder: (context, index) {
+                              var product = _products[index];
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CheckOutScreen(
+                                        tile: product['title'].toString(),
+                                        price: product['price'].toString(),
+                                        img: product['imageUrl'],
+                                        id: product['id'].toString(),
+                                        customerId:
+                                            product['sellerId'].toString(),
+                                        weight: product['weight'].toString(),
+                                        salePrice:
+                                            product['salePrice'].toString(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: const BoxDecoration(
+                                    color: AppColor.buttonTxColor,
+                                  ),
+                                  child: const Icon(
+                                    Icons.arrow_forward,
+                                    color: AppColor.primaryColor,
+                                  ),
+                                ),
                               );
                             },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: const BoxDecoration(
-                                color: AppColor.buttonTxColor,
-                              ),
-                              child: const Icon(
-                                Icons.arrow_forward,
-                                color: AppColor.primaryColor,
-                              ),
-                            ),
                           ),
                         ],
                       ),
