@@ -15,7 +15,6 @@ class CartWidget extends StatefulWidget {
     required this.items,
     required this.sellerId,
     required this.productId,
-    required this.index,
   });
   final String title;
   String price;
@@ -24,7 +23,6 @@ class CartWidget extends StatefulWidget {
   final String sellerId;
   final String productId;
   final Function() onDelete;
-  final String index;
   @override
   State<CartWidget> createState() => _CartWidgetState();
 }
@@ -35,8 +33,10 @@ class _CartWidgetState extends State<CartWidget> {
   void increment() {
     setState(() {
       widget.items++;
+
       int price = int.parse(widget.price);
       newPrice = (newPrice ?? int.parse(widget.price)) + price;
+      totalPrice = newPrice;
     });
   }
 
@@ -52,6 +52,7 @@ class _CartWidgetState extends State<CartWidget> {
     });
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return SizedBox(

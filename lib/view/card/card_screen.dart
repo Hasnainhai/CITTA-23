@@ -14,35 +14,39 @@ import 'widgets/emptyCartWidget.dart';
 import 'widgets/item_prizing.dart';
 
 class CardScreen extends StatefulWidget {
-  const CardScreen({super.key});
-
+  const CardScreen({
+    super.key,
+  });
   @override
   State<CardScreen> createState() => _CardScreenState();
 }
 
 class _CardScreenState extends State<CardScreen> {
   int? index;
-  @override
-  void initState() {
-    super.initState();
-    // refreshCartItems();
+
+  Future<void> getDocumentIndex() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("cart")
+        .get();
+    setState(() {
+      index = querySnapshot.docs.length;
+    });
   }
 
   // other stuff
-  Future<List<QueryDocumentSnapshot>> getCartItems() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    CollectionReference cartCollectionRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('cart');
-
-    QuerySnapshot cartSnapshot = await cartCollectionRef.get();
-
-    return cartSnapshot.docs;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDocumentIndex();
   }
 
   @override
   Widget build(BuildContext context) {
+    // getDocumentIndex();
+
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: AppBar(
@@ -71,6 +75,7 @@ class _CardScreenState extends State<CardScreen> {
         ),
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -92,16 +97,14 @@ class _CardScreenState extends State<CardScreen> {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       }
-
+                      if (snapshot.hasData) {}
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
-
-                      index = snapshot.data!.docs.length;
-
                       return ListView(
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         children: snapshot.data!.docs
                             .map((DocumentSnapshot document) {
                           Map<String, dynamic> data =
@@ -112,7 +115,6 @@ class _CardScreenState extends State<CardScreen> {
                             img: data['imageUrl'],
                             onDelete: () {},
                             items: 1,
-                            index: "",
                             sellerId: data['sellerId'],
                             productId: data['id'],
                           );
@@ -161,7 +163,34 @@ class _CardScreenState extends State<CardScreen> {
                   ],
                 ),
                 const VerticalSpeacing(30.0),
-                ItemPrizingWidget(title: 'Total Item', price: index.toString()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Items",
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.grayColor,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      index.toString(),
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // ItemPrizingWidget(title: 'Total Item', price: ),
                 const VerticalSpeacing(12.0),
                 SizedBox(
                   height: 1, // Height of the dotted line
@@ -171,7 +200,7 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                const ItemPrizingWidget(title: 'Price', price: '\$60'),
+                const ItemPrizingWidget(title: 'Shipment Price', price: '₹60'),
                 const VerticalSpeacing(12.0),
                 SizedBox(
                   height: 1, // Height of the dotted line
@@ -181,7 +210,8 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                const ItemPrizingWidget(title: 'Total Price', price: '\$66'),
+                const ItemPrizingWidget(title: 'Total Price', price: '₹66'),
+
                 const VerticalSpeacing(30.0),
                 SizedBox(
                   height: 46.0,
@@ -192,7 +222,7 @@ class _CardScreenState extends State<CardScreen> {
                         Navigator.pushNamed(context, RoutesName.checkOutScreen);
                       }),
                 ),
-                const VerticalSpeacing(30.0),
+                const VerticalSpeacing(60.0),
               ],
             ),
           ),

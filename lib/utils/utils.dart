@@ -7,6 +7,10 @@ import 'package:another_flushbar/flushbar.dart';
 
 import 'package:image_picker/image_picker.dart';
 
+var totalPrice;
+String? initialPrice;
+String? finalIndex;
+
 class Utils {
   static void focusNode(
       BuildContext context, FocusNode current, FocusNode focusNext) {
