@@ -440,10 +440,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     color: AppColor.primaryColor,
                     child: InkWell(
                       onTap: () {
-                        // Navigator.pushNamed(
-                        //   context,
-                        //   RoutesName.checkOutScreen,
-                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
