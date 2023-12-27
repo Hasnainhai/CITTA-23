@@ -47,8 +47,6 @@ class _FashionDetailState extends State<FashionDetail> {
 
       int price = int.parse(widget.salePrice);
       newPrice = (newPrice ?? int.parse(widget.salePrice)) + price;
-
-      // Notify listeners about the change
     });
   }
 
@@ -66,9 +64,7 @@ class _FashionDetailState extends State<FashionDetail> {
 
   void addToFavorites() async {
     try {
-      // Get the user's UID
-      String uid = FirebaseAuth
-          .instance.currentUser!.uid; // You need to implement this function
+      String uid = FirebaseAuth.instance.currentUser!.uid;
 
       // Add the item to the 'favoriteList' collection
       await _firestoreInstance
@@ -264,8 +260,6 @@ class _FashionDetailState extends State<FashionDetail> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // decreasement();
-
                             decrement();
                           },
                           child: Container(
