@@ -1,6 +1,7 @@
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -282,7 +283,23 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
-                        Navigator.pushNamed(context, RoutesName.checkOutScreen);
+                        debugPrint(
+                            "this is sub total from check out screen$subTotal");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => CheckOutScreen(
+                              tile: "tile",
+                              price: subTotal.toString(),
+                              img: "img",
+                              id: "id",
+                              customerId: "customerId",
+                              weight: "weight",
+                              salePrice: "salePrice",
+                              productType: "cart",
+                            ),
+                          ),
+                        );
                       }),
                 ),
                 // const VerticalSpeacing(30.0),
