@@ -1,6 +1,7 @@
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,7 +47,6 @@ class _CardScreenState extends State<CardScreen> {
         int sum = 0;
 
         querySnapshot.docs.forEach((QueryDocumentSnapshot document) {
-          // Assuming each product has a 'price' field
           String priceString = document['salePrice'];
           int priceInt = int.tryParse(priceString) ?? 0;
           subTotal += priceInt;
@@ -71,6 +71,19 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     getDocumentIndex();
     _fetchData();
+  }
+
+  Future<void> _deleteProduct(String productId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('cart')
+          .doc(productId)
+          .delete();
+    } catch (e) {
+      print("Error deleting product: $e");
+    }
   }
 
   @override
@@ -140,13 +153,39 @@ class _CardScreenState extends State<CardScreen> {
                         shrinkWrap: true,
                         children: snapshot.data!.docs
                             .map((DocumentSnapshot document) {
+                          bool _isLoading = true;
                           Map<String, dynamic> data =
                               document.data() as Map<String, dynamic>;
                           return CartWidget(
                             title: data['title'],
                             price: data['salePrice'],
                             img: data['imageUrl'],
-                            onDelete: () {},
+                            onDelete: () async {
+                              _deleteProduct(data['id']);
+                              // try {
+                              //   setState(() => _isLoading =
+                              //       true);
+
+                              //   await FirebaseFirestore.instance
+                              //       .collection('users')
+                              //       .doc(FirebaseAuth.instance.currentUser!.uid)
+                              //       .collection('cart')
+                              //       .doc(data['id'])
+                              //       .delete();
+                              //   await FirebaseFirestore.instance
+                              //       .enableNetwork();
+                              //   setState(() {});
+                              //   setState(() {});
+                              //   print(
+                              //       '..................${data['id']}...............');
+                              //   Utils.toastMessage('SuccessFully Deleted');
+                              // } catch (error) {
+                              //   print('Error deleting cart item: $error');
+                              // } finally {
+                              //   setState(() => _isLoading =
+                              //       false);
+                              // }
+                            },
                             items: 1,
                             sellerId: data['sellerId'],
                             productId: data['id'],
