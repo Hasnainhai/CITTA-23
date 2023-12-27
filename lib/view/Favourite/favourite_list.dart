@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +126,9 @@ class _FavouriteListState extends State<FavouriteList> {
         );
   }
 
-  void removeFromFavorites(String img,) async {
+  void removeFromFavorites(
+    String img,
+  ) async {
     try {
       // Get the user's UID
       String uid = FirebaseAuth
@@ -136,7 +139,10 @@ class _FavouriteListState extends State<FavouriteList> {
           .collection('favoriteList')
           .doc(uid)
           .collection('favorites')
-          .where('imageUrl', isEqualTo: img.toString(),)
+          .where(
+            'imageUrl',
+            isEqualTo: img.toString(),
+          )
           .get();
 
       // Delete the document
@@ -200,7 +206,12 @@ class _FavouriteListState extends State<FavouriteList> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (c) => const DashBoardScreen(),
+              ),
+            );
           },
           icon: const Icon(
             Icons.arrow_back,

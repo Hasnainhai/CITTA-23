@@ -117,7 +117,7 @@ class _CardScreenState extends State<CardScreen> {
               children: [
                 // cart widget stuff
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.45,
                   width: double.infinity,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
@@ -272,20 +272,8 @@ class _CardScreenState extends State<CardScreen> {
                         );
                       },
                     ),
-                    // Text(
-                    //   "price",
-                    //   style: GoogleFonts.getFont(
-                    //     "Gothic A1",
-                    //     textStyle: const TextStyle(
-                    //       fontSize: 16,
-                    //       fontWeight: FontWeight.w800,
-                    //       color: AppColor.blackColor,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
-                // ItemPrizingWidget(title: 'Total Price', price: '₹$subTotal'),
 
                 const VerticalSpeacing(30.0),
                 SizedBox(
@@ -297,7 +285,7 @@ class _CardScreenState extends State<CardScreen> {
                         Navigator.pushNamed(context, RoutesName.checkOutScreen);
                       }),
                 ),
-                const VerticalSpeacing(60.0),
+                // const VerticalSpeacing(30.0),
               ],
             ),
           ),
