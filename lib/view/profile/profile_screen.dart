@@ -231,6 +231,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _buildProfile() {
+    //     final GoogleSignInAuthentication googleSignInAuthentication =
+    //     await googleSignInAccount.authentication;
+    // final GoogleSignIn googleSignIn = GoogleSignIn();
+    //   final GoogleAuthCredential credential = GoogleAuthCredential.credential(
+    //   accessToken: googleSignInAuthentication.accessToken,
+    //   idToken: googleSignInAuthentication.idToken,
+    // if(){
+
+    // );
+    // }
     return Row(
       children: [
         const SizedBox(width: 30.0),
