@@ -1,10 +1,15 @@
+import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
+int subTotal = 0;
+
 // ignore: must_be_immutable
+
 class CartWidget extends StatefulWidget {
   CartWidget({
     super.key,
@@ -37,6 +42,12 @@ class _CartWidgetState extends State<CartWidget> {
       int price = int.parse(widget.price);
       newPrice = (newPrice ?? int.parse(widget.price)) + price;
       totalPrice = newPrice;
+      subTotal += totalPrice!;
+      debugPrint("this is sub-total$subTotal");
+
+      // Notify listeners about the change
+      Provider.of<SubTotalModel>(context, listen: false)
+          .updateSubTotal(subTotal);
     });
   }
 
@@ -46,13 +57,18 @@ class _CartWidgetState extends State<CartWidget> {
         widget.items--;
         int price = int.parse(widget.price);
         newPrice = (newPrice ?? int.parse(widget.price)) - price;
+        subTotal -= newPrice!;
+        debugPrint("this decrement subtotal$subTotal");
+
+        // Notify listeners about the change
+        Provider.of<SubTotalModel>(context, listen: false)
+            .updateSubTotal(subTotal);
       } else {
         Utils.flushBarErrorMessage("Fixed Limit", context);
       }
     });
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return SizedBox(
