@@ -1,3 +1,4 @@
+import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
@@ -5,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
@@ -47,11 +49,13 @@ class _CardScreenState extends State<CardScreen> {
           // Assuming each product has a 'price' field
           String priceString = document['salePrice'];
           int priceInt = int.tryParse(priceString) ?? 0;
-          sum += priceInt;
+          subTotal += priceInt;
         });
 
         setState(() {
           totalPrice = sum;
+          Provider.of<SubTotalModel>(context, listen: false)
+              .updateSubTotal(subTotal);
         });
         debugPrint(
           "this is the total price${totalPrice.toString()}",
@@ -92,6 +96,9 @@ class _CardScreenState extends State<CardScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
+            subTotal = 0;
+            Provider.of<SubTotalModel>(context, listen: false)
+                .updateSubTotal(subTotal);
             Navigator.pop(context);
           },
           icon: const Icon(
@@ -101,7 +108,7 @@ class _CardScreenState extends State<CardScreen> {
         ),
       ),
       body: ListView(
-        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -110,7 +117,7 @@ class _CardScreenState extends State<CardScreen> {
               children: [
                 // cart widget stuff
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   width: double.infinity,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
@@ -236,7 +243,49 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                ItemPrizingWidget(title: 'Total Price', price: '₹$totalPrice'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Pice",
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.grayColor,
+                        ),
+                      ),
+                    ),
+                    Consumer<SubTotalModel>(
+                      builder: (context, subTotalModel, child) {
+                        return Text(
+                          '₹${subTotalModel.subTotal}',
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    // Text(
+                    //   "price",
+                    //   style: GoogleFonts.getFont(
+                    //     "Gothic A1",
+                    //     textStyle: const TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w800,
+                    //       color: AppColor.blackColor,
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+                // ItemPrizingWidget(title: 'Total Price', price: '₹$subTotal'),
 
                 const VerticalSpeacing(30.0),
                 SizedBox(

@@ -1,6 +1,8 @@
+import 'package:citta_23/models/sub_total_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:provider/provider.dart';
 import 'routes/routes.dart';
 import 'routes/routes_name.dart';
 
@@ -11,7 +13,10 @@ void main() async {
       "pk_test_51MqJ7aSDFxQSCBeqlY6oQU8xdJEsaAiESLWghEUnYHUHYnCjJrbJMaIpSyVopiqfnyym9H4Gcvg5kNmiHcUThznT00QSiE5jbT";
   Stripe.instance.applySettings();
   runApp(
-    const MyApp(),
+    ChangeNotifierProvider(
+      create: (context) => SubTotalModel(),
+      child: const MyApp(),
+    ),
   );
 }
 
