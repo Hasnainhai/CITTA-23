@@ -450,6 +450,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               id: widget.productId,
                               customerId: widget.sellerId,
                               weight: items.toString(),
+                              productType: "product",
                               salePrice: newPrice == null
                                   ? widget.salePrice
                                   : newPrice.toString(),
