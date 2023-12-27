@@ -58,9 +58,6 @@ class _CardScreenState extends State<CardScreen> {
           Provider.of<SubTotalModel>(context, listen: false)
               .updateSubTotal(subTotal);
         });
-        debugPrint(
-          "this is the total price${totalPrice.toString()}",
-        );
       }
     });
   }
@@ -73,13 +70,13 @@ class _CardScreenState extends State<CardScreen> {
     _fetchData();
   }
 
-  Future<void> _deleteProduct(String productId) async {
+  Future<void> _deleteProduct(String deleteId) async {
     try {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('cart')
-          .doc(productId)
+          .doc(deleteId)
           .delete();
     } catch (e) {
       print("Error deleting product: $e");
@@ -151,7 +148,6 @@ class _CardScreenState extends State<CardScreen> {
                         shrinkWrap: true,
                         children: snapshot.data!.docs
                             .map((DocumentSnapshot document) {
-                          bool _isLoading = true;
                           Map<String, dynamic> data =
                               document.data() as Map<String, dynamic>;
                           return CartWidget(
@@ -159,7 +155,7 @@ class _CardScreenState extends State<CardScreen> {
                             price: data['salePrice'],
                             img: data['imageUrl'],
                             onDelete: () async {
-                              _deleteProduct(data['id']);
+                              _deleteProduct(data['deleteId']);
                               // try {
                               //   setState(() => _isLoading =
                               //       true);
