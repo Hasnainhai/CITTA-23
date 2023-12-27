@@ -35,7 +35,34 @@ class FashionDetail extends StatefulWidget {
 
 class _FashionDetailState extends State<FashionDetail> {
   bool like = false;
+  int? newPrice;
+  int items = 1;
+  String? addPrice;
+  int? totalPrice;
+
   final _firestoreInstance = FirebaseFirestore.instance;
+  void increment() {
+    setState(() {
+      items++;
+
+      int price = int.parse(widget.salePrice);
+      newPrice = (newPrice ?? int.parse(widget.salePrice)) + price;
+
+      // Notify listeners about the change
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (items > 1) {
+        items--;
+        int price = int.parse(widget.salePrice);
+        newPrice = (newPrice ?? int.parse(widget.salePrice)) - price;
+      } else {
+        Utils.flushBarErrorMessage("Fixed Limit", context);
+      }
+    });
+  }
 
   void addToFavorites() async {
     try {
@@ -219,7 +246,9 @@ class _FashionDetailState extends State<FashionDetail> {
                     Row(
                       children: [
                         Text(
-                          widget.salePrice,
+                          newPrice == null
+                              ? widget.salePrice
+                              : newPrice.toString(),
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -231,13 +260,67 @@ class _FashionDetailState extends State<FashionDetail> {
                         ),
                       ],
                     ),
-                    IncreaseContainer(
-                      price: widget.salePrice,
-                      onPriceChanged: (updatedPrice) {
-                        setState(() {
-                          widget.salePrice = updatedPrice.toString();
-                        });
-                      },
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // decreasement();
+
+                            decrement();
+                          },
+                          child: Container(
+                              height: 34,
+                              width: 34,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColor.grayColor,
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Divider(
+                                  height: 2,
+                                  thickness: 2.5,
+                                  color: AppColor.primaryColor,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 18,
+                        ),
+                        Text(
+                          items.toString(),
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 18,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            increment();
+                          },
+                          child: Container(
+                            height: 34,
+                            width: 34,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColor.grayColor,
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -356,24 +439,15 @@ class _FashionDetailState extends State<FashionDetail> {
                             ),
                           );
                         },
-                        child: Container(
-                          height: 50,
-                          width: 60,
-                          color: Colors.white,
-                          child: const Icon(Icons.shopping_bag_outlined),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        "Buy Now",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        child: Text(
+                          "Buy Now",
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
