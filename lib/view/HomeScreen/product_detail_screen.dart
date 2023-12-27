@@ -42,6 +42,28 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool like = false;
   final _firestoreInstance = FirebaseFirestore.instance;
+  int? newPrice;
+  int items = 1;
+  void increment() {
+    setState(() {
+      items++;
+
+      int price = int.parse(widget.salePrice);
+      newPrice = (newPrice ?? int.parse(widget.salePrice)) + price;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (items > 1) {
+        items--;
+        int price = int.parse(widget.salePrice);
+        newPrice = (newPrice ?? int.parse(widget.salePrice)) - price;
+      } else {
+        Utils.flushBarErrorMessage("Fixed Limit", context);
+      }
+    });
+  }
 
   void addToFavorites() async {
     try {
@@ -218,20 +240,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 const VerticalSpeacing(16),
-                Text(
-                  "Weight: ${widget.weight}",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(
-                  28,
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -253,7 +261,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           width: 10,
                         ),
                         Text(
-                          widget.salePrice,
+                          newPrice == null
+                              ? widget.salePrice
+                              : newPrice.toString(),
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -265,13 +275,70 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ],
                     ),
-                    IncreaseContainer(
-                      price: widget.salePrice,
-                      onPriceChanged: (updatedPrice) {
-                        setState(() {
-                          widget.salePrice = updatedPrice.toString();
-                        });
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                decrement();
+                              },
+                              child: Container(
+                                  height: 34,
+                                  width: 34,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: AppColor.grayColor,
+                                    ),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Divider(
+                                      height: 2,
+                                      thickness: 2.5,
+                                      color: AppColor.primaryColor,
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(
+                              width: 18,
+                            ),
+                            Text(
+                              "${items}Kg",
+                              style: GoogleFonts.getFont(
+                                "Gothic A1",
+                                textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.fontColor,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 18,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                increment();
+                              },
+                              child: Container(
+                                height: 34,
+                                width: 34,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColor.grayColor,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: AppColor.primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -377,18 +444,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         //   context,
                         //   RoutesName.checkOutScreen,
                         // );
-                        print(widget.sellerId);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (c) => CheckOutScreen(
                               tile: widget.title,
-                              price: widget.price,
+                              price: widget.salePrice,
                               img: widget.imageUrl,
                               id: widget.productId,
                               customerId: widget.sellerId,
-                              weight: widget.weight,
-                              salePrice: widget.salePrice,
+                              weight: items.toString(),
+                              salePrice: newPrice == null
+                                  ? widget.salePrice
+                                  : newPrice.toString(),
                             ),
                           ),
                         );
