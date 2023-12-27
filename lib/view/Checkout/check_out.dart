@@ -73,7 +73,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'title': widget.tile,
       'imgurl': widget.img,
       'productId': widget.id,
-      'sallerId': widget.id,
+      'sallerId': widget.customerId,
       'price': widget.price,
       'salePrice': widget.salePrice,
       'weight': widget.weight,
