@@ -1,6 +1,8 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,7 +68,6 @@ class _CardScreenState extends State<CardScreen> {
   // other stuff
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getDocumentIndex();
     _fetchData();
@@ -87,8 +88,6 @@ class _CardScreenState extends State<CardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // getDocumentIndex();
-
     return Scaffold(
       backgroundColor: AppColor.whiteColor,
       appBar: AppBar(

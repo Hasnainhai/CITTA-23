@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
 import '../../res/consts/vars.dart';
@@ -178,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection('users')
         .doc(userId)
         .collection('cart');
-
+    var uuid = const Uuid().v1();
     // Check if the product is already in the cart
     QuerySnapshot cartSnapshot = await cartCollectionRef
         .where('imageUrl', isEqualTo: img)
@@ -190,12 +191,18 @@ class _HomeScreenState extends State<HomeScreen> {
       Utils.toastMessage('Product is already in the cart');
     } else {
       // Product is not in the cart, add it
-      await cartCollectionRef.add({
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
         'id': productId,
         'sellerId': sellerId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
+        'deleteId': uuid
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
