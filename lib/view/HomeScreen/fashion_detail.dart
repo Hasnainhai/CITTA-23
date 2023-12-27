@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/widgets/increase_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,13 +35,36 @@ class FashionDetail extends StatefulWidget {
 
 class _FashionDetailState extends State<FashionDetail> {
   bool like = false;
+  int? newPrice;
+  int items = 1;
+  String? addPrice;
+  int? totalPrice;
+
   final _firestoreInstance = FirebaseFirestore.instance;
+  void increment() {
+    setState(() {
+      items++;
+
+      int price = int.parse(widget.salePrice);
+      newPrice = (newPrice ?? int.parse(widget.salePrice)) + price;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (items > 1) {
+        items--;
+        int price = int.parse(widget.salePrice);
+        newPrice = (newPrice ?? int.parse(widget.salePrice)) - price;
+      } else {
+        Utils.flushBarErrorMessage("Fixed Limit", context);
+      }
+    });
+  }
 
   void addToFavorites() async {
     try {
-      // Get the user's UID
-      String uid = FirebaseAuth
-          .instance.currentUser!.uid; // You need to implement this function
+      String uid = FirebaseAuth.instance.currentUser!.uid;
 
       // Add the item to the 'favoriteList' collection
       await _firestoreInstance
@@ -218,7 +242,9 @@ class _FashionDetailState extends State<FashionDetail> {
                     Row(
                       children: [
                         Text(
-                          widget.salePrice,
+                          newPrice == null
+                              ? widget.salePrice
+                              : newPrice.toString(),
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -230,13 +256,65 @@ class _FashionDetailState extends State<FashionDetail> {
                         ),
                       ],
                     ),
-                    IncreaseContainer(
-                      price: widget.salePrice,
-                      onPriceChanged: (updatedPrice) {
-                        setState(() {
-                          widget.salePrice = updatedPrice.toString();
-                        });
-                      },
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            decrement();
+                          },
+                          child: Container(
+                              height: 34,
+                              width: 34,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColor.grayColor,
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Divider(
+                                  height: 2,
+                                  thickness: 2.5,
+                                  color: AppColor.primaryColor,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 18,
+                        ),
+                        Text(
+                          items.toString(),
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 18,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            increment();
+                          },
+                          child: Container(
+                            height: 34,
+                            width: 34,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColor.grayColor,
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -340,29 +418,30 @@ class _FashionDetailState extends State<FashionDetail> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
+                          Navigator.push(
                             context,
-                            RoutesName.checkOutScreen,
+                            MaterialPageRoute(
+                              builder: (c) => CheckOutScreen(
+                                tile: widget.title,
+                                price: widget.salePrice,
+                                img: widget.imageUrl,
+                                id: widget.productId,
+                                customerId: widget.sellerId,
+                                weight: "1",
+                                salePrice: widget.salePrice,
+                              ),
+                            ),
                           );
                         },
-                        child: Container(
-                          height: 50,
-                          width: 60,
-                          color: Colors.white,
-                          child: const Icon(Icons.shopping_bag_outlined),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        "Buy Now",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        child: Text(
+                          "Buy Now",
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
