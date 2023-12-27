@@ -28,6 +28,7 @@ class CheckOutScreen extends StatefulWidget {
     required this.customerId,
     required this.weight,
     required this.salePrice,
+    required this.productType,
   });
   final String tile;
   final String price;
@@ -36,6 +37,7 @@ class CheckOutScreen extends StatefulWidget {
   final String customerId;
   final String weight;
   final String salePrice;
+  final String productType;
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -78,6 +80,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'salePrice': widget.salePrice,
       'weight': widget.weight,
       'date': date,
+      "productType": widget.productType,
       'status': "pending",
       'address': {
         "address": address,

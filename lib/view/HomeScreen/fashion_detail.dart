@@ -428,6 +428,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                 id: widget.productId,
                                 customerId: widget.sellerId,
                                 weight: items.toString(),
+                                productType: 'fashion',
                                 salePrice: newPrice == null
                                     ? widget.salePrice
                                     : newPrice.toString(),
