@@ -427,8 +427,10 @@ class _FashionDetailState extends State<FashionDetail> {
                                 img: widget.imageUrl,
                                 id: widget.productId,
                                 customerId: widget.sellerId,
-                                weight: "1",
-                                salePrice: widget.salePrice,
+                                weight: items.toString(),
+                                salePrice: newPrice == null
+                                    ? widget.salePrice
+                                    : newPrice.toString(),
                               ),
                             ),
                           );
