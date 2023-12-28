@@ -89,10 +89,10 @@ class Routes {
       //   return MaterialPageRoute(
       //     builder: (BuildContext context) => const ProductDetailScreen(title: '',),
       //   );
-      case RoutesName.newitemsscreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const NewItemsScreen(),
-        );
+      // case RoutesName.newitemsscreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const NewItemsScreen(),
+      //   );
       case RoutesName.popularpackscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const PopularPackScreen(),
