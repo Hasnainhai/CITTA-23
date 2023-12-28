@@ -1,4 +1,3 @@
-import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -7,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
@@ -49,13 +47,11 @@ class _CardScreenState extends State<CardScreen> {
         querySnapshot.docs.forEach((QueryDocumentSnapshot document) {
           String priceString = document['salePrice'];
           int priceInt = int.tryParse(priceString) ?? 0;
-          subTotal += priceInt;
+          sum += priceInt;
         });
 
         setState(() {
           totalPrice = sum;
-          Provider.of<SubTotalModel>(context, listen: false)
-              .updateSubTotal(subTotal);
         });
         debugPrint(
           "this is the total price${totalPrice.toString()}",
@@ -109,9 +105,6 @@ class _CardScreenState extends State<CardScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            subTotal = 0;
-            Provider.of<SubTotalModel>(context, listen: false)
-                .updateSubTotal(subTotal);
             Navigator.pop(context);
           },
           icon: const Icon(
@@ -121,7 +114,7 @@ class _CardScreenState extends State<CardScreen> {
         ),
       ),
       body: ListView(
-        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -130,7 +123,7 @@ class _CardScreenState extends State<CardScreen> {
               children: [
                 // cart widget stuff
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.45,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   width: double.infinity,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
@@ -153,7 +146,6 @@ class _CardScreenState extends State<CardScreen> {
                         shrinkWrap: true,
                         children: snapshot.data!.docs
                             .map((DocumentSnapshot document) {
-                          bool _isLoading = true;
                           Map<String, dynamic> data =
                               document.data() as Map<String, dynamic>;
                           return CartWidget(
@@ -282,37 +274,7 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total Pice",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.grayColor,
-                        ),
-                      ),
-                    ),
-                    Consumer<SubTotalModel>(
-                      builder: (context, subTotalModel, child) {
-                        return Text(
-                          '₹${subTotalModel.subTotal}',
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.blackColor,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                ItemPrizingWidget(title: 'Total Price', price: '₹$totalPrice'),
 
                 const VerticalSpeacing(30.0),
                 SizedBox(
@@ -324,7 +286,7 @@ class _CardScreenState extends State<CardScreen> {
                         Navigator.pushNamed(context, RoutesName.checkOutScreen);
                       }),
                 ),
-                // const VerticalSpeacing(30.0),
+                const VerticalSpeacing(60.0),
               ],
             ),
           ),
