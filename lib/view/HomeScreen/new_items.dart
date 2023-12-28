@@ -10,7 +10,9 @@ import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
 class NewItemsScreen extends StatefulWidget {
-  const NewItemsScreen({super.key});
+  NewItemsScreen({super.key, required this.title});
+
+  String title;
 
   @override
   State<NewItemsScreen> createState() => _NewItemsScreenState();
@@ -109,7 +111,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           ),
         ),
         title: Text(
-          "New Item",
+          widget.title ?? "New Item",
           style: GoogleFonts.getFont(
             "Gothic A1",
             textStyle: const TextStyle(

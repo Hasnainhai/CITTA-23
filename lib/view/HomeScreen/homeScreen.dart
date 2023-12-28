@@ -4,6 +4,7 @@ import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
+import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -758,10 +759,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      RoutesName.newitemsscreen,
-                                    );
+                                    String title = 'New Products';
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return NewItemsScreen(title: title);
+                                    }));
                                   },
                                   child: Text(
                                     "View All",
