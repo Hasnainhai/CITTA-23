@@ -260,7 +260,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   profilePic: _pImage ?? defaultProfile,
                   name: _name ?? 'Default Name',
                   email: _email ?? 'Default Email',
-                  phNo: _phNo ?? 'Default Phone Number',
                 );
               }));
             } else {

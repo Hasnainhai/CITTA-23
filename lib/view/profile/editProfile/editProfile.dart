@@ -7,6 +7,7 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../res/consts/firebase_const.dart';
 import '../../../utils/utils.dart';
@@ -17,13 +18,11 @@ class EditProfile extends StatefulWidget {
   String profilePic;
   String name;
   String email;
-  String phNo;
   EditProfile({
     Key? key,
     required this.profilePic,
     required this.name,
     required this.email,
-    required this.phNo,
   }) : super(key: key);
 
   @override
@@ -36,7 +35,6 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
-  TextEditingController phNoController = TextEditingController();
 
   void pickImage() async {
     final pickedImage = await pickImageFromGallery(context);
@@ -163,12 +161,6 @@ class _EditProfileState extends State<EditProfile> {
                     hintText: widget.email,
                     maxLines: 2,
                   ),
-                  TextFieldCustom(
-                    controller: phNoController,
-                    text: 'Ph No',
-                    hintText: widget.phNo,
-                    maxLines: 2,
-                  ),
                   const VerticalSpeacing(24.0),
                   _isLoading
                       ? const Center(
@@ -180,74 +172,57 @@ class _EditProfileState extends State<EditProfile> {
                             setState(() {
                               _isLoading = true;
                             });
-                            if (nameController.text.isEmpty) {
-                              nameController.text = widget.name;
+                            try {
+                              //user Id
+                              String userId =
+                                  FirebaseAuth.instance.currentUser!.uid;
+                              //updating nameController;
+                              if (nameController.text.isNotEmpty) {
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userId)
+                                    .update({
+                                  'name': nameController.text,
+                                });
+                                widget.name = nameController.text;
+                              }
+                              //updating emailController;
+                              if (emailController.text.isNotEmpty) {
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userId)
+                                    .update({
+                                  'email': emailController.text,
+                                });
+                                widget.email = emailController.text;
+                              }
+                              if (image != null) {
+                                final imageUrl = await uploadImageToFirestore(
+                                    image!, userId);
+                                //updating imageUrl
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userId)
+                                    .update({
+                                  'imageUrl': imageUrl,
+                                });
+                              }
+                              Utils.toastMessage('Successfully Updated');
+                              Navigator.pushNamed(
+                                  context, RoutesName.profileScreen);
+                            } catch (err) {
                               setState(() {
                                 _isLoading = false;
                               });
+
                               Navigator.pushNamed(
                                   context, RoutesName.profileScreen);
-                              Utils.toastMessage('SuccessFully Update');
-                            } else if (emailController.text.isEmpty) {
-                              emailController.text = widget.email;
-                            } else if (phNoController.text.isEmpty) {
-                              phNoController.text = widget.phNo;
-                            } else if (image == null) {
-                              widget.profilePic;
-                              // final imageUrl =
-                              //     await uploadImageToFirestore(image!, uid);
-                              // setState(() {
-                              //   widget.profilePic = imageUrl;
-                              //   _isLoading = false;
-                              // });
-                              // Navigator.pushNamed(
-                              //     context, RoutesName.profileScreen);
-                              // Utils.toastMessage('SuccessFully Update');
-                              // setState(() {
-                              //   _isLoading = false;
-                              // });
-                            } else {
-                              String _uid = user!.uid;
-                              try {
-                                // Upload the picked image to Firestore
-                                if (image != null) {
-                                  setState(() {
-                                    _isLoading = true;
-                                  });
-                                  final imageUrl = await uploadImageToFirestore(
-                                      image!, _uid);
-                                  setState(() {
-                                    widget.profilePic = imageUrl;
-                                  });
-                                }
-                                // Update user data in Firestore
-                                await FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(_uid)
-                                    .update({
-                                  'name': nameController.text,
-                                  'email': emailController.text,
-                                  'phNo': phNoController.text,
-                                });
-                                Navigator.pushNamed(
-                                    context, RoutesName.profileScreen);
-                                Utils.toastMessage('SuccessFully Update');
-                                setState(() {
-                                  widget.name = nameController.text;
-                                  widget.email = emailController.text;
-                                  widget.phNo = phNoController.text;
-                                });
-                              } catch (err) {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                                Utils.flushBarErrorMessage(
-                                    err.toString(), context);
-                              } finally {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                              }
+                              // Utils.flushBarErrorMessage(
+                              //     err.toString(), context);
+                            } finally {
+                              setState(() {
+                                _isLoading = false;
+                              });
                             }
                           },
                         ),
