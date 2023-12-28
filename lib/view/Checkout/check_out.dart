@@ -478,29 +478,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     text: 'Card Number',
                     hintText: '71501 90123 **** ****',
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     SizedBox(
-                  //       height: 100,
-                  //       width: MediaQuery.of(context).size.width * 0.43,
-                  //       child: const TextFieldCustom(
-                  //         maxLines: 1,
-                  //         text: 'Expiry Date',
-                  //         hintText: '01/04/2028',
-                  //       ),
-                  //     ),
-                  //     SizedBox(
-                  //       height: 100,
-                  //       width: MediaQuery.of(context).size.width * 0.43,
-                  //       child: const TextFieldCustom(
-                  //         maxLines: 2,
-                  //         text: 'CVV',
-                  //         hintText: '1214',
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   const VerticalSpeacing(20.0),
                   const ToggleWidget(
                     title: 'Remember My Card Details',
@@ -515,7 +492,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             city != null &&
                             state != null &&
                             address != null) {
-                          print("this is the name of customer:$name");
                           initPayment(
                               email: "basitalyshah51214@gmail.com",
                               amount: "50.0");

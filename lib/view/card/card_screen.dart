@@ -224,21 +224,7 @@ class _CardScreenState extends State<CardScreen> {
                         ),
                       ),
                     ),
-                    // Consumer<IndexModel>(
-                    //   builder: (context, indexModel, child) {
-                    //     return Text(
-                    //       '₹${indexModel.items}',
-                    //       style: GoogleFonts.getFont(
-                    //         "Gothic A1",
-                    //         textStyle: const TextStyle(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.w800,
-                    //           color: AppColor.blackColor,
-                    //         ),
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
+
                     Consumer<IndexModel>(
                       builder: (context, indexModel, child) {
                         return Text(
