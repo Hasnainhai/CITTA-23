@@ -45,7 +45,7 @@ class CardCheckOutScreen extends StatefulWidget {
   // final String weight;
   // final String salePrice;
   final String productType;
-  final List<Map<String, String>> productList;
+  final List<Map<String, dynamic>> productList;
   @override
   State<CardCheckOutScreen> createState() => _CardCheckOutScreenState();
 }
@@ -72,24 +72,26 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   void saveOrdersToFirestore() async {
     final CollectionReference<Map<String, dynamic>> myOrdersCollection =
         FirebaseFirestore.instance.collection('saller');
-
+    Map<String, dynamic> addressMap = {
+      "Address": address as String,
+      "postalCode": postalCode as String,
+      "city": city as String,
+      "state": state as String,
+      "name": name as String,
+      "phone": phoneNumber as String,
+    };
     for (var orderMap in widget.productList) {
-      final String buyerId = orderMap['buyyerId']!;
+      final String buyerId = orderMap['sellerId']!;
       var orderId = const Uuid().v1();
       orderMap['uuid'] = orderId;
-      orderMap['address'] = {
-        "Address": address,
-        "postalCode": postalCode,
-        "city": city,
-        "state": state,
-        "name": name,
-        "phone": phoneNumber,
-      } as String;
+      // orderMap['address'] = addressMap;
+
       await myOrdersCollection
           .doc(buyerId)
           .collection('my_orders')
           .doc(orderId)
           .set(orderMap);
+
       await myOrdersCollection
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('my_orders')

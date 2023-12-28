@@ -47,7 +47,7 @@ class _CardScreenState extends State<CardScreen> {
     });
   }
 
-  List<Map<String, String>> productList = [];
+  List<Map<String, dynamic>> productList = [];
 
   void fetchDataFromFirestore() async {
     QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
