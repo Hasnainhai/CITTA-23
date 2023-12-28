@@ -4,6 +4,7 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
+import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,6 +47,27 @@ class _CardScreenState extends State<CardScreen> {
     });
   }
 
+  List<Map<String, String>> productList = [];
+
+  void fetchDataFromFirestore() async {
+    QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
+
+    productList = productsSnapshot.docs.map((DocumentSnapshot product) {
+      return {
+        'productId': product.id,
+        'title': product['title'] as String,
+        'imgurl': product['imageUrl'] as String,
+        'sellerId': product['sellerId'] as String,
+        'salePrice': product['salePrice'] as String,
+        'status': "pending",
+        'date': DateTime.now().toString(),
+        'buyyerId': FirebaseAuth.instance.currentUser!.uid,
+      };
+    }).toList();
+
+    print(productList);
+  }
+
   void _fetchData() {
     _productsCollection.get().then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.isNotEmpty) {
@@ -72,6 +94,7 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     getDocumentIndex();
     _fetchData();
+    fetchDataFromFirestore();
   }
 
   Future<void> _deleteProduct(String deleteId) async {
@@ -317,17 +340,10 @@ class _CardScreenState extends State<CardScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (c) => CheckOutScreen(
-                              tile: "tile",
-                              price: subTotal.toString(),
-                              img: "img",
-                              id: "id",
-                              customerId: "customerId",
-                              weight: "weight",
-                              salePrice: "salePrice",
-                              productType: "cart",
-                            ),
-                          ),
+                              builder: (c) => CardCheckOutScreen(
+                                    productType: 'cart',
+                                    productList: productList,
+                                  )),
                         );
                       }),
                 ),
