@@ -92,7 +92,8 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
           .doc(orderId)
           .set(orderMap);
 
-      await myOrdersCollection
+      FirebaseFirestore.instance
+          .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('my_orders')
           .doc(orderId)
