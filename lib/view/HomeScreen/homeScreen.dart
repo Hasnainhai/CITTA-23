@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
 import '../../res/consts/vars.dart';
@@ -82,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Map<String, dynamic> product5 = qn.docs[i]['product5'] ?? {};
           Map<String, dynamic> product6 = qn.docs[i]['product6'] ?? {};
           _popularPacks.add({
-            //for popular packs details screen
             'product1': {
               'amount': product1['amount'] ?? '',
               'image': product1['image'] ?? '',
@@ -114,6 +112,8 @@ class _HomeScreenState extends State<HomeScreen> {
               'title': product6['title'] ?? '',
             },
             //simple card
+            'sellerId': qn.docs[i]['sellerId'],
+            'id': qn.docs[i]['id'],
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
@@ -121,8 +121,6 @@ class _HomeScreenState extends State<HomeScreen> {
             'detail': qn.docs[i]['detail'],
             'weight': qn.docs[i]['weight'],
             'size': qn.docs[i]['size'],
-            'sellerId': qn.docs[i]['sellerId'],
-            'id': qn.docs[i]['id'],
           });
         }
       });
@@ -179,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .collection('users')
         .doc(userId)
         .collection('cart');
-    var uuid = const Uuid().v1();
+
     // Check if the product is already in the cart
     QuerySnapshot cartSnapshot = await cartCollectionRef
         .where('imageUrl', isEqualTo: img)
@@ -191,24 +189,17 @@ class _HomeScreenState extends State<HomeScreen> {
       Utils.toastMessage('Product is already in the cart');
     } else {
       // Product is not in the cart, add it
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('cart')
-          .doc(uuid)
-          .set({
-        'id': productId,
+      await cartCollectionRef.add({
         'sellerId': sellerId,
+        'id': productId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
-        'deleteId': uuid
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
     }
   }
-
   // Add to Cart code
   // void addToCart(
   //   // String uid,
@@ -689,9 +680,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         );
                                       },
-                                      productId: _popularPacks[index]['id'],
-                                      sellerId: _popularPacks[index]
-                                          ['sellerId'],
+                                      sellerId: _popularPacks[index]['sellerId']
+                                          .toString(),
+                                      productId:
+                                          _popularPacks[index]['id'].toString(),
                                       name: _popularPacks[index]['title']
                                           .toString(),
                                       price: _popularPacks[index]['price']
@@ -711,11 +703,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             index >= 0 &&
                                             index < _popularPacks.length) {
                                           addToCart(
-                                              _popularPacks[index]['imageUrl'],
-                                              _popularPacks[index]['title'],
-                                              _popularPacks[index]['salePrice'],
-                                              _popularPacks[index]['id'],
-                                              _popularPacks[index]['sellerId']);
+                                            _popularPacks[index]['imageUrl'],
+                                            _popularPacks[index]['title'],
+                                            _popularPacks[index]['salePrice'],
+                                            _popularPacks[index]['sellerId'],
+                                            _popularPacks[index]['id'],
+                                          );
                                         }
                                       },
                                     );
@@ -845,11 +838,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             index >= 0 &&
                                             index < _products.length) {
                                           addToCart(
-                                              _products[index]['imageUrl'],
-                                              _products[index]['title'],
-                                              _products[index]['salePrice'],
-                                              _products[index]['id'],
-                                              _products[index]['sellerId']);
+                                            _products[index]['imageUrl'],
+                                            _products[index]['title'],
+                                            _products[index]['salePrice'],
+                                            _products[index]['sellerId'],
+                                            _products[index]['id'],
+                                          );
                                         }
                                       },
                                     );
