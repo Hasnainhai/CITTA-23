@@ -1,7 +1,5 @@
-
 // ignore_for_file: prefer_final_fields
 
-import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
