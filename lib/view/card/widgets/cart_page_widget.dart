@@ -1,5 +1,7 @@
+import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/card/card_screen.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -176,6 +178,14 @@ class _CartWidgetState extends State<CartWidget> {
                 children: [
                   InkWell(
                     onTap: () {
+                      newPrice == null
+                          ? subTotal -= int.parse(widget.price)
+                          : subTotal -= newPrice!;
+                      items -= 1;
+                      Provider.of<SubTotalModel>(context, listen: false)
+                          .updateSubTotal(subTotal);
+                      Provider.of<IndexModel>(context, listen: false)
+                          .updateIndex(items);
                       widget.onDelete();
                     },
                     child: const Icon(

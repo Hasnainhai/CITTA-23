@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
@@ -13,6 +14,8 @@ import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
 import 'widgets/item_prizing.dart';
+
+int items = 0;
 
 class CardScreen extends StatefulWidget {
   const CardScreen({
@@ -38,7 +41,8 @@ class _CardScreenState extends State<CardScreen> {
         .collection("cart")
         .get();
     setState(() {
-      index = querySnapshot.docs.length;
+      items = querySnapshot.docs.length;
+      Provider.of<IndexModel>(context, listen: false).updateIndex(items);
     });
   }
 
@@ -155,9 +159,6 @@ class _CardScreenState extends State<CardScreen> {
                             price: data['salePrice'],
                             img: data['imageUrl'],
                             onDelete: () async {
-                              subTotal -= int.parse(data['salePrice']);
-                              Provider.of<SubTotalModel>(context, listen: false)
-                                  .updateSubTotal(subTotal);
                               _deleteProduct(data['deleteId']);
                             },
                             items: 1,
@@ -223,17 +224,47 @@ class _CardScreenState extends State<CardScreen> {
                         ),
                       ),
                     ),
-                    Text(
-                      index.toString(),
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
+                    // Consumer<IndexModel>(
+                    //   builder: (context, indexModel, child) {
+                    //     return Text(
+                    //       '₹${indexModel.items}',
+                    //       style: GoogleFonts.getFont(
+                    //         "Gothic A1",
+                    //         textStyle: const TextStyle(
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w800,
+                    //           color: AppColor.blackColor,
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    Consumer<IndexModel>(
+                      builder: (context, indexModel, child) {
+                        return Text(
+                          '${indexModel.items}',
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        );
+                      },
                     ),
+                    // Text(
+                    //   index.toString(),
+                    //   style: GoogleFonts.getFont(
+                    //     "Gothic A1",
+                    //     textStyle: const TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w800,
+                    //       color: AppColor.blackColor,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 // ItemPrizingWidget(title: 'Total Item', price: ),
@@ -246,7 +277,7 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                const ItemPrizingWidget(title: 'Shipment Price', price: '₹60'),
+                const ItemPrizingWidget(title: 'Price', price: '₹60'),
                 const VerticalSpeacing(12.0),
                 SizedBox(
                   height: 1, // Height of the dotted line
