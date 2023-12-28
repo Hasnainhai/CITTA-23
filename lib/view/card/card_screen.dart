@@ -155,30 +155,10 @@ class _CardScreenState extends State<CardScreen> {
                             price: data['salePrice'],
                             img: data['imageUrl'],
                             onDelete: () async {
+                              subTotal -= int.parse(data['salePrice']);
+                              Provider.of<SubTotalModel>(context, listen: false)
+                                  .updateSubTotal(subTotal);
                               _deleteProduct(data['deleteId']);
-                              // try {
-                              //   setState(() => _isLoading =
-                              //       true);
-
-                              //   await FirebaseFirestore.instance
-                              //       .collection('users')
-                              //       .doc(FirebaseAuth.instance.currentUser!.uid)
-                              //       .collection('cart')
-                              //       .doc(data['id'])
-                              //       .delete();
-                              //   await FirebaseFirestore.instance
-                              //       .enableNetwork();
-                              //   setState(() {});
-                              //   setState(() {});
-                              //   print(
-                              //       '..................${data['id']}...............');
-                              //   Utils.toastMessage('SuccessFully Deleted');
-                              // } catch (error) {
-                              //   print('Error deleting cart item: $error');
-                              // } finally {
-                              //   setState(() => _isLoading =
-                              //       false);
-                              // }
                             },
                             items: 1,
                             sellerId: data['sellerId'],
