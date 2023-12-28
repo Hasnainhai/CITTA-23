@@ -1,6 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+
+import 'package:citta_23/res/consts/firebase_const.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
+
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
@@ -8,42 +21,36 @@ import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:citta_23/view/review/review.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:uuid/uuid.dart';
-import '../../res/components/colors.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen({
-    super.key,
-    required this.tile,
-    required this.price,
-    required this.img,
-    required this.id,
-    required this.customerId,
-    required this.weight,
-    required this.salePrice,
+import '../../../res/components/colors.dart';
+
+class CardCheckOutScreen extends StatefulWidget {
+  CardCheckOutScreen({
+    Key? key,
+    // required this.tile,
+    // required this.price,
+    // required this.img,
+    // required this.id,
+    // required this.customerId,
+    // required this.weight,
+    // required this.salePrice,
     required this.productType,
-  });
-  final String tile;
-  final String price;
-  final String img;
-  final String id;
-  final String customerId;
-  final String weight;
-  final String salePrice;
+    required this.productList,
+  }) : super(key: key);
+  // final String tile;
+  // final String price;
+  // final String img;
+  // final String id;
+  // final String customerId;
+  // final String weight;
+  // final String salePrice;
   final String productType;
-
+  final List<Map<String, dynamic>> productList;
   @override
-  State<CheckOutScreen> createState() => _CheckOutScreenState();
+  State<CardCheckOutScreen> createState() => _CardCheckOutScreenState();
 }
 
-class _CheckOutScreenState extends State<CheckOutScreen> {
+class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   bool firstButton = true;
   bool secondButton = false;
   bool thirdButton = false;
@@ -53,6 +60,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   String? city;
   String? state;
   String? name;
+  String? phoneNumber;
 
   onChanged(bool? value) {
     setState(() {
@@ -61,59 +69,91 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   bool _isLoading = false;
-  void saveDetail() {
-    var userId = FirebaseAuth.instance.currentUser!.uid;
-    var fireStore = FirebaseFirestore.instance;
-    var uid = const Uuid().v1();
-    var date = DateTime.now();
-    fireStore
-        .collection('users')
-        .doc(userId)
-        .collection('my_orders')
-        .doc(uid)
-        .set({
-      'title': widget.tile,
-      'imgurl': widget.img,
-      'productId': widget.id,
-      'sallerId': widget.customerId,
-      'price': widget.price,
-      'salePrice': widget.salePrice,
-      'weight': widget.weight,
-      'date': date,
-      "productType": widget.productType,
-      'status': "pending",
-      'address': {
-        "address": address,
-        "postalCode": postalCode,
-        'city': city,
-        'state': state,
-        'name': name,
-      }
-    });
-    fireStore
-        .collection('saller')
-        .doc(widget.customerId)
-        .collection('my_orders')
-        .doc(uid)
-        .set({
-      'title': widget.tile,
-      'imgurl': widget.img,
-      'productId': widget.id,
-      'buyyerId': userId,
-      'price': widget.price,
-      'salePrice': widget.salePrice,
-      'weight': widget.weight,
-      'date': date,
-      'status': "pending",
-      'address': {
-        "address": address,
-        "postalCode": postalCode,
-        'city': city,
-        'state': state,
-        'name': name,
-      }
-    });
+  void saveOrdersToFirestore() async {
+    final CollectionReference<Map<String, dynamic>> myOrdersCollection =
+        FirebaseFirestore.instance.collection('saller');
+    Map<String, dynamic> addressMap = {
+      "Address": address as String,
+      "postalCode": postalCode as String,
+      "city": city as String,
+      "state": state as String,
+      "name": name as String,
+      "phone": phoneNumber as String,
+    };
+    for (var orderMap in widget.productList) {
+      final String buyerId = orderMap['sellerId']!;
+      var orderId = const Uuid().v1();
+      orderMap['uuid'] = orderId;
+      // orderMap['address'] = addressMap;
+
+      await myOrdersCollection
+          .doc(buyerId)
+          .collection('my_orders')
+          .doc(orderId)
+          .set(orderMap);
+
+      await myOrdersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('my_orders')
+          .doc(orderId)
+          .set(orderMap);
+    }
+
+    print('Orders saved to Firestore.');
   }
+  // void saveDetail() {
+  //   var userId = FirebaseAuth.instance.currentUser!.uid;
+  //   var fireStore = FirebaseFirestore.instance;
+  //   var uid = const Uuid().v1();
+  //   var date = DateTime.now();
+  //   fireStore
+  //       .collection('users')
+  //       .doc(userId)
+  //       .collection('my_orders')
+  //       .doc(uid)
+  //       .set({
+  //     'title': widget.tile,
+  //     'imgurl': widget.img,
+  //     'productId': widget.id,
+  //     'sallerId': widget.customerId,
+  //     'price': widget.price,
+  //     'salePrice': widget.salePrice,
+  //     'weight': widget.weight,
+  //     'date': date,
+  //     "productType": widget.productType,
+  //     'status': "pending",
+  //     'address': {
+  //       "address": address,
+  //       "postalCode": postalCode,
+  //       'city': city,
+  //       'state': state,
+  //       'name': name,
+  //     }
+  //   });
+  //   fireStore
+  //       .collection('saller')
+  //       .doc(widget.customerId)
+  //       .collection('my_orders')
+  //       .doc(uid)
+  //       .set({
+  //     'title': widget.tile,
+  //     'imgurl': widget.img,
+  //     'productId': widget.id,
+  //     'buyyerId': userId,
+  //     'price': widget.price,
+  //     'salePrice': widget.salePrice,
+  //     'weight': widget.weight,
+  //     'date': date,
+  //     'status': "pending",
+  //     'address': {
+  //       "address": address,
+  //       "postalCode": postalCode,
+  //       'city': city,
+  //       'state': state,
+  //       'name': name,
+  //     }
+  //   });
+  // }
 
   Future<void> initPayment({
     required String email,
@@ -148,7 +188,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ));
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
-      saveDetail();
+      // saveDetail();
+      saveOrdersToFirestore();
       await showDialog(
         context: context,
         builder: (BuildContext context) => const Rating(),
@@ -266,6 +307,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       city = data['city'];
                                       postalCode = data['zipcode'];
                                       state = data['state'];
+                                      phoneNumber = data['phone'];
                                     },
                                     child: AddressCheckOutWidget(
                                       bgColor: AppColor.whiteColor,

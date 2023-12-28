@@ -1,7 +1,11 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:citta_23/models/index_model.dart';
+import 'package:citta_23/models/sub_total_model.dart';
+
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
+import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +15,8 @@ import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
 import 'widgets/item_prizing.dart';
+
+int items = 0;
 
 class CardScreen extends StatefulWidget {
   const CardScreen({
@@ -36,8 +42,30 @@ class _CardScreenState extends State<CardScreen> {
         .collection("cart")
         .get();
     setState(() {
-      index = querySnapshot.docs.length;
+      items = querySnapshot.docs.length;
+      Provider.of<IndexModel>(context, listen: false).updateIndex(items);
     });
+  }
+
+  List<Map<String, dynamic>> productList = [];
+
+  void fetchDataFromFirestore() async {
+    QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
+
+    productList = productsSnapshot.docs.map((DocumentSnapshot product) {
+      return {
+        'productId': product.id,
+        'title': product['title'] as String,
+        'imgurl': product['imageUrl'] as String,
+        'sellerId': product['sellerId'] as String,
+        'salePrice': product['salePrice'] as String,
+        'status': "pending",
+        'date': DateTime.now().toString(),
+        'buyyerId': FirebaseAuth.instance.currentUser!.uid,
+      };
+    }).toList();
+
+    print(productList);
   }
 
   void _fetchData() {
@@ -64,6 +92,7 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     getDocumentIndex();
     _fetchData();
+    fetchDataFromFirestore();
   }
 
   Future<void> _deleteProduct(String deleteId) async {
@@ -149,29 +178,6 @@ class _CardScreenState extends State<CardScreen> {
                             img: data['imageUrl'],
                             onDelete: () async {
                               _deleteProduct(data['deleteId']);
-                              // try {
-                              //   setState(() => _isLoading =
-                              //       true);
-
-                              //   await FirebaseFirestore.instance
-                              //       .collection('users')
-                              //       .doc(FirebaseAuth.instance.currentUser!.uid)
-                              //       .collection('cart')
-                              //       .doc(data['id'])
-                              //       .delete();
-                              //   await FirebaseFirestore.instance
-                              //       .enableNetwork();
-                              //   setState(() {});
-                              //   setState(() {});
-                              //   print(
-                              //       '..................${data['id']}...............');
-                              //   Utils.toastMessage('SuccessFully Deleted');
-                              // } catch (error) {
-                              //   print('Error deleting cart item: $error');
-                              // } finally {
-                              //   setState(() => _isLoading =
-                              //       false);
-                              // }
                             },
                             items: 1,
                             sellerId: data['sellerId'],
@@ -236,17 +242,33 @@ class _CardScreenState extends State<CardScreen> {
                         ),
                       ),
                     ),
-                    Text(
-                      index.toString(),
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: AppColor.blackColor,
-                        ),
-                      ),
+
+                    Consumer<IndexModel>(
+                      builder: (context, indexModel, child) {
+                        return Text(
+                          '${indexModel.items}',
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        );
+                      },
                     ),
+                    // Text(
+                    //   index.toString(),
+                    //   style: GoogleFonts.getFont(
+                    //     "Gothic A1",
+                    //     textStyle: const TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w800,
+                    //       color: AppColor.blackColor,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 // ItemPrizingWidget(title: 'Total Item', price: ),
@@ -259,7 +281,7 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                const ItemPrizingWidget(title: 'Shipment Price', price: '₹60'),
+                const ItemPrizingWidget(title: 'Price', price: '₹60'),
                 const VerticalSpeacing(12.0),
                 SizedBox(
                   height: 1, // Height of the dotted line
@@ -283,17 +305,10 @@ class _CardScreenState extends State<CardScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (c) => CheckOutScreen(
-                              tile: "tile",
-                              price: subTotal.toString(),
-                              img: "img",
-                              id: "id",
-                              customerId: "customerId",
-                              weight: "weight",
-                              salePrice: "salePrice",
-                              productType: "cart",
-                            ),
-                          ),
+                              builder: (c) => CardCheckOutScreen(
+                                    productType: 'cart',
+                                    productList: productList,
+                                  )),
                         );
                       }),
                 ),
