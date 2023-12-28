@@ -72,8 +72,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           'email': emailController.text.toLowerCase(),
           'phNo': phNoController.text.toLowerCase(),
           'shipping-address': addressController.text,
-          'userWish': [],
-          'userCart': [],
           'createdAt': Timestamp.now(),
           'profilePic': profileUrl,
         });
@@ -232,20 +230,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             ),
                             const VerticalSpeacing(30),
-                            //phone number
-                            TextFieldCustom(
-                              controller: phNoController,
-                              maxLines: 1,
-                              text: "Ph No",
-                              validator: (value) {
-                                if (value!.isEmpty || value.length < 11) {
-                                  return "Please enter a valid PhNo adress";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            const VerticalSpeacing(30),
+                            // //phone number
+                            // TextFieldCustom(
+                            //   controller: phNoController,
+                            //   maxLines: 1,
+                            //   text: "Ph No",
+                            //   validator: (value) {
+                            //     if (value!.isEmpty || value.length < 11) {
+                            //       return "Please enter a valid PhNo adress";
+                            //     } else {
+                            //       return null;
+                            //     }
+                            //   },
+                            // ),
+                            // const VerticalSpeacing(30),
                             // Password
                             TextFieldCustom(
                               controller: passwordController,
@@ -261,20 +259,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             ),
                             const VerticalSpeacing(30),
-                            // Address
-                            TextFieldCustom(
-                              controller: addressController,
-                              maxLines: 1,
-                              text: "Shipping address",
-                              validator: (value) {
-                                if (value!.isEmpty || value.length < 10) {
-                                  return "Please enter a valid  address";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            const VerticalSpeacing(30),
+                            // // Address
+                            // TextFieldCustom(
+                            //   controller: addressController,
+                            //   maxLines: 1,
+                            //   text: "Shipping address",
+                            //   validator: (value) {
+                            //     if (value!.isEmpty || value.length < 10) {
+                            //       return "Please enter a valid  address";
+                            //     } else {
+                            //       return null;
+                            //     }
+                            //   },
+                            // ),
+                            // const VerticalSpeacing(30),
                             _isLoading
                                 ? const Center(
                                     child: CircularProgressIndicator(),

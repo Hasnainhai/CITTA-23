@@ -11,7 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import '../../res/components/loading_manager.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -30,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  // final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   String? _email;
   String? _name;
@@ -51,37 +50,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _isLoading = true;
     });
-    if (user == null) {
-      setState(() {
-        _isLoading = false;
-      });
-      return;
-    } else {
+
+    final googleAuth = FirebaseAuth.instance.currentUser;
+    // if (googleAuth != null) {
+    _name = googleAuth!.displayName;
+    _email = googleAuth.email;
+    _pImage = googleAuth.photoURL;
+    setState(() {
+      _isLoading = false;
+    });
+    // }
+    // else {
+    if (user != null) {
       try {
         String _uid = user!.uid;
         final DocumentSnapshot userDoc = await FirebaseFirestore.instance
             .collection('users')
             .doc(_uid)
             .get();
-        // ... existing code ...
         if (userDoc != null || userDoc.data() != null) {
           _email = userDoc.get('email');
           _name = userDoc.get('name');
-          _phNo = userDoc.get('phNo');
-          address = userDoc.get('shipping-address');
-          _pImage = userDoc.get('profilePic');
-
-          _addressTextController.text = userDoc.get('shipping-address');
-          // GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-          // if (googleUser != null) {
-          //   _name = googleUser.displayName;
-          //   _email = googleUser.email;
-          //   _pImage = googleUser.photoUrl ?? defaultProfile;
-          //   // Assuming you don't have a phone number for Google sign-in
-          //   // _phNo = 'Default Phone Number';
-          // }
-        } else {
-          Utils.flushBarErrorMessage('User data not found', context);
+          _pImage = userDoc.get('imageUrl');
         }
       } catch (error) {
         setState(() {
@@ -94,74 +84,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     }
-    //   try {
-    // String _uid = user!.uid;
-    // final DocumentSnapshot userDoc =
-    //     await FirebaseFirestore.instance.collection('users').doc(_uid).get();
-    //     if (userDoc == null) {
-    //       return;
-    //     } else {
-    //       _email = userDoc.get('email');
-    //       _name = userDoc.get('name');
-    //       _phNo = userDoc.get('phNo');
-    //       address = userDoc.get('shipping-address');
-    //       _pImage = userDoc.get('profilePic');
-
-    //       _addressTextController.text = userDoc.get('shipping-address');
-    //     }
-    //   } catch (error) {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //     Utils.flushBarErrorMessage('$error', context);
-    //   } finally {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //   }
+    // }
   }
 
-  Future<void> _showAddressDialog() async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Update Address'),
-          content: TextField(
-            controller: _addressTextController,
-            maxLines: 5,
-            decoration: const InputDecoration(hintText: "Your address"),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                String _uid = user!.uid;
-                try {
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(_uid)
-                      .update({
-                    'shipping-address': _addressTextController.text,
-                  });
+  // Future<void> _showAddressDialog() async {
+  //   await showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: const Text('Update Address'),
+  //         content: TextField(
+  //           controller: _addressTextController,
+  //           maxLines: 5,
+  //           decoration: const InputDecoration(hintText: "Your address"),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () async {
+  //               String _uid = user!.uid;
+  //               try {
+  //                 await FirebaseFirestore.instance
+  //                     .collection('users')
+  //                     .doc(_uid)
+  //                     .update({
+  //                   'shipping-address': _addressTextController.text,
+  //                 });
 
-                  Navigator.pop(context);
-                  setState(() {
-                    address = _addressTextController.text;
-                  });
-                } catch (err) {
-                  Utils.flushBarErrorMessage(err.toString(), context);
-                }
-              },
-              child: const Text(
-                'Update',
-                style: TextStyle(color: AppColor.primaryColor),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  //                 Navigator.pop(context);
+  //                 setState(() {
+  //                   address = _addressTextController.text;
+  //                 });
+  //               } catch (err) {
+  //                 Utils.flushBarErrorMessage(err.toString(), context);
+  //               }
+  //             },
+  //             child: const Text(
+  //               'Update',
+  //               style: TextStyle(color: AppColor.primaryColor),
+  //             ),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   final double tHeight = 200.0;
   final double top = 130.0;
@@ -197,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   _buildCoverBar(),
                   Positioned(
-                    top: 20.0,
+                    top: 10.0,
                     left: 0.0,
                     child: _buildProfile(),
                   ),
@@ -231,16 +197,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _buildProfile() {
-    //     final GoogleSignInAuthentication googleSignInAuthentication =
-    //     await googleSignInAccount.authentication;
-    // final GoogleSignIn googleSignIn = GoogleSignIn();
-    //   final GoogleAuthCredential credential = GoogleAuthCredential.credential(
-    //   accessToken: googleSignInAuthentication.accessToken,
-    //   idToken: googleSignInAuthentication.idToken,
-    // if(){
-
-    // );
-    // }
     return Row(
       children: [
         const SizedBox(width: 30.0),
@@ -256,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(width: 20.0),
         Text.rich(
           TextSpan(
-            text: '${_name == null ? 'Name' : _name!} \n',
+            text: '\n${_name == null ? 'Name' : _name!} \n',
             style: GoogleFonts.getFont(
               "Gothic A1",
               textStyle: const TextStyle(
@@ -274,20 +230,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontSize: 14.0,
                 ),
               ),
-              TextSpan(
-                text: _phNo == null ? 'PhNo' : _phNo!,
-                style: const TextStyle(
-                  color: AppColor.whiteColor,
-                  fontWeight: FontWeight.w200,
-                  fontSize: 14.0,
-                ),
-              ),
+              // TextSpan(
+              //   text: _phNo == null ? 'PhNo' : _phNo!,
+              //   style: const TextStyle(
+              //     color: AppColor.whiteColor,
+              //     fontWeight: FontWeight.w200,
+              //     fontSize: 14.0,
+              //   ),
+              // ),
             ],
           ),
         ),
         const SizedBox(width: 5.0),
         IconButton(
-          onPressed: () async {
+          onPressed: () {
             // Navigate to EditProfile with the fetched details
             // Navigator.push(context, MaterialPageRoute(builder: (context) {
             //   return EditProfile(
@@ -297,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //     phNo: _phNo ?? 'Default Phone Number',
             //   );
             // }));
-            if (_name != null && _email != null && _phNo != null) {
+            if (_name != null && _email != null) {
               // Navigate to EditProfile with existing user details
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return EditProfile(
@@ -376,17 +332,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Column(
               children: [
-                ProfileWidgets(
-                  ontap: () {
-                    _showAddressDialog();
-                  },
-                  tColor: const Color(0xffCDFF9D),
-                  bColor: const Color(0xff40C269),
-                  icon: Icons.local_shipping_outlined,
-                  trIcon: Icons.arrow_forward_ios,
-                  title: address == null ? 'user' : address!,
-                ),
-                const Divider(),
                 ProfileWidgets(
                     ontap: () {
                       Navigator.pushNamed(
