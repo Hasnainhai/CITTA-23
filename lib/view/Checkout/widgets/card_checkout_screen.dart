@@ -3,8 +3,10 @@
 
 import 'dart:convert';
 
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -58,6 +60,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   String? city;
   String? state;
   String? name;
+  String? phoneNumber;
 
   onChanged(bool? value) {
     setState(() {
@@ -66,6 +69,36 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   }
 
   bool _isLoading = false;
+  void saveOrdersToFirestore() async {
+    final CollectionReference<Map<String, dynamic>> myOrdersCollection =
+        FirebaseFirestore.instance.collection('saller');
+
+    for (var orderMap in widget.productList) {
+      final String buyerId = orderMap['buyyerId']!;
+      var orderId = const Uuid().v1();
+      orderMap['uuid'] = orderId;
+      orderMap['address'] = {
+        "Address": address,
+        "postalCode": postalCode,
+        "city": city,
+        "state": state,
+        "name": name,
+        "phone": phoneNumber,
+      } as String;
+      await myOrdersCollection
+          .doc(buyerId)
+          .collection('my_orders')
+          .doc(orderId)
+          .set(orderMap);
+      await myOrdersCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('my_orders')
+          .doc(orderId)
+          .set(orderMap);
+    }
+
+    print('Orders saved to Firestore.');
+  }
   // void saveDetail() {
   //   var userId = FirebaseAuth.instance.currentUser!.uid;
   //   var fireStore = FirebaseFirestore.instance;
@@ -154,6 +187,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
       // saveDetail();
+      saveOrdersToFirestore();
       await showDialog(
         context: context,
         builder: (BuildContext context) => const Rating(),
@@ -271,6 +305,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                       city = data['city'];
                                       postalCode = data['zipcode'];
                                       state = data['state'];
+                                      phoneNumber = data['phone'];
                                     },
                                     child: AddressCheckOutWidget(
                                       bgColor: AppColor.whiteColor,
