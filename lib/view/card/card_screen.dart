@@ -1,16 +1,14 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:citta_23/models/index_model.dart';
-import 'package:citta_23/models/sub_total_model.dart';
-
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
@@ -56,7 +54,7 @@ class _CardScreenState extends State<CardScreen> {
       return {
         'productId': product.id,
         'title': product['title'] as String,
-        'imgurl': product['imageUrl'] as String,
+        'imageUrl': product['imageUrl'] as String,
         'sellerId': product['sellerId'] as String,
         'salePrice': product['salePrice'] as String,
         'status': "pending",
