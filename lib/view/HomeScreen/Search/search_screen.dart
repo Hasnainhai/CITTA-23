@@ -1,11 +1,9 @@
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/filter/filter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -147,50 +145,39 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ],
                 ),
-                // const VerticalSpeacing(20),
-                // Text(
-                //   "Recent Searches",
-                //   style: GoogleFonts.getFont(
-                //     "Gothic A1",
-                //     textStyle: const TextStyle(
-                //       fontSize: 18,
-                //       fontWeight: FontWeight.w400,
-                //       color: AppColor.fontColor,
-                //     ),
-                //   ),
-                // ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: double.infinity,
                   child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: resultList.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: InkWell(
-                            onTap: () {
-                              String title = 'Search results...';
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return NewItemsScreen(
-                                  title: title,
-                                );
-                              }));
-                            },
-                            child: Text(
-                              _allResults[index]['title'],
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: resultList.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: InkWell(
+                          onTap: () {
+                            String title = 'Search results...';
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return NewItemsScreen(
+                                title: title,
+                              );
+                            }));
+                          },
+                          child: Text(
+                            _allResults[index]['title'],
+                            style: GoogleFonts.getFont(
+                              "Gothic A1",
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

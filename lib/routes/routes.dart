@@ -11,7 +11,6 @@ import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 import 'package:citta_23/view/HomeScreen/Search/search_screen.dart';
 import 'package:citta_23/view/HomeScreen/all_fashionProd.dart';
 import 'package:citta_23/view/HomeScreen/create_myown_pack_screen.dart';
-import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/notification/notification.dart';
 import 'package:citta_23/view/HomeScreen/order_details/address_details_screen.dart';
 import 'package:citta_23/view/card/card_screen.dart';
