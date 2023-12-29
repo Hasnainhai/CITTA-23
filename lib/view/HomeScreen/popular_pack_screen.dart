@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import 'widgets/homeCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -119,17 +120,56 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
       Utils.toastMessage('Product is already in the cart');
     } else {
       // Product is not in the cart, add it
-      await cartCollectionRef.add({
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
         'sellerId': sellerId,
         'id': productId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
+        'deleteId': uuid,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
     }
   }
+
+  // void addToCart(String img, String title, String dPrice, String sellerId,
+  //     String productId) async {
+  //   final userId = FirebaseAuth.instance.currentUser!.uid;
+  //   // Get the collection reference for the user's cart
+  //   CollectionReference cartCollectionRef = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userId)
+  //       .collection('cart');
+
+  //   // Check if the product is already in the cart
+  //   QuerySnapshot cartSnapshot = await cartCollectionRef
+  //       .where('imageUrl', isEqualTo: img)
+  //       .limit(1)
+  //       .get();
+
+  //   if (cartSnapshot.docs.isNotEmpty) {
+  //     // Product is already in the cart, show a popup message
+  //     Utils.toastMessage('Product is already in the cart');
+  //   } else {
+  //     // Product is not in the cart, add it
+  //     await cartCollectionRef.add({
+  //       'sellerId': sellerId,
+  //       'id': productId,
+  //       'imageUrl': img,
+  //       'title': title,
+  //       'salePrice': dPrice,
+  //       // Add other product details as needed
+  //     });
+  //     Utils.toastMessage('Successfully added to cart');
+  //   }
+  // }
 
   @override
   initState() {
@@ -334,11 +374,11 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                               index >= 0 &&
                               index < _popularPacks.length) {
                             addToCart(
-                              _popularPacks[index]['sellerId'],
-                              _popularPacks[index]['id'],
                               _popularPacks[index]['imageUrl'],
                               _popularPacks[index]['title'],
                               _popularPacks[index]['salePrice'],
+                              _popularPacks[index]['sellerId'],
+                              _popularPacks[index]['id'],
                             );
                           }
                         },
