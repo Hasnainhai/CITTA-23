@@ -337,13 +337,16 @@ class _CardScreenState extends State<CardScreen> {
                       onpress: () {
                         debugPrint(
                             "this is sub total from check out screen$subTotal");
+
+                        int amountInCents = (subTotal * 100);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (c) => CardCheckOutScreen(
                               productType: 'cart',
                               productList: productList,
-                              subTotal: subTotal.toString(),
+                              subTotal: " ${amountInCents.toString()}.0",
                             ),
                           ),
                         );
