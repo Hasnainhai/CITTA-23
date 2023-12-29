@@ -36,6 +36,7 @@ class CardCheckOutScreen extends StatefulWidget {
     // required this.salePrice,
     required this.productType,
     required this.productList,
+    required this.subTotal,
   }) : super(key: key);
   // final String tile;
   // final String price;
@@ -46,6 +47,7 @@ class CardCheckOutScreen extends StatefulWidget {
   // final String salePrice;
   final String productType;
   final List<Map<String, dynamic>> productList;
+  final String subTotal;
   @override
   State<CardCheckOutScreen> createState() => _CardCheckOutScreenState();
 }
@@ -84,6 +86,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       final String buyerId = orderMap['sellerId']!;
       var orderId = const Uuid().v1();
       orderMap['uuid'] = orderId;
+
       // orderMap['address'] = addressMap;
 
       await myOrdersCollection
@@ -536,8 +539,9 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                             state != null &&
                             address != null) {
                           initPayment(
-                              email: "basitalyshah51214@gmail.com",
-                              amount: "50.0");
+                            email: "basitalyshah51214@gmail.com",
+                            amount: widget.subTotal,
+                          );
                         } else {
                           Fluttertoast.showToast(
                               msg: "Please enter address details");

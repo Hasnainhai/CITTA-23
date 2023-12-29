@@ -307,6 +307,7 @@ class _CardScreenState extends State<CardScreen> {
                               builder: (c) => CardCheckOutScreen(
                                     productType: 'cart',
                                     productList: productList,
+                                    subTotal: subTotal.toString(),
                                   )),
                         );
                       }),
