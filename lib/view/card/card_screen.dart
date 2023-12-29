@@ -91,7 +91,6 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     getDocumentIndex();
     _fetchData();
-    fetchDataFromFirestore();
   }
 
   Future<void> _deleteProduct(String deleteId) async {
@@ -165,6 +164,8 @@ class _CardScreenState extends State<CardScreen> {
                           child: CircularProgressIndicator(),
                         );
                       }
+                      fetchDataFromFirestore();
+
                       return ListView(
                         shrinkWrap: true,
                         children: snapshot.data!.docs
