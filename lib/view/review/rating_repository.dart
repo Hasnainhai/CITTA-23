@@ -8,8 +8,8 @@ class RatingRepository {
   void giveRatings(String productId, String comment, context, String userName,
       String userProfile, String produtType) {
     CollectionReference rateDriverRef = FirebaseFirestore.instance
-        .collection("products")
-        .doc(produtType)
+        .collection(produtType)
+        .doc(productId)
         .collection("ratings");
 
     rateDriverRef.get().then(
@@ -39,11 +39,6 @@ class RatingRepository {
             ),
           );
         }
-
-        // Use Fluttertoast or any other notification method as needed
-        // Fluttertoast.showToast(
-        //   msg: "Restarting the app now",
-        // );
       },
     );
 
@@ -58,8 +53,8 @@ class RatingRepository {
     };
 
     FirebaseFirestore.instance
-        .collection("products")
-        .doc("lJlxtZy4TShqYz5E3B0c")
+        .collection(produtType)
+        .doc(productId)
         .collection("commentsAndRatings")
         .doc(uuid)
         .set(commentMap);
