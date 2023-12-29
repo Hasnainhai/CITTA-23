@@ -5,6 +5,7 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/widgets/increase_container.dart';
+import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -370,21 +371,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                 ),
-                const Divider(
-                  thickness: 2,
+                const VerticalSpeacing(
+                  20,
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      RoutesName.totalreviewscreen,
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Review",
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.totalreviewscreen,
+                        );
+                      },
+                      child: Text(
+                        "View Reviews",
                         style: GoogleFonts.getFont(
                           "Gothic A1",
                           textStyle: const TextStyle(
@@ -394,42 +395,90 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => Rating(),
                           ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                        );
+                      },
+                      child: Text(
+                        "Give Review",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
                           ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.arrow_forward_ios_outlined,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const Divider(
-                  thickness: 2,
-                ),
+                // const Divider(
+                //   thickness: 2,
+                // ),
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.pushNamed(
+                //       context,
+                //       RoutesName.totalreviewscreen,
+                //     );
+                //   },
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //         "Review",
+                //         style: GoogleFonts.getFont(
+                //           "Gothic A1",
+                //           textStyle: const TextStyle(
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold,
+                //             color: AppColor.fontColor,
+                //           ),
+                //         ),
+                //       ),
+                //       Row(
+                //         children: [
+                //           const Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           const Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           const Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           const Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           const Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           IconButton(
+                //             onPressed: () {},
+                //             icon: const Icon(
+                //               Icons.arrow_forward_ios_outlined,
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // const Divider(
+                //   thickness: 2,
+                // ),
                 const VerticalSpeacing(
                   28,
                 ),
