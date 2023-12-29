@@ -546,9 +546,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: GoogleFonts.getFont(
                                       "Gothic A1",
                                       textStyle: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColor.buttonBgColor),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColor.buttonBgColor,
+                                      ),
                                     ),
                                   ),
                                 ),

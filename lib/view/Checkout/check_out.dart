@@ -6,6 +6,7 @@ import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -146,7 +147,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         customerEphemeralKeySecret: jsonRespone['aphemeralKey'],
       ));
       await Stripe.instance.presentPaymentSheet();
-      Fluttertoast.showToast(msg: "Payment is successful");
+      Utils.toastMessage('Payment is successful');
+
       saveDetail();
     } catch (e) {
       if (e is StripeException) {
