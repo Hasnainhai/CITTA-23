@@ -759,7 +759,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           context: context,
                           builder: (BuildContext context) => Rating(
                             productId: widget.productId,
-                            productType: "fashion",
+                            productType: "bundle pack",
                           ),
                         );
                       },
