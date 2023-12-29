@@ -35,7 +35,6 @@ import '../view/HomeScreen/popular_pack_screen.dart';
 import '../view/HomeScreen/total_reviews/total_reviews.dart';
 import '../view/deliveryAddress/delivery_address.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
-import '../view/review/review.dart';
 import '../view/trackOrder/track_order.dart';
 
 class Routes {
@@ -140,10 +139,10 @@ class Routes {
       case RoutesName.trackOrder:
         return MaterialPageRoute(
             builder: (BuildContext context) => const TrackOrder());
-      case RoutesName.ratingscreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const Rating(),
-        );
+      // case RoutesName.ratingscreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const Rating(),
+      //   );
       case RoutesName.notificationscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const NotificationScreen(),

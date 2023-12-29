@@ -112,40 +112,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const VerticalSpeacing(80.0),
-                  Container(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFieldCustom(
-                            controller: emailController,
-                            maxLines: 1,
-                            text: 'Email Address',
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value!.isEmpty || !value.contains("@")) {
-                                return "Please enter a valid Email adress";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          TextFieldCustom(
-                            controller: passwordController,
-                            maxLines: 1,
-                            text: 'Your Password',
-                            keyboardType: TextInputType.emailAddress,
-                            obscureText: true,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 7) {
-                                return "Please enter a valid password";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFieldCustom(
+                          controller: emailController,
+                          maxLines: 1,
+                          text: 'Email Address',
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value!.isEmpty || !value.contains("@")) {
+                              return "Please enter a valid Email adress";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        TextFieldCustom(
+                          controller: passwordController,
+                          maxLines: 1,
+                          text: 'Your Password',
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 7) {
+                              return "Please enter a valid password";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   GestureDetector(
@@ -183,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _submitFormOnLogin();
                           }),
                   const VerticalSpeacing(30.0),
-                  AuthButton(),
+                  const AuthButton(),
                   const VerticalSpeacing(20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
