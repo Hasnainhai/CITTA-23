@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:uuid/uuid.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
@@ -76,17 +77,55 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
       Utils.toastMessage('Product is already in the cart');
     } else {
       // Product is not in the cart, add it
-      await cartCollectionRef.add({
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
-        'id': productId,
-        'sellerId': sellerId,
+        'deleteId': uuid,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
     }
   }
+  // void addToCart(String img, String title, String dPrice, String sellerId,
+  //     String productId) async {
+  //   final userId = FirebaseAuth.instance.currentUser!.uid;
+  //   // Get the collection reference for the user's cart
+  //   CollectionReference cartCollectionRef = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userId)
+  //       .collection('cart');
+
+  //   // Check if the product is already in the cart
+  //   QuerySnapshot cartSnapshot = await cartCollectionRef
+  //       .where('imageUrl', isEqualTo: img)
+  //       .limit(1)
+  //       .get();
+
+  //   if (cartSnapshot.docs.isNotEmpty) {
+  //     // Product is already in the cart, show a popup message
+  //     Utils.toastMessage('Product is already in the cart');
+  //   } else {
+  //     // Product is not in the cart, add it
+  //     await cartCollectionRef.add({
+  //       'imageUrl': img,
+  //       'title': title,
+  //       'salePrice': dPrice,
+  //       'id': productId,
+  //       'sellerId': sellerId,
+  //       // Add other product details as needed
+  //     });
+  //     Utils.toastMessage('Successfully added to cart');
+  //   }
+  // }
 
   @override
   initState() {
