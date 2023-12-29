@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:citta_23/models/index_model.dart';
+import 'package:citta_23/models/sub_total_model.dart';
 
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
@@ -79,7 +80,9 @@ class _CardScreenState extends State<CardScreen> {
         });
 
         setState(() {
-          totalPrice = sum;
+          subTotal = sum;
+          Provider.of<SubTotalModel>(context, listen: false)
+              .updateSubTotal(subTotal);
         });
       }
     });
@@ -91,7 +94,6 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     getDocumentIndex();
     _fetchData();
-    fetchDataFromFirestore();
   }
 
   Future<void> _deleteProduct(String deleteId) async {
@@ -129,6 +131,9 @@ class _CardScreenState extends State<CardScreen> {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
+            subTotal = 0;
+            Provider.of<SubTotalModel>(context, listen: false)
+                .updateSubTotal(subTotal);
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -165,6 +170,8 @@ class _CardScreenState extends State<CardScreen> {
                           child: CircularProgressIndicator(),
                         );
                       }
+                      fetchDataFromFirestore();
+
                       return ListView(
                         shrinkWrap: true,
                         children: snapshot.data!.docs
@@ -290,8 +297,37 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                ItemPrizingWidget(title: 'Total Price', price: '₹$totalPrice'),
-
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Price",
+                      style: GoogleFonts.getFont(
+                        "Gothic A1",
+                        textStyle: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.grayColor,
+                        ),
+                      ),
+                    ),
+                    Consumer<SubTotalModel>(
+                      builder: (context, subTotalModel, child) {
+                        return Text(
+                          '${subTotalModel.subTotal}',
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: AppColor.blackColor,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
                 const VerticalSpeacing(30.0),
                 SizedBox(
                   height: 46.0,
@@ -301,13 +337,18 @@ class _CardScreenState extends State<CardScreen> {
                       onpress: () {
                         debugPrint(
                             "this is sub total from check out screen$subTotal");
+
+                        int amountInCents = (subTotal * 100);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (c) => CardCheckOutScreen(
-                                    productType: 'cart',
-                                    productList: productList,
-                                  )),
+                            builder: (c) => CardCheckOutScreen(
+                              productType: 'cart',
+                              productList: productList,
+                              subTotal: " ${amountInCents.toString()}.0",
+                            ),
+                          ),
                         );
                       }),
                 ),
