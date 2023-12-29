@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -726,57 +728,54 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ),
                   ],
                 ),
-                const Divider(
-                  thickness: 2,
+                const VerticalSpeacing(
+                  20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Review",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.totalreviewscreen,
+                        );
+                      },
+                      child: Text(
+                        "View Reviews",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
+                          ),
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.arrow_forward_ios_outlined,
+                    InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => Rating(
+                            productId: widget.productId,
+                            productType: "fashion",
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Give Review",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
                           ),
                         ),
-                      ],
-                    )
+                      ),
+                    ),
                   ],
-                ),
-                const Divider(
-                  thickness: 2,
                 ),
                 const VerticalSpeacing(20),
                 Row(

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
+import '../review/review.dart';
 
 class FashionDetail extends StatefulWidget {
   FashionDetail(
@@ -345,21 +346,21 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ),
                 ),
-                const Divider(
-                  thickness: 2,
+                const VerticalSpeacing(
+                  20,
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      RoutesName.totalreviewscreen,
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Review",
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.totalreviewscreen,
+                        );
+                      },
+                      child: Text(
+                        "View Reviews",
                         style: GoogleFonts.getFont(
                           "Gothic A1",
                           textStyle: const TextStyle(
@@ -369,41 +370,30 @@ class _FashionDetailState extends State<FashionDetail> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => Rating(
+                            productId: widget.productId,
+                            productType: "fashion",
                           ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                        );
+                      },
+                      child: Text(
+                        "Give Review",
+                        style: GoogleFonts.getFont(
+                          "Gothic A1",
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
                           ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.arrow_forward_ios_outlined,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(
-                  thickness: 2,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const VerticalSpeacing(
                   28,
