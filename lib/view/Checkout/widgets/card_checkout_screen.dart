@@ -3,10 +3,9 @@
 
 import 'dart:convert';
 
-import 'package:citta_23/res/consts/firebase_const.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -20,8 +19,6 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
-import 'package:citta_23/view/review/review.dart';
-
 import '../../../res/components/colors.dart';
 
 class CardCheckOutScreen extends StatefulWidget {
@@ -102,8 +99,6 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
           .doc(orderId)
           .set(orderMap);
     }
-
-    print('Orders saved to Firestore.');
   }
   // void saveDetail() {
   //   var userId = FirebaseAuth.instance.currentUser!.uid;
@@ -194,9 +189,11 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       Fluttertoast.showToast(msg: "Payment is successful");
       // saveDetail();
       saveOrdersToFirestore();
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => const Rating(),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (c) => const DashBoardScreen(),
+        ),
       );
     } catch (e) {
       if (e is StripeException) {

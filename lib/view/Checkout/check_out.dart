@@ -6,8 +6,9 @@ import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
-import 'package:citta_23/view/review/review.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -147,12 +148,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         customerEphemeralKeySecret: jsonRespone['aphemeralKey'],
       ));
       await Stripe.instance.presentPaymentSheet();
-      Fluttertoast.showToast(msg: "Payment is successful");
+      Utils.toastMessage('Payment is successful');
+
       saveDetail();
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => const Rating(),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (c) => const DashBoardScreen()),
+          (route) => false);
     } catch (e) {
       if (e is StripeException) {
         Fluttertoast.showToast(
@@ -492,9 +494,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             city != null &&
                             state != null &&
                             address != null) {
+                          int roundPrice = int.parse(widget.salePrice);
+                          String fixPrice = (roundPrice * 100).toString();
                           initPayment(
                               email: "basitalyshah51214@gmail.com",
-                              amount: "50.0");
+                              amount: fixPrice);
                         } else {
                           Fluttertoast.showToast(
                               msg: "Please enter address details");
