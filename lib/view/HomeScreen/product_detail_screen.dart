@@ -10,6 +10,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
 
@@ -70,17 +71,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       // Get the user's UID
       String uid = FirebaseAuth
           .instance.currentUser!.uid; // You need to implement this function
-
+      String uuid = const Uuid().v1();
       // Add the item to the 'favoriteList' collection
       await _firestoreInstance
           .collection('favoriteList')
           .doc(uid)
           .collection('favorites')
-          .add({
+          .doc(uuid)
+          .set({
         'title': widget.title.toString(),
         'salePrice': widget.salePrice.toString(),
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
+        'sellerId': widget.sellerId,
+        'deletedId': uuid
         // 'isLike': like,
       });
       // Display a success message or perform any other action

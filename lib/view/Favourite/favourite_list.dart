@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -258,7 +259,22 @@ class _FavouriteListState extends State<FavouriteList> {
                             favorite['imageUrl'],
                           );
                         },
-                        ontap2: () {},
+                        ontap2: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (c) => CheckOutScreen(
+                                  tile: favorite['title'],
+                                  price: favorite['salePrice'],
+                                  img: favorite['imageUrl'],
+                                  id: favorite['id'],
+                                  customerId: favorite['sellerId'],
+                                  weight: favorite['salePrice'],
+                                  salePrice: favorite['salePrice'],
+                                  productType: "faviroute list"),
+                            ),
+                          );
+                        },
                       );
                     },
                   );

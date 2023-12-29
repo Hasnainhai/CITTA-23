@@ -81,7 +81,7 @@ class FavouristListCart extends StatelessWidget {
                     onTap: () {
                       ontap();
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.delete_outline,
                       color: AppColor.fontColor,
                       size: 24,
@@ -91,7 +91,7 @@ class FavouristListCart extends StatelessWidget {
                     onTap: () {
                       ontap2();
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.shopping_cart_outlined,
                       color: AppColor.fontColor,
                       size: 24,
