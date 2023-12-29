@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/loading_manager.dart';
 
@@ -55,8 +56,8 @@ class _AllFashionProdState extends State<AllFashionProd> {
     }
   }
 
-  void addToCart(String img, String title, String dPrice, String productId,
-      String sellerId) async {
+  void addToCart(String img, String title, String dPrice, String sellerId,
+      String productId) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -75,12 +76,19 @@ class _AllFashionProdState extends State<AllFashionProd> {
       Utils.toastMessage('Product is already in the cart');
     } else {
       // Product is not in the cart, add it
-      await cartCollectionRef.add({
-        'id': productId,
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
         'sellerId': sellerId,
+        'id': productId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
+        'deleteId': uuid,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -180,11 +188,12 @@ class _AllFashionProdState extends State<AllFashionProd> {
                             index >= 0 &&
                             index < _fashionProducts.length) {
                           addToCart(
-                              _fashionProducts[index]['imageUrl'],
-                              _fashionProducts[index]['title'],
-                              _fashionProducts[index]['price'],
-                              _fashionProducts[index]['id'],
-                              _fashionProducts[index]['sellerId']);
+                            _fashionProducts[index]['imageUrl'],
+                            _fashionProducts[index]['title'],
+                            _fashionProducts[index]['price'],
+                            _fashionProducts[index]['sellerId'],
+                            _fashionProducts[index]['id'],
+                          );
                         }
                       },
                     );
