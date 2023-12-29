@@ -26,6 +26,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
   bool button7 = false;
 
   bool button8 = false;
+  final List _allCategorits = [];
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +76,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                   children: [
                     InkWell(
                       onTap: () {
+                        _allCategorits.add('Fashion');
                         setState(() {
                           button1 = !button1;
                         });
@@ -107,9 +109,11 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                     InkWell(
                       onTap: () {
+                       
                         setState(() {
                           button2 = !button2;
                         });
+                        _allCategorits.add('Grocery');
                       },
                       child: Container(
                         height: 45,
@@ -142,6 +146,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         setState(() {
                           button3 = !button3;
                         });
+                          _allCategorits.add('Vagetabals');
                       },
                       child: Container(
                         height: 45,
@@ -177,6 +182,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     setState(() {
                       button4 = !button4;
                     });
+                    _allCategorits.add('See All');
                   },
                   child: Container(
                     height: 45,
@@ -414,7 +420,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                      print('............................$_allCategorits....................');
                       },
                       child: Container(
                         height: 56,
