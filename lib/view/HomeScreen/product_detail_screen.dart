@@ -397,11 +397,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => Rating(),
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => Rating(
+                            productId: widget.productId,
+                            productType: "products",
                           ),
                         );
                       },

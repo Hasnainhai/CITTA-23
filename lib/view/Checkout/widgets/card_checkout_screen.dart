@@ -4,6 +4,7 @@
 import 'dart:convert';
 
 import 'package:citta_23/res/consts/firebase_const.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -194,9 +195,11 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       Fluttertoast.showToast(msg: "Payment is successful");
       // saveDetail();
       saveOrdersToFirestore();
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => const Rating(),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (c) => const DashBoardScreen(),
+        ),
       );
     } catch (e) {
       if (e is StripeException) {

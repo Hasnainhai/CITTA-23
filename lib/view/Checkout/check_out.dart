@@ -149,10 +149,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
       saveDetail();
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => const Rating(),
-      );
     } catch (e) {
       if (e is StripeException) {
         Fluttertoast.showToast(

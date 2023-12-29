@@ -12,13 +12,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/colors.dart';
 import '../../res/components/custom_field.dart';
-import '../HomeScreen/DashBoard/tapBar.dart';
 
 class Rating extends StatefulWidget {
   const Rating({
     Key? key,
+    required this.productId,
+    required this.productType,
   }) : super(key: key);
-
+  final String productId;
+  final String productType;
   @override
   State<Rating> createState() => _RatingState();
 }
@@ -36,12 +38,7 @@ class _RatingState extends State<Rating> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => const DashBoardScreen(),
-                ),
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back,
@@ -157,17 +154,14 @@ class _RatingState extends State<Rating> {
                             RoundedButton(
                               title: 'Submmit Review',
                               onpress: () async {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (c) => const DashBoardScreen()),
-                                // );
                                 if (commentController.text.isNotEmpty) {
                                   ratingRepository.giveRatings(
-                                    "widget.driverId",
-                                    commentController.text,
-                                    context,
-                                  );
+                                      widget.productId,
+                                      commentController.text,
+                                      context,
+                                      userData['name'],
+                                      userData['profilePic'],
+                                      widget.productType);
                                 } else {
                                   Utils.flushBarErrorMessage(
                                       "Must write your Review", context);

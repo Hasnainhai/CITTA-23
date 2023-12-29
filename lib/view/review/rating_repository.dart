@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class RatingRepository {
-  void giveRatings(String productId, String comment, context) {
+  void giveRatings(String productId, String comment, context, String userName,
+      String userProfile, String produtType) {
     CollectionReference rateDriverRef = FirebaseFirestore.instance
         .collection("products")
-        .doc("lJlxtZy4TShqYz5E3B0c")
+        .doc(produtType)
         .collection("ratings");
 
     rateDriverRef.get().then(
@@ -52,8 +53,8 @@ class RatingRepository {
       "comment": comment,
       "currentUserRating": countRatingStars,
       "time": time,
-      "userName": "userDataName", // Replace with actual user data
-      "profilePic": "profilePic", // Replace with actual user data
+      "userName": userName, // Replace with actual user data
+      "profilePic": userProfile, // Replace with actual user data
     };
 
     FirebaseFirestore.instance
