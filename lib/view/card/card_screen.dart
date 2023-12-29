@@ -55,7 +55,7 @@ class _CardScreenState extends State<CardScreen> {
       return {
         'productId': product.id,
         'title': product['title'] as String,
-        'imgurl': product['imageUrl'] as String,
+        'imageUrl': product['imageUrl'] as String,
         'sellerId': product['sellerId'] as String,
         'salePrice': product['salePrice'] as String,
         'status': "pending",
