@@ -264,21 +264,30 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           itemCount: cartItems.length,
                           itemBuilder: (context, index) {
                             var item = cartItems[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8.0, bottom: 8.0, right: 4.0),
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  color: AppColor.buttonTxColor,
-                                  image: DecorationImage(
-                                    image: NetworkImage(item['imageUrl']),
-                                    fit: BoxFit.contain,
+                            if (cartItems.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  'Empty Cart...',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            } else {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8.0, bottom: 8.0, right: 4.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.buttonTxColor,
+                                    image: DecorationImage(
+                                      image: NetworkImage(item['imageUrl']),
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                         ),
                       ),
@@ -367,119 +376,111 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
       body: SafeArea(
           child: ListView(
         children: [
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 20,
-                  left: 20,
-                  right: 20,
-                ),
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Search Here",
-                    helperStyle: TextStyle(color: AppColor.grayColor),
-                    filled: true,
-                    border: InputBorder.none,
-                    suffixIcon: Icon(
-                      Icons.search,
-                    ),
-                  ),
-                ),
+          // Container(
+          //   margin: const EdgeInsets.only(
+          //     top: 20,
+          //     left: 20,
+          //     right: 20,
+          //   ),
+          //   height: 60,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: TextFormField(
+          //     decoration: const InputDecoration(
+          //       hintText: "Search Here",
+          //       helperStyle: TextStyle(color: AppColor.grayColor),
+          //       filled: true,
+          //       border: InputBorder.none,
+          //       suffixIcon: Icon(
+          //         Icons.search,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // const VerticalSpeacing(18),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: GridView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              itemCount: _products.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 5, // Horizontal spacing
+                mainAxisSpacing: 10, // Vertical spacing
               ),
-              const VerticalSpeacing(18),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                  itemCount: _products.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5, // Horizontal spacing
-                    mainAxisSpacing: 10, // Vertical spacing
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) {
-                    // Check if _products is not empty and index is within valid range
-                    if (_products.isNotEmpty && index < _products.length) {
-                      return HomeCard(
-                        ontap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return ProductDetailScreen(
-                                    title: _products[index]['title'].toString(),
-                                    imageUrl: _products[index]['imageUrl'],
-                                    price: _products[index]['price'].toString(),
-                                    salePrice: _products[index]['salePrice']
-                                        .toString(),
-                                    productId:
-                                        _products[index]['id'].toString(),
-                                    sellerId:
-                                        _products[index]['sellerId'].toString(),
-                                    weight:
-                                        _products[index]['weight'].toString(),
-                                    detail:
-                                        _products[index]['detail'].toString());
-                              },
-                            ),
-                          );
-                        },
-                        sellerId: _products[index]['sellerId'],
-                        productId: _products[index]['id'],
-                        name: _products[index]['title'].toString(),
-                        price: _products[index]['price'].toString(),
-                        dPrice: _products[index]['salePrice'].toString(),
-                        borderColor: AppColor.buttonBgColor,
-                        fillColor: AppColor.appBarButtonColor,
-                        cartBorder: isTrue
-                            ? AppColor.appBarButtonColor
-                            : AppColor.buttonBgColor,
-                        img: _products[index]['imageUrl'],
-                        iconColor: AppColor.buttonBgColor,
-                        addCart: () {
-                          if (_products.isNotEmpty &&
-                              index >= 0 &&
-                              index < _products.length) {
-                            addToCart(
-                                _products[index]['imageUrl'],
-                                _products[index]['title'],
-                                _products[index]['salePrice'],
-                                _products[index]['id'],
-                                _products[index]['sellerId']);
-                          }
-                        },
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Shimmer(
-                          duration: const Duration(seconds: 3), //Default value
-                          interval: const Duration(
-                              seconds: 5), //Default value: Duration(seconds: 0)
-                          color: AppColor.grayColor
-                              .withOpacity(0.2), //Default value
-                          colorOpacity: 0.2, //Default value
-                          enabled: true, //Default value
-                          direction:
-                              const ShimmerDirection.fromLTRB(), //Default Value
-                          child: Container(
-                            height: 100,
-                            width: 150,
-                            color: AppColor.grayColor.withOpacity(0.2),
-                          ),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (_, index) {
+                // Check if _products is not empty and index is within valid range
+                if (_products.isNotEmpty && index < _products.length) {
+                  return HomeCard(
+                    ontap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ProductDetailScreen(
+                                title: _products[index]['title'].toString(),
+                                imageUrl: _products[index]['imageUrl'],
+                                price: _products[index]['price'].toString(),
+                                salePrice:
+                                    _products[index]['salePrice'].toString(),
+                                productId: _products[index]['id'].toString(),
+                                sellerId:
+                                    _products[index]['sellerId'].toString(),
+                                weight: _products[index]['weight'].toString(),
+                                detail: _products[index]['detail'].toString());
+                          },
                         ),
-                      ); // or some default widget
-                    }
-                  },
-                ),
-              ),
-            ],
+                      );
+                    },
+                    sellerId: _products[index]['sellerId'],
+                    productId: _products[index]['id'],
+                    name: _products[index]['title'].toString(),
+                    price: _products[index]['price'].toString(),
+                    dPrice: _products[index]['salePrice'].toString(),
+                    borderColor: AppColor.buttonBgColor,
+                    fillColor: AppColor.appBarButtonColor,
+                    cartBorder: isTrue
+                        ? AppColor.appBarButtonColor
+                        : AppColor.buttonBgColor,
+                    img: _products[index]['imageUrl'],
+                    iconColor: AppColor.buttonBgColor,
+                    addCart: () {
+                      if (_products.isNotEmpty &&
+                          index >= 0 &&
+                          index < _products.length) {
+                        addToCart(
+                            _products[index]['imageUrl'],
+                            _products[index]['title'],
+                            _products[index]['salePrice'],
+                            _products[index]['id'],
+                            _products[index]['sellerId']);
+                      }
+                    },
+                  );
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Shimmer(
+                      duration: const Duration(seconds: 3), //Default value
+                      interval: const Duration(
+                          seconds: 5), //Default value: Duration(seconds: 0)
+                      color:
+                          AppColor.grayColor.withOpacity(0.2), //Default value
+                      colorOpacity: 0.2, //Default value
+                      enabled: true, //Default value
+                      direction:
+                          const ShimmerDirection.fromLTRB(), //Default Value
+                      child: Container(
+                        height: 100,
+                        width: 150,
+                        color: AppColor.grayColor.withOpacity(0.2),
+                      ),
+                    ),
+                  ); // or some default widget
+                }
+              },
+            ),
           ),
         ],
       )),
