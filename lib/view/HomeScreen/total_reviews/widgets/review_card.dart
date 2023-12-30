@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../res/components/colors.dart';
 import '../../../../res/components/widgets/verticalSpacing.dart';
 
 class ReviewCard extends StatefulWidget {
-  const ReviewCard({super.key});
-
+  const ReviewCard(
+      {super.key,
+      required this.profilePic,
+      required this.name,
+      required this.rating,
+      required this.time,
+      required this.comment});
+  final String profilePic;
+  final String name;
+  final String rating;
+  final String time;
+  final String comment;
   @override
   State<ReviewCard> createState() => _ReviewCardState();
 }
@@ -24,11 +35,12 @@ class _ReviewCardState extends State<ReviewCard> {
               children: [
                 Row(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 24,
-                      backgroundImage: NetworkImage(
+                      backgroundImage: const NetworkImage(
                         'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                       ),
+                      foregroundImage: NetworkImage(widget.profilePic),
                     ),
                     const SizedBox(
                       width: 8,
@@ -37,7 +49,7 @@ class _ReviewCardState extends State<ReviewCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Ronti Jordan",
+                          widget.name,
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -47,35 +59,20 @@ class _ReviewCardState extends State<ReviewCard> {
                             ),
                           ),
                         ),
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
-                            ),
-                          ],
-                        ),
+                        RatingBar.builder(
+                            initialRating: double.parse(widget.rating),
+                            minRating: 1,
+                            allowHalfRating: true,
+                            glowColor: Colors.amber,
+                            itemCount: 5,
+                            itemSize: 18,
+                            itemPadding:
+                                const EdgeInsets.symmetric(horizontal: 0),
+                            itemBuilder: (context, _) => const Icon(
+                                  Icons.star_rate_rounded,
+                                  color: Colors.amber,
+                                ),
+                            onRatingUpdate: (rating) {}),
                       ],
                     ),
                   ],
@@ -95,7 +92,7 @@ class _ReviewCardState extends State<ReviewCard> {
             ),
             const VerticalSpeacing(8),
             Text(
-              "Aliqua officia duis occaecat consectetur fugiat nostrud anim dolor commodo officia proident. Voluptate nisi reprehenderit.",
+              widget.comment,
               textAlign: TextAlign.start,
               style: GoogleFonts.getFont(
                 "Gothic A1",

@@ -1,13 +1,16 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/review_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TotalRatingScreen extends StatefulWidget {
-  const TotalRatingScreen({super.key});
-
+  const TotalRatingScreen(
+      {super.key, required this.productType, required this.productId});
+  final String productType;
+  final String productId;
   @override
   State<TotalRatingScreen> createState() => _TotalRatingScreenState();
 }
@@ -299,10 +302,44 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                   ],
                 ),
                 const Divider(),
-                const ReviewCard(),
-                const ReviewCard(),
-                const ReviewCard(),
-                const ReviewCard(),
+                StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection(widget.productType)
+                        .doc(widget.productId)
+                        .collection('commentsAndRatings')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      if (snapshot.hasData) {}
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView(
+                        shrinkWrap: true,
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                              document.data() as Map<String, dynamic>;
+
+                          return ReviewCard(
+                            profilePic: data['profilePic'],
+                            name: data['userName'],
+                            rating: data['currentUserRating'].toString(),
+                            time: data['time'],
+                            comment: data['comment'],
+                          );
+                        }).toList(),
+                      );
+                    })
+                // const ReviewCard(),
+                // const ReviewCard(),
+                // const ReviewCard(),
+                // const ReviewCard(),
               ],
             ),
           ),
