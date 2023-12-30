@@ -307,6 +307,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         .collection(widget.productType)
                         .doc(widget.productId)
                         .collection('commentsAndRatings')
+                        .orderBy("time", descending: true)
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {

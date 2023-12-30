@@ -20,6 +20,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
   final List _products = [];
   final _firestoreInstance = FirebaseFirestore.instance;
   bool isTrue = true;
+  List<Map<String, dynamic>> productList = [];
 
   fetchProducts() async {
     QuerySnapshot qn = await _firestoreInstance.collection('products').get();
@@ -40,36 +41,30 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
     return qn.docs;
   }
 
-  void addToCart(String img, String title, String dPrice, String sellerId,
+  void addToMap(String img, String title, String dPrice, String sellerId,
       String productId) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    // Get the collection reference for the user's cart
-    CollectionReference cartCollectionRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('myOwnPack');
+    productList.add({
+      'productId': productId,
+      'title': title,
+      'imageUrl': img,
+      'sellerId': sellerId,
+      'salePrice': dPrice,
+      'status': "pending",
+      'date': DateTime.now().toString(),
+      'buyyerId': FirebaseAuth.instance.currentUser!.uid,
+    });
 
-    // Check if the product is already in the cart
-    QuerySnapshot cartSnapshot = await cartCollectionRef
-        .where('imageUrl', isEqualTo: img)
-        .limit(1)
-        .get();
+    // await cartCollectionRef.add({
+    //   'id': productId,
+    //   'sellerId': sellerId,
+    //   'imageUrl': img,
+    //   'title': title,
+    //   'salePrice': dPrice,
+    //   // Add other product details as needed
+    // });
+    print(productList);
 
-    if (cartSnapshot.docs.isNotEmpty) {
-      // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
-    } else {
-      // Product is not in the cart, add it
-      await cartCollectionRef.add({
-        'id': productId,
-        'sellerId': sellerId,
-        'imageUrl': img,
-        'title': title,
-        'salePrice': dPrice,
-        // Add other product details as needed
-      });
-      Utils.toastMessage('Successfully added to cart');
-    }
+    Utils.toastMessage('Successfully added to cart');
   }
 
   @override
@@ -116,124 +111,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   height: MediaQuery.of(context).size.height / 7,
-      //   color: AppColor.primaryColor,
-      //   child: Padding(
-      //     padding: const EdgeInsets.only(left: 20, right: 20),
-      //     child: Center(
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           SizedBox(
-      //             width: MediaQuery.of(context).size.width * 0.6,
-      //             child: SingleChildScrollView(
-      //               scrollDirection: Axis.horizontal,
-      //               child: Row(
-      //                 children: [
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 4,
-      //                   ),
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 4,
-      //                   ),
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 4,
-      //                   ),
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ),
-      //           Row(
-      //             children: [
-      //               Text(
-      //                 "\$35.05",
-      //                 style: GoogleFonts.getFont(
-      //                   "Gothic A1",
-      //                   textStyle: const TextStyle(
-      //                     fontSize: 18,
-      //                     fontWeight: FontWeight.w400,
-      //                     color: AppColor.buttonTxColor,
-      //                   ),
-      //                 ),
-      //               ),
-      //               const SizedBox(
-      //                 width: 4,
-      //               ),
-      //               InkWell(
-      //                 onTap: () {
-      //                   Navigator.pushNamed(
-      //                     context,
-      //                     RoutesName.cartScreen,
-      //                   );
-      //                 },
-      //                 child: Container(
-      //                   height: 50,
-      //                   width: 50,
-      //                   decoration: const BoxDecoration(
-      //                     color: AppColor.buttonTxColor,
-      //                   ),
-      //                   child: const Icon(
-      //                     Icons.arrow_forward,
-      //                     color: AppColor.primaryColor,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ],
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
       bottomNavigationBar: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -363,7 +240,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           }
         },
       ),
-
       body: SafeArea(
           child: ListView(
         children: [
@@ -446,7 +322,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           if (_products.isNotEmpty &&
                               index >= 0 &&
                               index < _products.length) {
-                            addToCart(
+                            addToMap(
                                 _products[index]['imageUrl'],
                                 _products[index]['title'],
                                 _products[index]['salePrice'],

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../res/components/colors.dart';
 import '../../../../res/components/widgets/verticalSpacing.dart';
+import 'package:intl/intl.dart';
 
 class ReviewCard extends StatefulWidget {
   const ReviewCard(
@@ -23,6 +24,13 @@ class ReviewCard extends StatefulWidget {
 }
 
 class _ReviewCardState extends State<ReviewCard> {
+  String formatDateAndTime(String time) {
+    DateTime dateTime = DateTime.parse(time);
+    String formattedDateTime =
+        "${DateFormat.MMMd().format(dateTime)},${DateFormat.y().format(dateTime)},${DateFormat.jm().format(dateTime)}";
+    return formattedDateTime;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -78,7 +86,9 @@ class _ReviewCardState extends State<ReviewCard> {
                   ],
                 ),
                 Text(
-                  "12 Days ago",
+                  formatDateAndTime(
+                    widget.time,
+                  ),
                   style: GoogleFonts.getFont(
                     "Gothic A1",
                     textStyle: const TextStyle(
