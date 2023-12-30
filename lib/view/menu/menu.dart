@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
@@ -13,7 +14,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-   CategoryType? categoryType;
+  CategoryType? categoryType;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,13 @@ class _MenuScreenState extends State<MenuScreen> {
                     setState(() {
                       categoryType = CategoryType.food;
                     });
-                    Navigator.pushNamed(context, RoutesName.newitemsscreen);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NewItemsScreen(title: 'New items'),
+                      ),
+                    );
                   },
                   child: Stack(
                     children: [

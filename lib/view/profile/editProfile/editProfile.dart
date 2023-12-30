@@ -213,11 +213,8 @@ class _EditProfileState extends State<EditProfile> {
                               setState(() {
                                 _isLoading = false;
                               });
-
                               Navigator.pushNamed(
                                   context, RoutesName.profileScreen);
-                              // Utils.flushBarErrorMessage(
-                              //     err.toString(), context);
                             } finally {
                               setState(() {
                                 _isLoading = false;

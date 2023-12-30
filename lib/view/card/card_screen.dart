@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_final_fields
-
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
-
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
@@ -171,7 +169,6 @@ class _CardScreenState extends State<CardScreen> {
                         );
                       }
                       fetchDataFromFirestore();
-
                       return ListView(
                         shrinkWrap: true,
                         children: snapshot.data!.docs
@@ -248,7 +245,6 @@ class _CardScreenState extends State<CardScreen> {
                         ),
                       ),
                     ),
-
                     Consumer<IndexModel>(
                       builder: (context, indexModel, child) {
                         return Text(
@@ -337,9 +333,7 @@ class _CardScreenState extends State<CardScreen> {
                       onpress: () {
                         debugPrint(
                             "this is sub total from check out screen$subTotal");
-
                         int amountInCents = (subTotal * 100);
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -28,8 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController phNoController = TextEditingController();
   File? image;
 
   @override
@@ -38,8 +36,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordController.dispose();
     emailController.dispose();
     nameController.dispose();
-    addressController.dispose();
-    phNoController.dispose();
   }
 
   bool _isLoading = false;
@@ -70,8 +66,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           'id': uid,
           'name': nameController.text,
           'email': emailController.text.toLowerCase(),
-          'phNo': phNoController.text.toLowerCase(),
-          'shipping-address': addressController.text,
           'createdAt': Timestamp.now(),
           'profilePic': profileUrl,
         });
