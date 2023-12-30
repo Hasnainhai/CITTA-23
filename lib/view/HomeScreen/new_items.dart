@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:uuid/uuid.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
@@ -74,12 +75,19 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
       Utils.toastMessage('Product is already in the cart');
     } else {
       // Product is not in the cart, add it
-      await cartCollectionRef.add({
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
         'imageUrl': img,
         'title': title,
         'salePrice': dPrice,
-        'id': productId,
-        'sellerId': sellerId,
+        'deleteId': uuid,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
