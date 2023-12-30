@@ -244,8 +244,8 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                             return ProductDetailScreen(
                               title: productData['title'].toString(),
                               imageUrl: productData['imageUrl'],
-                              price: productData['price'].toString(),
-                              salePrice: productData['salePrice'].toString(),
+                              price: productData['salePrice'].toString(),
+                              salePrice: productData['price'].toString(),
                               productId: productData['id'].toString(),
                               sellerId: productData['sellerId'].toString(),
                               weight: productData['weight'].toString(),
@@ -258,8 +258,8 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                     sellerId: productData['sellerId'],
                     productId: productData['id'],
                     name: productData['title'].toString(),
-                    price: productData['salePrice'].toString(),
-                    dPrice: productData['price'].toString(),
+                    price: productData['price'].toString(),
+                    dPrice: productData['salePrice'].toString(),
                     borderColor: AppColor.buttonBgColor,
                     fillColor: AppColor.appBarButtonColor,
                     cartBorder: isTrue
