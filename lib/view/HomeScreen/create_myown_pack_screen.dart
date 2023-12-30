@@ -20,6 +20,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
   final List _products = [];
   final _firestoreInstance = FirebaseFirestore.instance;
   bool isTrue = true;
+  List<Map<String, dynamic>> productList = [];
 
   fetchProducts() async {
     QuerySnapshot qn = await _firestoreInstance.collection('products').get();
@@ -40,36 +41,30 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
     return qn.docs;
   }
 
-  void addToCart(String img, String title, String dPrice, String sellerId,
+  void addToMap(String img, String title, String dPrice, String sellerId,
       String productId) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    // Get the collection reference for the user's cart
-    CollectionReference cartCollectionRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('myOwnPack');
+    productList.add({
+      'productId': productId,
+      'title': title,
+      'imageUrl': img,
+      'sellerId': sellerId,
+      'salePrice': dPrice,
+      'status': "pending",
+      'date': DateTime.now().toString(),
+      'buyyerId': FirebaseAuth.instance.currentUser!.uid,
+    });
 
-    // Check if the product is already in the cart
-    QuerySnapshot cartSnapshot = await cartCollectionRef
-        .where('imageUrl', isEqualTo: img)
-        .limit(1)
-        .get();
+    // await cartCollectionRef.add({
+    //   'id': productId,
+    //   'sellerId': sellerId,
+    //   'imageUrl': img,
+    //   'title': title,
+    //   'salePrice': dPrice,
+    //   // Add other product details as needed
+    // });
+    print(productList);
 
-    if (cartSnapshot.docs.isNotEmpty) {
-      // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
-    } else {
-      // Product is not in the cart, add it
-      await cartCollectionRef.add({
-        'id': productId,
-        'sellerId': sellerId,
-        'imageUrl': img,
-        'title': title,
-        'salePrice': dPrice,
-        // Add other product details as needed
-      });
-      Utils.toastMessage('Successfully added to cart');
-    }
+    Utils.toastMessage('Successfully added to cart');
   }
 
   @override
@@ -116,124 +111,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   height: MediaQuery.of(context).size.height / 7,
-      //   color: AppColor.primaryColor,
-      //   child: Padding(
-      //     padding: const EdgeInsets.only(left: 20, right: 20),
-      //     child: Center(
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           SizedBox(
-      //             width: MediaQuery.of(context).size.width * 0.6,
-      //             child: SingleChildScrollView(
-      //               scrollDirection: Axis.horizontal,
-      //               child: Row(
-      //                 children: [
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 4,
-      //                   ),
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 4,
-      //                   ),
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 4,
-      //                   ),
-      //                   Container(
-      //                     height: 50,
-      //                     width: 50,
-      //                     decoration: const BoxDecoration(
-      //                       color: AppColor.buttonTxColor,
-      //                       image: DecorationImage(
-      //                           image: AssetImage(
-      //                             "images/fruit1.png",
-      //                           ),
-      //                           fit: BoxFit.contain),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             ),
-      //           ),
-      //           Row(
-      //             children: [
-      //               Text(
-      //                 "\$35.05",
-      //                 style: GoogleFonts.getFont(
-      //                   "Gothic A1",
-      //                   textStyle: const TextStyle(
-      //                     fontSize: 18,
-      //                     fontWeight: FontWeight.w400,
-      //                     color: AppColor.buttonTxColor,
-      //                   ),
-      //                 ),
-      //               ),
-      //               const SizedBox(
-      //                 width: 4,
-      //               ),
-      //               InkWell(
-      //                 onTap: () {
-      //                   Navigator.pushNamed(
-      //                     context,
-      //                     RoutesName.cartScreen,
-      //                   );
-      //                 },
-      //                 child: Container(
-      //                   height: 50,
-      //                   width: 50,
-      //                   decoration: const BoxDecoration(
-      //                     color: AppColor.buttonTxColor,
-      //                   ),
-      //                   child: const Icon(
-      //                     Icons.arrow_forward,
-      //                     color: AppColor.primaryColor,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ],
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
       bottomNavigationBar: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
@@ -372,7 +249,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           }
         },
       ),
-
       body: SafeArea(
           child: ListView(
         children: [
@@ -408,6 +284,90 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                 crossAxisSpacing: 5, // Horizontal spacing
                 mainAxisSpacing: 10, // Vertical spacing
               ),
+              const VerticalSpeacing(18),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  itemCount: _products.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5, // Horizontal spacing
+                    mainAxisSpacing: 10, // Vertical spacing
+                  ),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    // Check if _products is not empty and index is within valid range
+                    if (_products.isNotEmpty && index < _products.length) {
+                      return HomeCard(
+                        ontap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ProductDetailScreen(
+                                    title: _products[index]['title'].toString(),
+                                    imageUrl: _products[index]['imageUrl'],
+                                    price: _products[index]['price'].toString(),
+                                    salePrice: _products[index]['salePrice']
+                                        .toString(),
+                                    productId:
+                                        _products[index]['id'].toString(),
+                                    sellerId:
+                                        _products[index]['sellerId'].toString(),
+                                    weight:
+                                        _products[index]['weight'].toString(),
+                                    detail:
+                                        _products[index]['detail'].toString());
+                              },
+                            ),
+                          );
+                        },
+                        sellerId: _products[index]['sellerId'],
+                        productId: _products[index]['id'],
+                        name: _products[index]['title'].toString(),
+                        price: _products[index]['price'].toString(),
+                        dPrice: _products[index]['salePrice'].toString(),
+                        borderColor: AppColor.buttonBgColor,
+                        fillColor: AppColor.appBarButtonColor,
+                        cartBorder: isTrue
+                            ? AppColor.appBarButtonColor
+                            : AppColor.buttonBgColor,
+                        img: _products[index]['imageUrl'],
+                        iconColor: AppColor.buttonBgColor,
+                        addCart: () {
+                          if (_products.isNotEmpty &&
+                              index >= 0 &&
+                              index < _products.length) {
+                            addToMap(
+                                _products[index]['imageUrl'],
+                                _products[index]['title'],
+                                _products[index]['salePrice'],
+                                _products[index]['id'],
+                                _products[index]['sellerId']);
+                          }
+                        },
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Shimmer(
+                          duration: const Duration(seconds: 3), //Default value
+                          interval: const Duration(
+                              seconds: 5), //Default value: Duration(seconds: 0)
+                          color: AppColor.grayColor
+                              .withOpacity(0.2), //Default value
+                          colorOpacity: 0.2, //Default value
+                          enabled: true, //Default value
+                          direction:
+                              const ShimmerDirection.fromLTRB(), //Default Value
+                          child: Container(
+                            height: 100,
+                            width: 150,
+                            color: AppColor.grayColor.withOpacity(0.2),
+                          ),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (_, index) {
                 // Check if _products is not empty and index is within valid range

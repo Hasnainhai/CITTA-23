@@ -310,7 +310,7 @@ class _CardScreenState extends State<CardScreen> {
                     Consumer<SubTotalModel>(
                       builder: (context, subTotalModel, child) {
                         return Text(
-                          '${subTotalModel.subTotal}',
+                          '₹${subTotalModel.subTotal}',
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(

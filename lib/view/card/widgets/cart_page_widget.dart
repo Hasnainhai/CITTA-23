@@ -41,13 +41,16 @@ class _CartWidgetState extends State<CartWidget> {
     setState(() {
       widget.items++;
 
-      int price = int.parse(widget.price);
-      newPrice = (newPrice ?? int.parse(widget.price)) + price;
-      totalPrice = newPrice;
-      subTotal += totalPrice! - price;
+      int price = int.tryParse(widget.price) ?? 0;
+
+      newPrice = (newPrice ?? price) + price;
+
+      subTotal += price;
+
       Provider.of<SubTotalModel>(context, listen: false)
           .updateSubTotal(subTotal);
-      debugPrint("this is sub-total$subTotal");
+
+      debugPrint("this is sub-total $subTotal");
     });
   }
 
@@ -55,12 +58,13 @@ class _CartWidgetState extends State<CartWidget> {
     setState(() {
       if (widget.items > 1) {
         widget.items--;
-        int price = int.parse(widget.price);
-        newPrice = (newPrice ?? int.parse(widget.price)) - price;
-        subTotal -= newPrice!;
-        debugPrint("this decrement subtotal$subTotal");
 
-        // Notify listeners about the change
+        int price = int.tryParse(widget.price) ?? 0;
+
+        newPrice = (newPrice ?? price) - price;
+
+        subTotal -= price;
+
         Provider.of<SubTotalModel>(context, listen: false)
             .updateSubTotal(subTotal);
       } else {
