@@ -481,10 +481,12 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                         height: 30.0,
                                         width: 30.0,
                                         decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'images/cash.png'),
-                                                fit: BoxFit.contain)),
+                                          image: DecorationImage(
+                                            image:
+                                                AssetImage('images/cash.png'),
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
                                       ),
                                       const VerticalSpeacing(5),
                                       Text(
@@ -530,6 +532,9 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                       title: 'Pay Now',
                       onpress: () async {
                         debugPrint("press");
+                        double amountInDollars = double.parse(widget.subTotal);
+                        int amountInCents = (amountInDollars * 100).round();
+
                         if (name != null &&
                             postalCode != null &&
                             city != null &&
@@ -537,7 +542,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                             address != null) {
                           initPayment(
                             email: "basitalyshah51214@gmail.com",
-                            amount: widget.subTotal,
+                            amount: amountInCents.toString(),
                           );
                         } else {
                           Fluttertoast.showToast(
