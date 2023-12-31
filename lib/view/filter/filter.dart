@@ -1,4 +1,9 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:citta_23/view/HomeScreen/all_fashionProd.dart';
+import 'package:citta_23/view/HomeScreen/new_items.dart';
+import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +19,7 @@ class FilterPopUp extends StatefulWidget {
 }
 
 class _FilterPopUpState extends State<FilterPopUp> {
-  bool button1 = true;
+  bool button1 = false;
   bool button2 = false;
 
   bool button3 = false;
@@ -109,7 +114,6 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                     InkWell(
                       onTap: () {
-                       
                         setState(() {
                           button2 = !button2;
                         });
@@ -146,7 +150,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         setState(() {
                           button3 = !button3;
                         });
-                          _allCategorits.add('Vagetabals');
+                        _allCategorits.add('Vagetabals');
                       },
                       child: Container(
                         height: 45,
@@ -396,6 +400,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                   children: [
                     InkWell(
                       onTap: () {
+                        _allCategorits.remove;
                         Navigator.pop(context);
                       },
                       child: Container(
@@ -420,7 +425,48 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                     InkWell(
                       onTap: () {
-                      print('............................$_allCategorits....................');
+                        if (_allCategorits.contains('Grocery')) {
+                          String title = 'Grocery';
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewItemsScreen(title: title)));
+                          _allCategorits.remove('Grocery');
+                        } else if (_allCategorits.contains('Vagetabals')) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PopularPackScreen()));
+                          _allCategorits.remove('Vagetabals');
+                        } else if (_allCategorits.contains('Fashion')) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AllFashionProd()));
+                          _allCategorits.remove('Fashion');
+                        } else if (_allCategorits.contains('See All')) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DashBoardScreen()));
+                          _allCategorits.remove('See All');
+                        } else if (_allCategorits.contains('See All') ||
+                            _allCategorits.contains('Fashion') ||
+                            _allCategorits.contains('Vagetabals') ||
+                            _allCategorits.contains('Grocery')) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DashBoardScreen()));
+                          _allCategorits.remove;
+                        } else {
+                          Utils.toastMessage('Please Select a filter');
+                        }
                       },
                       child: Container(
                         height: 56,
