@@ -3,6 +3,7 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -354,9 +355,14 @@ class _FashionDetailState extends State<FashionDetail> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(
+                        Navigator.push(
                           context,
-                          RoutesName.totalreviewscreen,
+                          MaterialPageRoute(
+                            builder: (c) => TotalRatingScreen(
+                              productType: "fashion",
+                              productId: widget.productId,
+                            ),
+                          ),
                         );
                       },
                       child: Text(
