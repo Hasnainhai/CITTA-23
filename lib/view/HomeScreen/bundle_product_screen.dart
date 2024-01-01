@@ -3,6 +3,7 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -736,9 +737,14 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(
+                        Navigator.push(
                           context,
-                          RoutesName.totalreviewscreen,
+                          MaterialPageRoute(
+                            builder: (c) => TotalRatingScreen(
+                              productType: "bundle pack",
+                              productId: widget.productId,
+                            ),
+                          ),
                         );
                       },
                       child: Text(
