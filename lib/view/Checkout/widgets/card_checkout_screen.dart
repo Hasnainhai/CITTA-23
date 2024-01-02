@@ -3,6 +3,7 @@
 
 import 'dart:convert';
 
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,6 +61,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   String? state;
   String? name;
   String? phoneNumber;
+  String paymentType = 'Stripe';
 
   onChanged(bool? value) {
     setState(() {
@@ -82,6 +84,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       orderMap['name'] = name;
       orderMap['uuid'] = orderId;
       orderMap['phone'] = phoneNumber;
+      orderMap['paymentType'] = paymentType;
 
       // orderMap['address'] = addressMap;
 
@@ -353,6 +356,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                   firstButton = !firstButton;
                                   secondButton = false;
                                   thirdButton = false;
+                                  paymentType = 'Stripe';
                                 });
                               },
                               child: Center(
@@ -406,6 +410,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                   firstButton = false;
                                   secondButton = !secondButton;
                                   thirdButton = false;
+                                  paymentType = 'Stripe';
                                 });
                               },
                               child: Center(
@@ -459,6 +464,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                   firstButton = false;
                                   secondButton = false;
                                   thirdButton = !thirdButton;
+                                  paymentType = 'cash on delivery';
                                 });
                               },
                               child: Center(
@@ -512,24 +518,9 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                       ],
                     ),
                   ),
-                  const VerticalSpeacing(30.0),
-                  const TextFieldCustom(
-                    maxLines: 1,
-                    text: 'Card Name',
-                    hintText: 'Hasnain haider',
-                  ),
-                  const TextFieldCustom(
-                    maxLines: 1,
-                    text: 'Card Number',
-                    hintText: '71501 90123 **** ****',
-                  ),
-                  const VerticalSpeacing(20.0),
-                  const ToggleWidget(
-                    title: 'Remember My Card Details',
-                  ),
-                  const VerticalSpeacing(20.0),
+                  VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
                   RoundedButton(
-                      title: 'Pay Now',
+                      title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                       onpress: () async {
                         debugPrint("press");
                         double amountInDollars = double.parse(widget.subTotal);
@@ -540,11 +531,22 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                             city != null &&
                             state != null &&
                             address != null) {
-                          // initPayment(
-                          //   email: "basitalyshah51214@gmail.com",
-                          //   amount: amountInCents.toString(),
-                          // );
-                          saveOrdersToFirestore();
+                          if (paymentType == 'Stripe') {
+// initPayment(
+                            //   email: "basitalyshah51214@gmail.com",
+                            //   amount: amountInCents.toString(),
+                            // );
+                          } else {
+                            saveOrdersToFirestore();
+
+                            Utils.toastMessage('Orders has been Placed');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => const DashBoardScreen(),
+                              ),
+                            );
+                          }
                         } else {
                           Fluttertoast.showToast(
                               msg: "Please enter address details");

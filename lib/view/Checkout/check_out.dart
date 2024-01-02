@@ -55,7 +55,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   String? state;
   String? name;
   String? phone;
-  String paymentType = 'card';
+  String paymentType = 'Stripe';
 
   onChanged(bool? value) {
     setState(() {
@@ -116,6 +116,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'state': state,
       'name': name,
       'phone': phone,
+      'paymentType': paymentType,
     });
   }
 
@@ -316,7 +317,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   firstButton = !firstButton;
                                   secondButton = false;
                                   thirdButton = false;
-                                  paymentType = 'card';
+                                  paymentType = 'Stripe';
                                 });
                               },
                               child: Center(
@@ -370,7 +371,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   firstButton = false;
                                   secondButton = !secondButton;
                                   thirdButton = false;
-                                  paymentType = 'card';
+                                  paymentType = 'Stripe';
                                 });
                               },
                               child: Center(
@@ -479,14 +480,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ),
                   VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
                   RoundedButton(
-                      title: paymentType == "card" ? 'Pay Now' : "Order Now",
+                      title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                       onpress: () async {
                         if (name != null &&
                             postalCode != null &&
                             city != null &&
                             state != null &&
                             address != null) {
-                          if ((paymentType == 'card')) {
+                          if ((paymentType == 'Stripe')) {
                             int roundPrice = int.parse(widget.salePrice);
                             String fixPrice = (roundPrice * 100).toString();
                             saveDetail();
