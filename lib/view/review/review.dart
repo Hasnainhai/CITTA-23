@@ -97,13 +97,16 @@ class _RatingState extends State<Rating> {
                               backgroundImage: const NetworkImage(
                                   "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
                               foregroundImage: NetworkImage(
-                                userData['profilePic'],
+                                userData['profilePic'] ??
+                                    FirebaseAuth.instance.currentUser!.photoURL,
                               ),
                               // User Image URL
                             ),
                             const VerticalSpeacing(30),
                             Text(
-                              userData['name'],
+                              userData['name'] ??
+                                  FirebaseAuth
+                                      .instance.currentUser!.displayName,
                               style: GoogleFonts.getFont(
                                 "Gothic A1",
                                 textStyle: const TextStyle(
@@ -159,8 +162,12 @@ class _RatingState extends State<Rating> {
                                       widget.productId,
                                       commentController.text,
                                       context,
-                                      userData['name'],
-                                      userData['profilePic'],
+                                      userData['name'] ??
+                                          FirebaseAuth.instance.currentUser!
+                                              .displayName,
+                                      userData['profilePic'] ??
+                                          FirebaseAuth
+                                              .instance.currentUser!.photoURL,
                                       widget.productType);
                                 } else {
                                   Utils.flushBarErrorMessage(

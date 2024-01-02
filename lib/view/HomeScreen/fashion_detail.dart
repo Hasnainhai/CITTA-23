@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
-import '../../routes/routes_name.dart';
 import '../review/review.dart';
 
 class FashionDetail extends StatefulWidget {

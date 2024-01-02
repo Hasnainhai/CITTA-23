@@ -5,7 +5,6 @@ import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:flutter/material.dart';
-
 import 'widget/drawer_options.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -19,6 +18,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      shape: const RoundedRectangleBorder(),
       child: Column(
         children: <Widget>[
           SizedBox(

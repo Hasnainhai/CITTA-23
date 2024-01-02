@@ -3,6 +3,7 @@ import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,9 +32,19 @@ class _AuthButtonState extends State<AuthButton> {
         // Getting users credential
         UserCredential result =
             await authInstance.signInWithCredential(authCredential);
-        // User? user = result.user;
 
         if (result != null) {
+          // setup google credentials in firebase Firestore
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(result.user!.uid)
+              .set({
+            'createdAt': Timestamp.now(),
+            'email': result.user!.email,
+            'id': result.user!.uid,
+            'name': result.user!.displayName,
+            'profilePic': result.user!.photoURL,
+          });
           Utils.toastMessage('Successfully SignIn');
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const DashBoardScreen()));
