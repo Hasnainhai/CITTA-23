@@ -13,7 +13,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../res/components/colors.dart';
-import 'widgets/increase_container.dart';
 
 // ignore: must_be_immutable
 class BundleProductScreen extends StatefulWidget {

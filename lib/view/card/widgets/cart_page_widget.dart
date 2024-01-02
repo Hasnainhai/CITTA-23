@@ -43,6 +43,7 @@ class _CartWidgetState extends State<CartWidget> {
   void increment() {
     setState(() {
       widget.items++;
+      // ignore: unused_local_variable
       int listItems = widget.items;
       debugPrint("this is amount of the product${widget.items}");
       int price = int.tryParse(widget.price) ?? 0;
@@ -65,11 +66,6 @@ class _CartWidgetState extends State<CartWidget> {
       if (productList[i]["imageUrl"] == widget.img) {
         productList[i]["salePrice"] = subTotal.toString();
         productList[i]['weight'] = widget.items.toString();
-        print('this is items${widget.items}');
-
-        print('this is productId${widget.productId}');
-        print("Sale price for product ${subTotal} updated successfully.");
-        debugPrint("this is product list$productList");
         break; // Break out of the loop once the update is done
       }
     }
@@ -104,7 +100,8 @@ class _CartWidgetState extends State<CartWidget> {
           .doc(widget.deletedId)
           .delete();
     } catch (e) {
-      print("Error deleting product: $e");
+      // ignore: use_build_context_synchronously
+      Utils.flushBarErrorMessage('$e', context);
     }
   }
 
