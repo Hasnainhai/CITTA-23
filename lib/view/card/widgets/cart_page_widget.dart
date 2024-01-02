@@ -1,8 +1,11 @@
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/card_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -18,10 +21,10 @@ class CartWidget extends StatefulWidget {
     required this.title,
     required this.price,
     required this.img,
-    required this.onDelete,
     required this.items,
     required this.sellerId,
     required this.productId,
+    required this.deletedId,
   });
   final String title;
   String price;
@@ -29,7 +32,7 @@ class CartWidget extends StatefulWidget {
   int items;
   final String sellerId;
   final String productId;
-  final Function() onDelete;
+  final String deletedId;
   @override
   State<CartWidget> createState() => _CartWidgetState();
 }
@@ -37,21 +40,40 @@ class CartWidget extends StatefulWidget {
 class _CartWidgetState extends State<CartWidget> {
   int? newPrice;
   String? addPrice;
+
   void increment() {
     setState(() {
       widget.items++;
-
+      int listItems = widget.items;
+      debugPrint("this is amount of the product${widget.items}");
       int price = int.tryParse(widget.price) ?? 0;
-
       newPrice = (newPrice ?? price) + price;
-
+      debugPrint("this is sub-total ${widget.sellerId}");
+      debugPrint("this is productList$productList");
       subTotal += price;
 
+      updateSalePrice(newPrice!);
       Provider.of<SubTotalModel>(context, listen: false)
           .updateSubTotal(subTotal);
 
       debugPrint("this is sub-total $subTotal");
     });
+  }
+
+  void updateSalePrice(int subTotal) {
+    // Iterate through the list, find the product with the specified ID, and update its sale price
+    for (int i = 0; i < productList.length; i++) {
+      if (productList[i]["imageUrl"] == widget.img) {
+        productList[i]["salePrice"] = subTotal.toString();
+        productList[i]['weight'] = widget.items.toString();
+        print('this is items${widget.items}');
+
+        print('this is productId${widget.productId}');
+        print("Sale price for product ${subTotal} updated successfully.");
+        debugPrint("this is product list$productList");
+        break; // Break out of the loop once the update is done
+      }
+    }
   }
 
   void decrement() {
@@ -64,6 +86,7 @@ class _CartWidgetState extends State<CartWidget> {
         newPrice = (newPrice ?? price) - price;
 
         subTotal -= price;
+        updateSalePrice(newPrice!);
 
         Provider.of<SubTotalModel>(context, listen: false)
             .updateSubTotal(subTotal);
@@ -71,6 +94,19 @@ class _CartWidgetState extends State<CartWidget> {
         Utils.flushBarErrorMessage("Fixed Limit", context);
       }
     });
+  }
+
+  Future<void> _deleteProduct(String deleteId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('cart')
+          .doc(widget.deletedId)
+          .delete();
+    } catch (e) {
+      print("Error deleting product: $e");
+    }
   }
 
   @override
@@ -184,11 +220,13 @@ class _CartWidgetState extends State<CartWidget> {
                           ? subTotal -= int.parse(widget.price)
                           : subTotal -= newPrice!;
                       items -= 1;
+                      _deleteProduct(widget.deletedId);
+
                       Provider.of<SubTotalModel>(context, listen: false)
                           .updateSubTotal(subTotal);
                       Provider.of<IndexModel>(context, listen: false)
                           .updateIndex(items);
-                      widget.onDelete();
+                      _deleteProduct(widget.deletedId);
                     },
                     child: const Icon(
                       Icons.delete_outline,
