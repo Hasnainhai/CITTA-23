@@ -10,6 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
+// ignore: must_be_immutable
 class NewItemsScreen extends StatefulWidget {
   NewItemsScreen({super.key, required this.title});
 
@@ -95,37 +96,6 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
       Utils.toastMessage('Successfully added to cart');
     }
   }
-  // void addToCart(String img, String title, String dPrice, String sellerId,
-  //     String productId) async {
-  //   final userId = FirebaseAuth.instance.currentUser!.uid;
-  //   // Get the collection reference for the user's cart
-  //   CollectionReference cartCollectionRef = FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(userId)
-  //       .collection('cart');
-
-  //   // Check if the product is already in the cart
-  //   QuerySnapshot cartSnapshot = await cartCollectionRef
-  //       .where('imageUrl', isEqualTo: img)
-  //       .limit(1)
-  //       .get();
-
-  //   if (cartSnapshot.docs.isNotEmpty) {
-  //     // Product is already in the cart, show a popup message
-  //     Utils.toastMessage('Product is already in the cart');
-  //   } else {
-  //     // Product is not in the cart, add it
-  //     await cartCollectionRef.add({
-  //       'imageUrl': img,
-  //       'title': title,
-  //       'salePrice': dPrice,
-  //       'id': productId,
-  //       'sellerId': sellerId,
-  //       // Add other product details as needed
-  //     });
-  //     Utils.toastMessage('Successfully added to cart');
-  //   }
-  // }
 
   @override
   initState() {
@@ -150,7 +120,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           ),
         ),
         title: Text(
-          widget.title ?? "New Item",
+          widget.title ?? 'New Items',
           style: GoogleFonts.getFont(
             "Gothic A1",
             textStyle: const TextStyle(
@@ -243,7 +213,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
                         color: AppColor.grayColor.withOpacity(0.2),
                       ),
                     ),
-                  ); // or some default widget
+                  );
                 }
               },
             ),

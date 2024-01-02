@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
+// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison, no_leading_underscores_for_local_identifiers
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
@@ -29,13 +29,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
-  // final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-
   String? _email;
   String? _name;
   String? address;
   String? _pImage;
-  String? _phNo;
   bool _isLoading = false;
   final User? user = authInstance.currentUser;
   String defaultProfile =
@@ -77,7 +74,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           _isLoading = false;
         });
-        // Utils.flushBarErrorMessage('$error', context);
       } finally {
         setState(() {
           _isLoading = false;
@@ -86,48 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     // }
   }
-
-  // Future<void> _showAddressDialog() async {
-  //   await showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: const Text('Update Address'),
-  //         content: TextField(
-  //           controller: _addressTextController,
-  //           maxLines: 5,
-  //           decoration: const InputDecoration(hintText: "Your address"),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () async {
-  //               String _uid = user!.uid;
-  //               try {
-  //                 await FirebaseFirestore.instance
-  //                     .collection('users')
-  //                     .doc(_uid)
-  //                     .update({
-  //                   'shipping-address': _addressTextController.text,
-  //                 });
-
-  //                 Navigator.pop(context);
-  //                 setState(() {
-  //                   address = _addressTextController.text;
-  //                 });
-  //               } catch (err) {
-  //                 Utils.flushBarErrorMessage(err.toString(), context);
-  //               }
-  //             },
-  //             child: const Text(
-  //               'Update',
-  //               style: TextStyle(color: AppColor.primaryColor),
-  //             ),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   final double tHeight = 200.0;
   final double top = 130.0;
@@ -230,29 +184,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   fontSize: 14.0,
                 ),
               ),
-              // TextSpan(
-              //   text: _phNo == null ? 'PhNo' : _phNo!,
-              //   style: const TextStyle(
-              //     color: AppColor.whiteColor,
-              //     fontWeight: FontWeight.w200,
-              //     fontSize: 14.0,
-              //   ),
-              // ),
             ],
           ),
         ),
         const SizedBox(width: 5.0),
         IconButton(
           onPressed: () {
-            // Navigate to EditProfile with the fetched details
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return EditProfile(
-            //     profilePic: _pImage ?? defaultProfile,
-            //     name: _name ?? 'Default Name',
-            //     email: _email ?? 'Default Email',
-            //     phNo: _phNo ?? 'Default Phone Number',
-            //   );
-            // }));
             if (_name != null && _email != null) {
               // Navigate to EditProfile with existing user details
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -264,7 +201,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }));
             } else {
               Utils.flushBarErrorMessage('Error occurred', context);
-              // Handle the case where one or more variables are null.
             }
           },
           icon: const Icon(

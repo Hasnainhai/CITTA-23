@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/review/review.dart';
@@ -14,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import 'widgets/increase_container.dart';
 
+// ignore: must_be_immutable
 class BundleProductScreen extends StatefulWidget {
   BundleProductScreen({
     super.key,

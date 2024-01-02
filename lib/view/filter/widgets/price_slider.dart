@@ -36,7 +36,6 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
               ),
             ),
           ),
-
           RangeSlider(
             activeColor: AppColor.primaryColor,
             inactiveColor: Colors.grey.shade300,
@@ -54,7 +53,6 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
               });
             },
           ),
-          // Add more widgets as needed
         ],
       ),
     );

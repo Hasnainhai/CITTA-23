@@ -4,7 +4,6 @@ import 'package:citta_23/view/AuthenticationScreens/verification_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
-
 import '../../res/components/colors.dart';
 
 class OtpScreen extends StatefulWidget {

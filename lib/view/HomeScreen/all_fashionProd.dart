@@ -1,4 +1,5 @@
-// ignore_for_file: unused_field
+// ignore_for_file: file_names
+
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
@@ -157,13 +158,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
                           return FashionDetail(
                             title: _fashionProducts[index]['title'].toString(),
                             imageUrl: _fashionProducts[index]['imageUrl'],
-                            // price: _fashionProducts[index]
-                            //         ['price']
-                            //     .toString(),
                             salePrice: _fashionProducts[index]['price'],
-                            // .toString(),
-                            // weight: _products[index]['weight']
-                            //     .toString(),
                             detail:
                                 _fashionProducts[index]['detail'].toString(),
                             sellerId: _fashionProducts[index]['sellerId'],

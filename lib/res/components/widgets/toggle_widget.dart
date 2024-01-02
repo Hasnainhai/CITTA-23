@@ -4,10 +4,8 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ToggleWidget extends StatefulWidget {
-  const ToggleWidget({super.key,required this.title});
-
+  const ToggleWidget({super.key, required this.title});
   final String title;
-
   @override
   State<ToggleWidget> createState() => _ToggleWidgetState();
 }
@@ -37,9 +35,9 @@ class _ToggleWidgetState extends State<ToggleWidget> {
               switchValue = value;
             });
           },
-          width: 50.0, // Adjust the width to make it square
-          height: 26.0, // Adjust the height to make it square
-          toggleSize: 28.0, // Adjust the toggle size
+          width: 50.0,
+          height: 26.0,
+          toggleSize: 28.0,
           activeColor: Colors.pink,
           inactiveColor: Colors.grey,
           borderRadius: 0.0,

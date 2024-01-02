@@ -10,11 +10,11 @@ class DottedLinePainter extends CustomPainter {
     final paint = Paint()
       ..color = AppColor.grayColor // Color of the dotted line
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0; // Thickness of the line
+      ..strokeWidth = 1.0;
 
     // Define the pattern for the dotted line
-    const dashWidth = 5.0; // Width of each dash
-    const dashSpace = 5.0; // Space between dashes
+    const dashWidth = 5.0;
+    const dashSpace = 5.0;
 
     // Calculate the number of dashes needed
     final numberOfDashes = size.width / (dashWidth + dashSpace);

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
 
+import 'package:flutter/material.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import '../../../routes/routes_name.dart';

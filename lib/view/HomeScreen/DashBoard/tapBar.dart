@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../../Favourite/favourite_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
-  const DashBoardScreen({Key? key}) : super(key: key);
+  const DashBoardScreen({super.key});
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
@@ -87,7 +87,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             backgroundColor: Colors.white,
             type: BottomNavigationBarType.fixed,
             showUnselectedLabels: true,
-            // selectedLabelStyle: const TextStyle(fontSize: 16),
             currentIndex: selectIndex,
             onTap: onItemClick,
           ),

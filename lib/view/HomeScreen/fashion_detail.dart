@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../review/review.dart';
 
+// ignore: must_be_immutable
 class FashionDetail extends StatefulWidget {
   FashionDetail(
       {super.key,

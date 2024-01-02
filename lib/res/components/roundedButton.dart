@@ -13,7 +13,6 @@ class RoundedButton extends StatelessWidget {
     required this.onpress,
     this.loading = false,
   });
-
   @override
   Widget build(BuildContext context) {
     return InkWell(

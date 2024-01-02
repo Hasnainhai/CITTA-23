@@ -63,7 +63,6 @@ class FavouristListCart extends StatelessWidget {
                               text: price,
                               style: const TextStyle(
                                 color: AppColor.fontColor,
-                                // fontWeight: FontWeight.w100,
                                 fontSize: 14.0,
                               ),
                             ),

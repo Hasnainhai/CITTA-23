@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TextFieldCustom extends StatefulWidget {
   const TextFieldCustom({
-    Key? key,
+    super.key,
     this.hintText,
     required int maxLines,
     required this.text,
@@ -12,7 +12,7 @@ class TextFieldCustom extends StatefulWidget {
     this.keyboardType,
     this.obscureText = false,
     this.validator,
-  }) : super(key: key);
+  });
 
   final String text;
   final TextEditingController? controller;

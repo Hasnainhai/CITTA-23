@@ -1,5 +1,4 @@
 // ignore_for_file: file_names
-
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/authButton.dart';

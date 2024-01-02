@@ -1,14 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 
 class TopQuestion extends StatelessWidget {
   const TopQuestion({
-    Key? key,
+    super.key,
     required this.question,
-  }) : super(key: key);
+  });
   final String question;
   @override
   Widget build(BuildContext context) {

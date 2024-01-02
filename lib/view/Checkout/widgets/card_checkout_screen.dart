@@ -2,7 +2,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +11,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
-
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
@@ -22,8 +20,8 @@ import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import '../../../res/components/colors.dart';
 
 class CardCheckOutScreen extends StatefulWidget {
-  CardCheckOutScreen({
-    Key? key,
+  const CardCheckOutScreen({
+    super.key,
     // required this.tile,
     // required this.price,
     // required this.img,
@@ -34,7 +32,7 @@ class CardCheckOutScreen extends StatefulWidget {
     required this.productType,
     required this.productList,
     required this.subTotal,
-  }) : super(key: key);
+  });
   // final String tile;
   // final String price;
   // final String img;
@@ -71,6 +69,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   void saveOrdersToFirestore() async {
     final CollectionReference<Map<String, dynamic>> myOrdersCollection =
         FirebaseFirestore.instance.collection('saller');
+    // ignore: unused_local_variable
     Map<String, dynamic> addressMap = {
       "Address": address as String,
       "postalCode": postalCode as String,
@@ -100,59 +99,6 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
           .set(orderMap);
     }
   }
-  // void saveDetail() {
-  //   var userId = FirebaseAuth.instance.currentUser!.uid;
-  //   var fireStore = FirebaseFirestore.instance;
-  //   var uid = const Uuid().v1();
-  //   var date = DateTime.now();
-  //   fireStore
-  //       .collection('users')
-  //       .doc(userId)
-  //       .collection('my_orders')
-  //       .doc(uid)
-  //       .set({
-  //     'title': widget.tile,
-  //     'imgurl': widget.img,
-  //     'productId': widget.id,
-  //     'sallerId': widget.customerId,
-  //     'price': widget.price,
-  //     'salePrice': widget.salePrice,
-  //     'weight': widget.weight,
-  //     'date': date,
-  //     "productType": widget.productType,
-  //     'status': "pending",
-  //     'address': {
-  //       "address": address,
-  //       "postalCode": postalCode,
-  //       'city': city,
-  //       'state': state,
-  //       'name': name,
-  //     }
-  //   });
-  //   fireStore
-  //       .collection('saller')
-  //       .doc(widget.customerId)
-  //       .collection('my_orders')
-  //       .doc(uid)
-  //       .set({
-  //     'title': widget.tile,
-  //     'imgurl': widget.img,
-  //     'productId': widget.id,
-  //     'buyyerId': userId,
-  //     'price': widget.price,
-  //     'salePrice': widget.salePrice,
-  //     'weight': widget.weight,
-  //     'date': date,
-  //     'status': "pending",
-  //     'address': {
-  //       "address": address,
-  //       "postalCode": postalCode,
-  //       'city': city,
-  //       'state': state,
-  //       'name': name,
-  //     }
-  //   });
-  // }
 
   Future<void> initPayment({
     required String email,
@@ -187,7 +133,6 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       ));
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
-      // saveDetail();
       saveOrdersToFirestore();
       Navigator.push(
         context,

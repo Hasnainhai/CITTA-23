@@ -51,7 +51,6 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   _onSearchChange() {
-    print('on Search......');
     searchResultList();
     searchFashionList();
   }
@@ -204,7 +203,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   return NewItemsScreen(
                                     title: title,
                                   );
-                                })); 
+                                }));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),

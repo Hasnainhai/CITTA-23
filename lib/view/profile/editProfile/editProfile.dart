@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, use_build_context_synchronously
+// ignore_for_file: file_names, must_be_immutable, use_build_context_synchronously
+
 import 'dart:io';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/custom_field.dart';
@@ -18,11 +19,11 @@ class EditProfile extends StatefulWidget {
   String name;
   String email;
   EditProfile({
-    Key? key,
+    super.key,
     required this.profilePic,
     required this.name,
     required this.email,
-  }) : super(key: key);
+  });
 
   @override
   State<EditProfile> createState() => _EditProfileState();
