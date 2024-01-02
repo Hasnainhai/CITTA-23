@@ -54,6 +54,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   String? city;
   String? state;
   String? name;
+  String? phone;
 
   onChanged(bool? value) {
     setState(() {
@@ -74,22 +75,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         .doc(uid)
         .set({
       'title': widget.tile,
-      'imgurl': widget.img,
+      'imageUrl': widget.img,
       'productId': widget.id,
       'sallerId': widget.customerId,
       'price': widget.price,
       'salePrice': widget.salePrice,
       'weight': widget.weight,
-      'date': date,
+      'date': date.toString(),
       "productType": widget.productType,
       'status': "pending",
-      'address': {
-        "address": address,
-        "postalCode": postalCode,
-        'city': city,
-        'state': state,
-        'name': name,
-      }
+      'uuid': uid,
+      "address": address,
+      "postalCode": postalCode,
+      'city': city,
+      'state': state,
+      'name': name,
+      'phone': phone,
     });
     fireStore
         .collection('saller')
@@ -98,21 +99,21 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         .doc(uid)
         .set({
       'title': widget.tile,
-      'imgurl': widget.img,
+      'imageUrl': widget.img,
       'productId': widget.id,
       'buyyerId': userId,
       'price': widget.price,
       'salePrice': widget.salePrice,
       'weight': widget.weight,
-      'date': date,
+      'date': date.toString(),
       'status': "pending",
-      'address': {
-        "address": address,
-        "postalCode": postalCode,
-        'city': city,
-        'state': state,
-        'name': name,
-      }
+      'uuid': uid,
+      "address": address,
+      "postalCode": postalCode,
+      'city': city,
+      'state': state,
+      'name': name,
+      'phone': phone,
     });
   }
 
@@ -268,6 +269,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       city = data['city'];
                                       postalCode = data['zipcode'];
                                       state = data['state'];
+                                      phone = data['phone'];
                                     },
                                     child: AddressCheckOutWidget(
                                       bgColor: AppColor.whiteColor,

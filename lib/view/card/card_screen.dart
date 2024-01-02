@@ -63,7 +63,7 @@ class _CardScreenState extends State<CardScreen> {
       };
     }).toList();
 
-    print(productList);
+    // print(productList);
   }
 
   void _fetchData() {
@@ -141,6 +141,7 @@ class _CardScreenState extends State<CardScreen> {
       ),
       body: ListView(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -149,7 +150,7 @@ class _CardScreenState extends State<CardScreen> {
               children: [
                 // cart widget stuff
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   width: double.infinity,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
