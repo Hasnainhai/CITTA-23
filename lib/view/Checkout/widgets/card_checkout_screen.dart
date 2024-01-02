@@ -188,8 +188,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
         customerEphemeralKeySecret: jsonRespone['aphemeralKey'],
       ));
       await Stripe.instance.presentPaymentSheet();
-      Fluttertoast.showToast(msg: "Payment is successful");
-      // saveDetail();
+      Utils.toastMessage("Payment is successful");
       saveOrdersToFirestore();
       Navigator.push(
         context,
@@ -199,10 +198,8 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       );
     } catch (e) {
       if (e is StripeException) {
-        debugPrint("this is the error of the stripe$e");
-        Fluttertoast.showToast(
-          msg: e.toString(),
-        );
+        Utils.flushBarErrorMessage("Problem in Payment", context);
+
         setState(() {
           _isLoading = false;
         });
@@ -532,10 +529,10 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                             state != null &&
                             address != null) {
                           if (paymentType == 'Stripe') {
-// initPayment(
-                            //   email: "basitalyshah51214@gmail.com",
-                            //   amount: amountInCents.toString(),
-                            // );
+                            initPayment(
+                              email: "basitalyshah51214@gmail.com",
+                              amount: amountInCents.toString(),
+                            );
                           } else {
                             saveOrdersToFirestore();
 

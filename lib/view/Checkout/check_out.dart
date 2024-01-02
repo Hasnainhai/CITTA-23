@@ -161,6 +161,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           (route) => false);
     } catch (e) {
       if (e is StripeException) {
+        Utils.flushBarErrorMessage("Problem in Payment", context);
         Fluttertoast.showToast(
           msg: e.toString(),
         );
@@ -490,10 +491,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           if ((paymentType == 'Stripe')) {
                             int roundPrice = int.parse(widget.salePrice);
                             String fixPrice = (roundPrice * 100).toString();
-                            saveDetail();
-                            // initPayment(
-                            //     email: "basitalyshah51214@gmail.com",
-                            //     amount: fixPrice);
+                            // saveDetail();
+                            initPayment(
+                                email: "basitalyshah51214@gmail.com",
+                                amount: fixPrice);
                           } else {
                             saveDetail();
                             Utils.toastMessage('Orders has been Placed');
