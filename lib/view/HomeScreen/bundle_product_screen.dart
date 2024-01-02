@@ -3,6 +3,7 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -796,32 +797,51 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         color: AppColor.fontColor,
                       ),
                     ),
-                    Container(
-                      height: 52,
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      color: AppColor.primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.shopping_bag_outlined,
-                            color: AppColor.buttonTxColor,
-                          ),
-                          const SizedBox(
-                            width: 14,
-                          ),
-                          Text(
-                            "Buy Now",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.buttonTxColor,
-                              ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => CheckOutScreen(
+                              tile: widget.title,
+                              price: widget.price,
+                              img: widget.imageUrl,
+                              id: widget.productId,
+                              customerId: widget.sellerId,
+                              weight: widget.weight,
+                              salePrice: widget.saleprice,
+                              productType: "popular_pak",
                             ),
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 52,
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        color: AppColor.primaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.shopping_bag_outlined,
+                              color: AppColor.buttonTxColor,
+                            ),
+                            const SizedBox(
+                              width: 14,
+                            ),
+                            Text(
+                              "Buy Now",
+                              style: GoogleFonts.getFont(
+                                "Gothic A1",
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.buttonTxColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

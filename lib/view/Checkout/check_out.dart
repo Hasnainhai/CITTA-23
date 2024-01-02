@@ -498,9 +498,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             address != null) {
                           int roundPrice = int.parse(widget.salePrice);
                           String fixPrice = (roundPrice * 100).toString();
-                          initPayment(
-                              email: "basitalyshah51214@gmail.com",
-                              amount: fixPrice);
+                          saveDetail();
+                          // initPayment(
+                          //     email: "basitalyshah51214@gmail.com",
+                          //     amount: fixPrice);
                         } else {
                           Fluttertoast.showToast(
                               msg: "Please enter address details");
