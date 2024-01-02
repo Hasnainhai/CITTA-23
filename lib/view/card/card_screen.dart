@@ -2,6 +2,7 @@
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,8 +45,6 @@ class _CardScreenState extends State<CardScreen> {
       Provider.of<IndexModel>(context, listen: false).updateIndex(items);
     });
   }
-
-  List<Map<String, dynamic>> productList = [];
 
   void fetchDataFromFirestore() async {
     QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
@@ -148,7 +147,6 @@ class _CardScreenState extends State<CardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // cart widget stuff
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.4,
                   width: double.infinity,
@@ -180,12 +178,10 @@ class _CardScreenState extends State<CardScreen> {
                             title: data['title'],
                             price: data['salePrice'],
                             img: data['imageUrl'],
-                            onDelete: () async {
-                              _deleteProduct(data['deleteId']);
-                            },
                             items: 1,
                             sellerId: data['sellerId'],
                             productId: data['id'],
+                            deletedId: data['deleteId'],
                           );
                         }).toList(),
                       );

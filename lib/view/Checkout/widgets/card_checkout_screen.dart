@@ -196,6 +196,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       );
     } catch (e) {
       if (e is StripeException) {
+        debugPrint("this is the error of the stripe$e");
         Fluttertoast.showToast(
           msg: e.toString(),
         );
@@ -539,10 +540,11 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                             city != null &&
                             state != null &&
                             address != null) {
-                          initPayment(
-                            email: "basitalyshah51214@gmail.com",
-                            amount: amountInCents.toString(),
-                          );
+                          // initPayment(
+                          //   email: "basitalyshah51214@gmail.com",
+                          //   amount: amountInCents.toString(),
+                          // );
+                          saveOrdersToFirestore();
                         } else {
                           Fluttertoast.showToast(
                               msg: "Please enter address details");
