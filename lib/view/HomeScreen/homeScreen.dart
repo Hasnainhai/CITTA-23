@@ -1,4 +1,5 @@
-// ignore_for_file: equal_keys_in_map, dead_code
+// ignore_for_file: file_names, dead_code
+
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -250,57 +251,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          // title: SizedBox(
-          //   height: 40.0,
-          //   width: 190.0,
-          //   child: Center(
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //       children: [
-          //         IconButton(
-          //           onPressed: () {},
-          //           icon: const Icon(
-          //             Icons.location_on,
-          //             color: AppColor.menuColor,
-          //           ),
-          //         ),
-          //         Column(
-          //           children: [
-          //             Text.rich(
-          //               TextSpan(
-          //                 text: 'Current Location \n',
-          //                 style: GoogleFonts.getFont(
-          //                   "Gothic A1",
-          //                   textStyle: const TextStyle(
-          //                     fontSize: 14,
-          //                     fontWeight: FontWeight.w400,
-          //                     color: AppColor.fontColor,
-          //                   ),
-          //                 ),
-          //                 children: const <TextSpan>[
-          //                   TextSpan(
-          //                     text: 'Chhatak,Syhlet',
-          //                     style: TextStyle(
-          //                       color: AppColor.grayColor,
-          //                       fontWeight: FontWeight.w200,
-          //                       fontSize: 12.0,
-          //                     ),
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //         const Icon(
-          //           Icons.expand_more,
-          //           color: AppColor.buttonBgColor,
-          //           size: 30,
-          //         )
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // centerTitle: true,
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -872,8 +822,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            // padding: const EdgeInsets.symmetric(
-                            //     horizontal: 10, vertical: 10),
                             itemCount: _fashionProducts.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -899,14 +847,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .toString(),
                                           imageUrl: _fashionProducts[index]
                                               ['imageUrl'],
-                                          // price: _fashionProducts[index]
-                                          //         ['price']
-                                          //     .toString(),
                                           salePrice: _fashionProducts[index]
                                               ['price'],
-                                          // .toString(),
-                                          // weight: _products[index]['weight']
-                                          //     .toString(),
                                           detail: _fashionProducts[index]
                                                   ['detail']
                                               .toString());
@@ -965,7 +907,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           AppColor.grayColor.withOpacity(0.2),
                                     ),
                                   ),
-                                ); // or some default widget
+                                );
                               }
                             },
                           ),

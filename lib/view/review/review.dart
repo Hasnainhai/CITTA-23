@@ -9,16 +9,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../res/components/colors.dart';
 import '../../res/components/custom_field.dart';
 
 class Rating extends StatefulWidget {
   const Rating({
-    Key? key,
+    super.key,
     required this.productId,
     required this.productType,
-  }) : super(key: key);
+  });
   final String productId;
   final String productType;
   @override

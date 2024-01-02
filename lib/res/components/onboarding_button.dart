@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
 import 'colors.dart';
 
 class OnButton extends StatelessWidget {
   final double progress;
   final Function()? onTap;
-
   const OnButton({super.key, required this.progress, this.onTap});
-
   @override
   Widget build(BuildContext context) {
     return CircularPercentIndicator(

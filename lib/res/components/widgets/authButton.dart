@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, use_build_context_synchronously
+// ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -79,7 +79,6 @@ class _AuthButtonState extends State<AuthButton> {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset('images/google.png'),
             ),
-            // const SizedBox(width: 20.0),
             const Text(
               'Signup with Google',
               style: TextStyle(

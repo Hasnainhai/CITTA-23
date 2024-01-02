@@ -15,6 +15,7 @@ import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import 'widgets/increase_container.dart';
 
+// ignore: must_be_immutable
 class BundleProductScreen extends StatefulWidget {
   BundleProductScreen({
     super.key,

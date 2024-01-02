@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:io';
-
 import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
@@ -52,8 +51,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             password: passwordController.text.trim());
         final User? user = authInstance.currentUser;
         final uid = user!.uid;
-        // user.updateDisplayName(nameController.text);
-        // user.reload();
         String profileUrl =
             'https://nakedsecurity.sophos.com/wp-content/uploads/sites/2/2013/08/facebook-silhouette_thumb.jpg';
         if (image != null) {
@@ -73,7 +70,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Utils.toastMessage('SuccessFully Register');
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
-        print('Error during Register');
         setState(() {
           _isLoading = false;
         });
@@ -224,20 +220,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             ),
                             const VerticalSpeacing(30),
-                            // //phone number
-                            // TextFieldCustom(
-                            //   controller: phNoController,
-                            //   maxLines: 1,
-                            //   text: "Ph No",
-                            //   validator: (value) {
-                            //     if (value!.isEmpty || value.length < 11) {
-                            //       return "Please enter a valid PhNo adress";
-                            //     } else {
-                            //       return null;
-                            //     }
-                            //   },
-                            // ),
-                            // const VerticalSpeacing(30),
                             // Password
                             TextFieldCustom(
                               controller: passwordController,
@@ -253,20 +235,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               },
                             ),
                             const VerticalSpeacing(30),
-                            // // Address
-                            // TextFieldCustom(
-                            //   controller: addressController,
-                            //   maxLines: 1,
-                            //   text: "Shipping address",
-                            //   validator: (value) {
-                            //     if (value!.isEmpty || value.length < 10) {
-                            //       return "Please enter a valid  address";
-                            //     } else {
-                            //       return null;
-                            //     }
-                            //   },
-                            // ),
-                            // const VerticalSpeacing(30),
                             _isLoading
                                 ? const Center(
                                     child: CircularProgressIndicator(),

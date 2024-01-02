@@ -5,12 +5,10 @@ class TabsWidget extends StatelessWidget {
     super.key,
     required this.text,
     required this.ontap,
-    // required this.color,
     required this.fontSize,
   });
   final String text;
   final Function ontap;
-  // final Color color;
   final double fontSize;
   @override
   Widget build(BuildContext context) {

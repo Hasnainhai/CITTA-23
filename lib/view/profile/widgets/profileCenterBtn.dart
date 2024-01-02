@@ -1,9 +1,12 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
+// ignore: camel_case_types
 class profileCenterBtns extends StatelessWidget {
   const profileCenterBtns(
       {super.key,

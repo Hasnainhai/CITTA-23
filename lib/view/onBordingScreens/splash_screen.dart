@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
           await Navigator.pushNamed(context, RoutesName.onboarding1);
         }
       } catch (e) {
-        print("Error initializing Firebase: $e");
-        // Handle Firebase initialization error
+        Utils.flushBarErrorMessage(
+            '$e', context); // Handle Firebase initialization error
       }
     });
   }
@@ -36,10 +37,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startTimer();
-    // Delay for 5 seconds and then navigate to the next screen
-    // Future.delayed(const Duration(seconds: 5), () {
-    //   Navigator.pushNamed(context, RoutesName.onboarding1);
-    // });
   }
 
   @override

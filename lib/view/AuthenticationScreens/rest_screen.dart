@@ -14,7 +14,6 @@ import '../../res/consts/firebase_const.dart';
 
 class RestScreen extends StatefulWidget {
   const RestScreen({super.key});
-
   @override
   State<RestScreen> createState() => _RestScreenState();
 }

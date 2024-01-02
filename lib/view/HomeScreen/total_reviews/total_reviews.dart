@@ -337,10 +337,6 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         }).toList(),
                       );
                     })
-                // const ReviewCard(),
-                // const ReviewCard(),
-                // const ReviewCard(),
-                // const ReviewCard(),
               ],
             ),
           ),

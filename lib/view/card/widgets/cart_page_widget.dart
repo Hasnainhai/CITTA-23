@@ -14,7 +14,6 @@ import '../../../res/components/colors.dart';
 int subTotal = 0;
 
 // ignore: must_be_immutable
-
 class CartWidget extends StatefulWidget {
   CartWidget({
     super.key,

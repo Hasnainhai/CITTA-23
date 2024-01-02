@@ -2,7 +2,6 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import '../widgets/coupon_card.dart';
@@ -198,25 +197,27 @@ class CouponDetail extends StatelessWidget {
                 }),
             //  VerticalSpeacing(10.0),
             Align(
-                alignment: Alignment.center,
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.termsandconditionscreen,
-                      );
-                    },
-                    child: Text(
-                      'Terms and Conditions',
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          color: AppColor.fontColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    )))
+              alignment: Alignment.center,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    RoutesName.termsandconditionscreen,
+                  );
+                },
+                child: Text(
+                  'Terms and Conditions',
+                  style: GoogleFonts.getFont(
+                    "Gothic A1",
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      color: AppColor.fontColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

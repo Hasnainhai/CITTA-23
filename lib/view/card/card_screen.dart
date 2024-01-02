@@ -1,8 +1,12 @@
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, use_build_context_synchronously
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+
+import 'package:citta_23/utils/utils.dart';
+
 import 'package:citta_23/res/consts/firebase_const.dart';
+
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,8 +65,6 @@ class _CardScreenState extends State<CardScreen> {
         'buyyerId': FirebaseAuth.instance.currentUser!.uid,
       };
     }).toList();
-
-    // print(productList);
   }
 
   void _fetchData() {
@@ -70,6 +72,7 @@ class _CardScreenState extends State<CardScreen> {
       if (querySnapshot.docs.isNotEmpty) {
         int sum = 0;
 
+        // ignore: avoid_function_literals_in_foreach_calls
         querySnapshot.docs.forEach((QueryDocumentSnapshot document) {
           String priceString = document['salePrice'];
           int priceInt = int.tryParse(priceString) ?? 0;
@@ -102,7 +105,7 @@ class _CardScreenState extends State<CardScreen> {
           .doc(deleteId)
           .delete();
     } catch (e) {
-      print("Error deleting product: $e");
+      Utils.flushBarErrorMessage('$e', context);
     }
   }
 
@@ -257,24 +260,12 @@ class _CardScreenState extends State<CardScreen> {
                         );
                       },
                     ),
-                    // Text(
-                    //   index.toString(),
-                    //   style: GoogleFonts.getFont(
-                    //     "Gothic A1",
-                    //     textStyle: const TextStyle(
-                    //       fontSize: 16,
-                    //       fontWeight: FontWeight.w800,
-                    //       color: AppColor.blackColor,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
-                // ItemPrizingWidget(title: 'Total Item', price: ),
                 const VerticalSpeacing(12.0),
                 SizedBox(
-                  height: 1, // Height of the dotted line
-                  width: double.infinity, // Infinite width
+                  height: 1,
+                  width: double.infinity,
                   child: CustomPaint(
                     painter: DottedLinePainter(),
                   ),
@@ -283,8 +274,8 @@ class _CardScreenState extends State<CardScreen> {
                 const ItemPrizingWidget(title: 'Price', price: '₹60'),
                 const VerticalSpeacing(12.0),
                 SizedBox(
-                  height: 1, // Height of the dotted line
-                  width: double.infinity, // Infinite width
+                  height: 1,
+                  width: double.infinity,
                   child: CustomPaint(
                     painter: DottedLinePainter(),
                   ),

@@ -69,9 +69,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
       totalSalePriceString = totalSalePrice.toString();
     });
 
-    // Update or use the totalSalePriceString as needed
-    print('Total Sale Price after adding: $totalSalePriceString');
-
     Utils.toastMessage('Successfully added to cart');
   }
 
@@ -213,11 +210,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                   child: CircularProgressIndicator(),
                 );
               }
-
               List<DocumentSnapshot> createList = snapshot.data?.docs ?? [];
-              debugPrint(
-                  "..................this is for checking the created list $createList");
-
               return GridView.builder(
                 shrinkWrap: true,
                 padding:
@@ -233,8 +226,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                   DocumentSnapshot productSnapshot = createList[index];
                   Map<String, dynamic> productData =
                       productSnapshot.data() as Map<String, dynamic>;
-                  debugPrint(
-                      "..........................This is the map: $productData ");
                   return HomeCard(
                     ontap: () {
                       Navigator.push(

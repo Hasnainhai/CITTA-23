@@ -7,7 +7,6 @@ import '../../routes/routes_name.dart';
 
 class LoginOrSigninScreen extends StatelessWidget {
   const LoginOrSigninScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
