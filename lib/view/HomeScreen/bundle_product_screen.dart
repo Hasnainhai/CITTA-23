@@ -2,6 +2,7 @@
 
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +10,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../res/components/colors.dart';
 import 'widgets/increase_container.dart';
@@ -88,6 +90,70 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
   int currentIndex = 0;
 
   final _firestoreInstance = FirebaseFirestore.instance;
+  int? newPrice;
+  int items = 1;
+  String? addPrice;
+  int? totalPrice;
+
+  void increment() {
+    setState(() {
+      items++;
+
+      int price = int.parse(widget.saleprice);
+      newPrice = (newPrice ?? int.parse(widget.saleprice)) + price;
+    });
+  }
+
+  void decrement() {
+    setState(() {
+      if (items > 1) {
+        items--;
+        int price = int.parse(widget.saleprice);
+        newPrice = (newPrice ?? int.parse(widget.saleprice)) - price;
+      } else {
+        Utils.flushBarErrorMessage("Fixed Limit", context);
+      }
+    });
+  }
+
+  void addToCart(String img, String title, String dPrice, String sellerId,
+      String productId) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        'deleteId': uuid,
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
+    }
+  }
 
   void addToFavorites() async {
     try {
@@ -279,7 +345,9 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           width: 10,
                         ),
                         Text(
-                          widget.saleprice,
+                          newPrice == null
+                              ? widget.saleprice
+                              : newPrice.toString(),
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -291,13 +359,73 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ],
                     ),
-                    IncreaseContainer(
-                      price: widget.saleprice,
-                      onPriceChanged: (updatedPrice) {
-                        setState(() {
-                          widget.saleprice = updatedPrice.toString();
-                        });
-                      },
+                    // IncreaseContainer(
+                    //   price: widget.saleprice,
+                    //   onPriceChanged: (updatedPrice) {
+                    //     setState(() {
+                    //       widget.saleprice = updatedPrice.toString();
+                    //     });
+                    //   },
+                    // ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            decrement();
+                          },
+                          child: Container(
+                              height: 34,
+                              width: 34,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColor.grayColor,
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Divider(
+                                  height: 2,
+                                  thickness: 2.5,
+                                  color: AppColor.primaryColor,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 18,
+                        ),
+                        Text(
+                          items.toString(),
+                          style: GoogleFonts.getFont(
+                            "Gothic A1",
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 18,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            increment();
+                          },
+                          child: Container(
+                            height: 34,
+                            width: 34,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColor.grayColor,
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppColor.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -360,7 +488,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     Column(
                       children: [
                         Text(
-                          "17",
+                          "6",
                           style: GoogleFonts.getFont(
                             "Gothic A1",
                             textStyle: const TextStyle(
@@ -787,41 +915,73 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 52,
-                      width: 60,
-                      color: const Color(0xffEDBCD4),
-                      child: const Icon(
-                        Icons.shopping_cart_outlined,
-                        color: AppColor.fontColor,
+                    InkWell(
+                      onTap: () {
+                        addToCart(
+                          widget.imageUrl,
+                          widget.title,
+                          widget.saleprice,
+                          widget.sellerId,
+                          widget.productId,
+                        );
+                      },
+                      child: Container(
+                        height: 52,
+                        width: 60,
+                        color: const Color(0xffEDBCD4),
+                        child: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: AppColor.fontColor,
+                        ),
                       ),
                     ),
-                    Container(
-                      height: 52,
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      color: AppColor.primaryColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.shopping_bag_outlined,
-                            color: AppColor.buttonTxColor,
-                          ),
-                          const SizedBox(
-                            width: 14,
-                          ),
-                          Text(
-                            "Buy Now",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.buttonTxColor,
-                              ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => CheckOutScreen(
+                              tile: widget.title,
+                              price: widget.price,
+                              img: widget.imageUrl,
+                              id: widget.productId,
+                              customerId: widget.sellerId,
+                              weight: items.toString(),
+                              salePrice: newPrice == null
+                                  ? widget.saleprice
+                                  : newPrice.toString(),
+                              productType: "popular_pak",
                             ),
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 52,
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        color: AppColor.primaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.shopping_bag_outlined,
+                              color: AppColor.buttonTxColor,
+                            ),
+                            const SizedBox(
+                              width: 14,
+                            ),
+                            Text(
+                              "Buy Now",
+                              style: GoogleFonts.getFont(
+                                "Gothic A1",
+                                textStyle: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.buttonTxColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

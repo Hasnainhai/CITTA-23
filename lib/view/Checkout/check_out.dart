@@ -54,6 +54,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   String? city;
   String? state;
   String? name;
+  String? phone;
+  String paymentType = 'Stripe';
 
   onChanged(bool? value) {
     setState(() {
@@ -74,22 +76,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         .doc(uid)
         .set({
       'title': widget.tile,
-      'imgurl': widget.img,
+      'imageUrl': widget.img,
       'productId': widget.id,
       'sallerId': widget.customerId,
-      'price': widget.price,
-      'salePrice': widget.salePrice,
+      'price': widget.salePrice,
+      'salePrice': widget.price,
       'weight': widget.weight,
-      'date': date,
+      'date': date.toString(),
       "productType": widget.productType,
       'status': "pending",
-      'address': {
-        "address": address,
-        "postalCode": postalCode,
-        'city': city,
-        'state': state,
-        'name': name,
-      }
+      'uuid': uid,
+      "address": address,
+      "postalCode": postalCode,
+      'city': city,
+      'state': state,
+      'name': name,
+      'phone': phone,
+      "paymentType": paymentType,
     });
     fireStore
         .collection('saller')
@@ -98,21 +101,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         .doc(uid)
         .set({
       'title': widget.tile,
-      'imgurl': widget.img,
+      'imageUrl': widget.img,
       'productId': widget.id,
       'buyyerId': userId,
       'price': widget.price,
       'salePrice': widget.salePrice,
       'weight': widget.weight,
-      'date': date,
+      'date': date.toString(),
       'status': "pending",
-      'address': {
-        "address": address,
-        "postalCode": postalCode,
-        'city': city,
-        'state': state,
-        'name': name,
-      }
+      'uuid': uid,
+      "address": address,
+      "postalCode": postalCode,
+      'city': city,
+      'state': state,
+      'name': name,
+      'phone': phone,
+      'paymentType': paymentType,
     });
   }
 
@@ -157,6 +161,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           (route) => false);
     } catch (e) {
       if (e is StripeException) {
+        Utils.flushBarErrorMessage("Problem in Payment", context);
         Fluttertoast.showToast(
           msg: e.toString(),
         );
@@ -268,6 +273,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       city = data['city'];
                                       postalCode = data['zipcode'];
                                       state = data['state'];
+                                      phone = data['phone'];
                                     },
                                     child: AddressCheckOutWidget(
                                       bgColor: AppColor.whiteColor,
@@ -312,6 +318,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   firstButton = !firstButton;
                                   secondButton = false;
                                   thirdButton = false;
+                                  paymentType = 'Stripe';
                                 });
                               },
                               child: Center(
@@ -365,6 +372,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   firstButton = false;
                                   secondButton = !secondButton;
                                   thirdButton = false;
+                                  paymentType = 'Stripe';
                                 });
                               },
                               child: Center(
@@ -418,6 +426,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   firstButton = false;
                                   secondButton = false;
                                   thirdButton = !thirdButton;
+                                  paymentType = 'cash on Delivery';
                                 });
                               },
                               child: Center(
@@ -425,14 +434,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   height: 66,
                                   width: 135,
                                   decoration: BoxDecoration(
-                                      color: thirdButton
-                                          ? AppColor.logoBgColor
-                                          : Colors.transparent,
-                                      border: Border.all(
-                                          width: 1,
-                                          color: thirdButton
-                                              ? AppColor.primaryColor
-                                              : AppColor.grayColor)),
+                                    color: thirdButton
+                                        ? AppColor.logoBgColor
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: thirdButton
+                                            ? AppColor.primaryColor
+                                            : AppColor.grayColor),
+                                  ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -469,36 +479,32 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ],
                     ),
                   ),
-                  const VerticalSpeacing(30.0),
-                  const TextFieldCustom(
-                    maxLines: 1,
-                    text: 'Card Name',
-                    hintText: 'Hasnain haider',
-                  ),
-                  const TextFieldCustom(
-                    maxLines: 1,
-                    text: 'Card Number',
-                    hintText: '71501 90123 **** ****',
-                  ),
-                  const VerticalSpeacing(20.0),
-                  const ToggleWidget(
-                    title: 'Remember My Card Details',
-                  ),
-                  const VerticalSpeacing(20.0),
+                  VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
                   RoundedButton(
-                      title: 'Pay Now',
+                      title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                       onpress: () async {
-                        debugPrint("press");
                         if (name != null &&
                             postalCode != null &&
                             city != null &&
                             state != null &&
                             address != null) {
-                          int roundPrice = int.parse(widget.salePrice);
-                          String fixPrice = (roundPrice * 100).toString();
-                          initPayment(
-                              email: "basitalyshah51214@gmail.com",
-                              amount: fixPrice);
+                          if ((paymentType == 'Stripe')) {
+                            int roundPrice = int.parse(widget.salePrice);
+                            String fixPrice = (roundPrice * 100).toString();
+                            // saveDetail();
+                            initPayment(
+                                email: "basitalyshah51214@gmail.com",
+                                amount: fixPrice);
+                          } else {
+                            saveDetail();
+                            Utils.toastMessage('Orders has been Placed');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => const DashBoardScreen(),
+                              ),
+                            );
+                          }
                         } else {
                           Fluttertoast.showToast(
                               msg: "Please enter address details");
