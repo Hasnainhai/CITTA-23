@@ -11,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey =
       "pk_test_51MqJ7aSDFxQSCBeqlY6oQU8xdJEsaAiESLWghEUnYHUHYnCjJrbJMaIpSyVopiqfnyym9H4Gcvg5kNmiHcUThznT00QSiE5jbT";
+
   Stripe.instance.applySettings();
   await Firebase.initializeApp();
   runApp(
@@ -30,7 +31,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(

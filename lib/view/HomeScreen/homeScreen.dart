@@ -209,33 +209,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Utils.toastMessage('Successfully added to cart');
     }
   }
-  // Add to Cart code
-  // void addToCart(
-  //   // String uid,
-  //   // Map<String, dynamic> product,
-  //   String img,
-  //   String title,
-  //   String dPrice,
-  // ) async {
-  //   final userId = FirebaseAuth.instance.currentUser!.uid;
-  //   // Get the collection reference for the user's cart
-  //   CollectionReference cartCollectionRef = FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(userId)
-  //       .collection('cart');
-
-  //   // Add the product to the cart as a new document
-  //   await cartCollectionRef.add({
-  //     // 'productId': product['id'],
-  //     // 'productName': product['name'],
-  //     // 'productPrice': product['price'],
-  //     'id': userId,
-  //     'imageUrl': img,
-  //     'title': title,
-  //     'salePrice': dPrice,
-  //     // Add other product details as needed
-  //   });
-  // }
 
   @override
   initState() {

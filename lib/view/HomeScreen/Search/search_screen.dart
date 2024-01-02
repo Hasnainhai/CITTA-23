@@ -1,4 +1,6 @@
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/view/HomeScreen/all_fashionProd.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/filter/filter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +19,8 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   List resultList = [];
   List _allResults = [];
+  List fashionList = [];
+  List _fashionResults = [];
 
   getProductsStream() async {
     var data = await FirebaseFirestore.instance
@@ -25,6 +29,17 @@ class _SearchScreenState extends State<SearchScreen> {
         .get();
     setState(() {
       _allResults = data.docs;
+    });
+    searchResultList();
+  }
+
+  getFashionProdStream() async {
+    var data = await FirebaseFirestore.instance
+        .collection('fashion')
+        .orderBy('title')
+        .get();
+    setState(() {
+      _fashionResults = data.docs;
     });
     searchResultList();
   }
@@ -38,6 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
   _onSearchChange() {
     print('on Search......');
     searchResultList();
+    searchFashionList();
   }
 
   @override
@@ -49,24 +65,46 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void didChangeDependencies() {
     getProductsStream();
+    getFashionProdStream();
     super.didChangeDependencies();
   }
 
   void searchResultList() {
     var showResult = [];
-    if (_searchController.text != '') {
+
+    if (_searchController.text.isNotEmpty) {
       for (var clientsnapShot in _allResults) {
         var name = clientsnapShot['title'].toString().toLowerCase();
-        if (name.contains(_searchController.text.toString().toLowerCase())) {
+        if (name.contains(_searchController.text.toLowerCase())) {
           showResult.add(clientsnapShot);
-        } else {
-          showResult = List.from(_allResults);
-          setState(() {
-            resultList = showResult;
-          });
         }
       }
+    } else {
+      showResult = List.from(_allResults);
     }
+
+    setState(() {
+      resultList = showResult;
+    });
+  }
+
+  void searchFashionList() {
+    var showfashionResult = [];
+
+    if (_searchController.text.isNotEmpty) {
+      for (var clientsnapShot in _fashionResults) {
+        var name = clientsnapShot['title'].toString().toLowerCase();
+        if (name.contains(_searchController.text.toLowerCase())) {
+          showfashionResult.add(clientsnapShot);
+        }
+      }
+    } else {
+      showfashionResult = List.from(_fashionResults);
+    }
+
+    setState(() {
+      fashionList = showfashionResult;
+    });
   }
 
   @override
@@ -150,32 +188,74 @@ class _SearchScreenState extends State<SearchScreen> {
                   width: double.infinity,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: resultList.length,
+                    itemCount: resultList.length + fashionList.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: InkWell(
-                          onTap: () {
-                            String title = 'Search results...';
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return NewItemsScreen(
-                                title: title,
-                              );
-                            }));
-                          },
-                          child: Text(
-                            _allResults[index]['title'],
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
+                      if (index < resultList.length) {
+                        var currentResult = resultList[index];
+                        // Handle results from _allResults
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                String title = 'Grocery';
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return NewItemsScreen(
+                                    title: title,
+                                  );
+                                })); 
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  currentResult['title'],
+                                  style: GoogleFonts.getFont(
+                                    "Gothic A1",
+                                    textStyle: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.fontColor,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
+                            const VerticalSpeacing(10.0),
+                          ],
+                        );
+                      } else {
+                        var currentFashionResult =
+                            fashionList[index - resultList.length];
+                        // Handle results from _fashionResults
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const AllFashionProd();
+                                }));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  currentFashionResult['title'],
+                                  style: GoogleFonts.getFont(
+                                    "Gothic A1",
+                                    textStyle: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColor.fontColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
                     },
                   ),
                 ),
