@@ -290,7 +290,7 @@ class _MyOrdersState extends State<MyOrders>
                       .data!.docs
                       .where((document) =>
                           (document.data() as Map<String, dynamic>)['status'] ==
-                          'Delivered send')
+                          'Delivered')
                       .toList();
 
                   if (deliverySendOrders.isEmpty) {
