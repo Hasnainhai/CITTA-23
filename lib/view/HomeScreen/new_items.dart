@@ -120,7 +120,7 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           ),
         ),
         title: Text(
-          widget.title ?? 'New Items',
+          widget.title,
           style: GoogleFonts.getFont(
             "Gothic A1",
             textStyle: const TextStyle(
