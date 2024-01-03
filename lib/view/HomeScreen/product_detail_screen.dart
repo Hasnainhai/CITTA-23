@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
-import '../../routes/routes_name.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   ProductDetailScreen({
