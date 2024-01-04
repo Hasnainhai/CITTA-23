@@ -113,7 +113,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
             onpress: () async {
               await authInstance.signOut();
               Utils.toastMessage('Successfully LogOut');
-              Navigator.pushNamed(context, RoutesName.loginscreen);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, RoutesName.loginscreen, (route) => false);
             },
           ),
         ],
