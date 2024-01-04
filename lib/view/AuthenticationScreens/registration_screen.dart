@@ -169,7 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     padding: const EdgeInsets.only(bottom: 10),
                                     child: CircleAvatar(
                                       radius: 50,
-                                      backgroundColor: AppColor.buttonBgColor,
+                                      backgroundColor: AppColor.primaryColor,
                                       foregroundImage: image == null
                                           ? null
                                           : FileImage(

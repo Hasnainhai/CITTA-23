@@ -11,7 +11,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthButton extends StatefulWidget {
   const AuthButton({
     super.key,
+    required this.buttonText,
   });
+  final String buttonText;
   @override
   State<AuthButton> createState() => _AuthButtonState();
 }
@@ -79,9 +81,9 @@ class _AuthButtonState extends State<AuthButton> {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset('images/google.png'),
             ),
-            const Text(
-              'Signup with Google',
-              style: TextStyle(
+            Text(
+              widget.buttonText,
+              style: const TextStyle(
                 color: AppColor.primaryColor,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,

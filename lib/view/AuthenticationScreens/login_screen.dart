@@ -182,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             _submitFormOnLogin();
                           }),
                   const VerticalSpeacing(30.0),
-                  const AuthButton(),
+                  const AuthButton(
+                    buttonText: 'Login with Google',
+                  ),
                   const VerticalSpeacing(20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
