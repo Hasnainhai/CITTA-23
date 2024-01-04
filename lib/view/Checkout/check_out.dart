@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
@@ -230,6 +231,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: AppColor.blackColor,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutesName.addressdetailscreen);
+                        },
+                        child: Container(
+                          height: 28.0,
+                          width: 28.0,
+                          color: AppColor.primaryColor,
+                          child: const Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
