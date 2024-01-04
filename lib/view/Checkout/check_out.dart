@@ -284,6 +284,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
+                                      bool isColor = false;
                                       debugPrint('address one is selected');
                                       address = data['address2'];
                                       name = data['name'];
