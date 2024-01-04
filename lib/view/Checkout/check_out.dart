@@ -387,60 +387,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               onTap: () {
                                 setState(() {
                                   firstButton = false;
-                                  secondButton = !secondButton;
-                                  thirdButton = false;
-                                  paymentType = 'Stripe';
-                                });
-                              },
-                              child: Center(
-                                child: Container(
-                                  height: 66,
-                                  width: 135,
-                                  decoration: BoxDecoration(
-                                      color: secondButton
-                                          ? AppColor.logoBgColor
-                                          : Colors.transparent,
-                                      border: Border.all(
-                                          width: 1,
-                                          color: secondButton
-                                              ? AppColor.primaryColor
-                                              : AppColor.grayColor)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 30.0,
-                                        width: 30.0,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'images/paypal.png'),
-                                                fit: BoxFit.contain)),
-                                      ),
-                                      const VerticalSpeacing(5),
-                                      Text(
-                                        "PayPal",
-                                        style: GoogleFonts.getFont(
-                                          "Gothic A1",
-                                          textStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: secondButton
-                                                ? AppColor.fontColor
-                                                : AppColor.fontColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20.0),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  firstButton = false;
                                   secondButton = false;
                                   thirdButton = !thirdButton;
                                   paymentType = 'cash on Delivery';
