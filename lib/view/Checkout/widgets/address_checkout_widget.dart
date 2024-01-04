@@ -40,16 +40,6 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const MyCheckBox(),
-
-            // Container(
-            //   height: 20,
-            //   width: 20,
-            //   color: widget.color,
-            //   decoration: BoxDecoration(
-            //     color: widget.color,
-            //     border: Border.all(width: 1, color: Colors.grey),
-            //   ),
-            // ),
             const SizedBox(width: 15.0),
             Text.rich(
               TextSpan(
