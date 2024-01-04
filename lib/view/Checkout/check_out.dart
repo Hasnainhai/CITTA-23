@@ -253,6 +253,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ),
                     ],
                   ),
+                  const VerticalSpeacing(20),
                   SizedBox(
                     child: StreamBuilder(
                         stream: FirebaseFirestore.instance
