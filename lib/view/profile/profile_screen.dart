@@ -196,7 +196,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return EditProfile(
                   profilePic: _pImage ?? defaultProfile,
                   name: _name ?? 'Default Name',
-                  email: _email ?? 'Default Email',
+                  email: _email!.length > 12
+                      ? "${_email!.substring(0, 12)}..."
+                      : _email ?? 'Default Email',
                 );
               }));
             } else {

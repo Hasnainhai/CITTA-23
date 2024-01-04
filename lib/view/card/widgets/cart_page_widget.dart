@@ -86,7 +86,7 @@ class _CartWidgetState extends State<CartWidget> {
         Provider.of<SubTotalModel>(context, listen: false)
             .updateSubTotal(subTotal);
       } else {
-        Utils.flushBarErrorMessage("Fixed Limit", context);
+        // Utils.flushBarErrorMessage("Fixed Limit", context);
       }
     });
   }

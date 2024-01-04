@@ -44,7 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
             email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim());
         Utils.toastMessage('SuccessFully Login');
-        Navigator.pushNamed(context, RoutesName.dashboardScreen);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RoutesName.dashboardScreen, (route) => false);
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {
