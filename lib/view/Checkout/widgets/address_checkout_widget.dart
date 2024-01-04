@@ -39,6 +39,8 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const MyCheckBox(),
+
             // Container(
             //   height: 20,
             //   width: 20,
