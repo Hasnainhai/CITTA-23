@@ -101,7 +101,7 @@ class _FavouriteListState extends State<FavouriteList> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'My Favourite List',
           style: TextStyle(
             fontFamily: 'CenturyGothic',

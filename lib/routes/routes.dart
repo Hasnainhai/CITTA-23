@@ -23,8 +23,7 @@ import 'package:citta_23/view/myOrder/my_order.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen2.dart';
 import 'package:citta_23/view/onBordingScreens/onboarding_screen3.dart';
 import 'package:citta_23/view/onBordingScreens/splash_screen.dart';
-import 'package:citta_23/view/payments/AddCard/add_new_card.dart';
-import 'package:citta_23/view/payments/payment.dart';
+
 import 'package:citta_23/view/profile/profile_screen.dart';
 import 'package:citta_23/view/promos/CouponDetails/coupon_details.dart';
 import 'package:citta_23/view/promos/offer_promos.dart';
@@ -125,14 +124,7 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const NotificationScreen(),
         );
-      case RoutesName.paymentScreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const Payment(),
-        );
-      case RoutesName.addCardScreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const AddCard(),
-        );
+
       case RoutesName.promosOffer:
         return MaterialPageRoute(
           builder: (BuildContext context) => const PromosOffer(),

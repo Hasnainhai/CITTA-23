@@ -100,7 +100,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         centerTitle: true,
-        leading: const Icon(Icons.arrow_back),
+        leading: const Icon(
+          Icons.arrow_back,
+          color: AppColor.buttonTxColor,
+        ),
       ),
       body: LoadingManager(
         isLoading: _isLoading,
@@ -139,8 +142,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       width: double.infinity,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(100.0),
-          bottomRight: Radius.circular(100.0),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
         ),
         color: AppColor.primaryColor,
       ),
@@ -284,16 +287,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icons.lock_outline,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Reset Password'),
-                const Divider(),
-                ProfileWidgets(
-                    ontap: () {
-                      Navigator.pushNamed(context, RoutesName.paymentScreen);
-                    },
-                    tColor: const Color(0xff9E93F4),
-                    bColor: const Color(0xff7465EC),
-                    icon: Icons.wallet_outlined,
-                    trIcon: Icons.arrow_forward_ios,
-                    title: 'Payment'),
                 const Divider(),
                 ProfileWidgets(
                   ontap: () async {
