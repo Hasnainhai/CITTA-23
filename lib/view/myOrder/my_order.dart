@@ -99,7 +99,8 @@ class _MyOrdersState extends State<MyOrders>
         ),
       ),
       body: TabBarView(
-        controller: _tabController, // Provide the TabController
+        // Provide the TabController
+        controller: _tabController,
         children: <Widget>[
           // Content for the "All" tab
           Column(
