@@ -96,6 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF7F7F7),
       body: LoadingManager(
         isLoading: _isLoading,
         child: SafeArea(
@@ -134,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                   Container(
-                    color: AppColor.grayColor.withOpacity(0.2),
+                    color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 20,
@@ -276,6 +277,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
+                  const VerticalSpeacing(20),
                 ],
               ),
             ),

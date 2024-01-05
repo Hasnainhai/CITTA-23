@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const stripe = require("stripe")(
-    "sk_test_51MqJ7aSDFxQSCBeqQM7eh52dvMSKJxSiFgWNDG3hJ9VNtt4J6uxnIsvwBkIOtjg9PAStb2q7lDPzyIEyNzabpFhn00key2zWb4",
+    "",
 );
 
 exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) => {
@@ -27,7 +27,7 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
           country: "IND",
         },
       });
-      customerId = customer.data.id;
+      customerId = customer.id;
     }
 
     // Creates a temporary secret key linked with the customer

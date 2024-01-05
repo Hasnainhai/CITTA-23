@@ -299,7 +299,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ontap: () async {
                     authInstance.signOut();
                     Utils.toastMessage('SuccessFully LogOut');
-                    await Navigator.pushNamed(context, RoutesName.loginscreen);
+                    await Navigator.pushNamedAndRemoveUntil(
+                        context, RoutesName.loginscreen, (route) => false);
                   },
                   tColor: const Color(0xffFF9CCB),
                   bColor: const Color(0xffEC4091),
