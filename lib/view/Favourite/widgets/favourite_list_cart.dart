@@ -26,6 +26,9 @@ class FavouristListCart extends StatelessWidget {
     return SizedBox(
       height: 100,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0.0),
+        ),
         color: Colors.white,
         elevation: 0.5,
         child: Padding(
