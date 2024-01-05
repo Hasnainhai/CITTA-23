@@ -141,7 +141,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       final jsonRespone = jsonDecode(
         response.body,
       );
-      print("Cloud Function Response: $jsonRespone");
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonRespone['paymentIntent'],
@@ -279,7 +278,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      bool isColor = false;
                                       debugPrint('address one is selected');
                                       address = data['address2'];
                                       name = data['name'];
