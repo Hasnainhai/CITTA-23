@@ -142,13 +142,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       final jsonRespone = jsonDecode(
         response.body,
       );
-      debugPrint(jsonRespone.toString());
+      print("Cloud Function Response: $jsonRespone");
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: jsonRespone['paymentIntent'],
         merchantDisplayName: 'Groccery',
-        customerId: jsonRespone['customerId'],
-        customerEphemeralKeySecret: jsonRespone['aphemeralKey'],
+        customerId: jsonRespone['customer'],
+        customerEphemeralKeySecret: jsonRespone['ephemeralKey'],
       ));
       await Stripe.instance.presentPaymentSheet();
       Utils.toastMessage('Payment is successful');
