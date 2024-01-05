@@ -1,6 +1,5 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TextFieldCustom extends StatefulWidget {
   const TextFieldCustom({
@@ -35,13 +34,11 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
         children: [
           Text(
             widget.text,
-            style: GoogleFonts.getFont(
-              "Gothic A1",
-              textStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColor.fontColor,
-              ),
+            style: const TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: AppColor.fontColor,
             ),
           ),
           const SizedBox(height: 8),

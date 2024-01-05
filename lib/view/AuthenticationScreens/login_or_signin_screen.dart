@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
@@ -26,28 +25,26 @@ class LoginOrSigninScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const VerticalSpeacing(80.0),
+                    VerticalSpeacing(80.0),
                     Text(
                       "Welcome to our",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor),
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 36,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     Text(
                       "Vegan Life Style",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.primaryColor),
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 36,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.primaryColor,
                       ),
                     ),
                   ],

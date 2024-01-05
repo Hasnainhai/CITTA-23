@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
@@ -43,6 +42,7 @@ class _CartWidgetState extends State<CartWidget> {
   void increment() {
     setState(() {
       widget.items++;
+      // ignore: unused_local_variable
       int listItems = widget.items;
       debugPrint("this is amount of the product${widget.items}");
       int price = int.tryParse(widget.price) ?? 0;
@@ -65,11 +65,6 @@ class _CartWidgetState extends State<CartWidget> {
       if (productList[i]["imageUrl"] == widget.img) {
         productList[i]["salePrice"] = subTotal.toString();
         productList[i]['weight'] = widget.items.toString();
-        print('this is items${widget.items}');
-
-        print('this is productId${widget.productId}');
-        print("Sale price for product ${subTotal} updated successfully.");
-        debugPrint("this is product list$productList");
         break; // Break out of the loop once the update is done
       }
     }
@@ -90,7 +85,7 @@ class _CartWidgetState extends State<CartWidget> {
         Provider.of<SubTotalModel>(context, listen: false)
             .updateSubTotal(subTotal);
       } else {
-        Utils.flushBarErrorMessage("Fixed Limit", context);
+        // Utils.flushBarErrorMessage("Fixed Limit", context);
       }
     });
   }
@@ -104,7 +99,8 @@ class _CartWidgetState extends State<CartWidget> {
           .doc(widget.deletedId)
           .delete();
     } catch (e) {
-      print("Error deleting product: $e");
+      // ignore: use_build_context_synchronously
+      Utils.flushBarErrorMessage('$e', context);
     }
   }
 
@@ -133,13 +129,11 @@ class _CartWidgetState extends State<CartWidget> {
                   Text.rich(
                     TextSpan(
                       text: widget.title,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: AppColor.fontColor,
-                        ),
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor.fontColor,
                       ),
                     ),
                   ),
@@ -177,13 +171,11 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                     Text(
                       widget.items.toString(),
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     const SizedBox(
@@ -235,13 +227,11 @@ class _CartWidgetState extends State<CartWidget> {
                   ),
                   Text(
                     newPrice == null ? widget.price : newPrice.toString(),
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: AppColor.fontColor,
-                      ),
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColor.fontColor,
                     ),
                   ),
                 ],

@@ -2,7 +2,6 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/vars.dart';
 
@@ -23,17 +22,15 @@ class _MenuScreenState extends State<MenuScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const VerticalSpeacing(50.0),
-            Align(
+            const Align(
               alignment: Alignment.center,
               child: Text(
                 'Choose a Category',
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    color: AppColor.fontColor,
-                  ),
+                style: TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.fontColor,
                 ),
               ),
             ),
@@ -82,15 +79,13 @@ class _MenuScreenState extends State<MenuScreen> {
                                 ),
                                 Text(
                                   'Food',
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: categoryType == CategoryType.food
-                                          ? AppColor.whiteColor
-                                          : AppColor.buttonBgColor,
-                                    ),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: categoryType == CategoryType.food
+                                        ? AppColor.whiteColor
+                                        : AppColor.buttonBgColor,
                                   ),
                                 ),
                               ],
@@ -150,16 +145,13 @@ class _MenuScreenState extends State<MenuScreen> {
                                 ),
                                 Text(
                                   'Fashion',
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          categoryType == CategoryType.fashion
-                                              ? AppColor.whiteColor
-                                              : AppColor.buttonBgColor,
-                                    ),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: categoryType == CategoryType.fashion
+                                        ? AppColor.whiteColor
+                                        : AppColor.buttonBgColor,
                                   ),
                                 ),
                               ],

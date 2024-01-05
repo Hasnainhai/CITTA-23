@@ -6,7 +6,6 @@ import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import 'widgets/favourite_list_cart.dart';
 
@@ -104,13 +103,11 @@ class _FavouriteListState extends State<FavouriteList> {
         elevation: 0.0,
         title: Text(
           'My Favourite List',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
@@ -178,7 +175,7 @@ class _FavouriteListState extends State<FavouriteList> {
                                   img: favorite['imageUrl'],
                                   id: favorite['id'],
                                   customerId: favorite['sellerId'],
-                                  weight: favorite['salePrice'],
+                                  weight: '1',
                                   salePrice: favorite['salePrice'],
                                   productType: "faviroute list"),
                             ),

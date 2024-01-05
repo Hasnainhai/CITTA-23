@@ -6,7 +6,6 @@ import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/custom_field.dart';
 import '../../res/components/roundedButton.dart';
@@ -68,15 +67,13 @@ class _RestScreenState extends State<RestScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text(
+          title: const Text(
             "Forget Password",
-            style: GoogleFonts.getFont(
-              "Gothic A1",
+            style: TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
               color: AppColor.fontColor,
-              textStyle: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 18,
-              ),
             ),
           ),
           leading: IconButton(
@@ -103,28 +100,24 @@ class _RestScreenState extends State<RestScreen> {
                       child: Column(
                         children: [
                           const VerticalSpeacing(24),
-                          Text(
+                          const Text(
                             "Reset Your Password",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const VerticalSpeacing(24),
-                          Text(
+                          const Text(
                             "Please enter your email. We will send a link to your email to reset your password.",
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const VerticalSpeacing(30),

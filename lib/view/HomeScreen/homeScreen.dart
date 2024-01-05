@@ -10,7 +10,6 @@ import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
@@ -333,16 +332,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Text(
                                         'Food',
-                                        style: GoogleFonts.getFont(
-                                          "Gothic A1",
-                                          textStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: categoryType ==
-                                                    CategoryType.food
-                                                ? AppColor.whiteColor
-                                                : AppColor.buttonBgColor,
-                                          ),
+                                        style: TextStyle(
+                                          fontFamily: 'CenturyGothic',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              categoryType == CategoryType.food
+                                                  ? AppColor.whiteColor
+                                                  : AppColor.buttonBgColor,
                                         ),
                                       ),
                                     ],
@@ -405,16 +402,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Text(
                                         'Fashion',
-                                        style: GoogleFonts.getFont(
-                                          "Gothic A1",
-                                          textStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: categoryType ==
-                                                    CategoryType.fashion
-                                                ? AppColor.whiteColor
-                                                : AppColor.buttonBgColor,
-                                          ),
+                                        style: TextStyle(
+                                          fontFamily: 'CenturyGothic',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: categoryType ==
+                                                  CategoryType.fashion
+                                              ? AppColor.whiteColor
+                                              : AppColor.buttonBgColor,
                                         ),
                                       ),
                                     ],
@@ -448,14 +443,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Popular Pack",
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.fontColor),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
                                 InkWell(
@@ -465,15 +459,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       RoutesName.popularpackscreen,
                                     );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "View All",
-                                    style: GoogleFonts.getFont(
-                                      "Gothic A1",
-                                      textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColor.buttonBgColor,
-                                      ),
+                                    style: TextStyle(
+                                      fontFamily: 'CenturyGothic',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.buttonBgColor,
                                     ),
                                   ),
                                 ),
@@ -679,14 +671,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   "Our New Item",
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.fontColor),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
                                 InkWell(
@@ -697,14 +688,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return NewItemsScreen(title: title);
                                     }));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "View All",
-                                    style: GoogleFonts.getFont(
-                                      "Gothic A1",
-                                      textStyle: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColor.buttonBgColor),
+                                    style: TextStyle(
+                                      fontFamily: 'CenturyGothic',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.buttonBgColor,
                                     ),
                                   ),
                                 ),

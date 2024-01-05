@@ -2,7 +2,6 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/AuthenticationScreens/verification_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import '../../res/components/colors.dart';
 
@@ -34,15 +33,13 @@ class _OtpScreenState extends State<OtpScreen> {
                       children: [
                         VerticalSpeacing(
                             MediaQuery.of(context).size.height / 20),
-                        Text(
+                        const Text(
                           "Entry Your 4 digit code",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.grayColor,
                           ),
                         ),
                         Image.asset(
@@ -61,15 +58,13 @@ class _OtpScreenState extends State<OtpScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "Did not recieve code?",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                             const SizedBox(
@@ -77,15 +72,13 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                             GestureDetector(
                               onTap: () {},
-                              child: Text(
+                              child: const Text(
                                 "Resend",
-                                style: GoogleFonts.getFont(
-                                  "Gothic A1",
-                                  textStyle: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColor.primaryColor,
-                                  ),
+                                style: TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.primaryColor,
                                 ),
                               ),
                             ),

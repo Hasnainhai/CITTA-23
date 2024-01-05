@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 
@@ -149,15 +148,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Product Details",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -235,13 +232,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const VerticalSpeacing(30),
                 Text(
                   widget.title,
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.fontColor,
-                    ),
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(16),
@@ -252,15 +247,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       children: [
                         Text(
                           widget.price,
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
+                          style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: AppColor.fontColor,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
+                              decoration: TextDecoration.lineThrough),
                         ),
                         const SizedBox(
                           width: 10,
@@ -269,13 +261,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           newPrice == null
                               ? widget.salePrice
                               : newPrice.toString(),
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.primaryColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
                           ),
                         ),
                       ],
@@ -311,13 +301,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                             Text(
                               "${items}Kg",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.fontColor,
                               ),
                             ),
                             const SizedBox(
@@ -350,15 +338,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const VerticalSpeacing(
                   20,
                 ),
-                Text(
+                const Text(
                   "Product Details",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(
@@ -366,13 +352,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 Text(
                   widget.detail,
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
-                    ),
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.grayColor,
                   ),
                 ),
                 const VerticalSpeacing(
@@ -392,15 +376,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "View Reviews",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
                         ),
                       ),
                     ),
@@ -414,15 +396,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Give Review",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
                         ),
                       ),
                     ),
@@ -456,16 +436,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         );
                       },
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Buy Now",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.whiteColor,
                           ),
                         ),
                       ),

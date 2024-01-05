@@ -3,7 +3,6 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class VerficationPopUp extends StatelessWidget {
   const VerficationPopUp({super.key});
@@ -26,28 +25,24 @@ class VerficationPopUp extends StatelessWidget {
               ),
             ),
             VerticalSpeacing(MediaQuery.of(context).size.height / 20),
-            Text(
+            const Text(
               "Verified!!",
-              style: GoogleFonts.getFont(
-                "Gothic A1",
-                textStyle: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.fontColor,
-                ),
+              style: TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppColor.fontColor,
               ),
             ),
             VerticalSpeacing(MediaQuery.of(context).size.height / 20),
-            Text(
+            const Text(
               "Hurrah!!  You have successfully verified the account.",
               textAlign: TextAlign.center,
-              style: GoogleFonts.getFont(
-                "Gothic A1",
-                textStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.grayColor,
-                ),
+              style: TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: AppColor.grayColor,
               ),
             ),
             VerticalSpeacing(MediaQuery.of(context).size.height / 20),

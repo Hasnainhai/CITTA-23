@@ -4,7 +4,6 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
 import 'product_detail_screen.dart';
@@ -120,14 +119,12 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
           ),
         ),
         title: Text(
-          widget.title ?? 'New Items',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          widget.title,
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),

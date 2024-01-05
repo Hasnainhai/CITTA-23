@@ -5,7 +5,6 @@ import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/filter/filter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -124,15 +123,13 @@ class _SearchScreenState extends State<SearchScreen> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Search",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -209,13 +206,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   currentResult['title'],
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.fontColor,
-                                    ),
+                                  style: const TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.blackColor,
                                   ),
                                 ),
                               ),
@@ -241,13 +236,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   currentFashionResult['title'],
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.fontColor,
-                                    ),
+                                  style: const TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.blackColor,
                                   ),
                                 ),
                               ),

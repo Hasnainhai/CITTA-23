@@ -9,11 +9,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../res/components/colors.dart';
-import 'widgets/increase_container.dart';
 
 // ignore: must_be_immutable
 class BundleProductScreen extends StatefulWidget {
@@ -160,17 +158,20 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
       // Get the user's UID
       String uid = FirebaseAuth
           .instance.currentUser!.uid; // You need to implement this function
-
+      String uuid = const Uuid().v1();
       // Add the item to the 'favoriteList' collection
       await _firestoreInstance
           .collection('favoriteList')
           .doc(uid)
           .collection('favorites')
-          .add({
+          .doc(uuid)
+          .set({
         'title': widget.title.toString(),
         'salePrice': widget.saleprice.toString(),
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
+        'sellerId': widget.sellerId,
+        'deletedId': uuid
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -229,15 +230,13 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Bundel Details",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -314,13 +313,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                 const VerticalSpeacing(30),
                 Text(
                   widget.title,
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.fontColor,
-                    ),
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(30),
@@ -331,14 +328,12 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       children: [
                         Text(
                           widget.price,
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor,
-                              decoration: TextDecoration.lineThrough,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
                         const SizedBox(
@@ -348,25 +343,15 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           newPrice == null
                               ? widget.saleprice
                               : newPrice.toString(),
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.primaryColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
                           ),
                         ),
                       ],
                     ),
-                    // IncreaseContainer(
-                    //   price: widget.saleprice,
-                    //   onPriceChanged: (updatedPrice) {
-                    //     setState(() {
-                    //       widget.saleprice = updatedPrice.toString();
-                    //     });
-                    //   },
-                    // ),
                     Row(
                       children: [
                         InkWell(
@@ -395,13 +380,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                         Text(
                           items.toString(),
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
                           ),
                         ),
                         const SizedBox(
@@ -437,24 +420,20 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       children: [
                         Text(
                           widget.weight,
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "Weight",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.grayColor,
                           ),
                         ),
                       ],
@@ -463,50 +442,42 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       children: [
                         Text(
                           widget.size,
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "Size",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.grayColor,
                           ),
                         ),
                       ],
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text(
                           "6",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
                           ),
                         ),
                         Text(
                           "Item’s",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.grayColor,
                           ),
                         ),
                       ],
@@ -514,15 +485,13 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                   ],
                 ),
                 const VerticalSpeacing(20),
-                Text(
+                const Text(
                   "Pack Details",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
 
@@ -551,13 +520,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         children: [
                           Text(
                             widget.title1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const SizedBox(
@@ -567,13 +534,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           Text(
                             widget.amount1,
                             // widget.amount1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
@@ -607,13 +572,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         children: [
                           Text(
                             widget.title2,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const SizedBox(
@@ -623,13 +586,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           Text(
                             widget.amount2,
                             // widget.amount1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
@@ -662,13 +623,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         children: [
                           Text(
                             widget.title3,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const SizedBox(
@@ -678,13 +637,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           Text(
                             widget.amount3,
                             // widget.amount1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
@@ -717,13 +674,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         children: [
                           Text(
                             widget.title4,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const SizedBox(
@@ -733,13 +688,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           Text(
                             widget.amount4,
                             // widget.amount1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
@@ -772,13 +725,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         children: [
                           Text(
                             widget.title5,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const SizedBox(
@@ -788,13 +739,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           Text(
                             widget.amount5,
                             // widget.amount1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
@@ -827,13 +776,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         children: [
                           Text(
                             widget.title6,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           const SizedBox(
@@ -843,13 +790,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           Text(
                             widget.amount6,
                             // widget.amount1,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
@@ -875,15 +820,13 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "View Reviews",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
                         ),
                       ),
                     ),
@@ -897,15 +840,13 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         "Give Review",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
                         ),
                       ),
                     ),
@@ -959,25 +900,23 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         height: 52,
                         width: MediaQuery.of(context).size.width / 1.5,
                         color: AppColor.primaryColor,
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.shopping_bag_outlined,
                               color: AppColor.buttonTxColor,
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 14,
                             ),
                             Text(
                               "Buy Now",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.buttonTxColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.buttonTxColor,
                               ),
                             ),
                           ],

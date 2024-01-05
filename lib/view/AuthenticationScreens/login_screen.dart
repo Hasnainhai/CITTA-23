@@ -7,7 +7,6 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/firebase_const.dart';
 import '../../utils/utils.dart';
@@ -44,7 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
             email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim());
         Utils.toastMessage('SuccessFully Login');
-        Navigator.pushNamed(context, RoutesName.dashboardScreen);
+        Navigator.pushNamedAndRemoveUntil(
+            context, RoutesName.dashboardScreen, (route) => false);
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {
@@ -87,22 +87,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const VerticalSpeacing(50.0),
-                  Center(
+                  const Center(
                     child: Text.rich(
                       TextSpan(
                         text: 'Welcome to our \n',
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w300,
-                            color: AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 30,
+                          fontWeight: FontWeight.w300,
+                          color: AppColor.fontColor,
                         ),
-                        children: const <TextSpan>[
+                        children: <TextSpan>[
                           TextSpan(
                             text: 'Vegan Life Style',
                             style: TextStyle(
+                                fontFamily: 'CenturyGothic',
                                 color: AppColor.buttonBgColor,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 30.0),
@@ -153,18 +152,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         RoutesName.restscreen,
                       );
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
                           "Forget Password?",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
                           ),
                         ),
                       ],
@@ -181,20 +178,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             _submitFormOnLogin();
                           }),
                   const VerticalSpeacing(30.0),
-                  const AuthButton(),
+                  const AuthButton(
+                    buttonText: 'Login with Google',
+                  ),
                   const VerticalSpeacing(20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Don’t Have Account?",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: AppColor.fontColor,
                         ),
                       ),
                       const SizedBox(
@@ -205,15 +202,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushNamed(
                               context, RoutesName.registerScreen);
                         },
-                        child: Text(
+                        child: const Text(
                           "Sign up",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.primaryColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
                           ),
                         ),
                       ),

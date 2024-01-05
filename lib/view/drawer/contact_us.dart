@@ -1,7 +1,5 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../res/components/colors.dart';
 
 class ContactUsScreen extends StatelessWidget {
@@ -22,15 +20,13 @@ class ContactUsScreen extends StatelessWidget {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Contact Us",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.primaryColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.primaryColor,
           ),
         ),
         bottom: const PreferredSize(
@@ -65,26 +61,22 @@ class ContactUsScreen extends StatelessWidget {
                     color: AppColor.primaryColor,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   "+8801710000000",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
-                title: Text(
+                title: const Text(
                   "+8801710000000",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
               ),
@@ -103,15 +95,13 @@ class ContactUsScreen extends StatelessWidget {
                     color: AppColor.primaryColor,
                   ),
                 ),
-                title: Text(
+                title: const Text(
                   "Hello@gmail.com",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
               ),
@@ -130,26 +120,22 @@ class ContactUsScreen extends StatelessWidget {
                     color: AppColor.primaryColor,
                   ),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                   "Dhaka, Bangladesh",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
-                title: Text(
+                title: const Text(
                   "26/C Mohammadpur",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
               )

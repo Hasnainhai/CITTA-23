@@ -5,7 +5,6 @@ import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
@@ -165,25 +164,23 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                 child: Container(
                   height: 52,
                   color: AppColor.primaryColor,
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.shopping_bag_outlined,
                         color: AppColor.buttonTxColor,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         width: 14,
                       ),
                       Text(
                         "Create Own Pack",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.buttonTxColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.buttonTxColor,
                         ),
                       ),
                     ],
@@ -211,15 +208,13 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
               color: AppColor.fontColor,
             ),
           ),
-          title: Text(
+          title: const Text(
             "Popular Pack",
-            style: GoogleFonts.getFont(
-              "Gothic A1",
-              textStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: AppColor.fontColor,
-              ),
+            style: TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: AppColor.fontColor,
             ),
           ),
         ),

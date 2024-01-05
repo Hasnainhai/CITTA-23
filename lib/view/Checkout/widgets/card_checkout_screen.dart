@@ -2,7 +2,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,13 +10,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
-import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
-import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import '../../../res/components/colors.dart';
@@ -179,15 +176,13 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'Checkout ',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
@@ -214,19 +209,35 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Select delivery address',
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.blackColor,
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.blackColor,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutesName.addressdetailscreen);
+                        },
+                        child: Container(
+                          height: 28.0,
+                          width: 28.0,
+                          color: AppColor.primaryColor,
+                          child: const Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
+                  const VerticalSpeacing(20),
                   SizedBox(
                     child: StreamBuilder(
                         stream: FirebaseFirestore.instance
@@ -281,16 +292,14 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                           );
                         }),
                   ),
-                  Text(
+                  const Text(
                     'Select Payment System',
                     textAlign: TextAlign.start,
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.fontColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
                     ),
                   ),
                   const VerticalSpeacing(20.0),
@@ -339,70 +348,13 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                       const VerticalSpeacing(5),
                                       Text(
                                         "Master Card",
-                                        style: GoogleFonts.getFont(
-                                          "Gothic A1",
-                                          textStyle: TextStyle(
+                                        style: TextStyle(
+                                            fontFamily: 'CenturyGothic',
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                             color: firstButton
                                                 ? AppColor.fontColor
-                                                : AppColor.fontColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20.0),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  firstButton = false;
-                                  secondButton = !secondButton;
-                                  thirdButton = false;
-                                  paymentType = 'Stripe';
-                                });
-                              },
-                              child: Center(
-                                child: Container(
-                                  height: 66,
-                                  width: 135,
-                                  decoration: BoxDecoration(
-                                      color: secondButton
-                                          ? AppColor.logoBgColor
-                                          : Colors.transparent,
-                                      border: Border.all(
-                                          width: 1,
-                                          color: secondButton
-                                              ? AppColor.primaryColor
-                                              : AppColor.grayColor)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        height: 30.0,
-                                        width: 30.0,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    'images/paypal.png'),
-                                                fit: BoxFit.contain)),
-                                      ),
-                                      const VerticalSpeacing(5),
-                                      Text(
-                                        "PayPal",
-                                        style: GoogleFonts.getFont(
-                                          "Gothic A1",
-                                          textStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: secondButton
-                                                ? AppColor.fontColor
-                                                : AppColor.fontColor,
-                                          ),
-                                        ),
+                                                : AppColor.fontColor),
                                       ),
                                     ],
                                   ),
@@ -449,16 +401,13 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                       const VerticalSpeacing(5),
                                       Text(
                                         "Cash On Delivery",
-                                        style: GoogleFonts.getFont(
-                                          "Gothic A1",
-                                          textStyle: TextStyle(
+                                        style: TextStyle(
+                                            fontFamily: 'CenturyGothic',
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                             color: thirdButton
                                                 ? AppColor.fontColor
-                                                : AppColor.fontColor,
-                                          ),
-                                        ),
+                                                : AppColor.fontColor),
                                       ),
                                     ],
                                   ),
