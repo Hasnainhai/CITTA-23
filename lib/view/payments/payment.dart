@@ -1,7 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 
 class Payment extends StatefulWidget {
@@ -30,15 +29,13 @@ class _PaymentState extends State<Payment> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Payment",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -52,15 +49,13 @@ class _PaymentState extends State<Payment> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "My Card",
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
                     ),
                   ),
                   InkWell(
@@ -105,15 +100,13 @@ class _PaymentState extends State<Payment> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Other Payment Options",
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
                     ),
                   ),
                   const VerticalSpeacing(20.0),
@@ -154,21 +147,19 @@ class _PaymentState extends State<Payment> {
                             ),
                           ),
                           const SizedBox(width: 25.0),
-                          Text.rich(
+                          const Text.rich(
                             TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'Paypal   \n',
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColor.fontColor,
-                                    ),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
-                                const TextSpan(
+                                TextSpan(
                                   text: 'MyPaypal@gmail.com',
                                   style: TextStyle(
                                     color: AppColor.fontColor,
@@ -220,21 +211,19 @@ class _PaymentState extends State<Payment> {
                             ),
                           ),
                           const SizedBox(width: 25.0),
-                          Text.rich(
+                          const Text.rich(
                             TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'Cash On Delivery   \n',
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColor.fontColor,
-                                    ),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
-                                const TextSpan(
+                                TextSpan(
                                   text: 'Pay in Cash',
                                   style: TextStyle(
                                     color: AppColor.fontColor,

@@ -1,7 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/drawer/widget/top_questions.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 
 class HelpScreen extends StatelessWidget {
@@ -22,15 +21,13 @@ class HelpScreen extends StatelessWidget {
               Icons.arrow_back,
               color: AppColor.primaryColor,
             )),
-        title: Text(
+        title: const Text(
           "Help Center",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
         bottom: const PreferredSize(
@@ -54,15 +51,13 @@ class HelpScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Hi! How can we help?",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(24),
@@ -82,15 +77,13 @@ class HelpScreen extends StatelessWidget {
                   ),
                 ),
                 const VerticalSpeacing(24),
-                Text(
+                const Text(
                   "Top Questions",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(14),
@@ -107,15 +100,13 @@ class HelpScreen extends StatelessWidget {
                   question: "How can i avail Sticker Price?",
                 ),
                 const VerticalSpeacing(24),
-                Text(
+                const Text(
                   "Topics",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(14),

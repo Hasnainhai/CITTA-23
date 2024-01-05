@@ -3,7 +3,6 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/review_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TotalRatingScreen extends StatefulWidget {
@@ -31,15 +30,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Reviews",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -63,30 +60,26 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                           height: 60,
                           width: 60,
                           color: AppColor.primaryColor,
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               "4.5",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.buttonTxColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 22,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.buttonTxColor,
                               ),
                             ),
                           ),
                         ),
                         const VerticalSpeacing(10),
-                        Text(
+                        const Text(
                           "320 reviews",
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
                           ),
                         ),
                         const Row(
@@ -125,15 +118,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "5 stars",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.grayColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.grayColor,
                               ),
                             ),
                             LinearPercentIndicator(
@@ -144,15 +135,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               progressColor: AppColor.primaryColor,
                               backgroundColor: Colors.grey.shade300,
                             ),
-                            Text(
+                            const Text(
                               "200",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ],
@@ -160,15 +149,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "4 stars",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.grayColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.grayColor,
                               ),
                             ),
                             LinearPercentIndicator(
@@ -179,15 +166,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               progressColor: AppColor.primaryColor,
                               backgroundColor: Colors.grey.shade300,
                             ),
-                            Text(
+                            const Text(
                               "150",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ],
@@ -195,15 +180,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "3 stars ",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.grayColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.grayColor,
                               ),
                             ),
                             LinearPercentIndicator(
@@ -214,15 +197,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               progressColor: AppColor.primaryColor,
                               backgroundColor: Colors.grey.shade300,
                             ),
-                            Text(
+                            const Text(
                               "90",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ],
@@ -230,15 +211,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "2 stars",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.grayColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.grayColor,
                               ),
                             ),
                             LinearPercentIndicator(
@@ -249,15 +228,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               progressColor: AppColor.primaryColor,
                               backgroundColor: Colors.grey.shade300,
                             ),
-                            Text(
+                            const Text(
                               "30",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ],
@@ -265,15 +242,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "1 stars",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.grayColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.grayColor,
                               ),
                             ),
                             LinearPercentIndicator(
@@ -284,15 +259,13 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               progressColor: AppColor.primaryColor,
                               backgroundColor: Colors.grey.shade300,
                             ),
-                            Text(
+                            const Text(
                               "10",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ],

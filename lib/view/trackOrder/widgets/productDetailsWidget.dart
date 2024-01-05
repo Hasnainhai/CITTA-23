@@ -1,8 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
@@ -50,13 +48,11 @@ class ProductDetailsWidget extends StatelessWidget {
                       Text.rich(
                         TextSpan(
                           text: '$title \n',
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.fontColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: AppColor.fontColor,
                           ),
                           children: <TextSpan>[
                             TextSpan(
@@ -87,24 +83,20 @@ class ProductDetailsWidget extends StatelessWidget {
                 children: [
                   Text(
                     productPrice,
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColor.fontColor,
-                      ),
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColor.fontColor,
                     ),
                   ),
                   Text(
                     procustAverate,
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.grayColor,
-                      ),
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.grayColor,
                     ),
                   ),
                 ],

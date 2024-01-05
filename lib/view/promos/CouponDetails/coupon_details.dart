@@ -1,7 +1,6 @@
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import '../widgets/coupon_card.dart';
@@ -15,15 +14,13 @@ class CouponDetail extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'Coupon Details ',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
@@ -40,19 +37,18 @@ class CouponDetail extends StatelessWidget {
             const VerticalSpeacing(20.0),
             CouponCard(ontap: () {}, img: 'images/offer1.png'),
             const VerticalSpeacing(40.0),
-            Align(
+            const Align(
               alignment: Alignment.center,
               child: Text.rich(
                 TextSpan(
                   text: '41% off only for you. To get this discount\n',
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                        fontSize: 18,
-                        color: AppColor.fontColor,
-                        fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
                   ),
-                  children: const <TextSpan>[
+                  children: <TextSpan>[
                     TextSpan(
                       text: '        collect and apply the voucher.',
                       style: TextStyle(
@@ -74,17 +70,16 @@ class CouponDetail extends StatelessWidget {
                   color: AppColor.primaryColor,
                 ),
                 const SizedBox(width: 20.0),
-                Text.rich(
+                const Text.rich(
                   TextSpan(
                     text: 'Redeemable At All Sulphurfree Bura\n',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                          fontSize: 18,
-                          color: AppColor.fontColor,
-                          fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
                     ),
-                    children: const <TextSpan>[
+                    children: <TextSpan>[
                       TextSpan(
                         text: 'And Black Coffee',
                         style: TextStyle(
@@ -107,17 +102,16 @@ class CouponDetail extends StatelessWidget {
                   color: AppColor.primaryColor,
                 ),
                 const SizedBox(width: 20.0),
-                Text.rich(
+                const Text.rich(
                   TextSpan(
                     text: 'Not Valid With Any Other Discount \n',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                          fontSize: 18,
-                          color: AppColor.fontColor,
-                          fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
                     ),
-                    children: const <TextSpan>[
+                    children: <TextSpan>[
                       TextSpan(
                         text: 'And Promotion',
                         style: TextStyle(
@@ -140,15 +134,14 @@ class CouponDetail extends StatelessWidget {
                   color: AppColor.primaryColor,
                 ),
                 const SizedBox(width: 20.0),
-                Text.rich(
+                const Text.rich(
                   TextSpan(
                     text: 'Vaild For Sulphurfree, Coffee,\n And Tea Only',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                          fontSize: 18,
-                          color: AppColor.fontColor,
-                          fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
                     ),
                   ),
                 ),
@@ -163,30 +156,27 @@ class CouponDetail extends StatelessWidget {
                   color: AppColor.primaryColor,
                 ),
                 const SizedBox(width: 20.0),
-                Text.rich(
+                const Text.rich(
                   TextSpan(
                     text: 'No Cash Value',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                          fontSize: 18,
-                          color: AppColor.fontColor,
-                          fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
                     ),
                   ),
                 ),
               ],
             ),
             const VerticalSpeacing(30.0),
-            Text(
+            const Text(
               'Exp 12/12/2020',
-              style: GoogleFonts.getFont(
-                "Gothic A1",
-                textStyle: const TextStyle(
-                  fontSize: 18,
-                  color: AppColor.fontColor,
-                  fontWeight: FontWeight.w600,
-                ),
+              style: TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppColor.blackColor,
               ),
             ),
             const VerticalSpeacing(30.0),
@@ -205,15 +195,13 @@ class CouponDetail extends StatelessWidget {
                     RoutesName.termsandconditionscreen,
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Terms and Conditions',
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      color: AppColor.fontColor,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColor.fontColor,
                   ),
                 ),
               ),

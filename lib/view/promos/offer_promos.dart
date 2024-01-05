@@ -1,8 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../res/components/colors.dart';
 import 'widgets/coupon_card.dart';
 
@@ -15,15 +13,13 @@ class PromosOffer extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'Offer & Promos ',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
@@ -47,15 +43,13 @@ class PromosOffer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const VerticalSpeacing(30.0),
-              Text(
+              const Text(
                 'You Have 5 Coupons To Use ',
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
-                  ),
+                style: TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.blackColor,
                 ),
               ),
               const VerticalSpeacing(20.0),

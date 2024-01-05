@@ -1,6 +1,5 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class IncreaseContainer extends StatefulWidget {
   const IncreaseContainer(
@@ -10,6 +9,7 @@ class IncreaseContainer extends StatefulWidget {
   @override
   State<IncreaseContainer> createState() => _IncreaseContainerState();
 }
+
 class _IncreaseContainerState extends State<IncreaseContainer> {
   int amount = 1;
 
@@ -64,13 +64,11 @@ class _IncreaseContainerState extends State<IncreaseContainer> {
         ),
         Text(
           amount.toString(),
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColor.fontColor,
-            ),
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColor.fontColor,
           ),
         ),
         const SizedBox(

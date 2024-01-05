@@ -1,7 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/custom_field.dart';
 import '../../../res/components/roundedButton.dart';
@@ -25,15 +24,13 @@ class AddCard extends StatelessWidget {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Add New Card",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),

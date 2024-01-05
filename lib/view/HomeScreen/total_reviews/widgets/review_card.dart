@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../../res/components/colors.dart';
 import '../../../../res/components/widgets/verticalSpacing.dart';
 import 'package:intl/intl.dart';
@@ -57,13 +56,11 @@ class _ReviewCardState extends State<ReviewCard> {
                       children: [
                         Text(
                           widget.name,
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
                           ),
                         ),
                         RatingBar.builder(
@@ -88,13 +85,11 @@ class _ReviewCardState extends State<ReviewCard> {
                   formatDateAndTime(
                     widget.time,
                   ),
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
-                    ),
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.grayColor,
                   ),
                 ),
               ],
@@ -102,51 +97,44 @@ class _ReviewCardState extends State<ReviewCard> {
             const VerticalSpeacing(8),
             Text(
               widget.comment,
-              textAlign: TextAlign.start,
-              style: GoogleFonts.getFont(
-                "Gothic A1",
-                textStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: AppColor.grayColor,
-                ),
+              style: const TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: AppColor.grayColor,
               ),
             ),
             const VerticalSpeacing(14),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.favorite,
                   color: AppColor.primaryColor,
                 ),
                 Text(
                   "24 Like",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.grayColor,
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 20,
                 ),
-                const Icon(
+                Icon(
                   Icons.reply_outlined,
                   color: AppColor.grayColor,
                 ),
                 Text(
                   "Reply",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.grayColor,
                   ),
                 ),
               ],

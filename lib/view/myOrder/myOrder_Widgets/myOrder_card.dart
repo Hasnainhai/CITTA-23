@@ -1,8 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
@@ -36,13 +34,12 @@ class myOrderCard extends StatelessWidget {
                 Text.rich(
                   TextSpan(
                     text: 'Order ID: ',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blackColor,
-                      ),
+                    // ignore: prefer_const_constructors
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.blackColor,
                     ),
                     children: <TextSpan>[
                       TextSpan(

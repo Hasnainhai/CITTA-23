@@ -6,8 +6,6 @@ import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../res/components/colors.dart';
 import 'widgets/price_slider.dart';
 
@@ -47,30 +45,26 @@ class _FilterPopUpState extends State<FilterPopUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
+                const Center(
                   child: Text(
                     "Filters",
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
                     ),
                   ),
                 ),
                 const VerticalSpeacing(30),
                 const PriceRangeSlider(),
-                Text(
+                const Text(
                   "Categories",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(
@@ -98,15 +92,13 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         child: Center(
                           child: Text(
                             "Fashion",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: button1
-                                    ? AppColor.buttonTxColor
-                                    : AppColor.fontColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: button1
+                                  ? AppColor.buttonTxColor
+                                  : AppColor.fontColor,
                             ),
                           ),
                         ),
@@ -131,15 +123,13 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         child: Center(
                           child: Text(
                             "Grocery",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: button2
-                                    ? AppColor.buttonTxColor
-                                    : AppColor.fontColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: button2
+                                  ? AppColor.buttonTxColor
+                                  : AppColor.fontColor,
                             ),
                           ),
                         ),
@@ -164,15 +154,13 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         child: Center(
                           child: Text(
                             "Vagetabals",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: button3
-                                    ? AppColor.buttonTxColor
-                                    : AppColor.fontColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: button3
+                                  ? AppColor.buttonTxColor
+                                  : AppColor.fontColor,
                             ),
                           ),
                         ),
@@ -199,15 +187,13 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     child: Center(
                       child: Text(
                         "See All",
-                        style: GoogleFonts.getFont(
-                          "Gothic A1",
-                          textStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: button4
-                                ? AppColor.buttonTxColor
-                                : AppColor.fontColor,
-                          ),
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: button4
+                              ? AppColor.buttonTxColor
+                              : AppColor.fontColor,
                         ),
                       ),
                     ),
@@ -216,15 +202,13 @@ class _FilterPopUpState extends State<FilterPopUp> {
                 const VerticalSpeacing(
                   30,
                 ),
-                Text(
+                const Text(
                   "Rating",
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(

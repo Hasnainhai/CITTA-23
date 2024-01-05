@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -17,7 +16,10 @@ class HomeCard extends StatelessWidget {
     required this.cartBorder,
     required this.img,
     required this.iconColor,
-    required this.ontap, required this.addCart, required this.productId, required this.sellerId,
+    required this.ontap,
+    required this.addCart,
+    required this.productId,
+    required this.sellerId,
   });
   final String img;
   final String name;
@@ -63,13 +65,11 @@ class HomeCard extends StatelessWidget {
                 const VerticalSpeacing(6.0),
                 Text(
                   name.length > 8 ? '${name.substring(0, 8)}...' : name,
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: AppColor.fontColor,
-                    ),
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 Row(
@@ -87,20 +87,18 @@ class HomeCard extends StatelessWidget {
                           ),
                           TextSpan(
                             text: dPrice,
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800,
-                                color: AppColor.fontColor,
-                              ),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: AppColor.fontColor,
                             ),
                           ),
                         ],
                       ),
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         addCart();
                       },
                       child: Container(

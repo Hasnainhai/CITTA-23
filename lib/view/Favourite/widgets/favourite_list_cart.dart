@@ -1,7 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 
 class FavouristListCart extends StatelessWidget {
@@ -50,13 +48,11 @@ class FavouristListCart extends StatelessWidget {
                       Text.rich(
                         TextSpan(
                           text: '\n$title \n',
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.fontColor,
-                            ),
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
+                            color: AppColor.fontColor,
                           ),
                           children: <TextSpan>[
                             TextSpan(

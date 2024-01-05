@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../res/components/colors.dart';
 
@@ -130,13 +129,11 @@ class _CartWidgetState extends State<CartWidget> {
                   Text.rich(
                     TextSpan(
                       text: widget.title,
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: AppColor.fontColor,
-                        ),
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor.fontColor,
                       ),
                     ),
                   ),
@@ -174,13 +171,11 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                     Text(
                       widget.items.toString(),
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     const SizedBox(
@@ -232,13 +227,11 @@ class _CartWidgetState extends State<CartWidget> {
                   ),
                   Text(
                     newPrice == null ? widget.price : newPrice.toString(),
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: AppColor.fontColor,
-                      ),
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColor.fontColor,
                     ),
                   ),
                 ],

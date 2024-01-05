@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SiginButton extends StatelessWidget {
   final String buttonTitle;
@@ -42,14 +41,12 @@ class SiginButton extends StatelessWidget {
               ),
               Text(
                 buttonTitle,
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: TextStyle(
-                    fontSize: 16,
+                   style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 24,
                     fontWeight: FontWeight.w400,
                     color: borderColor,
                   ),
-                ),
               ),
             ],
           ),

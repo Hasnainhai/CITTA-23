@@ -1,8 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 
 class PriceRangeSlider extends StatefulWidget {
@@ -27,13 +25,11 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
         children: [
           Text(
             'Price Range: \$${_values.start.toInt()} - \$${_values.end.toInt()}',
-            style: GoogleFonts.getFont(
-              "Gothic A1",
-              textStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: AppColor.blackColor,
-              ),
+            style: TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: AppColor.blackColor,
             ),
           ),
           RangeSlider(

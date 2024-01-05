@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 
 class TopQuestion extends StatelessWidget {
@@ -16,13 +15,11 @@ class TopQuestion extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text(
             question,
-            style: GoogleFonts.getFont(
-              "Gothic A1",
-              textStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: AppColor.grayColor,
-              ),
+            style: const TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: AppColor.grayColor,
             ),
           ),
           const Icon(

@@ -7,7 +7,6 @@ import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
@@ -118,15 +117,13 @@ class _AllFashionProdState extends State<AllFashionProd> {
             color: AppColor.fontColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           "Fashion",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),

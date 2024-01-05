@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../../res/components/colors.dart';
 
 class ItemPrizingWidget extends StatelessWidget {
@@ -18,24 +17,20 @@ class ItemPrizingWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              color: AppColor.grayColor,
-            ),
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: AppColor.grayColor,
           ),
         ),
         Text(
           price,
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: AppColor.blackColor,
-            ),
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+            color: AppColor.blackColor,
           ),
         ),
       ],

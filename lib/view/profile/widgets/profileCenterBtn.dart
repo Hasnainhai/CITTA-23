@@ -1,8 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
@@ -57,12 +55,11 @@ class profileCenterBtns extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: '$title\n',
-            style: GoogleFonts.getFont(
-              "Gothic A1",
-              textStyle: const TextStyle(
-                  fontSize: 12,
-                  color: AppColor.fontColor,
-                  fontWeight: FontWeight.w600),
+            style: const TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColor.fontColor,
             ),
             children: <TextSpan>[
               TextSpan(

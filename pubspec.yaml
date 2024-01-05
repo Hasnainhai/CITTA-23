@@ -37,7 +37,6 @@ dependencies:
   fluttertoast: ^8.2.2
   another_flushbar: ^1.12.30
   percent_indicator: ^4.2.3
-  google_fonts: ^6.1.0
   animated_bottom_navigation_bar: ^1.3.0
   pinput: ^3.0.1
   carousel_slider: ^4.2.1
@@ -102,22 +101,24 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: CenturyGothic
+      fonts:
+        - asset: fonts/century-gothic/Century Gothic.ttf
+        - asset: fonts/century-gothic/CenturyGothic.ttf
+        - asset: fonts/century-gothic/GOTHIC.TTF
+        - asset: fonts/century-gothic/GOTHICB.TTF
+        - asset: fonts/century-gothic/GOTHICB0.TTF
+        - asset: fonts/century-gothic/GOTHICBI.TTF
+        - asset: fonts/century-gothic/GOTHICI.TTF
+    - family: ShareFonts
+      fonts:
+        - asset: fonts/century-gothic/sharefonts.net.txt
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_launcher_icons:
-   android: "launcher_icon"
-   ios: true
-   image_path: "images/app_icon.png"
-   min_sdk_android: 21
+  android: "launcher_icon"
+  ios: true
+  image_path: "images/app_icon.png"
+  min_sdk_android: 21

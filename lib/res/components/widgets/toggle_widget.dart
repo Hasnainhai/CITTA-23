@@ -1,7 +1,6 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ToggleWidget extends StatefulWidget {
   const ToggleWidget({super.key, required this.title});
@@ -19,13 +18,12 @@ class _ToggleWidgetState extends State<ToggleWidget> {
       children: [
         Text(
           widget.title,
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          // ignore: prefer_const_constructors
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
         FlutterSwitch(

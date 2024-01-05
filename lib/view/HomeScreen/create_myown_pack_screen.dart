@@ -3,7 +3,6 @@ import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import 'widgets/homeCard.dart';
 
@@ -104,15 +103,13 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "Create My Pack",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -155,13 +152,11 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                 children: [
                   Text(
                     totalSalePriceString, // Display total price
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.buttonTxColor,
-                      ),
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.buttonTxColor,
                     ),
                   ),
                   const SizedBox(

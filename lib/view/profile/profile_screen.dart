@@ -10,7 +10,6 @@ import 'package:citta_23/view/profile/widgets/profile_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/loading_manager.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -91,15 +90,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: AppColor.primaryColor,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'Profile ',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.whiteColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.whiteColor,
           ),
         ),
         centerTitle: true,
@@ -167,13 +164,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text.rich(
           TextSpan(
             text: '\n${_name == null ? 'Name' : _name!} \n',
-            style: GoogleFonts.getFont(
-              "Gothic A1",
-              textStyle: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColor.whiteColor,
-              ),
+            style: const TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: AppColor.whiteColor,
             ),
             children: <TextSpan>[
               TextSpan(

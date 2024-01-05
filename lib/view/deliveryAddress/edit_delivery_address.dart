@@ -11,8 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../res/components/colors.dart';
 
 class EditAddressScreen extends StatefulWidget {
@@ -152,15 +150,13 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
               Icons.arrow_back,
               color: AppColor.fontColor,
             )),
-        title: Text(
+        title: const Text(
           "New Address",
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.fontColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
           ),
         ),
       ),
@@ -289,21 +285,19 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
                               ],
                             ),
                             const VerticalSpeacing(20),
-                            Row(
+                            const Row(
                               children: [
-                                const MyCheckBox(),
-                                const SizedBox(
+                                MyCheckBox(),
+                                SizedBox(
                                   width: 10,
                                 ),
                                 Text(
                                   "Make Default Shipping Address",
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.fontColor,
-                                    ),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
                               ],

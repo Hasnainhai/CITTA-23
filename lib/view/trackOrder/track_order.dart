@@ -3,7 +3,6 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/trackOrder/widgets/productDetailsWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:order_tracker/order_tracker.dart';
 
 class TrackOrder extends StatefulWidget {
@@ -40,15 +39,13 @@ class _TrackOrderState extends State<TrackOrder> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'My Order Details ',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
@@ -72,15 +69,13 @@ class _TrackOrderState extends State<TrackOrder> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpeacing(20.0),
-                Text(
+                const Text(
                   '   Order id #30398505202',
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.blackColor,
                   ),
                 ),
                 Padding(
@@ -95,15 +90,13 @@ class _TrackOrderState extends State<TrackOrder> {
                     deliveredTitleAndDateList: deliveredList,
                   ),
                 ),
-                Text(
+                const Text(
                   '   Product Details',
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.blackColor,
                   ),
                 ),
                 const VerticalSpeacing(20.0),
@@ -142,51 +135,43 @@ class _TrackOrderState extends State<TrackOrder> {
                 ),
 
                 const VerticalSpeacing(30.0),
-                ListTile(
+                const ListTile(
                   title: Text(
                     'Total Amount',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.blackColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
                     ),
                   ),
                   trailing: Text(
                     '\$130',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blackColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
                     ),
                   ),
                 ),
-                ListTile(
+                const ListTile(
                   title: Text(
                     'Paid From',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.blackColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
                     ),
                   ),
                   trailing: Text(
                     'Credit Card',
-                    style: GoogleFonts.getFont(
-                      "Gothic A1",
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.blackColor,
-                      ),
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.blackColor,
                     ),
                   ),
                 ),

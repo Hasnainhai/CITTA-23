@@ -10,7 +10,6 @@ import 'package:citta_23/view/profile/editProfile/widgets/image_pickerWidget.dar
 import 'package:citta_23/view/profile/widgets/common_firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/firebase_const.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -107,31 +106,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const VerticalSpeacing(60),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Column(
                         children: [
                           Text(
                             "Welcome to our",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 30,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           Text(
                             "Vegan Life Style",
-                            style: GoogleFonts.getFont(
-                              "Gothic A1",
-                              textStyle: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.primaryColor,
-                              ),
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.primaryColor,
                             ),
                           ),
                         ],
@@ -151,14 +146,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Register",
-                              style: GoogleFonts.getFont(
-                                "Gothic A1",
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  color: AppColor.fontColor,
-                                ),
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 20,
+                                color: AppColor.fontColor,
                               ),
                             ),
                             Center(
@@ -248,15 +241,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   "Already have account",
-                                  style: GoogleFonts.getFont(
-                                    "Gothic A1",
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColor.fontColor,
-                                    ),
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
                                 const SizedBox(
@@ -267,15 +258,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     Navigator.pushNamed(
                                         context, RoutesName.loginscreen);
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Log In",
-                                    style: GoogleFonts.getFont(
-                                      "Gothic A1",
-                                      textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.primaryColor,
-                                      ),
+                                    style: TextStyle(
+                                      fontFamily: 'CenturyGothic',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.primaryColor,
                                     ),
                                   ),
                                 ),

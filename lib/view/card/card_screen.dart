@@ -12,7 +12,6 @@ import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
@@ -117,15 +116,13 @@ class _CardScreenState extends State<CardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'Cart Page',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
@@ -193,15 +190,13 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(30.0),
-                Text(
+                const Text(
                   'Add Coupon',
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: AppColor.fontColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(20.0),
@@ -235,28 +230,24 @@ class _CardScreenState extends State<CardScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Total Items",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.grayColor,
-                        ),
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.blackColor,
                       ),
                     ),
                     Consumer<IndexModel>(
                       builder: (context, indexModel, child) {
                         return Text(
                           '${indexModel.items}',
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.blackColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: AppColor.blackColor,
                           ),
                         );
                       },
@@ -285,28 +276,24 @@ class _CardScreenState extends State<CardScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Total Price",
-                      style: GoogleFonts.getFont(
-                        "Gothic A1",
-                        textStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.grayColor,
-                        ),
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.grayColor,
                       ),
                     ),
                     Consumer<SubTotalModel>(
                       builder: (context, subTotalModel, child) {
                         return Text(
                           '₹${subTotalModel.subTotal}',
-                          style: GoogleFonts.getFont(
-                            "Gothic A1",
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.blackColor,
-                            ),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: AppColor.blackColor,
                           ),
                         );
                       },

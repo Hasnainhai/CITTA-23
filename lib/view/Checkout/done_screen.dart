@@ -2,7 +2,6 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/components/colors.dart';
 import '../HomeScreen/DashBoard/tapBar.dart';
@@ -45,28 +44,24 @@ class CheckOutDoneScreen extends StatelessWidget {
                 ),
               ),
               const VerticalSpeacing(20),
-              Text(
+              const Text(
                 "Order Placed Successfully ",
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.fontColor,
-                  ),
+                style: TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.fontColor,
                 ),
               ),
               const VerticalSpeacing(14),
-              Text(
+              const Text(
                 "Thanks for your order. Your order has placed successfully. Please continue your order.",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.getFont(
-                  "Gothic A1",
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
-                  ),
+                style: TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.grayColor,
                 ),
               ),
               const VerticalSpeacing(
@@ -85,16 +80,14 @@ class CheckOutDoneScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, RoutesName.trackOrder);
                 },
-                child: Text(
+                child: const Text(
                   "Track Order",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.getFont(
-                    "Gothic A1",
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.primaryColor,
-                    ),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.primaryColor,
                   ),
                 ),
               )

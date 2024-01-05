@@ -7,7 +7,6 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'myOrder_Widgets/myOrder_card.dart';
@@ -60,15 +59,13 @@ class _MyOrdersState extends State<MyOrders>
             color: AppColor.blackColor,
           ),
         ),
-        title: Text(
+        title: const Text(
           'My Order',
-          style: GoogleFonts.getFont(
-            "Gothic A1",
-            textStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: AppColor.blackColor,
-            ),
+          style: TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            color: AppColor.blackColor,
           ),
         ),
         centerTitle: true,
