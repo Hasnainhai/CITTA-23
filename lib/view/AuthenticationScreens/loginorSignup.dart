@@ -80,9 +80,7 @@ class _LoginOrSignUpState extends State<LoginOrSignUp> {
             const VerticalSpeacing(50.0),
             const Padding(
               padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: AuthButton(
-                buttonText: 'SignUp with Google',
-              ),
+              child: AuthButton(),
             ),
           ],
         )),

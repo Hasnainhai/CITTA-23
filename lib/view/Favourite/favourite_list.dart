@@ -178,7 +178,7 @@ class _FavouriteListState extends State<FavouriteList> {
                                   img: favorite['imageUrl'],
                                   id: favorite['id'],
                                   customerId: favorite['sellerId'],
-                                  weight: '1',
+                                  weight: favorite['salePrice'],
                                   salePrice: favorite['salePrice'],
                                   productType: "faviroute list"),
                             ),

@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
+import 'package:citta_23/res/components/widgets/toggle_widget.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
@@ -234,26 +235,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutesName.addressdetailscreen);
-                        },
-                        child: Container(
-                          height: 28.0,
-                          width: 28.0,
-                          color: AppColor.primaryColor,
-                          child: const Center(
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
-                  const VerticalSpeacing(20),
                   SizedBox(
                     child: StreamBuilder(
                         stream: FirebaseFirestore.instance
@@ -284,7 +267,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      bool isColor = false;
                                       debugPrint('address one is selected');
                                       address = data['address2'];
                                       name = data['name'];
@@ -373,6 +355,60 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                             color: firstButton
+                                                ? AppColor.fontColor
+                                                : AppColor.fontColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20.0),
+                            InkWell(
+                              onTap: () {
+                                setState(() {
+                                  firstButton = false;
+                                  secondButton = !secondButton;
+                                  thirdButton = false;
+                                  paymentType = 'Stripe';
+                                });
+                              },
+                              child: Center(
+                                child: Container(
+                                  height: 66,
+                                  width: 135,
+                                  decoration: BoxDecoration(
+                                      color: secondButton
+                                          ? AppColor.logoBgColor
+                                          : Colors.transparent,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: secondButton
+                                              ? AppColor.primaryColor
+                                              : AppColor.grayColor)),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        height: 30.0,
+                                        width: 30.0,
+                                        decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    'images/paypal.png'),
+                                                fit: BoxFit.contain)),
+                                      ),
+                                      const VerticalSpeacing(5),
+                                      Text(
+                                        "PayPal",
+                                        style: GoogleFonts.getFont(
+                                          "Gothic A1",
+                                          textStyle: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: secondButton
                                                 ? AppColor.fontColor
                                                 : AppColor.fontColor,
                                           ),

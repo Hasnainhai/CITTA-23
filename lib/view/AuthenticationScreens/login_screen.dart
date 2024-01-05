@@ -44,8 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             email: emailController.text.toLowerCase().trim(),
             password: passwordController.text.trim());
         Utils.toastMessage('SuccessFully Login');
-        Navigator.pushNamedAndRemoveUntil(
-            context, RoutesName.dashboardScreen, (route) => false);
+        Navigator.pushNamed(context, RoutesName.dashboardScreen);
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {
@@ -182,9 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _submitFormOnLogin();
                           }),
                   const VerticalSpeacing(30.0),
-                  const AuthButton(
-                    buttonText: 'Login with Google',
-                  ),
+                  const AuthButton(),
                   const VerticalSpeacing(20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

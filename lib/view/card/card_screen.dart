@@ -96,7 +96,6 @@ class _CardScreenState extends State<CardScreen> {
     _fetchData();
   }
 
-  // ignore: unused_element
   Future<void> _deleteProduct(String deleteId) async {
     try {
       await FirebaseFirestore.instance

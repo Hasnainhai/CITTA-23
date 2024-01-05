@@ -27,7 +27,7 @@ class myOrderCard extends StatelessWidget {
       width: double.infinity,
       color: AppColor.whiteColor,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
             Row(
@@ -46,9 +46,7 @@ class myOrderCard extends StatelessWidget {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: orderId.length > 6
-                            ? orderId.substring(0, 6)
-                            : orderId,
+                        text: orderId,
                         style: const TextStyle(
                           color: AppColor.primaryColor,
                           fontWeight: FontWeight.w600,

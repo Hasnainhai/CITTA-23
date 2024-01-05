@@ -3,13 +3,8 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
-import 'package:citta_23/utils/utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'myOrder_Widgets/myOrder_card.dart';
 
 class MyOrders extends StatefulWidget {
@@ -22,12 +17,6 @@ class MyOrders extends StatefulWidget {
 class _MyOrdersState extends State<MyOrders>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String formatDateAndTime(String time) {
-    DateTime dateTime = DateTime.parse(time);
-    String formattedDateTime =
-        "${DateFormat.MMMd().format(dateTime)},${DateFormat.y().format(dateTime)},${DateFormat.jm().format(dateTime)}";
-    return formattedDateTime;
-  }
 
   @override
   void initState() {
@@ -86,11 +75,9 @@ class _MyOrdersState extends State<MyOrders>
                   unselectedLabelColor: AppColor.grayColor,
                   controller: _tabController, // Provide the TabController
                   tabs: const <Widget>[
-                    Tab(
-                      text: 'All',
-                    ),
-                    Tab(text: 'Running'),
-                    Tab(text: 'Previous'),
+                    Tab(text: 'All(58)'),
+                    Tab(text: 'Running(14)'),
+                    Tab(text: 'Previous(32)'),
                   ],
                 ),
               ],
@@ -99,233 +86,206 @@ class _MyOrdersState extends State<MyOrders>
         ),
       ),
       body: TabBarView(
-        // Provide the TabController
-        controller: _tabController,
+        controller: _tabController, // Provide the TabController
         children: <Widget>[
           // Content for the "All" tab
-          Column(
-            children: [
-              const VerticalSpeacing(20.0),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('my_orders')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    Utils.flushBarErrorMessage('${snapshot.error}', context);
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor.withOpacity(0.2),
-                            colorOpacity: 0.2,
-                            enabled: true,
-                            direction: const ShimmerDirection.fromLTRB(),
-                            child: Container(
-                              height: 100.0,
-                              width: double.infinity,
-                              color: AppColor.grayColor.withOpacity(0.2),
-                            ),
-                          ),
-                        );
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                      orderId: '236743',
+                      date: '26 OCT',
+                      status: 'Processing',
+                      ontap: () {
+                        Navigator.pushNamed(context, RoutesName.trackOrder);
                       },
-                    );
-                  }
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: myOrderCard(
-                          orderId: data['uuid'],
-                          date: formatDateAndTime(
-                            data['date'],
-                          ),
-                          status: data['status'],
-                          ontap: () {
-                            Navigator.pushNamed(context, RoutesName.trackOrder);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-            ],
+                    ),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '678494',
+                        date: '25 NOV',
+                        status: 'Completed',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '847382',
+                        date: '12 DEC',
+                        status: 'Shipped',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '748398',
+                        date: '8 JAN',
+                        status: 'Delivered',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '099876',
+                        date: '16 FEB',
+                        status: 'Processing',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '748398',
+                        date: '8 JAN',
+                        status: 'Delivered',
+                        ontap: () {}),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '099876',
+                        date: '16 FEB',
+                        status: 'Processing',
+                        ontap: () {}),
+                  ],
+                ),
+              ],
+            ),
           ),
-          Column(
-            children: [
-              const VerticalSpeacing(20.0),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('my_orders')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    Utils.flushBarErrorMessage('${snapshot.error}', context);
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor.withOpacity(0.2),
-                            colorOpacity: 0.2,
-                            enabled: true,
-                            direction: const ShimmerDirection.fromLTRB(),
-                            child: Container(
-                              height: 100.0,
-                              width: double.infinity,
-                              color: AppColor.grayColor.withOpacity(0.2),
-                            ),
-                          ),
-                        );
+          // Content for the "Running" tab
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                      orderId: '236743',
+                      date: '22 OCT',
+                      status: 'Processing',
+                      ontap: () {
+                        Navigator.pushNamed(context, RoutesName.trackOrder);
                       },
-                    );
-                  }
-
-                  // Filter documents where status is "Delivery send"
-                  List<DocumentSnapshot> deliverySendOrders = snapshot
-                      .data!.docs
-                      .where((document) =>
-                          (document.data() as Map<String, dynamic>)['status'] ==
-                          'processing')
-                      .toList();
-
-                  if (deliverySendOrders.isEmpty) {
-                    return const Center(
-                      child: Text("No orders to show"),
-                    );
-                  }
-
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        deliverySendOrders.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: myOrderCard(
-                          orderId: data['uuid'],
-                          date: formatDateAndTime(
-                            data['date'],
-                          ),
-                          status: data['status'],
-                          ontap: () {
-                            Navigator.pushNamed(context, RoutesName.trackOrder);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-            ],
+                    ),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '678494',
+                        date: '20 NOV',
+                        status: 'Completed',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '847382',
+                        date: '11 DEC',
+                        status: 'Shipped',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '748398',
+                        date: '9 JAN',
+                        status: 'Delivered',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '099876',
+                        date: '17 FEB',
+                        status: 'Processing',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '748398',
+                        date: '23 JAN',
+                        status: 'Delivered',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '099876',
+                        date: '13 FEB',
+                        status: 'Processing',
+                        ontap: () {}),
+                  ],
+                ),
+              ],
+            ),
           ),
-
           // Content for the "Previous" tab
-          Column(
-            children: [
-              const VerticalSpeacing(20.0),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('my_orders')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    Utils.flushBarErrorMessage('${snapshot.error}', context);
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor.withOpacity(0.2),
-                            colorOpacity: 0.2,
-                            enabled: true,
-                            direction: const ShimmerDirection.fromLTRB(),
-                            child: Container(
-                              height: 100.0,
-                              width: double.infinity,
-                              color: AppColor.grayColor.withOpacity(0.2),
-                            ),
-                          ),
-                        );
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                      orderId: '236743',
+                      date: '28 OCT',
+                      status: 'Processing',
+                      ontap: () {
+                        Navigator.pushNamed(context, RoutesName.trackOrder);
                       },
-                    );
-                  }
-                  List<DocumentSnapshot> deliverySendOrders = snapshot
-                      .data!.docs
-                      .where((document) =>
-                          (document.data() as Map<String, dynamic>)['status'] ==
-                          'Delivered')
-                      .toList();
-
-                  if (deliverySendOrders.isEmpty) {
-                    return const Center(
-                      child: Text("No orders to show"),
-                    );
-                  }
-
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        deliverySendOrders.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: myOrderCard(
-                          orderId: data['uuid'],
-                          date: formatDateAndTime(
-                            data['date'],
-                          ),
-                          status: data['status'],
-                          ontap: () {
-                            Navigator.pushNamed(context, RoutesName.trackOrder);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-            ],
+                    ),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '678494',
+                        date: '20 NOV',
+                        status: 'Completed',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '847382',
+                        date: '10 DEC',
+                        status: 'Shipped',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '748398',
+                        date: '6 JAN',
+                        status: 'Delivered',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '099876',
+                        date: '15 FEB',
+                        status: 'Processing',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '748398',
+                        date: '18 JAN',
+                        status: 'Delivered',
+                        ontap: () {
+                          Navigator.pushNamed(context, RoutesName.trackOrder);
+                        }),
+                    const VerticalSpeacing(20.0),
+                    myOrderCard(
+                        orderId: '099876',
+                        date: '17 FEB',
+                        status: 'Processing',
+                        ontap: () {}),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
