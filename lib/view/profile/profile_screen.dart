@@ -100,7 +100,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         centerTitle: true,
-        leading: const Icon(Icons.arrow_back),
+        leading: const Icon(
+          Icons.arrow_back,
+          color: AppColor.buttonTxColor,
+        ),
       ),
       body: LoadingManager(
         isLoading: _isLoading,
