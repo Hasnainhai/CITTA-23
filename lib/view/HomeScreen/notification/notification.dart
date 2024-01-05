@@ -44,6 +44,9 @@ class NotificationScreen extends StatelessWidget {
           child: Column(
             children: [
               Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 16,
