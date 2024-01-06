@@ -37,7 +37,6 @@ Future<void> signUp(BuildContext context) async {
 
       if (result.user != null) {
         await _setupUserData(result.user!);
-
         // Show success message and navigate to the dashboard
         _showSuccessMessage(context);
         _navigateToDashboard(context);
@@ -61,7 +60,6 @@ Future<void> _setupUserData(User user) async {
 }
 
 void _showSuccessMessage(BuildContext context) {
-  // Show a success message using your preferred method (e.g., toast)
   Utils.toastMessage('SuccessFully SignIn');
 }
 
@@ -74,18 +72,17 @@ void _navigateToDashboard(BuildContext context) {
 
 void _handleFirebaseAuthException(
     FirebaseAuthException e, BuildContext context) {
-  // Handle FirebaseAuthException, show specific error message to the user
+  // Handle FirebaseAuthException,
   _showErrorMessage('${e.message}', context);
 }
 
 void _handleGenericError(dynamic e, BuildContext context) {
-  // Handle generic errors, show a generic error message to the user
+  // Handle generic errors, 
   _showErrorMessage(e.toString(), context);
 }
 
 void _showErrorMessage(String message, BuildContext context) {
   Utils.flushBarErrorMessage(message, context);
-  // Show an error message using your preferred method (e.g., flushbar)
 }
 
 class _AuthButtonState extends State<AuthButton> {
