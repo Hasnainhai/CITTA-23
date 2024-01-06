@@ -109,6 +109,7 @@ class _CartWidgetState extends State<CartWidget> {
     return SizedBox(
       height: 110,
       child: Card(
+        shape: const RoundedRectangleBorder(),
         color: AppColor.whiteColor,
         elevation: 0.5,
         child: Padding(
