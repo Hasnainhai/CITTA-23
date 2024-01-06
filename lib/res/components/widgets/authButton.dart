@@ -1,6 +1,5 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,52 +17,123 @@ class AuthButton extends StatefulWidget {
   State<AuthButton> createState() => _AuthButtonState();
 }
 
-class _AuthButtonState extends State<AuthButton> {
-  Future<void> signup(BuildContext context) async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+final GoogleSignIn _googleSignIn = GoogleSignIn();
+final FirebaseAuth _authInstance = FirebaseAuth.instance;
+Future<void> signUp(BuildContext context) async {
+  try {
     final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
+        await _googleSignIn.signIn();
+
     if (googleSignInAccount != null) {
-      try {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-        final AuthCredential authCredential = GoogleAuthProvider.credential(
-            idToken: googleSignInAuthentication.idToken,
-            accessToken: googleSignInAuthentication.accessToken);
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken,
+      );
 
-        // Getting users credential
-        UserCredential result =
-            await authInstance.signInWithCredential(authCredential);
+      UserCredential result =
+          await _authInstance.signInWithCredential(authCredential);
 
-        if (result != null) {
-          // setup google credentials in firebase Firestore
-          await FirebaseFirestore.instance
-              .collection('users')
-              .doc(result.user!.uid)
-              .set({
-            'createdAt': Timestamp.now(),
-            'email': result.user!.email,
-            'id': result.user!.uid,
-            'name': result.user!.displayName,
-            'profilePic': result.user!.photoURL,
-          });
-          Utils.toastMessage('Successfully SignIn');
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const DashBoardScreen()));
-        }
-      } on FirebaseException catch (e) {
-        Utils.flushBarErrorMessage('${e.message}', context);
-      } catch (e) {
-        Utils.flushBarErrorMessage(e.toString(), context);
+      if (result.user != null) {
+        await _setupUserData(result.user!);
+
+        // Show success message and navigate to the dashboard
+        _showSuccessMessage(context);
+        _navigateToDashboard(context);
       }
     }
+  } on FirebaseAuthException catch (e) {
+    _handleFirebaseAuthException(e, context);
+  } catch (e) {
+    _handleGenericError(e, context);
   }
+}
+
+Future<void> _setupUserData(User user) async {
+  await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+    'createdAt': FieldValue.serverTimestamp(),
+    'email': user.email,
+    'id': user.uid,
+    'name': user.displayName,
+    'profilePic': user.photoURL,
+  });
+}
+
+void _showSuccessMessage(BuildContext context) {
+  // Show a success message using your preferred method (e.g., toast)
+  Utils.toastMessage('SuccessFully SignIn');
+}
+
+void _navigateToDashboard(BuildContext context) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => const DashBoardScreen()),
+  );
+}
+
+void _handleFirebaseAuthException(
+    FirebaseAuthException e, BuildContext context) {
+  // Handle FirebaseAuthException, show specific error message to the user
+  _showErrorMessage('${e.message}', context);
+}
+
+void _handleGenericError(dynamic e, BuildContext context) {
+  // Handle generic errors, show a generic error message to the user
+  _showErrorMessage(e.toString(), context);
+}
+
+void _showErrorMessage(String message, BuildContext context) {
+  Utils.flushBarErrorMessage(message, context);
+  // Show an error message using your preferred method (e.g., flushbar)
+}
+
+class _AuthButtonState extends State<AuthButton> {
+  // Future<void> signup(BuildContext context) async {
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
+  //   final GoogleSignInAccount? googleSignInAccount =
+  //       await googleSignIn.signIn();
+  //   if (googleSignInAccount != null) {
+  //     try {
+  //       final GoogleSignInAuthentication googleSignInAuthentication =
+  //           await googleSignInAccount.authentication;
+  //       final AuthCredential authCredential = GoogleAuthProvider.credential(
+  //           idToken: googleSignInAuthentication.idToken,
+  //           accessToken: googleSignInAuthentication.accessToken);
+
+  //       // Getting users credential
+  //       UserCredential result =
+  //           await authInstance.signInWithCredential(authCredential);
+
+  //       if (result != null) {
+  //         // setup google credentials in firebase Firestore
+  //         await FirebaseFirestore.instance
+  //             .collection('users')
+  //             .doc(result.user!.uid)
+  //             .set({
+  //           'createdAt': Timestamp.now(),
+  //           'email': result.user!.email,
+  //           'id': result.user!.uid,
+  //           'name': result.user!.displayName,
+  //           'profilePic': result.user!.photoURL,
+  //         });
+  //         Utils.toastMessage('Successfully SignIn');
+  //         Navigator.pushReplacement(context,
+  //             MaterialPageRoute(builder: (context) => const DashBoardScreen()));
+  //       }
+  //     } on FirebaseException catch (e) {
+  //       Utils.flushBarErrorMessage('${e.message}', context);
+  //     } catch (e) {
+  //       Utils.flushBarErrorMessage(e.toString(), context);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        signup(context);
+        signUp(context);
       },
       child: Container(
         height: 60.0,
