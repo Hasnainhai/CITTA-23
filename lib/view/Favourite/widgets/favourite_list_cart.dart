@@ -51,7 +51,7 @@ class FavouristListCart extends StatelessWidget {
                       Text.rich(
                         TextSpan(
                           text: '\n$title \n',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'CenturyGothic',
                             fontSize: 14,
                             fontWeight: FontWeight.w800,
