@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (userDoc != null || userDoc.data() != null) {
           _email = userDoc.get('email');
           _name = userDoc.get('name');
-          _pImage = userDoc.get('imageUrl');
+          _pImage = userDoc.get('profilePic');
         }
       } catch (error) {
         setState(() {
