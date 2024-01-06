@@ -9,6 +9,7 @@ import 'package:citta_23/res/consts/firebase_const.dart';
 
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
+import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -169,23 +170,26 @@ class _CardScreenState extends State<CardScreen> {
                         );
                       }
                       fetchDataFromFirestore();
-                      return ListView(
-                        shrinkWrap: true,
-                        children: snapshot.data!.docs
-                            .map((DocumentSnapshot document) {
-                          Map<String, dynamic> data =
-                              document.data() as Map<String, dynamic>;
-                          return CartWidget(
-                            title: data['title'],
-                            price: data['salePrice'],
-                            img: data['imageUrl'],
-                            items: 1,
-                            sellerId: data['sellerId'],
-                            productId: data['id'],
-                            deletedId: data['deleteId'],
-                          );
-                        }).toList(),
-                      );
+
+                      return snapshot.data!.docs.isEmpty
+                          ? const EmptyCart()
+                          : ListView(
+                              shrinkWrap: true,
+                              children: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                Map<String, dynamic> data =
+                                    document.data() as Map<String, dynamic>;
+                                return CartWidget(
+                                  title: data['title'],
+                                  price: data['salePrice'],
+                                  img: data['imageUrl'],
+                                  items: 1,
+                                  sellerId: data['sellerId'],
+                                  productId: data['id'],
+                                  deletedId: data['deleteId'],
+                                );
+                              }).toList(),
+                            );
                     },
                   ),
                 ),
