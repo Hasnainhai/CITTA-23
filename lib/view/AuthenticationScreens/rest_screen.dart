@@ -65,8 +65,9 @@ class _RestScreenState extends State<RestScreen> {
     return LoadingManager(
       isLoading: _isLoading,
       child: Scaffold(
+        backgroundColor: const Color(0xffEEEEEE),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xffFFFFFF),
           title: const Text(
             "Forget Password",
             style: TextStyle(
@@ -87,21 +88,28 @@ class _RestScreenState extends State<RestScreen> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(right: 20, left: 20, top: 40),
+            padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Card(
+                    color: const Color(0xffFFFFFF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0.0),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 20,
                         right: 20,
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const VerticalSpeacing(24),
                           const Text(
                             "Reset Your Password",
+                            textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
                               fontSize: 24,
@@ -112,12 +120,12 @@ class _RestScreenState extends State<RestScreen> {
                           const VerticalSpeacing(24),
                           const Text(
                             "Please enter your email. We will send a link to your email to reset your password.",
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
+                              color: Color(0xff8B8B97),
                             ),
                           ),
                           const VerticalSpeacing(30),
@@ -127,17 +135,23 @@ class _RestScreenState extends State<RestScreen> {
                             text: 'Email Address',
                             keyboardType: TextInputType.emailAddress,
                           ),
-                          const VerticalSpeacing(24),
+                          const VerticalSpeacing(80),
                           RoundedButton(
-                              title: "Reset now",
+                              title: "Send Me Link",
                               onpress: () {
                                 _forgetPassFCT();
                               }),
-                          const VerticalSpeacing(300),
+                          const VerticalSpeacing(
+                            200,
+                          ),
+                          // const VerticalSpeacing(300),
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
                 ],
               ),
             ),
