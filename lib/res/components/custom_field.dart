@@ -43,7 +43,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
           ),
           const SizedBox(height: 8),
           Container(
-            color: const Color(0xfff1f1f1),
+            color: const Color(0xffEEEEEE),
             child: TextFormField(
               keyboardType: widget.keyboardType,
               obscureText: (widget.obscureText && hidden),
@@ -65,7 +65,7 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
                         ),
                       )
                     : null,
-                fillColor: const Color(0xfff1f1f1),
+                fillColor: const Color(0xffEEEEEE),
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xfff1f1f1)),
                   borderRadius: BorderRadius.zero,

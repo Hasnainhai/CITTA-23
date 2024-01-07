@@ -267,7 +267,33 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 const VerticalSpeacing(12.0),
-                const ItemPrizingWidget(title: 'Price', price: '₹60'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Price",
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.grayColor,
+                      ),
+                    ),
+                    Consumer<SubTotalModel>(
+                      builder: (context, subTotalModel, child) {
+                        return Text(
+                          '₹${subTotalModel.subTotal}',
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: AppColor.blackColor,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
                 const VerticalSpeacing(12.0),
                 SizedBox(
                   height: 1,
