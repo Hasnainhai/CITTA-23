@@ -42,7 +42,9 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
             const SizedBox(width: 15.0),
             Text.rich(
               TextSpan(
-                text: '${widget.title} \n ',
+                text: widget.title.length > 20
+                    ? '${widget.title.substring(0, 20)}...\n'
+                    : widget.title,
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 18,

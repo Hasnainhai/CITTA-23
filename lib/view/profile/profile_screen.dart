@@ -175,7 +175,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             children: <TextSpan>[
               TextSpan(
-                text: '${_email == null ? 'Email' : _email!} \n',
+                text: _email!.length > 20
+                    ? '${_email!.substring(0, 20)}...\n'
+                    : _email! + '...\n',
                 style: const TextStyle(
                   color: AppColor.whiteColor,
                   fontWeight: FontWeight.w200,
