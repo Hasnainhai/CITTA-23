@@ -12,7 +12,20 @@
           "package_name": "com.example.citta_23"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1098406014436-j7i4r0d3gsio2dop1jsn8hd8097bdma3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.citta_23",
+            "certificate_hash": "627c4c7eb7c78e8c8b92479bb3c0eb00e10e54d6"
+          }
+        },
+        {
+          "client_id": "1098406014436-9584h6q1n8j5mkdp0ttrsohsft76v93g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBbDVu885-0DMxYZ_9eE6_y7-KU7tqogoc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098406014436-9584h6q1n8j5mkdp0ttrsohsft76v93g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

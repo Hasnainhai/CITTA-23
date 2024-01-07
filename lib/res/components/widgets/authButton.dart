@@ -77,7 +77,7 @@ void _handleFirebaseAuthException(
 }
 
 void _handleGenericError(dynamic e, BuildContext context) {
-  // Handle generic errors, 
+  // Handle generic errors,
   _showErrorMessage(e.toString(), context);
 }
 
