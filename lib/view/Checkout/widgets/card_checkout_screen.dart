@@ -150,18 +150,13 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       );
     } catch (e) {
       if (e is StripeException) {
-        Utils.flushBarErrorMessage("Problem in Payment", context);
+        Utils.flushBarErrorMessage("Payment  Cancelled", context);
 
         setState(() {
           _isLoading = false;
         });
       } else {
-        debugPrint(
-          "This error of code ${e.toString()}",
-        );
-        Fluttertoast.showToast(
-          msg: e.toString(),
-        );
+        Utils.flushBarErrorMessage("Problem in Payment", context);
       }
     } finally {
       setState(() {

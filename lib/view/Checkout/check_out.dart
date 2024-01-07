@@ -158,15 +158,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           (route) => false);
     } catch (e) {
       if (e is StripeException) {
-        Utils.flushBarErrorMessage("Problem in Canceled", context);
+        Utils.flushBarErrorMessage("Payment  Cancelled", context);
 
         setState(() {
           _isLoading = false;
         });
       } else {
-        Fluttertoast.showToast(
-          msg: e.toString(),
-        );
+        Utils.flushBarErrorMessage("Problem in Payment", context);
       }
     } finally {
       setState(() {
