@@ -805,23 +805,29 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                 const VerticalSpeacing(
                   20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => TotalRatingScreen(
-                              productType: "bundle pack",
-                              productId: widget.productId,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "View Reviews",
+                const Divider(
+                  color: Color(0xffECECEC),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => TotalRatingScreen(
+                          productType: "bundle pack",
+                          productId: widget.productId,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Review",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
                           fontSize: 16,
@@ -829,28 +835,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           color: AppColor.fontColor,
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) => Rating(
-                            productId: widget.productId,
-                            productType: "bundle pack",
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
                           ),
-                        );
-                      },
-                      child: const Text(
-                        "Give Review",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
+                const Divider(
+                  color: Color(0xffECECEC),
                 ),
                 const VerticalSpeacing(20),
                 Row(
