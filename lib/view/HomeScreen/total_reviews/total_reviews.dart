@@ -1,6 +1,8 @@
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/review_card.dart';
+import 'package:citta_23/view/review/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -18,6 +20,22 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        child: RoundedButton(
+            title: "Add Review",
+            onpress: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (c) => Rating(
+                    productId: widget.productId,
+                    productType: widget.productType,
+                  ),
+                ),
+              );
+            }),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

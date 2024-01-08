@@ -342,22 +342,22 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => TotalRatingScreen(
-                              productType: "fashion",
-                              productId: widget.productId,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Text(
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => TotalRatingScreen(
+                          productType: "fashion",
+                          productId: widget.productId,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         "View Reviews",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
@@ -366,28 +366,32 @@ class _FashionDetailState extends State<FashionDetail> {
                           color: AppColor.fontColor,
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) => Rating(
-                            productId: widget.productId,
-                            productType: "fashion",
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
                           ),
-                        );
-                      },
-                      child: const Text(
-                        "Give Review",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                  ],
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const VerticalSpeacing(
                   28,
