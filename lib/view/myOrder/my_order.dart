@@ -138,6 +138,11 @@ class _MyOrdersState extends State<MyOrders>
                       },
                     );
                   }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text("No orders to show"),
+                    );
+                  }
                   return ListView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
