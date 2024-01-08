@@ -9,8 +9,9 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF2F2F2),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xffFFFFFF),
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -33,16 +34,15 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           child: Column(
             children: [
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0.0),
                 ),
+                color: const Color(0xffFFFFFF),
+                surfaceTintColor: const Color(0xffFFFFFF),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 16,

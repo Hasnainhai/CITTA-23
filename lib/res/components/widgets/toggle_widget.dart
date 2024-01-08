@@ -35,7 +35,7 @@ class _ToggleWidgetState extends State<ToggleWidget> {
           },
           width: 50.0,
           height: 26.0,
-          toggleSize: 28.0,
+          toggleSize: 20.0,
           activeColor: Colors.pink,
           inactiveColor: Colors.grey,
           borderRadius: 0.0,
