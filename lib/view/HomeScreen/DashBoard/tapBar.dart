@@ -102,10 +102,12 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 height: 60,
                 width: 60,
                 child: const Center(
-                  child: Icon(
-                    Icons.shopping_basket_outlined,
+                  child: ImageIcon(
+                    AssetImage(
+                      "images/card.png",
+                    ),
+                    color: Colors.white,
                     size: 40,
-                    color: AppColor.whiteColor,
                   ),
                 ),
               ),

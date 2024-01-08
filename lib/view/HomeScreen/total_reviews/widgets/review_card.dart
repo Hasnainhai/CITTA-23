@@ -32,6 +32,9 @@ class _ReviewCardState extends State<ReviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(

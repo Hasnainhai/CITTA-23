@@ -362,42 +362,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 const VerticalSpeacing(
                   20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => TotalRatingScreen(
-                                productType: "products",
-                                productId: widget.productId),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "View Reviews",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) => Rating(
-                            productId: widget.productId,
+                const Divider(
+                  color: Color(0xffECECEC),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => TotalRatingScreen(
                             productType: "products",
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "Give Review",
+                            productId: widget.productId),
+                      ),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Review",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
                           fontSize: 16,
@@ -405,8 +391,58 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           color: AppColor.fontColor,
                         ),
                       ),
-                    ),
-                  ],
+                      // InkWell(
+                      //   onTap: () async {
+                      //     await showDialog(
+                      //       context: context,
+                      //       builder: (BuildContext context) => Rating(
+                      //         productId: widget.productId,
+                      //         productType: "products",
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: const Text(
+                      //     "Give Review",
+                      //     style: TextStyle(
+                      //       fontFamily: 'CenturyGothic',
+                      //       fontSize: 16,
+                      //       fontWeight: FontWeight.bold,
+                      //       color: AppColor.fontColor,
+                      //     ),
+                      //   ),
+                      // ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
+                const Divider(
+                  color: Color(0xffECECEC),
                 ),
                 const VerticalSpeacing(
                   28,
