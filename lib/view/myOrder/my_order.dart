@@ -103,149 +103,154 @@ class _MyOrdersState extends State<MyOrders>
           Column(
             children: [
               const VerticalSpeacing(20.0),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('my_orders')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    Utils.flushBarErrorMessage('${snapshot.error}', context);
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListView.builder(
+              Expanded(
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('my_orders')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      Utils.flushBarErrorMessage('${snapshot.error}', context);
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Shimmer(
+                              duration: const Duration(seconds: 3),
+                              interval: const Duration(seconds: 5),
+                              color: AppColor.grayColor.withOpacity(0.2),
+                              colorOpacity: 0.2,
+                              enabled: true,
+                              direction: const ShimmerDirection.fromLTRB(),
+                              child: Container(
+                                height: 100.0,
+                                width: double.infinity,
+                                color: AppColor.grayColor.withOpacity(0.2),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                        child: Text("No orders to show"),
+                      );
+                    }
+                    return ListView(
                       shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data() as Map<String, dynamic>;
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor.withOpacity(0.2),
-                            colorOpacity: 0.2,
-                            enabled: true,
-                            direction: const ShimmerDirection.fromLTRB(),
-                            child: Container(
-                              height: 100.0,
-                              width: double.infinity,
-                              color: AppColor.grayColor.withOpacity(0.2),
+                          child: myOrderCard(
+                            orderId: data['uuid'],
+                            date: formatDateAndTime(
+                              data['date'],
                             ),
+                            status: data['status'],
+                            ontap: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.trackOrder);
+                            },
                           ),
                         );
-                      },
+                      }).toList(),
                     );
-                  }
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return const Center(
-                      child: Text("No orders to show"),
-                    );
-                  }
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: myOrderCard(
-                          orderId: data['uuid'],
-                          date: formatDateAndTime(
-                            data['date'],
-                          ),
-                          status: data['status'],
-                          ontap: () {
-                            Navigator.pushNamed(context, RoutesName.trackOrder);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+                  },
+                ),
               ),
             ],
           ),
           Column(
             children: [
               const VerticalSpeacing(20.0),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('my_orders')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    Utils.flushBarErrorMessage('${snapshot.error}', context);
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListView.builder(
+              Expanded(
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('my_orders')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      Utils.flushBarErrorMessage('${snapshot.error}', context);
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Shimmer(
+                              duration: const Duration(seconds: 3),
+                              interval: const Duration(seconds: 5),
+                              color: AppColor.grayColor.withOpacity(0.2),
+                              colorOpacity: 0.2,
+                              enabled: true,
+                              direction: const ShimmerDirection.fromLTRB(),
+                              child: Container(
+                                height: 100.0,
+                                width: double.infinity,
+                                color: AppColor.grayColor.withOpacity(0.2),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+
+                    // Filter documents where status is "Delivery send"
+                    List<DocumentSnapshot> deliverySendOrders = snapshot
+                        .data!.docs
+                        .where((document) =>
+                            (document.data()
+                                as Map<String, dynamic>)['status'] ==
+                            'processing')
+                        .toList();
+
+                    if (deliverySendOrders.isEmpty) {
+                      return const Center(
+                        child: Text("No orders to show"),
+                      );
+                    }
+
+                    return ListView(
                       shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
+                      children:
+                          deliverySendOrders.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data() as Map<String, dynamic>;
+
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor.withOpacity(0.2),
-                            colorOpacity: 0.2,
-                            enabled: true,
-                            direction: const ShimmerDirection.fromLTRB(),
-                            child: Container(
-                              height: 100.0,
-                              width: double.infinity,
-                              color: AppColor.grayColor.withOpacity(0.2),
+                          child: myOrderCard(
+                            orderId: data['uuid'],
+                            date: formatDateAndTime(
+                              data['date'],
                             ),
+                            status: data['status'],
+                            ontap: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.trackOrder);
+                            },
                           ),
                         );
-                      },
+                      }).toList(),
                     );
-                  }
-
-                  // Filter documents where status is "Delivery send"
-                  List<DocumentSnapshot> deliverySendOrders = snapshot
-                      .data!.docs
-                      .where((document) =>
-                          (document.data() as Map<String, dynamic>)['status'] ==
-                          'processing')
-                      .toList();
-
-                  if (deliverySendOrders.isEmpty) {
-                    return const Center(
-                      child: Text("No orders to show"),
-                    );
-                  }
-
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        deliverySendOrders.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: myOrderCard(
-                          orderId: data['uuid'],
-                          date: formatDateAndTime(
-                            data['date'],
-                          ),
-                          status: data['status'],
-                          ontap: () {
-                            Navigator.pushNamed(context, RoutesName.trackOrder);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+                  },
+                ),
               ),
             ],
           ),
@@ -254,78 +259,81 @@ class _MyOrdersState extends State<MyOrders>
           Column(
             children: [
               const VerticalSpeacing(20.0),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('my_orders')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    Utils.flushBarErrorMessage('${snapshot.error}', context);
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return ListView.builder(
+              Expanded(
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('my_orders')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      Utils.flushBarErrorMessage('${snapshot.error}', context);
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Shimmer(
+                              duration: const Duration(seconds: 3),
+                              interval: const Duration(seconds: 5),
+                              color: AppColor.grayColor.withOpacity(0.2),
+                              colorOpacity: 0.2,
+                              enabled: true,
+                              direction: const ShimmerDirection.fromLTRB(),
+                              child: Container(
+                                height: 100.0,
+                                width: double.infinity,
+                                color: AppColor.grayColor.withOpacity(0.2),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    List<DocumentSnapshot> deliverySendOrders = snapshot
+                        .data!.docs
+                        .where((document) =>
+                            (document.data()
+                                as Map<String, dynamic>)['status'] ==
+                            'Delivered')
+                        .toList();
+
+                    if (deliverySendOrders.isEmpty) {
+                      return const Center(
+                        child: Text("No orders to show"),
+                      );
+                    }
+
+                    return ListView(
                       shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
+                      children:
+                          deliverySendOrders.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data() as Map<String, dynamic>;
+
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Shimmer(
-                            duration: const Duration(seconds: 3),
-                            interval: const Duration(seconds: 5),
-                            color: AppColor.grayColor.withOpacity(0.2),
-                            colorOpacity: 0.2,
-                            enabled: true,
-                            direction: const ShimmerDirection.fromLTRB(),
-                            child: Container(
-                              height: 100.0,
-                              width: double.infinity,
-                              color: AppColor.grayColor.withOpacity(0.2),
+                          child: myOrderCard(
+                            orderId: data['uuid'],
+                            date: formatDateAndTime(
+                              data['date'],
                             ),
+                            status: data['status'],
+                            ontap: () {
+                              Navigator.pushNamed(
+                                  context, RoutesName.trackOrder);
+                            },
                           ),
                         );
-                      },
+                      }).toList(),
                     );
-                  }
-                  List<DocumentSnapshot> deliverySendOrders = snapshot
-                      .data!.docs
-                      .where((document) =>
-                          (document.data() as Map<String, dynamic>)['status'] ==
-                          'Delivered')
-                      .toList();
-
-                  if (deliverySendOrders.isEmpty) {
-                    return const Center(
-                      child: Text("No orders to show"),
-                    );
-                  }
-
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children:
-                        deliverySendOrders.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data() as Map<String, dynamic>;
-
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: myOrderCard(
-                          orderId: data['uuid'],
-                          date: formatDateAndTime(
-                            data['date'],
-                          ),
-                          status: data['status'],
-                          ontap: () {
-                            Navigator.pushNamed(context, RoutesName.trackOrder);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+                  },
+                ),
               ),
             ],
           ),

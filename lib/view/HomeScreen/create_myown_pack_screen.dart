@@ -123,6 +123,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: productList.length,
                   itemBuilder: (context, index) {
@@ -194,79 +195,81 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: StreamBuilder<QuerySnapshot>(
-            stream:
-                FirebaseFirestore.instance.collection('products').snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              List<DocumentSnapshot> createList = snapshot.data?.docs ?? [];
-              return GridView.builder(
-                shrinkWrap: true,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                itemCount: createList.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5, // Horizontal spacing
-                  mainAxisSpacing: 10, // Vertical spacing
-                ),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (_, index) {
-                  DocumentSnapshot productSnapshot = createList[index];
-                  Map<String, dynamic> productData =
-                      productSnapshot.data() as Map<String, dynamic>;
-                  return HomeCard(
-                    ontap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ProductDetailScreen(
-                              title: productData['title'].toString(),
-                              imageUrl: productData['imageUrl'],
-                              price: productData['salePrice'].toString(),
-                              salePrice: productData['price'].toString(),
-                              productId: productData['id'].toString(),
-                              sellerId: productData['sellerId'].toString(),
-                              weight: productData['weight'].toString(),
-                              detail: productData['detail'].toString(),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    sellerId: productData['sellerId'],
-                    productId: productData['id'],
-                    name: productData['title'].toString(),
-                    price: productData['price'].toString(),
-                    dPrice: productData['salePrice'].toString(),
-                    borderColor: AppColor.buttonBgColor,
-                    fillColor: AppColor.appBarButtonColor,
-                    cartBorder: isTrue
-                        ? AppColor.appBarButtonColor
-                        : AppColor.buttonBgColor,
-                    img: productData['imageUrl'],
-                    iconColor: AppColor.buttonBgColor,
-                    addCart: () {
-                      setState(() {
-                        addToCart(
-                            productData['imageUrl'],
-                            productData['title'].toString(),
-                            productData['price'].toString(),
-                            productData['sellerId'],
-                            productData['id']);
-                      });
-                    },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection('products').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              );
-            },
+                }
+                List<DocumentSnapshot> createList = snapshot.data?.docs ?? [];
+                return GridView.builder(
+                  shrinkWrap: true,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                  itemCount: createList.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5, // Horizontal spacing
+                    mainAxisSpacing: 10, // Vertical spacing
+                  ),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (_, index) {
+                    DocumentSnapshot productSnapshot = createList[index];
+                    Map<String, dynamic> productData =
+                        productSnapshot.data() as Map<String, dynamic>;
+                    return HomeCard(
+                      ontap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailScreen(
+                                title: productData['title'].toString(),
+                                imageUrl: productData['imageUrl'],
+                                price: productData['salePrice'].toString(),
+                                salePrice: productData['price'].toString(),
+                                productId: productData['id'].toString(),
+                                sellerId: productData['sellerId'].toString(),
+                                weight: productData['weight'].toString(),
+                                detail: productData['detail'].toString(),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      sellerId: productData['sellerId'],
+                      productId: productData['id'],
+                      name: productData['title'].toString(),
+                      price: productData['price'].toString(),
+                      dPrice: productData['salePrice'].toString(),
+                      borderColor: AppColor.buttonBgColor,
+                      fillColor: AppColor.appBarButtonColor,
+                      cartBorder: isTrue
+                          ? AppColor.appBarButtonColor
+                          : AppColor.buttonBgColor,
+                      img: productData['imageUrl'],
+                      iconColor: AppColor.buttonBgColor,
+                      addCart: () {
+                        setState(() {
+                          addToCart(
+                              productData['imageUrl'],
+                              productData['title'].toString(),
+                              productData['price'].toString(),
+                              productData['sellerId'],
+                              productData['id']);
+                        });
+                      },
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),

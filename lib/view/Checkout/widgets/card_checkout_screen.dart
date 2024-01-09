@@ -88,6 +88,8 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       orderMap['state'] = state;
       orderMap['name'] = name;
       orderMap['uuid'] = orderId;
+      orderMap['date'] = DateTime.now().toString();
+      orderMap['status'] = "pending";
       orderMap['phone'] = phoneNumber;
       orderMap['paymentType'] = paymentType;
 
