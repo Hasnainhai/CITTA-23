@@ -65,235 +65,235 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
             right: 20,
             top: 20,
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          color: AppColor.primaryColor,
-                          child: const Center(
-                            child: Text(
-                              "4.5",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 22,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.buttonTxColor,
-                              ),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 60,
+                        color: AppColor.primaryColor,
+                        child: const Center(
+                          child: Text(
+                            "4.5",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 22,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.buttonTxColor,
                             ),
                           ),
                         ),
-                        const VerticalSpeacing(10),
-                        const Text(
-                          "320 reviews",
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor,
+                      ),
+                      const VerticalSpeacing(10),
+                      const Text(
+                        "320 reviews",
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 18,
                           ),
-                        ),
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 18,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 18,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 18,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 18,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "5 stars",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
                             ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
+                          ),
+                          LinearPercentIndicator(
+                            animation: true,
+                            animationDuration: 1000,
+                            width: 160,
+                            percent: 0.8,
+                            progressColor: AppColor.primaryColor,
+                            backgroundColor: Colors.grey.shade300,
+                          ),
+                          const Text(
+                            "200",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "4 stars",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
                             ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
+                          ),
+                          LinearPercentIndicator(
+                            animation: true,
+                            animationDuration: 1000,
+                            width: 160,
+                            percent: 0.7,
+                            progressColor: AppColor.primaryColor,
+                            backgroundColor: Colors.grey.shade300,
+                          ),
+                          const Text(
+                            "150",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 18,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "3 stars ",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "5 stars",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.grayColor,
-                              ),
+                          ),
+                          LinearPercentIndicator(
+                            animation: true,
+                            animationDuration: 1000,
+                            width: 160,
+                            percent: 0.6,
+                            progressColor: AppColor.primaryColor,
+                            backgroundColor: Colors.grey.shade300,
+                          ),
+                          const Text(
+                            "90",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
-                            LinearPercentIndicator(
-                              animation: true,
-                              animationDuration: 1000,
-                              width: 160,
-                              percent: 0.8,
-                              progressColor: AppColor.primaryColor,
-                              backgroundColor: Colors.grey.shade300,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "2 stars",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
                             ),
-                            const Text(
-                              "200",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
+                          ),
+                          LinearPercentIndicator(
+                            animation: true,
+                            animationDuration: 1000,
+                            width: 160,
+                            percent: 0.5,
+                            progressColor: AppColor.primaryColor,
+                            backgroundColor: Colors.grey.shade300,
+                          ),
+                          const Text(
+                            "30",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "4 stars",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.grayColor,
-                              ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "1 stars",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
                             ),
-                            LinearPercentIndicator(
-                              animation: true,
-                              animationDuration: 1000,
-                              width: 160,
-                              percent: 0.7,
-                              progressColor: AppColor.primaryColor,
-                              backgroundColor: Colors.grey.shade300,
+                          ),
+                          LinearPercentIndicator(
+                            animation: true,
+                            animationDuration: 1000,
+                            width: 160,
+                            percent: 0.4,
+                            progressColor: AppColor.primaryColor,
+                            backgroundColor: Colors.grey.shade300,
+                          ),
+                          const Text(
+                            "10",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
-                            const Text(
-                              "150",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "3 stars ",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.grayColor,
-                              ),
-                            ),
-                            LinearPercentIndicator(
-                              animation: true,
-                              animationDuration: 1000,
-                              width: 160,
-                              percent: 0.6,
-                              progressColor: AppColor.primaryColor,
-                              backgroundColor: Colors.grey.shade300,
-                            ),
-                            const Text(
-                              "90",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "2 stars",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.grayColor,
-                              ),
-                            ),
-                            LinearPercentIndicator(
-                              animation: true,
-                              animationDuration: 1000,
-                              width: 160,
-                              percent: 0.5,
-                              progressColor: AppColor.primaryColor,
-                              backgroundColor: Colors.grey.shade300,
-                            ),
-                            const Text(
-                              "30",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "1 stars",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.grayColor,
-                              ),
-                            ),
-                            LinearPercentIndicator(
-                              animation: true,
-                              animationDuration: 1000,
-                              width: 160,
-                              percent: 0.4,
-                              progressColor: AppColor.primaryColor,
-                              backgroundColor: Colors.grey.shade300,
-                            ),
-                            const Text(
-                              "10",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.fontColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Divider(),
-                StreamBuilder(
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const Divider(),
+              Expanded(
+                child: StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection(widget.productType)
                         .doc(widget.productId)
@@ -312,6 +312,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         );
                       }
                       return ListView(
+                        scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         children: snapshot.data!.docs
                             .map((DocumentSnapshot document) {
@@ -327,9 +328,9 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                           );
                         }).toList(),
                       );
-                    })
-              ],
-            ),
+                    }),
+              )
+            ],
           ),
         ),
       ),
