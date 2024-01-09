@@ -123,6 +123,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
+                  shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: productList.length,
                   itemBuilder: (context, index) {
