@@ -37,7 +37,8 @@ class _ToggleWidgetState extends State<ToggleWidget> {
             height: 20.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(0.0),
-              color: switchValue ? Colors.pink : Colors.grey,
+              color:
+                  switchValue ? AppColor.primaryColor : const Color(0xffECECEC),
             ),
             child: Row(
               mainAxisAlignment:

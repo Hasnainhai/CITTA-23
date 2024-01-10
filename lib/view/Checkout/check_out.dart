@@ -6,6 +6,7 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/done_screen.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -152,9 +153,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       Utils.toastMessage('Payment is successful');
 
       saveDetail();
+      print("befroe navigtion");
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (c) => const DashBoardScreen()),
+          MaterialPageRoute(builder: (c) => const CheckOutDoneScreen()),
           (route) => false);
     } catch (e) {
       if (e is StripeException) {
@@ -441,12 +443,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           } else {
                             saveDetail();
                             Utils.toastMessage('Orders has been Placed');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (c) => const DashBoardScreen(),
-                              ),
-                            );
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (c) => const CheckOutDoneScreen()),
+                                (route) => false);
                           }
                         } else {
                           Fluttertoast.showToast(
