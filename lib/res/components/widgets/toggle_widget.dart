@@ -26,20 +26,37 @@ class _ToggleWidgetState extends State<ToggleWidget> {
             color: AppColor.fontColor,
           ),
         ),
-        FlutterSwitch(
-          value: switchValue,
-          onToggle: (value) {
+        GestureDetector(
+          onTap: () {
             setState(() {
-              switchValue = value;
+              switchValue = !switchValue;
             });
           },
-          width: 50.0,
-          height: 26.0,
-          toggleSize: 20.0,
-          activeColor: Colors.pink,
-          inactiveColor: Colors.grey,
-          borderRadius: 0.0,
-        ),
+          child: Container(
+            width: 40.0,
+            height: 20.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(0.0),
+              color:
+                  switchValue ? AppColor.primaryColor : const Color(0xffECECEC),
+            ),
+            child: Row(
+              mainAxisAlignment:
+                  switchValue ? MainAxisAlignment.end : MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: const EdgeInsets.only(left: 4, right: 4),
+                  width: 12.0,
+                  height: 12.0,
+                  decoration: const BoxDecoration(
+                    // shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }

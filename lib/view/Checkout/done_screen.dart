@@ -1,6 +1,7 @@
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/view/myOrder/my_order.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/components/colors.dart';
@@ -78,7 +79,12 @@ class CheckOutDoneScreen extends StatelessWidget {
                   }),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, RoutesName.trackOrder);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => const MyOrders(),
+                    ),
+                  );
                 },
                 child: const Text(
                   "Track Order",

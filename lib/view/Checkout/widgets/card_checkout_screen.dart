@@ -4,6 +4,7 @@
 import 'dart:convert';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/Checkout/done_screen.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -144,12 +145,10 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
       saveOrdersToFirestore();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (c) => const DashBoardScreen(),
-        ),
-      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (c) => const CheckOutDoneScreen()),
+          (route) => false);
     } catch (e) {
       if (e is StripeException) {
         Utils.flushBarErrorMessage("Payment  Cancelled", context);
@@ -436,14 +435,12 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                             );
                           } else {
                             saveOrdersToFirestore();
-
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (c) => const CheckOutDoneScreen()),
+                                (route) => false);
                             Utils.toastMessage('Orders has been Placed');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (c) => const DashBoardScreen(),
-                              ),
-                            );
                           }
                         } else {
                           Fluttertoast.showToast(
