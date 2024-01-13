@@ -9,6 +9,7 @@ class AppColor {
   static const Color buttonTxColor = Color(0xffFFFFFF);
   static const Color whiteColor = Color(0xffFFFFFF);
   static const Color logoBgColor = Color(0xffFBB9D2);
+  static const Color bgColor = Color(0xffF7F7F7);
   static const Color appleColor = Color(0xff444444);
   static const Color googleColor = Color(0xffDD4B39);
   static const Color twitterColor = Color(0xff55ACEE);
