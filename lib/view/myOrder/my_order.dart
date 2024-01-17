@@ -162,6 +162,13 @@ class _MyOrdersState extends State<MyOrders>
                               Navigator.pushNamed(
                                   context, RoutesName.trackOrder);
                             },
+                            img: data['imageUrl'],
+                            amount: "1",
+                            shippingAddress: data['address'],
+                            salePrice: data['salePrice'],
+                            sellerId: data['sellerId'] ?? "?",
+                            title: data['title'],
+                            phoneNumber: data['phone'],
                           ),
                         );
                       }).toList(),
@@ -245,6 +252,13 @@ class _MyOrdersState extends State<MyOrders>
                               Navigator.pushNamed(
                                   context, RoutesName.trackOrder);
                             },
+                            img: data['imageUrl'],
+                            amount: data['weight'] ?? "1",
+                            shippingAddress: data['address'],
+                            salePrice: data['salePrice'],
+                            sellerId: data['sallerId'],
+                            title: data['title'],
+                            phoneNumber: data['phone'],
                           ),
                         );
                       }).toList(),
@@ -328,6 +342,13 @@ class _MyOrdersState extends State<MyOrders>
                               Navigator.pushNamed(
                                   context, RoutesName.trackOrder);
                             },
+                            img: data['imageUrl'],
+                            amount: data['weight'] ?? "1",
+                            shippingAddress: data['address'],
+                            salePrice: data['salePrice'],
+                            sellerId: data['sallerId'],
+                            title: data['title'],
+                            phoneNumber: data['phone'],
                           ),
                         );
                       }).toList(),

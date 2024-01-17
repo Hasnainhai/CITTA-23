@@ -12,55 +12,65 @@ class myOrderCard extends StatelessWidget {
     required this.date,
     required this.status,
     required this.ontap,
+    required this.img,
+    required this.amount,
+    required this.shippingAddress,
+    required this.salePrice,
+    required this.sellerId,
+    required this.title,
+    required this.phoneNumber,
   });
   final String orderId;
   final String date;
   final String status;
   final Function ontap;
+  final String img;
+  final String amount;
+  final String shippingAddress;
+  final String salePrice;
+  final String sellerId;
+  final String title;
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
+      height: 114.0,
       width: double.infinity,
       color: AppColor.whiteColor,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text.rich(
-                  TextSpan(
-                    text: 'Order ID: ',
-                    // ignore: prefer_const_constructors
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.blackColor,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: orderId.length > 6
-                            ? orderId.substring(0, 6)
-                            : orderId,
-                        style: const TextStyle(
-                          color: AppColor.primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Text(
                   date,
                   style: const TextStyle(
                     color: AppColor.grayColor,
                     fontWeight: FontWeight.w600,
-                    fontSize: 14.0,
+                    fontSize: 12.0,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    height: 30,
+                    width: 80,
+                    color: AppColor.primaryColor,
+                    child: const Center(
+                      child: Text(
+                        'Track Order',
+                        style: TextStyle(
+                          color: AppColor.whiteColor,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
