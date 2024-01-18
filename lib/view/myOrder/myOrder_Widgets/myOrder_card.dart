@@ -17,6 +17,8 @@ class myOrderCard extends StatelessWidget {
     required this.shippingAddress,
     required this.salePrice,
     required this.sellerId,
+    required this.title,
+    required this.phoneNumber,
   });
   final String orderId;
   final String date;
@@ -27,6 +29,8 @@ class myOrderCard extends StatelessWidget {
   final String shippingAddress;
   final String salePrice;
   final String sellerId;
+  final String title;
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +55,20 @@ class myOrderCard extends StatelessWidget {
                     fontSize: 12.0,
                   ),
                 ),
-                Container(
-                  height: 30,
-                  width: 80,
-                  color: AppColor.primaryColor,
-                  child: const Center(
-                    child: Text(
-                      'Track Order',
-                      style: TextStyle(
-                        color: AppColor.whiteColor,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 14.0,
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    height: 30,
+                    width: 80,
+                    color: AppColor.primaryColor,
+                    child: const Center(
+                      child: Text(
+                        'Track Order',
+                        style: TextStyle(
+                          color: AppColor.whiteColor,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14.0,
+                        ),
                       ),
                     ),
                   ),
