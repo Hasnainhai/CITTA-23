@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:citta_23/view/myOrder/myOrder_Widgets/order_tracking.dart';
 import 'package:flutter/material.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
@@ -56,7 +57,14 @@ class myOrderCard extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => const OrderTrackingScreen(),
+                      ),
+                    );
+                  },
                   child: Container(
                     height: 30,
                     width: 80,
