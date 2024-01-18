@@ -6,7 +6,7 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
 // ignore: camel_case_types
-class myOrderCard extends StatelessWidget {
+class myOrderCard extends StatefulWidget {
   const myOrderCard({
     super.key,
     required this.orderId,
@@ -34,6 +34,11 @@ class myOrderCard extends StatelessWidget {
   final String phoneNumber;
 
   @override
+  State<myOrderCard> createState() => _myOrderCardState();
+}
+
+class _myOrderCardState extends State<myOrderCard> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 114.0,
@@ -49,7 +54,7 @@ class myOrderCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  date,
+                  widget.date,
                   style: const TextStyle(
                     color: AppColor.grayColor,
                     fontWeight: FontWeight.w600,
@@ -58,10 +63,13 @@ class myOrderCard extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                    debugPrint("this is the img:${widget.img}");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (c) => const OrderTrackingScreen(),
+                        builder: (c) => OrderTrackingScreen(
+                          img: widget.img,
+                        ),
                       ),
                     );
                   },
@@ -97,10 +105,10 @@ class myOrderCard extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    ontap();
+                    widget.ontap();
                   },
                   child: Text(
-                    status,
+                    widget.status,
                     style: const TextStyle(
                       color: AppColor.primaryColor,
                       fontWeight: FontWeight.w600,
