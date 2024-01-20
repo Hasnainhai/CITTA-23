@@ -29,6 +29,7 @@ class CheckOutScreen extends StatefulWidget {
     required this.weight,
     required this.salePrice,
     required this.productType,
+    required this.size,
   });
   final String tile;
   final String price;
@@ -38,6 +39,7 @@ class CheckOutScreen extends StatefulWidget {
   final String weight;
   final String salePrice;
   final String productType;
+  final String size;
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -92,6 +94,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'name': name,
       'phone': phone,
       "paymentType": paymentType,
+      "size": widget.size,
     });
     fireStore
         .collection('saller')
@@ -116,6 +119,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'name': name,
       'phone': phone,
       'paymentType': paymentType,
+      "size": widget.size,
     });
   }
 
