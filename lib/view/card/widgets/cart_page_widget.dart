@@ -227,7 +227,7 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                   ),
                   Text(
-                    newPrice == null ? widget.price : newPrice.toString(),
+                    newPrice == null ? "${widget.price}₹" : "$newPrice₹",
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
                       fontSize: 16,

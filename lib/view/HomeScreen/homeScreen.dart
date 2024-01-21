@@ -614,8 +614,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .toString(),
                                       price: _popularPacks[index]['price']
                                           .toString(),
-                                      dPrice: _popularPacks[index]['salePrice']
-                                          .toString(),
+                                      dPrice:
+                                          "${_popularPacks[index]['salePrice']}₹",
                                       borderColor: AppColor.buttonBgColor,
                                       fillColor: AppColor.appBarButtonColor,
                                       cartBorder: isTrue
@@ -733,9 +733,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ['imageUrl'],
                                               price: _products[index]['price']
                                                   .toString(),
-                                              salePrice: _products[index]
-                                                      ['salePrice']
-                                                  .toString(),
+                                              salePrice:
+                                                  "$_products[index]['salePrice']",
                                               weight: _products[index]['weight']
                                                   .toString(),
                                               detail: _products[index]['detail']
@@ -748,8 +747,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           _products[index]['title'].toString(),
                                       price:
                                           _products[index]['price'].toString(),
-                                      dPrice: _products[index]['salePrice']
-                                          .toString(),
+                                      dPrice:
+                                          "${_products[index]['salePrice']}₹",
                                       borderColor: AppColor.buttonBgColor,
                                       fillColor: AppColor.appBarButtonColor,
                                       cartBorder: isTrue
@@ -849,8 +848,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: _fashionProducts[index]['title']
                                       .toString(),
                                   price: '',
-                                  dPrice: _fashionProducts[index]['price']
-                                      .toString(),
+                                  dPrice:
+                                      "${_fashionProducts[index]['price']}₹",
                                   borderColor: AppColor.buttonBgColor,
                                   fillColor: AppColor.appBarButtonColor,
                                   cartBorder: isTrue
