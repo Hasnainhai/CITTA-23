@@ -718,28 +718,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                       index < _products.length) {
                                     return HomeCard(
                                       ontap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return ProductDetailScreen(
-                                              title: _products[index]['title']
-                                                  .toString(),
-                                              productId: _products[index]['id']
-                                                  .toString(),
-                                              sellerId: _products[index]
-                                                      ['sellerId']
-                                                  .toString(),
-                                              imageUrl: _products[index]
-                                                  ['imageUrl'],
-                                              price: _products[index]['price']
-                                                  .toString(),
-                                              salePrice:
-                                                  "$_products[index]['salePrice']",
-                                              weight: _products[index]['weight']
-                                                  .toString(),
-                                              detail: _products[index]['detail']
-                                                  .toString());
-                                        }));
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return ProductDetailScreen(
+                                                  title: _products[index]
+                                                          ['title']
+                                                      .toString(),
+                                                  productId: _products[index]
+                                                          ['id']
+                                                      .toString(),
+                                                  sellerId: _products[index]
+                                                          ['sellerId']
+                                                      .toString(),
+                                                  imageUrl: _products[index]
+                                                      ['imageUrl'],
+                                                  price: _products[index]
+                                                          ['price']
+                                                      .toString(),
+                                                  salePrice: _products[index]
+                                                      ['salePrice'],
+                                                  weight: _products[index]
+                                                          ['weight']
+                                                      .toString(),
+                                                  detail: _products[index]
+                                                          ['detail']
+                                                      .toString());
+                                            },
+                                          ),
+                                        );
                                       },
                                       productId: _products[index]['id'],
                                       sellerId: _products[index]['sellerId'],

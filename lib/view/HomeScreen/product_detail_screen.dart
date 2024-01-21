@@ -257,16 +257,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          newPrice == null
-                              ? widget.salePrice
-                              : newPrice.toString(),
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.primaryColor,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              newPrice == null
+                                  ? "${widget.salePrice}₹"
+                                  : "${newPrice.toString()}₹",
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
