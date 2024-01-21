@@ -38,6 +38,7 @@ class _FashionDetailState extends State<FashionDetail> {
   bool like = false;
   int? newPrice;
   int items = 1;
+  String size = 'small';
   String? addPrice;
   int? totalPrice;
   bool button1 = true;
@@ -427,21 +428,239 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   14,
                 ),
-                Container(
-                  height: 54,
-                  width: 54,
-                  decoration: BoxDecoration(color: AppColor.primaryColor),
-                  child: const Center(
-                    child: Text(
-                      "S",
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.fontColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button1 = !button1;
+                          button2 = false;
+                          button3 = false;
+                          button4 = false;
+                          button5 = false;
+                          button6 = false;
+                        });
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                            color: button1
+                                ? AppColor.primaryColor
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: button1
+                                  ? Colors.transparent
+                                  : AppColor.fontColor,
+                            )),
+                        child: Center(
+                          child: Text(
+                            "S",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: button1
+                                  ? AppColor.whiteColor
+                                  : AppColor.fontColor,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button1 = !button1;
+                          button2 = false;
+                          button3 = false;
+                          button4 = false;
+                          button5 = false;
+                          button6 = false;
+                        });
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                            color: button1
+                                ? AppColor.primaryColor
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: button1
+                                  ? Colors.transparent
+                                  : AppColor.fontColor,
+                            )),
+                        child: Center(
+                          child: Text(
+                            "S",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: button1
+                                  ? AppColor.whiteColor
+                                  : AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button1 = !button1;
+                          button2 = false;
+                          button3 = false;
+                          button4 = false;
+                          button5 = false;
+                          button6 = false;
+                        });
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                            color: button1
+                                ? AppColor.primaryColor
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: button1
+                                  ? Colors.transparent
+                                  : AppColor.fontColor,
+                            )),
+                        child: Center(
+                          child: Text(
+                            "S",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: button1
+                                  ? AppColor.whiteColor
+                                  : AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button1 = !button1;
+                          button2 = false;
+                          button3 = false;
+                          button4 = false;
+                          button5 = false;
+                          button6 = false;
+                        });
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                            color: button1
+                                ? AppColor.primaryColor
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: button1
+                                  ? Colors.transparent
+                                  : AppColor.fontColor,
+                            )),
+                        child: Center(
+                          child: Text(
+                            "S",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: button1
+                                  ? AppColor.whiteColor
+                                  : AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button1 = false;
+                          button2 = false;
+                          button3 = false;
+                          button4 = false;
+                          button5 = !button5;
+                          button6 = false;
+                        });
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                            color: button5
+                                ? AppColor.primaryColor
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: button5
+                                  ? Colors.transparent
+                                  : AppColor.fontColor,
+                            )),
+                        child: Center(
+                          child: Text(
+                            "2xl",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: button5
+                                  ? AppColor.whiteColor
+                                  : AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          button1 = false;
+                          button2 = false;
+                          button3 = false;
+                          button4 = false;
+                          button5 = false;
+                          button6 = !button6;
+                          size = '3XL';
+                        });
+                      },
+                      child: Container(
+                        height: 54,
+                        width: 54,
+                        decoration: BoxDecoration(
+                            color: button6
+                                ? AppColor.primaryColor
+                                : Colors.transparent,
+                            border: Border.all(
+                              color: button6
+                                  ? Colors.transparent
+                                  : AppColor.fontColor,
+                            )),
+                        child: Center(
+                          child: Text(
+                            "3XL",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: button6
+                                  ? AppColor.whiteColor
+                                  : AppColor.fontColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const VerticalSpeacing(
                   14,
