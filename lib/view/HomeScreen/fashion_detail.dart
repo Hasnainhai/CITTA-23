@@ -342,6 +342,12 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   20,
                 ),
+                const Divider(
+                  color: Color(0xffECECEC),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -391,6 +397,24 @@ class _FashionDetailState extends State<FashionDetail> {
                         ],
                       )
                     ],
+                  ),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
+                const Divider(
+                  color: Color(0xffECECEC),
+                ),
+                const VerticalSpeacing(
+                  20,
+                ),
+                const Text(
+                  "Size:",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(
