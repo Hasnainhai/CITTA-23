@@ -468,6 +468,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               salePrice: newPrice == null
                                   ? widget.salePrice
                                   : newPrice.toString(),
+                              size: "Null",
                             ),
                           ),
                         );
