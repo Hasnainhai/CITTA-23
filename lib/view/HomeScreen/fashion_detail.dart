@@ -524,14 +524,15 @@ class _FashionDetailState extends State<FashionDetail> {
                         height: 54,
                         width: 53,
                         decoration: BoxDecoration(
+                          color: button3
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                          border: Border.all(
                             color: button3
-                                ? AppColor.primaryColor
-                                : Colors.transparent,
-                            border: Border.all(
-                              color: button3
-                                  ? Colors.transparent
-                                  : AppColor.fontColor,
-                            )),
+                                ? Colors.transparent
+                                : AppColor.fontColor,
+                          ),
+                        ),
                         child: Center(
                           child: Text(
                             "L",
