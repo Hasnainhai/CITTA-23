@@ -40,6 +40,13 @@ class _FashionDetailState extends State<FashionDetail> {
   int items = 1;
   String? addPrice;
   int? totalPrice;
+  bool button1 = true;
+  bool button2 = false;
+  bool button3 = false;
+  bool button4 = false;
+
+  bool button5 = false;
+  bool button6 = false;
 
   final _firestoreInstance = FirebaseFirestore.instance;
   void increment() {
@@ -416,6 +423,28 @@ class _FashionDetailState extends State<FashionDetail> {
                     fontWeight: FontWeight.bold,
                     color: AppColor.fontColor,
                   ),
+                ),
+                const VerticalSpeacing(
+                  14,
+                ),
+                Container(
+                  height: 54,
+                  width: 54,
+                  decoration: BoxDecoration(color: AppColor.primaryColor),
+                  child: const Center(
+                    child: Text(
+                      "S",
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const VerticalSpeacing(
+                  14,
                 ),
                 const VerticalSpeacing(
                   28,
