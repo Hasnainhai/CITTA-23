@@ -252,8 +252,8 @@ class _FashionDetailState extends State<FashionDetail> {
                       children: [
                         Text(
                           newPrice == null
-                              ? widget.salePrice
-                              : newPrice.toString(),
+                              ? "${widget.salePrice}₹"
+                              : "$newPrice₹",
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
                             fontSize: 18,
