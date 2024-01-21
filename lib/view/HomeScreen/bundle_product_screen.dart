@@ -908,6 +908,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                   ? widget.saleprice
                                   : newPrice.toString(),
                               productType: "popular_pak",
+                              size: "Null",
                             ),
                           ),
                         );
