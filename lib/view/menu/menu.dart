@@ -122,11 +122,14 @@ class _MenuScreenState extends State<MenuScreen> {
                             height: 45.0,
                             width: MediaQuery.of(context).size.width * 0.4,
                             decoration: BoxDecoration(
-                                color: categoryType == CategoryType.food
-                                    ? AppColor.buttonBgColor
-                                    : Colors.transparent,
-                                border: Border.all(
-                                    width: 1, color: AppColor.buttonBgColor)),
+                              color: categoryType == CategoryType.food
+                                  ? AppColor.buttonBgColor
+                                  : Colors.transparent,
+                              border: Border.all(
+                                width: 1,
+                                color: AppColor.buttonBgColor,
+                              ),
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -259,7 +262,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     ? HomeCard(
                                         name: item['title'],
                                         price: item['price'],
-                                        dPrice: item['salePrice'],
+                                        dPrice: item['salePrice'] + "₹",
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
                                         cartBorder: isTrue
@@ -307,7 +310,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     : HomeCard(
                                         name: item['title'],
                                         price: "",
-                                        dPrice: item['price'],
+                                        dPrice: item['price'] + "₹",
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
                                         cartBorder: isTrue
