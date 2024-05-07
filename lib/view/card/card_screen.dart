@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
 import 'widgets/dottedLineWidget.dart';
-import 'widgets/item_prizing.dart';
 
 int items = 0;
 

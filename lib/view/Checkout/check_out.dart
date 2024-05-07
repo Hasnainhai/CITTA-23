@@ -8,7 +8,6 @@ import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/done_screen.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
-import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +156,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       Utils.toastMessage('Payment is successful');
 
       saveDetail();
-      print("befroe navigtion");
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (c) => const CheckOutDoneScreen()),

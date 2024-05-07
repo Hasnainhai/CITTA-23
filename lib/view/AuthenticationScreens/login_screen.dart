@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushNamedAndRemoveUntil(
             context, RoutesName.dashboardScreen, (route) => false);
       } on FirebaseException catch (e) {
-        Utils.flushBarErrorMessage('NetWork Error', context);
+        Utils.flushBarErrorMessage('NetWork Error $e', context);
         setState(() {
           _isLoading = false;
         });

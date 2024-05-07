@@ -1,11 +1,10 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, camel_case_types
 
 import 'package:citta_23/view/myOrder/myOrder_Widgets/order_tracking.dart';
 import 'package:flutter/material.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 
-// ignore: camel_case_types
 class myOrderCard extends StatefulWidget {
   const myOrderCard({
     super.key,
