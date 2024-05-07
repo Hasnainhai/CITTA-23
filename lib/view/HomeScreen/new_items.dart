@@ -59,7 +59,13 @@ class _NewItemsScreenState extends State<NewItemsScreen> {
 
   void addToCart(String img, String title, String dPrice, String sellerId,
       String productId) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      Utils.toastMessage('Please SignUp first');
+      return;
+    }
+
+    final userId = currentUser.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')

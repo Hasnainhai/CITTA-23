@@ -173,7 +173,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void addToCart(String img, String title, String dPrice, String sellerId,
       String productId) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      Utils.toastMessage('Please SignUp first');
+      return;
+    }
+
+    final userId = currentUser.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')
@@ -281,12 +287,13 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Column(
                 children: [
+                  const VerticalSpeacing(20.0),
                   Container(
-                    height: 180.0,
+                    height: 78.0,
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/bannerImg.png'),
+                        image: AssetImage('images/banner.png'),
                         fit: BoxFit.contain,
                       ),
                     ),

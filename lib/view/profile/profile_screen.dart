@@ -48,15 +48,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
 
     final googleAuth = FirebaseAuth.instance.currentUser;
-    // if (googleAuth != null) {
-    _name = googleAuth!.displayName;
-    _email = googleAuth.email;
-    _pImage = googleAuth.photoURL;
+    _name = googleAuth?.displayName ?? 'You';
+    _email = googleAuth?.email ?? 'ID: 5788478';
+    _pImage = googleAuth?.photoURL ?? defaultProfile;
     setState(() {
       _isLoading = false;
     });
-    // }
-    // else {
     if (user != null) {
       try {
         String _uid = user!.uid;
@@ -79,7 +76,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
     }
-    // }
+  }
+
+// popUp
+  void showSignupDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   final double tHeight = 200.0;
@@ -99,6 +152,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: AppColor.whiteColor,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              if (_name != null && _email != null) {
+                // Navigate to EditProfile with existing user details
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditProfile(
+                    profilePic: _pImage ?? defaultProfile,
+                    name: _name ?? 'Default Name',
+                    email: _email!.length > 12
+                        ? "${_email!.substring(0, 12)}..."
+                        : _email ?? 'Default Email',
+                  );
+                }));
+              } else {
+                Utils.flushBarErrorMessage('Error occurred', context);
+              }
+            },
+            icon: const Icon(
+              Icons.edit_outlined,
+              color: AppColor.whiteColor,
+            ),
+          )
+        ],
         centerTitle: true,
         leading: const Icon(
           Icons.arrow_back,
@@ -113,12 +190,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Stack(
                 clipBehavior: Clip.none,
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 children: [
                   _buildCoverBar(),
-                  Positioned(
-                    top: 10.0,
-                    left: 0.0,
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 30.0, left: 24.0, right: 24.0),
                     child: _buildProfile(),
                   ),
                   Positioned(
@@ -127,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              const VerticalSpeacing(55.0),
+              const VerticalSpeacing(70.0),
               _buildProfileFeatures(),
             ],
           ),
@@ -152,64 +229,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildProfile() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const SizedBox(width: 30.0),
-        Stack(
+        // Avatar and Text
+        Row(
           children: [
             CircleAvatar(
-              radius: 40,
+              radius: 30,
               backgroundImage:
                   NetworkImage(_pImage == null ? defaultProfile : _pImage!),
             ),
+            const SizedBox(width: 20.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _name == null ? 'You' : _name!,
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.whiteColor,
+                  ),
+                ),
+                Text(
+                  _email == null
+                      ? 'ID: 1540580'
+                      : (_email!.length > 20
+                          ? '${_email!.substring(0, 20)}...'
+                          : _email!),
+                  style: const TextStyle(
+                    color: AppColor.whiteColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14.0,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
-        const SizedBox(width: 20.0),
-        Text.rich(
-          TextSpan(
-            text: '\n${_name == null ? 'Name' : _name!} \n',
-            style: const TextStyle(
-              fontFamily: 'CenturyGothic',
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: AppColor.whiteColor,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: _email!.length > 20
-                    ? '${_email!.substring(0, 20)}...\n'
-                    : '${_email!}...\n',
-                style: const TextStyle(
-                  color: AppColor.whiteColor,
-                  fontWeight: FontWeight.w200,
-                  fontSize: 14.0,
+        // Sign Up button
+        if (_pImage == defaultProfile)
+          InkWell(
+            onTap: () {
+              showSignupDialog(context);
+            },
+            child: Container(
+              height: 40.0,
+              width: 80.0,
+              decoration: const BoxDecoration(
+                color: AppColor.whiteColor,
+              ),
+              child: const Center(
+                child: Text(
+                  'sign Up',
+                  style: TextStyle(
+                    color: AppColor.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-        const SizedBox(width: 5.0),
-        IconButton(
-          onPressed: () {
-            if (_name != null && _email != null) {
-              // Navigate to EditProfile with existing user details
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditProfile(
-                  profilePic: _pImage ?? defaultProfile,
-                  name: _name ?? 'Default Name',
-                  email: _email!.length > 12
-                      ? "${_email!.substring(0, 12)}..."
-                      : _email ?? 'Default Email',
-                );
-              }));
-            } else {
-              Utils.flushBarErrorMessage('Error occurred', context);
-            }
-          },
-          icon: const Icon(
-            Icons.edit_outlined,
-            color: AppColor.whiteColor,
-          ),
-        )
       ],
     );
   }
@@ -227,8 +308,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ontap: () {
               Navigator.pushNamed(context, RoutesName.myOrder);
             },
-            tColor: const Color(0xff6AA9FF),
-            bColor: const Color(0xff005AD5),
+            tColor: const Color(0xffFF6A9F),
+            bColor: const Color(0xffD50059),
             icon: Icons.local_shipping_outlined,
             title: 'My All',
             subtitle: 'Order',
@@ -245,13 +326,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           profileCenterBtns(
             ontap: () {
-              Navigator.pushNamed(context, RoutesName.deliveryAddress);
+              Navigator.pushNamed(context, RoutesName.totalreviewscreen);
             },
-            tColor: const Color(0xff6DF5FC),
-            bColor: const Color(0xff3CB6BB),
-            icon: Icons.home_outlined,
-            title: 'Delivery',
-            subtitle: 'Address',
+            tColor: const Color(0xffFF6A9F),
+            bColor: const Color(0xffD50059),
+            icon: Icons.star,
+            title: 'Your',
+            subtitle: 'Reviews',
           ),
         ],
       ),
@@ -271,11 +352,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 ProfileWidgets(
                     ontap: () {
+                      Navigator.pushNamed(context, RoutesName.deliveryAddress);
+                    },
+                    tColor: const Color(0xffFF6A9F),
+                    bColor: const Color(0xffD50059),
+                    icon: Icons.location_on_outlined,
+                    trIcon: Icons.arrow_forward_ios,
+                    title: 'Delivery Address'),
+                const Divider(),
+                ProfileWidgets(
+                    ontap: () {
                       Navigator.pushNamed(
                           context, RoutesName.notificationscreen);
                     },
-                    tColor: const Color(0xff6DF5FC),
-                    bColor: const Color(0xff46C5CA),
+                    tColor: const Color(0xffFF6A9F),
+                    bColor: const Color(0xffD50059),
                     icon: Icons.notifications_outlined,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Notification'),
@@ -284,11 +375,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ontap: () {
                       Navigator.pushNamed(context, RoutesName.restscreen);
                     },
-                    tColor: const Color(0xffDF9EF5),
-                    bColor: const Color(0xffA24ABF),
+                    tColor: const Color(0xffFF6A9F),
+                    bColor: const Color(0xffD50059),
                     icon: Icons.lock_outline,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Reset Password'),
+                const Divider(),
+                ProfileWidgets(
+                    ontap: () {
+                      Navigator.pushNamed(context, RoutesName.restscreen);
+                    },
+                    tColor: const Color(0xffFF6A9F),
+                    bColor: const Color(0xffD50059),
+                    icon: Icons.help_outline,
+                    trIcon: Icons.arrow_forward_ios,
+                    title: 'Help Center'),
                 const Divider(),
                 ProfileWidgets(
                   ontap: () async {
@@ -297,8 +398,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     await Navigator.pushNamedAndRemoveUntil(
                         context, RoutesName.loginscreen, (route) => false);
                   },
-                  tColor: const Color(0xffFF9CCB),
-                  bColor: const Color(0xffEC4091),
+                  tColor: const Color(0xffFF6A9F),
+                  bColor: const Color(0xffD50059),
                   icon: Icons.logout_outlined,
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Log Out',

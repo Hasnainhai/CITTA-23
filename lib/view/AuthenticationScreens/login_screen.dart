@@ -74,7 +74,22 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const VerticalSpeacing(40.0),
+                  const VerticalSpeacing(20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutesName.dashboardScreen);
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(color: AppColor.primaryColor),
+                        ),
+                      ),
+                    ],
+                  ),
                   Container(
                     height: 80.0,
                     width: 215.0,
