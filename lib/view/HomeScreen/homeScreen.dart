@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var categoryType = CategoryType.food;
+  var categoryType = CategoryType.fashion;
   final List _products = [];
   final List _fashionProducts = [];
   final _firestoreInstance = FirebaseFirestore.instance;
@@ -297,75 +297,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          if (categoryType == CategoryType.food) {
-                            return;
-                          }
-                          setState(() {
-                            categoryType = CategoryType.food;
-                          });
-                        },
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              height: 60.0,
-                              width: MediaQuery.of(context).size.width * 0.43,
-                              child: Center(
-                                child: Container(
-                                  height: 45.0,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
-                                  decoration: BoxDecoration(
-                                      color: categoryType == CategoryType.food
-                                          ? AppColor.buttonBgColor
-                                          : Colors.transparent,
-                                      border: Border.all(
-                                          width: 1,
-                                          color: AppColor.buttonBgColor)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Container(
-                                        height: 33.0,
-                                        width: 63.0,
-                                        color: AppColor.categoryLightColor,
-                                      ),
-                                      Text(
-                                        'Food',
-                                        style: TextStyle(
-                                          fontFamily: 'CenturyGothic',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              categoryType == CategoryType.food
-                                                  ? AppColor.whiteColor
-                                                  : AppColor.buttonBgColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 25,
-                              top: 0,
-                              bottom: 5.0,
-                              child: FittedBox(
-                                fit: BoxFit.contain,
-                                child: Image.asset(
-                                  'images/foodimg.png',
-                                  height: 59.0,
-                                  width: 59.0,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
                           if (categoryType == CategoryType.fashion) {
                             return;
                           }
@@ -427,6 +358,75 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'images/fashionimg.png',
                                   height: 56.0,
                                   width: 42.0,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (categoryType == CategoryType.food) {
+                            return;
+                          }
+                          setState(() {
+                            categoryType = CategoryType.food;
+                          });
+                        },
+                        child: Stack(
+                          children: [
+                            SizedBox(
+                              height: 60.0,
+                              width: MediaQuery.of(context).size.width * 0.43,
+                              child: Center(
+                                child: Container(
+                                  height: 45.0,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  decoration: BoxDecoration(
+                                      color: categoryType == CategoryType.food
+                                          ? AppColor.buttonBgColor
+                                          : Colors.transparent,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: AppColor.buttonBgColor)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        height: 33.0,
+                                        width: 63.0,
+                                        color: AppColor.categoryLightColor,
+                                      ),
+                                      Text(
+                                        'Food',
+                                        style: TextStyle(
+                                          fontFamily: 'CenturyGothic',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color:
+                                              categoryType == CategoryType.food
+                                                  ? AppColor.whiteColor
+                                                  : AppColor.buttonBgColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 25,
+                              top: 0,
+                              bottom: 5.0,
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Image.asset(
+                                  'images/foodimg.png',
+                                  height: 59.0,
+                                  width: 59.0,
                                   fit: BoxFit.contain,
                                 ),
                               ),
