@@ -10,7 +10,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
-import '../review/review.dart';
 
 // ignore: must_be_immutable
 class FashionDetail extends StatefulWidget {

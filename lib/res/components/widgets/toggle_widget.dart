@@ -1,6 +1,5 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 
 class ToggleWidget extends StatefulWidget {
   const ToggleWidget({super.key, required this.title});
