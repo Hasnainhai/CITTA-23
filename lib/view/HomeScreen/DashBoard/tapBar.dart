@@ -59,6 +59,24 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     }
   }
 
+  Stream<int> getCartItemCountStream() {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      Utils.toastMessage('please SignUp first');
+      return const Stream<int>.empty();
+    }
+
+    String userId = currentUser.uid;
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.length);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -120,32 +138,78 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         currentIndex: selectIndex,
         onTap: onItemClick,
       ),
-      floatingActionButton: Container(
-        width: 50.0,
-        height: 50.0,
-        decoration: const BoxDecoration(
-          color: AppColor.primaryColor,
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(254, 1, 128, 0.2588),
-              blurRadius: 18.0,
-              offset: Offset(0, 12),
-            ),
-          ],
-        ),
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, RoutesName.cartScreen);
-          },
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Image.asset('images/card.png'),
-            ),
-          ),
-        ),
+      floatingActionButton: StreamBuilder<int>(
+        stream: getCartItemCountStream(),
+        builder: (context, snapshot) {
+          int itemCount = snapshot.data ?? 0;
+
+          return Stack(
+            children: [
+              Container(
+                width: 60.0,
+                height: 60.0,
+                decoration: const BoxDecoration(
+                  color: AppColor.primaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(254, 1, 128, 0.2588),
+                      blurRadius: 18.0,
+                      offset: Offset(0, 12),
+                    ),
+                  ],
+                ),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutesName.cartScreen);
+                  },
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  child: Center(
+                    child: Image.asset('images/card.png'),
+                  ),
+                ),
+              ),
+              if (itemCount > 0)
+                Positioned(
+                  right: 22,
+                  top: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(4.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColor.whiteColor,
+                    ),
+                    child: Text(
+                      itemCount.toString(),
+                      style: const TextStyle(
+                        color: AppColor.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              if (itemCount == 0)
+                Positioned(
+                  right: 22,
+                  top: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(4.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColor.whiteColor,
+                    ),
+                    child: const Text(
+                      '0',
+                      style: TextStyle(
+                        color: AppColor.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
