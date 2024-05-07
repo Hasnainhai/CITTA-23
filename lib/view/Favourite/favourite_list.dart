@@ -22,7 +22,15 @@ class _FavouriteListState extends State<FavouriteList> {
 
   late Stream<List<Map<String, dynamic>?>> favoriteItemsStream;
   Stream<List<Map<String, dynamic>?>> getFavoriteItemsStream() {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      _isLoading = false;
+      return Stream<List<Map<String, dynamic>?>>.empty();
+    }
+
+    String uid = currentUser.uid;
+
     return _firestoreInstance
         .collection('favoriteList')
         .doc(uid)

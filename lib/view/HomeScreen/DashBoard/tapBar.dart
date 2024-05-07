@@ -1,12 +1,16 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/menu/menu.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../res/consts/firebase_const.dart';
 import '../../Favourite/favourite_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -26,10 +30,40 @@ class _DashBoardScreenState extends State<DashBoardScreen>
       tabController!.index = selectIndex;
     });
   }
+  // for profile
+
+  String? _name;
+  String? _pImage;
+  final User? user = authInstance.currentUser;
+  String defaultProfile =
+      'https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg';
+
+  Future<void> getUserData() async {
+    final googleAuth = FirebaseAuth.instance.currentUser;
+    _name = googleAuth?.displayName ?? 'You';
+    _pImage = googleAuth?.photoURL ?? defaultProfile;
+    if (user != null) {
+      try {
+        String _uid = user!.uid;
+        final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_uid)
+            .get();
+        if (userDoc != null || userDoc.data() != null) {
+          _name = userDoc.get('name');
+          _pImage = userDoc.get('profilePic');
+        }
+      } catch (error) {
+        Utils.flushBarErrorMessage('$error', context);
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    getUserData();
+
     tabController = TabController(length: 4, vsync: this);
   }
 
@@ -47,30 +81,35 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
             ),
             label: ('Home'),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(
               Icons.list_alt_outlined,
             ),
-            label: ('Menu'),
+            label: ('Categories'),
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite_border_outlined,
+            ),
+            label: ('Wish List'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.bookmark_outline_rounded,
-            ),
-            label: ('Save'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
-            ),
-            label: ('Profile'),
+            icon: _pImage == null
+                ? const Icon(Icons.account_circle)
+                : CircleAvatar(
+                    radius: 14.0,
+                    backgroundImage: NetworkImage(_pImage.toString()),
+                  ),
+            label: _name == null
+                ? 'You'
+                : _name!.substring(0, _name!.length > 6 ? 6 : _name!.length),
           ),
         ],
         unselectedItemColor: AppColor.grayColor,
@@ -82,8 +121,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         onTap: onItemClick,
       ),
       floatingActionButton: Container(
-        width: 60.0,
-        height: 60.0,
+        width: 50.0,
+        height: 50.0,
         decoration: const BoxDecoration(
           color: AppColor.primaryColor,
           boxShadow: [
