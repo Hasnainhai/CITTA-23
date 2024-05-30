@@ -1000,7 +1000,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     products[index]['sellerId'].toString(),
                                 imageUrl: products[index]['imageUrl'],
                                 price: products[index]['price'].toString(),
-                                salePrice: products[index]['salePrice'],
+                                salePrice: products[index]['price'],
                                 weight: products[index]['weight'].toString(),
                                 detail: products[index]['detail'].toString(),
                               );
