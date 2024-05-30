@@ -24,15 +24,15 @@ class LoadingManager extends StatelessWidget {
                       children: [
                         Lottie.asset(
                           'animation/animate.json',
-                          width: 100,
-                          height: 100,
+                          width: 60,
+                          height: 60,
                         ),
                         const SizedBox(height: 20),
                         const Text(
                           'Loading...',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
