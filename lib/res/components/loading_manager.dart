@@ -1,29 +1,47 @@
-import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 
 class LoadingManager extends StatelessWidget {
   const LoadingManager(
       {super.key, required this.isLoading, required this.child});
   final bool isLoading;
   final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         child,
-        isLoading
-            ? Container(
-                color: Colors.black.withOpacity(0.7),
-              )
-            : Container(),
-        isLoading
-            ? const Center(
-                child: SpinKitFadingFour(
-                  color: AppColor.primaryColor,
-                ),
-              )
-            : Container(),
+        AnimatedOpacity(
+          opacity: isLoading ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 300),
+          child: isLoading
+              ? Container(
+                  color: Colors.black.withOpacity(0.7),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Lottie.asset(
+                          'animation/animate.json',
+                          width: 100,
+                          height: 100,
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Loading...',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : Container(),
+        ),
       ],
     );
   }

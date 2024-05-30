@@ -48,7 +48,7 @@ class HomeCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const VerticalSpeacing(15.0),
+                const VerticalSpeacing(14.0),
                 Center(
                   child: InkWell(
                     onTap: ontap,
