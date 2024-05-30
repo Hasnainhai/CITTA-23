@@ -149,7 +149,7 @@ class _CardScreenState extends State<CardScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   width: double.infinity,
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
@@ -192,44 +192,7 @@ class _CardScreenState extends State<CardScreen> {
                     },
                   ),
                 ),
-                const VerticalSpeacing(30.0),
-                const Text(
-                  'Add Coupon',
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: AppColor.fontColor,
-                  ),
-                ),
                 const VerticalSpeacing(20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 46,
-                      width: MediaQuery.of(context).size.width * 0.55,
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: AppColor.grayColor, width: 1.0),
-                        borderRadius: BorderRadius.zero,
-                      ),
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Enter Voucher Code',
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(12),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 46.0,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: RoundedButton(title: 'Apply', onpress: () {}),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(30.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

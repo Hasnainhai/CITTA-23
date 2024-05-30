@@ -151,8 +151,8 @@ class _CartWidgetState extends State<CartWidget> {
                         decrement();
                       },
                       child: Container(
-                          height: 34,
-                          width: 34,
+                          height: 30,
+                          width: 30,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: AppColor.grayColor,
@@ -168,27 +168,27 @@ class _CartWidgetState extends State<CartWidget> {
                           )),
                     ),
                     const SizedBox(
-                      width: 18,
+                      width: 10,
                     ),
                     Text(
                       widget.items.toString(),
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColor.fontColor,
                       ),
                     ),
                     const SizedBox(
-                      width: 18,
+                      width: 10,
                     ),
                     InkWell(
                       onTap: () {
                         increment();
                       },
                       child: Container(
-                        height: 34,
-                        width: 34,
+                        height: 30,
+                        width: 30,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: AppColor.grayColor,
