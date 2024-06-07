@@ -70,7 +70,7 @@ class _MenuScreenState extends State<MenuScreen> {
         'id': productId,
         'imageUrl': img,
         'title': title,
-        'salePrice': dPrice,
+        'price': dPrice,
         'deleteId': uuid,
         // Add other product details as needed
       });
@@ -262,7 +262,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     ? HomeCard(
                                         name: item['title'],
                                         price: item['price'],
-                                        dPrice: item['salePrice'] + "₹",
+                                        dPrice: item['price'] + "₹",
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
                                         img: item['imageUrl'],
@@ -282,7 +282,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                                     imageUrl: item['imageUrl'],
                                                     price: item['price']
                                                         .toString(),
-                                                    salePrice: item['salePrice']
+                                                    salePrice: item['price']
                                                         .toString(),
                                                     weight: item['weight']
                                                         .toString(),
@@ -297,7 +297,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                             item['imageUrl'],
                                             item['title'],
                                             item['price'],
-                                            item['salePrice'],
+                                            item['price'],
                                             item['id'],
                                           );
                                         },
