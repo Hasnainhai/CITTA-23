@@ -264,8 +264,10 @@ class _FilterPopUpState extends State<FilterPopUp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      NewItemsScreen(title: title)));
+                                  builder: (context) => CategoryProductsScreen(
+                                        title: title,
+                                        products: [],
+                                      )));
                           _allCategorits.remove('Grocery');
                         } else if (_allCategorits.contains('Vagetabals')) {
                           Navigator.push(

@@ -38,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   initState() {
     super.initState();
-    fetchProducts();
+    fetchCategoryProducts();
     fetchPopularPack();
     fetchFashionProducts();
   }
 
-  fetchProducts() async {
+  fetchCategoryProducts() async {
     try {
       setState(() {
         _isLoading = true;
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             'category': doc['category'],
           };
 
-          print('Fetched product: $product'); // Debugging statement
+          debugPrint('Fetched product: $product'); // Debugging statement
 
           switch (product['category']) {
             case 'New Items':
@@ -87,12 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         _isLoading = false;
 
-        print('New Items: $_newItems'); // Debugging statement
-        print('Hot Selling: $_hotSelling'); // Debugging statement
-        print('Lightening Deals: $_lighteningDeals'); // Debugging statement
+        debugPrint('New Items: $_newItems'); // Debugging statement
+        debugPrint('Hot Selling: $_hotSelling'); // Debugging statement
+        debugPrint(
+            'Lightening Deals: $_lighteningDeals'); // Debugging statement
       });
     } catch (e) {
-      print('Error fetching products: $e'); // Debugging statement
+      debugPrint('Error fetching products: $e'); // Debugging statement
       setState(() {
         _isLoading = false;
       });
@@ -255,9 +256,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    debugPrint('New Items: ${_newItems}');
-    debugPrint('New Items: ${_hotSelling}');
-    debugPrint('New Items: ${_lighteningDeals}');
+    debugPrint('New Items: $_newItems');
+    debugPrint('New Items: $_hotSelling');
+    debugPrint('New Items: $_lighteningDeals');
 
     bool isTrue = true;
     return LoadingManager(
@@ -719,116 +720,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             )
-                            // Our New Items
-                            // SizedBox(
-                            //   height: MediaQuery.of(context).size.height / 4,
-                            //   child: GridView.builder(
-                            //     physics: const NeverScrollableScrollPhysics(),
-                            //     shrinkWrap: true,
-                            //     itemCount: 2,
-                            //     gridDelegate:
-                            //         const SliverGridDelegateWithFixedCrossAxisCount(
-                            //       crossAxisCount: 2,
-                            //     ),
-                            //     itemBuilder: (_, index) {
-                            //       // Check if _products is not empty and index is within valid range
-                            //       if (_newItems.isNotEmpty &&
-                            //           index < _newItems.length) {
-                            //         return HomeCard(
-                            //           ontap: () {
-                            //             Navigator.push(
-                            //               context,
-                            //               MaterialPageRoute(
-                            //                 builder: (context) {
-                            //                   return ProductDetailScreen(
-                            //                       title: _newItems[index]
-                            //                               ['title']
-                            //                           .toString(),
-                            //                       productId: _newItems[index]
-                            //                               ['id']
-                            //                           .toString(),
-                            //                       sellerId: _newItems[index]
-                            //                               ['sellerId']
-                            //                           .toString(),
-                            //                       imageUrl: _newItems[index]
-                            //                           ['imageUrl'],
-                            //                       price: _newItems[index]
-                            //                               ['price']
-                            //                           .toString(),
-                            //                       salePrice: _newItems[index]
-                            //                           ['salePrice'],
-                            //                       weight: _newItems[index]
-                            //                               ['weight']
-                            //                           .toString(),
-                            //                       detail: _newItems[index]
-                            //                               ['detail']
-                            //                           .toString());
-                            //                 },
-                            //               ),
-                            //             );
-                            //           },
-                            //           productId: _newItems[index]['id'],
-                            //           sellerId: _newItems[index]['sellerId'],
-                            //           name:
-                            //               _newItems[index]['title'].toString(),
-                            //           price:
-                            //               _newItems[index]['price'].toString(),
-                            //           dPrice:
-                            //               "${_newItems[index]['salePrice']}₹",
-                            //           borderColor: AppColor.buttonBgColor,
-                            //           fillColor: AppColor.appBarButtonColor,
-                            //           cartBorder: isTrue
-                            //               ? AppColor.appBarButtonColor
-                            //               : const Color.fromRGBO(
-                            //                   203, 1, 102, 1),
-                            //           img: _newItems[index]['imageUrl'],
-                            //           iconColor: AppColor.buttonBgColor,
-                            //           addCart: () {
-                            //             if (_newItems.isNotEmpty &&
-                            //                 index >= 0 &&
-                            //                 index < _newItems.length) {
-                            //               addToCart(
-                            //                 _newItems[index]['imageUrl'],
-                            //                 _newItems[index]['title'],
-                            //                 _newItems[index]['salePrice'],
-                            //                 _newItems[index]['sellerId'],
-                            //                 _newItems[index]['id'],
-                            //               );
-                            //             }
-                            //           },
-                            //         );
-                            //       } else if (_newItems.isEmpty) {
-                            //         return const Center(
-                            //           child: Text('No New Products...'),
-                            //         );
-                            //       } else {
-                            //         // Handle the case when the list is empty or index is out of range
-                            //         return Padding(
-                            //           padding: const EdgeInsets.all(10.0),
-                            //           child: Shimmer(
-                            //             duration: const Duration(
-                            //                 seconds: 3), //Default value
-                            //             interval: const Duration(
-                            //                 seconds:
-                            //                     5), //Default value: Duration(seconds: 0)
-                            //             color: AppColor.grayColor
-                            //                 .withOpacity(0.2), //Default value
-                            //             colorOpacity: 0.2, //Default value
-                            //             enabled: true, //Default value
-                            //             direction: const ShimmerDirection
-                            //                 .fromLTRB(), //Default Value
-                            //             child: Container(
-                            //               height: 100,
-                            //               width: 150,
-                            //               color: AppColor.grayColor
-                            //                   .withOpacity(0.2),
-                            //             ),
-                            //           ),
-                            //         );
-                            //       }
-                            //     },
-                            //   ),
-                            // ),
                           ],
                         )
                       : Padding(
@@ -959,7 +850,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   String title = category;
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return NewItemsScreen(title: title);
+                    return CategoryProductsScreen(
+                      title: title,
+                      products: products,
+                    );
                   }));
                 },
                 child: const Text(
