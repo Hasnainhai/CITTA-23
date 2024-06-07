@@ -197,8 +197,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                 String title = 'Grocery';
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return NewItemsScreen(
+                                  return CategoryProductsScreen(
                                     title: title,
+                                    products: [],
                                   );
                                 }));
                               },
