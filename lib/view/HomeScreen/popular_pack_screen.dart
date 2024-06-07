@@ -332,9 +332,6 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                         dPrice: _popularPacks[index]['salePrice'].toString(),
                         borderColor: AppColor.buttonBgColor,
                         fillColor: AppColor.appBarButtonColor,
-                        cartBorder: isTrue
-                            ? AppColor.appBarButtonColor
-                            : AppColor.buttonBgColor,
                         img: _popularPacks[index]['imageUrl'],
                         iconColor: AppColor.buttonBgColor,
                         // add to cart logic

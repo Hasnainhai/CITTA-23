@@ -2,7 +2,6 @@
 
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
-import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -176,9 +175,6 @@ class _AllFashionProdState extends State<AllFashionProd> {
                       dPrice: _fashionProducts[index]['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      cartBorder: isTrue
-                          ? AppColor.appBarButtonColor
-                          : AppColor.buttonBgColor,
                       img: _fashionProducts[index]['imageUrl'],
                       iconColor: AppColor.buttonBgColor, // add to cart logic
                       addCart: () {

@@ -265,9 +265,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                         dPrice: item['salePrice'] + "₹",
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
-                                        cartBorder: isTrue
-                                            ? AppColor.appBarButtonColor
-                                            : AppColor.buttonBgColor,
                                         img: item['imageUrl'],
                                         iconColor: AppColor.buttonBgColor,
                                         ontap: () {
@@ -313,9 +310,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                         dPrice: item['price'] + "₹",
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
-                                        cartBorder: isTrue
-                                            ? AppColor.appBarButtonColor
-                                            : AppColor.buttonBgColor,
                                         img: item['imageUrl'],
                                         iconColor: AppColor.buttonBgColor,
                                         ontap: () {

@@ -250,9 +250,6 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                       dPrice: productData['salePrice'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      cartBorder: isTrue
-                          ? AppColor.appBarButtonColor
-                          : AppColor.buttonBgColor,
                       img: productData['imageUrl'],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {

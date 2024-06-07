@@ -13,7 +13,6 @@ class HomeCard extends StatelessWidget {
     required this.dPrice,
     required this.borderColor,
     required this.fillColor,
-    required this.cartBorder,
     required this.img,
     required this.iconColor,
     required this.ontap,
@@ -27,7 +26,6 @@ class HomeCard extends StatelessWidget {
   final String dPrice;
   final Color borderColor;
   final Color fillColor;
-  final Color cartBorder;
   final Color iconColor;
   final Function() ontap;
   final Function() addCart;
