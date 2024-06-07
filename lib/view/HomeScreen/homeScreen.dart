@@ -16,6 +16,7 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
 import '../../res/consts/vars.dart';
 import '../drawer/drawer.dart';
+import 'popular_pack_screen.dart';
 import 'widgets/homeCard.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,36 +28,71 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var categoryType = CategoryType.fashion;
-  final List _products = [];
+  // final List _products = [];
   final List _fashionProducts = [];
   final _firestoreInstance = FirebaseFirestore.instance;
   bool _isLoading = false;
+  final List<Map<String, dynamic>> _newItems = [];
+  final List<Map<String, dynamic>> _hotSelling = [];
+  final List<Map<String, dynamic>> _lighteningDeals = [];
+  @override
+  initState() {
+    super.initState();
+    fetchProducts();
+    fetchPopularPack();
+    fetchFashionProducts();
+  }
+
   fetchProducts() async {
     try {
       setState(() {
         _isLoading = true;
       });
+
       QuerySnapshot qn = await _firestoreInstance.collection('products').get();
+      debugPrint(
+          'Data fetched from Firestore ${qn.docs}'); // Debugging statement
+
       setState(() {
-        for (int i = 0; i < qn.docs.length; i++) {
-          _products.add({
-            'sellerId': qn.docs[i]['sellerId'],
-            'id': qn.docs[i]['id'],
-            'imageUrl': qn.docs[i]['imageUrl'],
-            'title': qn.docs[i]['title'],
-            'price': qn.docs[i]['price'],
-            'salePrice': qn.docs[i]['salePrice'],
-            'detail': qn.docs[i]['detail'],
-            'weight': qn.docs[i]['weight'],
-          });
+        _newItems.clear();
+        _hotSelling.clear();
+        _lighteningDeals.clear();
+
+        for (var doc in qn.docs) {
+          var product = {
+            'sellerId': doc['sellerId'],
+            'id': doc['id'],
+            'imageUrl': doc['imageUrl'],
+            'title': doc['title'],
+            'price': doc['price'],
+            // 'salePrice': doc['salePrice'],
+            'detail': doc['detail'],
+            'weight': doc['weight'],
+            'category': doc['category'],
+          };
+
+          print('Fetched product: $product'); // Debugging statement
+
+          switch (product['category']) {
+            case 'New Items':
+              _newItems.add(product);
+              break;
+            case 'Hot Selling':
+              _hotSelling.add(product);
+              break;
+            case 'Lightening Deals':
+              _lighteningDeals.add(product);
+              break;
+          }
         }
-      });
-      return qn.docs;
-    } catch (e) {
-      setState(() {
         _isLoading = false;
+
+        print('New Items: $_newItems'); // Debugging statement
+        print('Hot Selling: $_hotSelling'); // Debugging statement
+        print('Lightening Deals: $_lighteningDeals'); // Debugging statement
       });
-    } finally {
+    } catch (e) {
+      print('Error fetching products: $e'); // Debugging statement
       setState(() {
         _isLoading = false;
       });
@@ -217,16 +253,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  initState() {
-    super.initState();
-    fetchProducts();
-    fetchPopularPack();
-    fetchFashionProducts();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    debugPrint('New Items: ${_newItems}');
+    debugPrint('New Items: ${_hotSelling}');
+    debugPrint('New Items: ${_lighteningDeals}');
 
     bool isTrue = true;
     return LoadingManager(
@@ -674,150 +705,130 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
 
-                            const VerticalSpeacing(20.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Our New Item",
-                                  style: TextStyle(
-                                    fontFamily: 'CenturyGothic',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColor.fontColor,
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    String title = 'New Products';
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return NewItemsScreen(title: title);
-                                    }));
-                                  },
-                                  child: const Text(
-                                    "View All",
-                                    style: TextStyle(
-                                      fontFamily: 'CenturyGothic',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.buttonBgColor,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                             const VerticalSpeacing(16.0),
-                            // Our New Items
                             SizedBox(
-                              height: MediaQuery.of(context).size.height / 4,
-                              child: GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: 2,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                ),
-                                itemBuilder: (_, index) {
-                                  // Check if _products is not empty and index is within valid range
-                                  if (_products.isNotEmpty &&
-                                      index < _products.length) {
-                                    return HomeCard(
-                                      ontap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return ProductDetailScreen(
-                                                  title: _products[index]
-                                                          ['title']
-                                                      .toString(),
-                                                  productId: _products[index]
-                                                          ['id']
-                                                      .toString(),
-                                                  sellerId: _products[index]
-                                                          ['sellerId']
-                                                      .toString(),
-                                                  imageUrl: _products[index]
-                                                      ['imageUrl'],
-                                                  price: _products[index]
-                                                          ['price']
-                                                      .toString(),
-                                                  salePrice: _products[index]
-                                                      ['salePrice'],
-                                                  weight: _products[index]
-                                                          ['weight']
-                                                      .toString(),
-                                                  detail: _products[index]
-                                                          ['detail']
-                                                      .toString());
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      productId: _products[index]['id'],
-                                      sellerId: _products[index]['sellerId'],
-                                      name:
-                                          _products[index]['title'].toString(),
-                                      price:
-                                          _products[index]['price'].toString(),
-                                      dPrice:
-                                          "${_products[index]['salePrice']}₹",
-                                      borderColor: AppColor.buttonBgColor,
-                                      fillColor: AppColor.appBarButtonColor,
-                                      cartBorder: isTrue
-                                          ? AppColor.appBarButtonColor
-                                          : const Color.fromRGBO(
-                                              203, 1, 102, 1),
-                                      img: _products[index]['imageUrl'],
-                                      iconColor: AppColor.buttonBgColor,
-                                      addCart: () {
-                                        if (_products.isNotEmpty &&
-                                            index >= 0 &&
-                                            index < _products.length) {
-                                          addToCart(
-                                            _products[index]['imageUrl'],
-                                            _products[index]['title'],
-                                            _products[index]['salePrice'],
-                                            _products[index]['sellerId'],
-                                            _products[index]['id'],
-                                          );
-                                        }
-                                      },
-                                    );
-                                  } else if (_products.isEmpty) {
-                                    return const Center(
-                                      child: Text('No Products...'),
-                                    );
-                                  } else {
-                                    // Handle the case when the list is empty or index is out of range
-                                    return Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Shimmer(
-                                        duration: const Duration(
-                                            seconds: 3), //Default value
-                                        interval: const Duration(
-                                            seconds:
-                                                5), //Default value: Duration(seconds: 0)
-                                        color: AppColor.grayColor
-                                            .withOpacity(0.2), //Default value
-                                        colorOpacity: 0.2, //Default value
-                                        enabled: true, //Default value
-                                        direction: const ShimmerDirection
-                                            .fromLTRB(), //Default Value
-                                        child: Container(
-                                          height: 100,
-                                          width: 150,
-                                          color: AppColor.grayColor
-                                              .withOpacity(0.2),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
+                              height: MediaQuery.of(context).size.height / 1,
+                              child: Column(
+                                children: [
+                                  _buildCategorySection(
+                                      context, 'New Items', _newItems),
+                                  _buildCategorySection(
+                                      context, 'Hot Selling', _hotSelling),
+                                  _buildCategorySection(context,
+                                      'Lightening Deals', _lighteningDeals),
+                                ],
                               ),
-                            ),
+                            )
+                            // Our New Items
+                            // SizedBox(
+                            //   height: MediaQuery.of(context).size.height / 4,
+                            //   child: GridView.builder(
+                            //     physics: const NeverScrollableScrollPhysics(),
+                            //     shrinkWrap: true,
+                            //     itemCount: 2,
+                            //     gridDelegate:
+                            //         const SliverGridDelegateWithFixedCrossAxisCount(
+                            //       crossAxisCount: 2,
+                            //     ),
+                            //     itemBuilder: (_, index) {
+                            //       // Check if _products is not empty and index is within valid range
+                            //       if (_newItems.isNotEmpty &&
+                            //           index < _newItems.length) {
+                            //         return HomeCard(
+                            //           ontap: () {
+                            //             Navigator.push(
+                            //               context,
+                            //               MaterialPageRoute(
+                            //                 builder: (context) {
+                            //                   return ProductDetailScreen(
+                            //                       title: _newItems[index]
+                            //                               ['title']
+                            //                           .toString(),
+                            //                       productId: _newItems[index]
+                            //                               ['id']
+                            //                           .toString(),
+                            //                       sellerId: _newItems[index]
+                            //                               ['sellerId']
+                            //                           .toString(),
+                            //                       imageUrl: _newItems[index]
+                            //                           ['imageUrl'],
+                            //                       price: _newItems[index]
+                            //                               ['price']
+                            //                           .toString(),
+                            //                       salePrice: _newItems[index]
+                            //                           ['salePrice'],
+                            //                       weight: _newItems[index]
+                            //                               ['weight']
+                            //                           .toString(),
+                            //                       detail: _newItems[index]
+                            //                               ['detail']
+                            //                           .toString());
+                            //                 },
+                            //               ),
+                            //             );
+                            //           },
+                            //           productId: _newItems[index]['id'],
+                            //           sellerId: _newItems[index]['sellerId'],
+                            //           name:
+                            //               _newItems[index]['title'].toString(),
+                            //           price:
+                            //               _newItems[index]['price'].toString(),
+                            //           dPrice:
+                            //               "${_newItems[index]['salePrice']}₹",
+                            //           borderColor: AppColor.buttonBgColor,
+                            //           fillColor: AppColor.appBarButtonColor,
+                            //           cartBorder: isTrue
+                            //               ? AppColor.appBarButtonColor
+                            //               : const Color.fromRGBO(
+                            //                   203, 1, 102, 1),
+                            //           img: _newItems[index]['imageUrl'],
+                            //           iconColor: AppColor.buttonBgColor,
+                            //           addCart: () {
+                            //             if (_newItems.isNotEmpty &&
+                            //                 index >= 0 &&
+                            //                 index < _newItems.length) {
+                            //               addToCart(
+                            //                 _newItems[index]['imageUrl'],
+                            //                 _newItems[index]['title'],
+                            //                 _newItems[index]['salePrice'],
+                            //                 _newItems[index]['sellerId'],
+                            //                 _newItems[index]['id'],
+                            //               );
+                            //             }
+                            //           },
+                            //         );
+                            //       } else if (_newItems.isEmpty) {
+                            //         return const Center(
+                            //           child: Text('No New Products...'),
+                            //         );
+                            //       } else {
+                            //         // Handle the case when the list is empty or index is out of range
+                            //         return Padding(
+                            //           padding: const EdgeInsets.all(10.0),
+                            //           child: Shimmer(
+                            //             duration: const Duration(
+                            //                 seconds: 3), //Default value
+                            //             interval: const Duration(
+                            //                 seconds:
+                            //                     5), //Default value: Duration(seconds: 0)
+                            //             color: AppColor.grayColor
+                            //                 .withOpacity(0.2), //Default value
+                            //             colorOpacity: 0.2, //Default value
+                            //             enabled: true, //Default value
+                            //             direction: const ShimmerDirection
+                            //                 .fromLTRB(), //Default Value
+                            //             child: Container(
+                            //               height: 100,
+                            //               width: 150,
+                            //               color: AppColor.grayColor
+                            //                   .withOpacity(0.2),
+                            //             ),
+                            //           ),
+                            //         );
+                            //       }
+                            //     },
+                            //   ),
+                            // ),
                           ],
                         )
                       : Padding(
@@ -922,6 +933,111 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCategorySection(BuildContext context, String category,
+      List<Map<String, dynamic>> products) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                category,
+                style: const TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.fontColor,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  String title = category;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return NewItemsScreen(title: title);
+                  }));
+                },
+                child: const Text(
+                  "View All",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.buttonBgColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 4,
+          child: products.isEmpty
+              ? Center(child: Text('No $category...'))
+              : GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: products.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (_, index) {
+                    return HomeCard(
+                      ontap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailScreen(
+                                title: products[index]['title'].toString(),
+                                productId: products[index]['id'].toString(),
+                                sellerId:
+                                    products[index]['sellerId'].toString(),
+                                imageUrl: products[index]['imageUrl'],
+                                price: products[index]['price'].toString(),
+                                salePrice: products[index]['price'],
+                                weight: products[index]['weight'].toString(),
+                                detail: products[index]['detail'].toString(),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      productId: products[index]['id'],
+                      sellerId: products[index]['sellerId'],
+                      name: products[index]['title'].toString(),
+                      price: products[index]['price'].toString(),
+                      dPrice: "${products[index]['price']}₹",
+                      borderColor: AppColor.buttonBgColor,
+                      fillColor: AppColor.appBarButtonColor,
+                      cartBorder: isTrue
+                          ? AppColor.appBarButtonColor
+                          : const Color.fromRGBO(203, 1, 102, 1),
+                      img: products[index]['imageUrl'],
+                      iconColor: AppColor.buttonBgColor,
+                      addCart: () {
+                        if (products.isNotEmpty &&
+                            index >= 0 &&
+                            index < products.length) {
+                          addToCart(
+                            products[index]['imageUrl'],
+                            products[index]['title'],
+                            products[index]['price'],
+                            products[index]['sellerId'],
+                            products[index]['id'],
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+        ),
+      ],
     );
   }
 }
