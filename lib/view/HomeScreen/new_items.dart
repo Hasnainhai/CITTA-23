@@ -1,17 +1,16 @@
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
 import 'product_detail_screen.dart';
 import 'widgets/homeCard.dart';
 
 // ignore: must_be_immutable
 class CategoryProductsScreen extends StatefulWidget {
-  CategoryProductsScreen({super.key, required this.title, required this.products});
+  CategoryProductsScreen(
+      {super.key, required this.title, required this.products});
 
   String title;
   final List<Map<String, dynamic>> products;
@@ -21,42 +20,6 @@ class CategoryProductsScreen extends StatefulWidget {
 
 class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   bool isTrue = true;
-  // final List _products = [];
-  // final _firestoreInstance = FirebaseFirestore.instance;
-  // bool _isLoading = false;
-
-  // fetchProducts() async {
-  //   try {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     QuerySnapshot qn = await _firestoreInstance.collection('products').get();
-  //     setState(() {
-  //       for (int i = 0; i < qn.docs.length; i++) {
-  //         _products.add({
-  //           'id': qn.docs[i]['id'],
-  //           'sellerId': qn.docs[i]['sellerId'],
-  //           'imageUrl': qn.docs[i]['imageUrl'],
-  //           'title': qn.docs[i]['title'],
-  //           'price': qn.docs[i]['price'],
-  //           'salePrice': qn.docs[i]['salePrice'],
-  //           'detail': qn.docs[i]['detail'],
-  //           'weight': qn.docs[i]['weight'],
-  //         });
-  //       }
-  //     });
-  //     return qn.docs;
-  //   } catch (e) {
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //   } finally {
-  //     setState(() {
-  //       _isLoading = false;
-  //     });
-  //   }
-  // }
-
   void addToCart(String img, String title, String dPrice, String sellerId,
       String productId) async {
     final currentUser = FirebaseAuth.instance.currentUser;
@@ -151,9 +114,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             dPrice: "${widget.products[index]['price']}₹",
             borderColor: AppColor.buttonBgColor,
             fillColor: AppColor.appBarButtonColor,
-            cartBorder: true
-                ? AppColor.appBarButtonColor
-                : const Color.fromRGBO(203, 1, 102, 1),
             img: widget.products[index]['imageUrl'],
             iconColor: AppColor.buttonBgColor,
             addCart: () {

@@ -16,7 +16,6 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
 import '../../res/consts/vars.dart';
 import '../drawer/drawer.dart';
-import 'popular_pack_screen.dart';
 import 'widgets/homeCard.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -260,7 +259,6 @@ class _HomeScreenState extends State<HomeScreen> {
     debugPrint('New Items: $_hotSelling');
     debugPrint('New Items: $_lighteningDeals');
 
-    bool isTrue = true;
     return LoadingManager(
       isLoading: _isLoading,
       child: Scaffold(
@@ -657,9 +655,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           "${_popularPacks[index]['salePrice']}₹",
                                       borderColor: AppColor.buttonBgColor,
                                       fillColor: AppColor.appBarButtonColor,
-                                      cartBorder: isTrue
-                                          ? AppColor.appBarButtonColor
-                                          : AppColor.buttonBgColor,
                                       img: _popularPacks[index]['imageUrl'],
                                       iconColor: AppColor.buttonBgColor,
                                       // add to cart logic
@@ -769,9 +764,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "${_fashionProducts[index]['price']}₹",
                                   borderColor: AppColor.buttonBgColor,
                                   fillColor: AppColor.appBarButtonColor,
-                                  cartBorder: isTrue
-                                      ? AppColor.appBarButtonColor
-                                      : AppColor.buttonBgColor,
                                   img: _fashionProducts[index]['imageUrl'],
                                   iconColor: AppColor.buttonBgColor,
                                   addCart: () {
@@ -909,9 +901,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       dPrice: "${products[index]['price']}₹",
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      cartBorder: isTrue
-                          ? AppColor.appBarButtonColor
-                          : const Color.fromRGBO(203, 1, 102, 1),
                       img: products[index]['imageUrl'],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
