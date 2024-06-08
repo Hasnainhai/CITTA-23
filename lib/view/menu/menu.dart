@@ -259,6 +259,7 @@ class _MenuScreenState extends State<MenuScreen> {
                               itemCount: data.length,
                               itemBuilder: (context, index) {
                                 var item = data[index];
+
                                 return productType == "food"
                                     ? HomeCard(
                                         name: item['title'],
@@ -327,8 +328,10 @@ class _MenuScreenState extends State<MenuScreen> {
                                                   salePrice: item['price'],
                                                   detail:
                                                       item['detail'].toString(),
-                                                  colors: [],
-                                                  sizes: const [],
+                                                  colors: List<String>.from(item[
+                                                      'color']),
+                                                  sizes: List<String>.from(
+                                                      item['size']),
                                                 );
                                               },
                                             ),
