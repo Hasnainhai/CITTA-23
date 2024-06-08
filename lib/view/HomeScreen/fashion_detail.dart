@@ -136,17 +136,23 @@ class _FashionDetailState extends State<FashionDetail> {
   }
 
   String? _selectedImageUrl;
+  String? _selectedSize;
 
   @override
   void initState() {
     super.initState();
-    _selectedImageUrl =
-        widget.imageUrl; // Initialize with the default image URL
+    _selectedImageUrl = widget.imageUrl;
   }
 
   void _onColorTap(String imageUrl) {
     setState(() {
-      _selectedImageUrl = imageUrl; // Update the selected image URL
+      _selectedImageUrl = imageUrl;
+    });
+  }
+
+  void _onSizeTap(String size) {
+    setState(() {
+      _selectedSize = size; // Update the selected size
     });
   }
 
@@ -483,19 +489,26 @@ class _FashionDetailState extends State<FashionDetail> {
                 Wrap(
                   spacing: 8,
                   children: widget.sizes.map((size) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: Text(
-                        size,
-                        style: const TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                    return GestureDetector(
+                      onTap: () => _onSizeTap(size),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: _selectedSize == size
+                                ? AppColor.primaryColor
+                                : Colors.grey,
+                          ),
+                        ),
+                        child: Text(
+                          size,
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     );
