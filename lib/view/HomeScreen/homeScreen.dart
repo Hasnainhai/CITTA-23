@@ -64,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
             'imageUrl': doc['imageUrl'],
             'title': doc['title'],
             'price': doc['price'],
-            // 'salePrice': doc['salePrice'],
             'detail': doc['detail'],
             'weight': doc['weight'],
             'category': doc['category'],
@@ -192,6 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
             'price': qn.docs[i]['price'],
             // 'salePrice': qn.docs[i]['salePrice'],
             'detail': qn.docs[i]['detail'],
+            'color': qn.docs[i]['color'],
+            'size': qn.docs[i]['size'],
           });
         }
       });
@@ -739,20 +740,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return FashionDetail(
-                                          sellerId: _fashionProducts[index]
-                                              ['sellerId'],
-                                          productId: _fashionProducts[index]
-                                              ['id'],
-                                          title: _fashionProducts[index]
-                                                  ['title']
-                                              .toString(),
-                                          imageUrl: _fashionProducts[index]
-                                              ['imageUrl'],
-                                          salePrice: _fashionProducts[index]
-                                              ['price'],
-                                          detail: _fashionProducts[index]
-                                                  ['detail']
-                                              .toString());
+                                        sellerId: _fashionProducts[index]
+                                            ['sellerId'],
+                                        productId: _fashionProducts[index]
+                                            ['id'],
+                                        title: _fashionProducts[index]['title']
+                                            .toString(),
+                                        imageUrl: _fashionProducts[index]
+                                            ['imageUrl'],
+                                        salePrice: _fashionProducts[index]
+                                            ['price'],
+                                        detail: _fashionProducts[index]
+                                                ['detail']
+                                            .toString(),
+                                        colors: (_fashionProducts[index]
+                                                ['color'] as List<dynamic>)
+                                            .cast<
+                                                String>(), // Explicitly cast to List<String>
+                                        sizes: _fashionProducts[index]['size']
+                                            .cast<String>(),
+                                      );
                                     }));
                                   },
                                   sellerId: _fashionProducts[index]['sellerId'],
