@@ -135,6 +135,21 @@ class _FashionDetailState extends State<FashionDetail> {
     }
   }
 
+  String? _selectedImageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedImageUrl =
+        widget.imageUrl; // Initialize with the default image URL
+  }
+
+  void _onColorTap(String imageUrl) {
+    setState(() {
+      _selectedImageUrl = imageUrl; // Update the selected image URL
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,7 +242,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             height: 250,
                             width: 250,
                             child: FancyShimmerImage(
-                              imageUrl: widget.imageUrl,
+                              imageUrl: _selectedImageUrl.toString(),
                               boxFit: BoxFit.fill,
                             ),
                           ),
@@ -428,17 +443,26 @@ class _FashionDetailState extends State<FashionDetail> {
                 Wrap(
                   spacing: 8,
                   children: widget.colors.map((color) {
-                    return Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Container(
-                        height: 40,
-                        width: 44,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
+                    return GestureDetector(
+                      onTap: () => _onColorTap(color),
+                      child: Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Container(
+                          height: 40,
+                          width: 44,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: _selectedImageUrl == color
+                                  ? AppColor.primaryColor
+                                  : Colors.grey,
+                            ),
+                          ),
+                          child: Center(
+                            child: Image.network(color),
+                          ),
                         ),
-                        child: Center(child: Image.network(color)),
                       ),
                     );
                   }).toList(),
