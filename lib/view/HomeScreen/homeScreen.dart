@@ -753,10 +753,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         detail: _fashionProducts[index]
                                                 ['detail']
                                             .toString(),
-                                        colors: (_fashionProducts[index]
-                                                ['color'] as List<dynamic>)
-                                            .cast<
-                                                String>(), // Explicitly cast to List<String>
+                                        colors: _fashionProducts[index]['color']
+                                            .cast<String>(),
                                         sizes: _fashionProducts[index]['size']
                                             .cast<String>(),
                                       );

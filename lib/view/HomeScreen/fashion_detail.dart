@@ -3,7 +3,6 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
-import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -359,68 +358,96 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   20,
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (c) => TotalRatingScreen(
-                          productType: "fashion",
-                          productId: widget.productId,
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "View Reviews",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (c) => TotalRatingScreen(
+                //           productType: "fashion",
+                //           productId: widget.productId,
+                //         ),
+                //       ),
+                //     );
+                //   },
+                //   child: const Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //         "View Reviews",
+                //         style: TextStyle(
+                //           fontFamily: 'CenturyGothic',
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.bold,
+                //           color: AppColor.fontColor,
+                //         ),
+                //       ),
+                //       Row(
+                //         children: [
+                //           Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //           Icon(
+                //             Icons.star,
+                //             color: Colors.amber,
+                //           ),
+                //         ],
+                //       )
+                //     ],
+                //   ),
+                // ),
                 const VerticalSpeacing(
                   20,
                 ),
                 const Divider(
                   color: Color(0xffECECEC),
                 ),
+                const Text(
+                  "Colors:",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+                const VerticalSpeacing(14),
+                Wrap(
+                  spacing: 8,
+                  children: widget.colors.map((color) {
+                    return Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Container(
+                        height: 40,
+                        width: 44,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Center(child: Image.network(color)),
+                      ),
+                    );
+                  }).toList(),
+                ),
                 const VerticalSpeacing(
                   20,
                 ),
                 const Text(
-                  "Size:",
+                  "Sizes:",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
                     fontSize: 16,
