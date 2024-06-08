@@ -781,7 +781,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               } else if (_fashionProducts.isEmpty) {
                                 return const Center(
-                                  child: Text('No Products...'),
+                                  child: Text(
+                                    'No Products...',
+                                  ),
                                 );
                               } else {
                                 return Padding(
