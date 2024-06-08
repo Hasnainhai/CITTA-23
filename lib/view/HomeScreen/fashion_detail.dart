@@ -672,47 +672,197 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   28,
                 ),
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  color: AppColor.primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (c) => CheckOutScreen(
-                                tile: widget.title,
-                                price: widget.salePrice,
-                                img: widget.imageUrl,
-                                id: widget.productId,
-                                customerId: widget.sellerId,
-                                weight: items.toString(),
-                                productType: 'fashion',
-                                salePrice: newPrice == null
-                                    ? widget.salePrice
-                                    : newPrice.toString(),
-                                size: size,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width / 8,
+                      color: AppColor.primaryColor,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: AppColor.whiteColor,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        color: AppColor.primaryColor,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => CheckOutScreen(
+                                  tile: widget.title,
+                                  price: widget.salePrice,
+                                  img: widget.imageUrl,
+                                  id: widget.productId,
+                                  customerId: widget.sellerId,
+                                  weight: items.toString(),
+                                  productType: 'fashion',
+                                  salePrice: newPrice == null
+                                      ? widget.salePrice
+                                      : newPrice.toString(),
+                                  size: size,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Center(
+                            child: Text(
+                              "Buy Now",
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.whiteColor,
                               ),
                             ),
-                          );
-                        },
-                        child: const Text(
-                          "Buy Now",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Top reviews',
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: const Text(
+                        "See More",
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.buttonBgColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(14),
+                // ReviewCard(
+                //     profilePic:
+                //         'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
+                //     name: 'Hassnain haider',
+                //     rating: 5.toString(),
+                //     time: '12.20 Am',
+                //     comment: 'Good product'),
+                const VerticalSpeacing(13),
+                const Text(
+                  'Related products',
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+                const VerticalSpeacing(12),
+                Container(
+                  height: 63,
+                  width: 206,
+                  color: const Color(0xffEEEEEE),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 63,
+                        width: 83,
+                        color: const Color(0xffC4C4C4),
+                        child: Center(
+                          child: Image.asset('images/fashionimg.png'),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      const Text.rich(
+                        TextSpan(
+                          text: 'T-Shirt\n',
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: AppColor.whiteColor,
+                            color: AppColor.fontColor,
                           ),
+                          children: [
+                            TextSpan(
+                              text: '₹12000',
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.buttonBgColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
+                // Container(
+                //   height: 50,
+                //   width: MediaQuery.of(context).size.width,
+                //   color: AppColor.primaryColor,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       InkWell(
+                //         onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (c) => CheckOutScreen(
+                //       tile: widget.title,
+                //       price: widget.salePrice,
+                //       img: widget.imageUrl,
+                //       id: widget.productId,
+                //       customerId: widget.sellerId,
+                //       weight: items.toString(),
+                //       productType: 'fashion',
+                //       salePrice: newPrice == null
+                //           ? widget.salePrice
+                //           : newPrice.toString(),
+                //       size: size,
+                //     ),
+                //   ),
+                // );
+                //         },
+                //         child: const Text(
+                //           "Buy Now",
+                //           style: TextStyle(
+                //             fontFamily: 'CenturyGothic',
+                //             fontSize: 16,
+                //             fontWeight: FontWeight.bold,
+                //             color: AppColor.whiteColor,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const VerticalSpeacing(
                   40,
                 ),

@@ -871,75 +871,160 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        addToCart(
-                          widget.imageUrl,
-                          widget.title,
-                          widget.saleprice,
-                          widget.sellerId,
-                          widget.productId,
-                        );
-                      },
-                      child: Container(
-                        height: 52,
-                        width: 60,
-                        color: const Color(0xffEEEEEE),
-                        child: const Icon(
-                          Icons.shopping_cart_outlined,
-                          color: AppColor.fontColor,
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width / 8,
+                      color: AppColor.primaryColor,
+                      child: InkWell(
+                        onTap: () {
+                          addToCart(
+                            widget.imageUrl,
+                            widget.title,
+                            widget.saleprice,
+                            widget.sellerId,
+                            widget.productId,
+                          );
+                        },
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: AppColor.whiteColor,
+                              size: 30,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => CheckOutScreen(
-                              tile: widget.title,
-                              price: widget.price,
-                              img: widget.imageUrl,
-                              id: widget.productId,
-                              customerId: widget.sellerId,
-                              weight: items.toString(),
-                              salePrice: newPrice == null
-                                  ? widget.saleprice
-                                  : newPrice.toString(),
-                              productType: "popular_pak",
-                              size: "Null",
-                            ),
-                          ),
-                        );
-                      },
                       child: Container(
-                        height: 52,
-                        width: MediaQuery.of(context).size.width / 1.5,
+                        height: 50,
+                        width: MediaQuery.of(context).size.width / 1.4,
                         color: AppColor.primaryColor,
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.shopping_bag_outlined,
-                              color: AppColor.buttonTxColor,
-                            ),
-                            SizedBox(
-                              width: 14,
-                            ),
-                            Text(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => CheckOutScreen(
+                                  tile: widget.title,
+                                  price: widget.price,
+                                  img: widget.imageUrl,
+                                  id: widget.productId,
+                                  customerId: widget.sellerId,
+                                  weight: items.toString(),
+                                  salePrice: newPrice == null
+                                      ? widget.saleprice
+                                      : newPrice.toString(),
+                                  productType: "popular_pak",
+                                  size: "Null",
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Center(
+                            child: Text(
                               "Buy Now",
                               style: TextStyle(
                                 fontFamily: 'CenturyGothic',
                                 fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: AppColor.buttonTxColor,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.whiteColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Top reviews',
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: const Text(
+                        "See More",
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.buttonBgColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(14),
+                // ReviewCard(
+                //     profilePic:
+                //         'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
+                //     name: 'Hassnain haider',
+                //     rating: 5.toString(),
+                //     time: '12.20 Am',
+                //     comment: 'Good product'),
+                const VerticalSpeacing(13),
+                const Text(
+                  'Related products',
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+                const VerticalSpeacing(12),
+                Container(
+                  height: 63,
+                  width: 206,
+                  color: const Color(0xffEEEEEE),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 63,
+                        width: 83,
+                        color: const Color(0xffC4C4C4),
+                        child: Center(
+                          child: Image.asset('images/fashionimg.png'),
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      const Text.rich(
+                        TextSpan(
+                          text: 'T-Shirt\n',
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '₹12000',
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.buttonBgColor,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const VerticalSpeacing(20),
               ],
