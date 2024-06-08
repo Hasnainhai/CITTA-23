@@ -165,13 +165,10 @@ class _AllFashionProdState extends State<AllFashionProd> {
                                 _fashionProducts[index]['detail'].toString(),
                             sellerId: _fashionProducts[index]['sellerId'],
                             productId: _fashionProducts[index]['id'],
-                            colors: (_fashionProducts[index]['color']
-                                    as List<dynamic>)
-                                .cast<
-                                    String>(), // Explicitly cast to List<String>
-                            sizes: (_fashionProducts[index]['size']
-                                    as List<dynamic>)
-                                .cast<String>(),
+                            colors:
+                                _fashionProducts[index]['color'].cast<String>(),
+                            sizes:
+                                _fashionProducts[index]['size'].cast<String>(),
                           );
                         }));
                       },
