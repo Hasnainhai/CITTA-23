@@ -25,6 +25,7 @@ class Rating extends StatefulWidget {
 
 class _RatingState extends State<Rating> {
   TextEditingController commentController = TextEditingController();
+  double? countRatingStars = 4.0;
   @override
   Widget build(BuildContext context) {
     RatingRepository ratingRepository = RatingRepository();
@@ -160,7 +161,8 @@ class _RatingState extends State<Rating> {
                                       userData['profilePic'] ??
                                           FirebaseAuth
                                               .instance.currentUser!.photoURL,
-                                      widget.productType);
+                                      widget.productType,
+                                      countRatingStars);
                                 } else {
                                   Utils.flushBarErrorMessage(
                                       "Must write your Review", context);
