@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 
 class RatingRepository {
   void giveRatings(String productId, String comment, context, String userName,
-      String userProfile, String produtType) {
+      String userProfile, String produtType, double? countRatingStars) {
     CollectionReference rateDriverRef = FirebaseFirestore.instance
         .collection(produtType)
         .doc(productId)
