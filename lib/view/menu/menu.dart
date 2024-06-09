@@ -3,7 +3,6 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
-import 'package:citta_23/view/card/card_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -328,8 +327,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                                   salePrice: item['price'],
                                                   detail:
                                                       item['detail'].toString(),
-                                                  colors: List<String>.from(item[
-                                                      'color']),
+                                                  colors: List<String>.from(
+                                                      item['color']),
                                                   sizes: List<String>.from(
                                                       item['size']),
                                                 );

@@ -142,6 +142,7 @@ class _FashionDetailState extends State<FashionDetail> {
   void initState() {
     super.initState();
     _selectedImageUrl = widget.imageUrl;
+    fetchFashionRelatedProducts();
   }
 
   void _onColorTap(String imageUrl) {
@@ -152,8 +153,45 @@ class _FashionDetailState extends State<FashionDetail> {
 
   void _onSizeTap(String size) {
     setState(() {
-      _selectedSize = size; // Update the selected size
+      _selectedSize = size;
     });
+  }
+
+  //fashion detail related products
+  bool isLoading = false;
+  final List _fashionRelatedProducts = [];
+  fetchFashionRelatedProducts() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      QuerySnapshot qn = await _firestoreInstance.collection('fashion').get();
+
+      setState(() {
+        _fashionRelatedProducts.clear();
+        for (int i = 0; i < qn.docs.length; i++) {
+          _fashionRelatedProducts.add({
+            'sellerId': qn.docs[i]['sellerId'],
+            'id': qn.docs[i]['id'],
+            'imageUrl': qn.docs[i]['imageUrl'],
+            'title': qn.docs[i]['title'],
+            'price': qn.docs[i]['price'],
+            'detail': qn.docs[i]['detail'],
+            'color': qn.docs[i]['color'],
+            'size': qn.docs[i]['size'],
+          });
+        }
+      });
+      return qn.docs;
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -629,91 +667,67 @@ class _FashionDetailState extends State<FashionDetail> {
                   ),
                 ),
                 const VerticalSpeacing(12),
-                Container(
+                SizedBox(
                   height: 63,
-                  width: 206,
-                  color: const Color(0xffEEEEEE),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 63,
-                        width: 83,
-                        color: const Color(0xffC4C4C4),
-                        child: Center(
-                          child: Image.asset('images/fashionimg.png'),
-                        ),
-                      ),
-                      const SizedBox(width: 8.0),
-                      const Text.rich(
-                        TextSpan(
-                          text: 'T-Shirt\n',
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '₹12000',
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.buttonBgColor,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _fashionRelatedProducts.length,
+                    itemBuilder: (context, index) {
+                      if (_fashionRelatedProducts.isEmpty) {
+                        return const Center(
+                          child: Text('Empty fashion products'),
+                        );
+                      } else {
+                        final fashion = _fashionRelatedProducts[index];
+                        return Container(
+                          width: 206,
+                          color: const Color(0xffEEEEEE),
+                          margin: const EdgeInsets.symmetric(horizontal: 6.0,),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 63,
+                                width: 84,
+                                color: const Color(0xffC4C4C4),
+                                child: Center(
+                                  child: Image.network(fashion['imageUrl']),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Text.rich(
+                                  TextSpan(
+                                    text: '${fashion['title']}\n',
+                                    style: const TextStyle(
+                                      fontFamily: 'CenturyGothic',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.fontColor,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '₹${fashion['price']}',
+                                        style: const TextStyle(
+                                          fontFamily: 'CenturyGothic',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColor.buttonBgColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
-                // Container(
-                //   height: 50,
-                //   width: MediaQuery.of(context).size.width,
-                //   color: AppColor.primaryColor,
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       InkWell(
-                //         onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (c) => CheckOutScreen(
-                //       tile: widget.title,
-                //       price: widget.salePrice,
-                //       img: widget.imageUrl,
-                //       id: widget.productId,
-                //       customerId: widget.sellerId,
-                //       weight: items.toString(),
-                //       productType: 'fashion',
-                //       salePrice: newPrice == null
-                //           ? widget.salePrice
-                //           : newPrice.toString(),
-                //       size: size,
-                //     ),
-                //   ),
-                // );
-                //         },
-                //         child: const Text(
-                //           "Buy Now",
-                //           style: TextStyle(
-                //             fontFamily: 'CenturyGothic',
-                //             fontSize: 16,
-                //             fontWeight: FontWeight.bold,
-                //             color: AppColor.whiteColor,
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                const VerticalSpeacing(
-                  40,
-                ),
+
+                const VerticalSpeacing(40),
               ],
             ),
           ),
