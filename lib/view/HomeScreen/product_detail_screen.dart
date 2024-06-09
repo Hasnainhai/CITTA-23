@@ -638,7 +638,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     color: const Color(0xffC4C4C4),
                                     child: Center(
                                       child: Image.network(
-                                          categoryRelatedProducts['imageUrl']),
+                                        categoryRelatedProducts['imageUrl'],
+                                        height: 50,
+                                        width: 60,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 8.0),
