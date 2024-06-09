@@ -65,11 +65,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     }
   }
 
-  @override
-  initState() {
-    super.initState();
-    // fetchProducts();
-  }
 
   @override
   Widget build(BuildContext context) {
