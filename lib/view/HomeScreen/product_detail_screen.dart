@@ -7,7 +7,6 @@ import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
-import 'package:citta_23/view/HomeScreen/total_reviews/widgets/review_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -131,7 +130,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   //get related products
-  List<Map<String, dynamic>> _relatedProducts = [];
+  final List<Map<String, dynamic>> _relatedProducts = [];
   bool _isLoading = false;
   fetchRelatedProducts() async {
     try {
@@ -419,131 +418,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       color: AppColor.grayColor,
                     ),
                   ),
-                  const VerticalSpeacing(
-                    20,
-                  ),
-                  const Divider(
-                    color: Color(0xffECECEC),
-                  ),
-                  const VerticalSpeacing(
-                    20,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (c) => TotalRatingScreen(
-                              productType: "products",
-                              productId: widget.productId),
-                        ),
-                      );
-                    },
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Review",
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
-                        ),
-                        // InkWell(
-                        //   onTap: () async {
-                        //     await showDialog(
-                        //       context: context,
-                        //       builder: (BuildContext context) => Rating(
-                        //         productId: widget.productId,
-                        //         productType: "products",
-                        //       ),
-                        //     );
-                        //   },
-                        //   child: const Text(
-                        //     "Give Review",
-                        //     style: TextStyle(
-                        //       fontFamily: 'CenturyGothic',
-                        //       fontSize: 16,
-                        //       fontWeight: FontWeight.bold,
-                        //       color: AppColor.fontColor,
-                        //     ),
-                        //   ),
-                        // ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const VerticalSpeacing(
-                    20,
-                  ),
-
-                  const Divider(
-                    color: Color(0xffECECEC),
-                  ),
-                  const VerticalSpeacing(
-                    28,
-                  ),
+                  const VerticalSpeacing(20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-
-                ),
-                const VerticalSpeacing(
-                  20,
-                ),
-                const VerticalSpeacing(
-                  28,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 8,
-                      color: AppColor.primaryColor,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.add_shopping_cart_outlined,
-                              color: AppColor.whiteColor,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      child: Container(
-
                         height: 50,
                         width: MediaQuery.of(context).size.width / 8,
                         color: AppColor.primaryColor,
@@ -561,7 +440,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       ),
-
                       InkWell(
                         child: Container(
                           height: 50,
@@ -603,105 +481,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                     ],
-
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Top reviews',
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.fontColor,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => TotalRatingScreen(
-                                productType: "products",
-                                productId: widget.productId),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "See More",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.buttonBgColor,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(14),
-                SizedBox(
-                  height: 145,
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection("products")
-                        .doc(widget.productId)
-                        .collection('commentsAndRatings')
-                        .orderBy("time", descending: true)
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return const Center(
-                          child: Text('No comments and ratings available'),
-                        );
-                      }
-
-                      // Limit the number of items to 2
-                      final limitedDocs = snapshot.data!.docs.take(2).toList();
-
-                      return ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: limitedDocs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          Map<String, dynamic> data =
-                              limitedDocs[index].data() as Map<String, dynamic>;
-                          return DetailRating(
-                            userName: data['userName'],
-                            img: data['profilePic'],
-                            comment: data['comment'],
-                            rating: data['currentUserRating'].toString(),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(height: 10),
-                      );
-                    },
-                  ),
-                ),
-                const VerticalSpeacing(13),
-                const Text(
-                  'Related products',
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.fontColor,
-
                   ),
                   const VerticalSpeacing(24),
                   Row(
@@ -717,7 +496,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (c) => TotalRatingScreen(
+                                  productType: "products",
+                                  productId: widget.productId),
+                            ),
+                          );
+                        },
                         child: const Text(
                           "See More",
                           style: TextStyle(
@@ -730,15 +518,58 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ],
                   ),
-
                   const VerticalSpeacing(14),
-                  // ReviewCard(
-                  //     profilePic:
-                  //         'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg',
-                  //     name: 'Hassnain haider',
-                  //     rating: 5.toString(),
-                  //     time: '12.20 Am',
-                  //     comment: 'Good product'),
+                  SizedBox(
+                    height: 145,
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("products")
+                          .doc(widget.productId)
+                          .collection('commentsAndRatings')
+                          .orderBy("time", descending: true)
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                            child: Text('No comments and ratings available'),
+                          );
+                        }
+
+                        // Limit the number of items to 2
+                        final limitedDocs =
+                            snapshot.data!.docs.take(2).toList();
+
+                        return ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: limitedDocs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            Map<String, dynamic> data = limitedDocs[index]
+                                .data() as Map<String, dynamic>;
+                            return DetailRating(
+                              userName: data['userName'],
+                              img: data['profilePic'],
+                              comment: data['comment'],
+                              rating: data['currentUserRating'].toString(),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(height: 10),
+                        );
+                      },
+                    ),
+                  ),
                   const VerticalSpeacing(13),
                   const Text(
                     'Related products',
@@ -845,15 +676,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                     ),
                   ),
-
                   const VerticalSpeacing(40),
                 ],
               ),
-
-                ),
-                const VerticalSpeacing(40),
-              ],
-
             ),
           ),
         ),
