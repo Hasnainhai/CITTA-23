@@ -679,47 +679,73 @@ class _FashionDetailState extends State<FashionDetail> {
                         );
                       } else {
                         final fashion = _fashionRelatedProducts[index];
-                        return Container(
-                          width: 206,
-                          color: const Color(0xffEEEEEE),
-                          margin: const EdgeInsets.symmetric(horizontal: 6.0,),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 63,
-                                width: 84,
-                                color: const Color(0xffC4C4C4),
-                                child: Center(
-                                  child: Image.network(fashion['imageUrl']),
-                                ),
-                              ),
-                              const SizedBox(width: 8.0),
-                              Expanded(
-                                child: Text.rich(
-                                  TextSpan(
-                                    text: '${fashion['title']}\n',
-                                    style: const TextStyle(
-                                      fontFamily: 'CenturyGothic',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.fontColor,
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: '₹${fashion['price']}',
-                                        style: const TextStyle(
-                                          fontFamily: 'CenturyGothic',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: AppColor.buttonBgColor,
-                                        ),
-                                      ),
-                                    ],
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return FashionDetail(
+                                sellerId: _fashionRelatedProducts[index]
+                                    ['sellerId'],
+                                productId: _fashionRelatedProducts[index]['id'],
+                                title: _fashionRelatedProducts[index]['title']
+                                    .toString(),
+                                imageUrl: _fashionRelatedProducts[index]
+                                    ['imageUrl'],
+                                salePrice: _fashionRelatedProducts[index]
+                                    ['price'],
+                                detail: _fashionRelatedProducts[index]['detail']
+                                    .toString(),
+                                colors: _fashionRelatedProducts[index]['color']
+                                    .cast<String>(),
+                                sizes: _fashionRelatedProducts[index]['size']
+                                    .cast<String>(),
+                              );
+                            }));
+                          },
+                          child: Container(
+                            width: 206,
+                            color: const Color(0xffEEEEEE),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 6.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 63,
+                                  width: 84,
+                                  color: const Color(0xffC4C4C4),
+                                  child: Center(
+                                    child: Image.network(fashion['imageUrl']),
                                   ),
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 8.0),
+                                Expanded(
+                                  child: Text.rich(
+                                    TextSpan(
+                                      text: '${fashion['title']}\n',
+                                      style: const TextStyle(
+                                        fontFamily: 'CenturyGothic',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.fontColor,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: '₹${fashion['price']}',
+                                          style: const TextStyle(
+                                            fontFamily: 'CenturyGothic',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColor.buttonBgColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }
