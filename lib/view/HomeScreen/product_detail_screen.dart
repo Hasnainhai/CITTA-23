@@ -507,15 +507,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           Map<String, dynamic> data =
                               limitedDocs[index].data() as Map<String, dynamic>;
-                          return Container(
-                            padding:
-                                EdgeInsets.all(8.0), // Adjust padding as needed
-                            child: DetailRating(
-                              userName: data['userName'],
-                              img: data['profilePic'],
-                              comment: data['comment'],
-                              rating: data['currentUserRating'].toString(),
-                            ),
+                          return DetailRating(
+                            userName: data['userName'],
+                            img: data['profilePic'],
+                            comment: data['comment'],
+                            rating: data['currentUserRating'].toString(),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) =>
