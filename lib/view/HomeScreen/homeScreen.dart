@@ -79,10 +79,40 @@ class _HomeScreenState extends State<HomeScreen> {
               _hotSelling.add(product);
               break;
             case 'Lightening Deals':
+              // Add discount field if available
+              if (doc['discount'] != null) {
+                product['discount'] = doc['discount'];
+              } else {
+                product['discount'] = 'N/A';
+              }
               _lighteningDeals.add(product);
               break;
           }
         }
+
+        // Check if _newItems or _hotSelling is empty, if yes, add products without discount
+        if (_newItems.isEmpty || _hotSelling.isEmpty) {
+          for (var doc in qn.docs) {
+            var product = {
+              'sellerId': doc['sellerId'],
+              'id': doc['id'],
+              'imageUrl': doc['imageUrl'],
+              'title': doc['title'],
+              'price': doc['price'],
+              'detail': doc['detail'],
+              'weight': doc['weight'],
+              'category': doc['category'],
+            };
+            if (product['category'] == 'New Items' &&
+                !_newItems.contains(product)) {
+              _newItems.add(product);
+            } else if (product['category'] == 'Hot Selling' &&
+                !_hotSelling.contains(product)) {
+              _hotSelling.add(product);
+            }
+          }
+        }
+
         _isLoading = false;
 
         debugPrint('New Items: $_newItems'); // Debugging statement
@@ -828,6 +858,26 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategorySection(BuildContext context, String category,
       List<Map<String, dynamic>> products) {
+    final categoryProducts =
+        products.where((product) => product['category'] == category).toList();
+    String calculateDiscountedPrice(
+        String originalPriceString, String discountPercentageString) {
+      // Convert strings to double
+      debugPrint("this is the discount:$discountPercentageString");
+      debugPrint("this is the total:$originalPriceString");
+
+      double originalPrice = double.parse(originalPriceString);
+      double discountPercentage = double.parse(discountPercentageString);
+
+      // Calculate discounted price
+      double p = originalPrice * (discountPercentage / 100);
+      double discountedPrice = originalPrice - p;
+
+      // Return the discounted price as a formatted string
+      return discountedPrice.toStringAsFixed(
+          0); // You can adjust the number of decimal places as needed
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -870,16 +920,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4,
-          child: products.isEmpty
+          child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: products.length,
+                  itemCount: categoryProducts.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
                   itemBuilder: (_, index) {
+                    final product = categoryProducts[index];
+                    final isLighteningDeal =
+                        product['category'] == 'Lightening Deals';
+                    final hasDiscount = product.containsKey('discount');
+
                     return HomeCard(
                       ontap: () {
                         Navigator.push(
@@ -887,40 +942,53 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialPageRoute(
                             builder: (context) {
                               return ProductDetailScreen(
-                                title: products[index]['title'].toString(),
-                                productId: products[index]['id'].toString(),
-                                sellerId:
-                                    products[index]['sellerId'].toString(),
-                                imageUrl: products[index]['imageUrl'],
-                                price: products[index]['price'].toString(),
-                                salePrice: products[index]['price'],
-                                weight: products[index]['weight'].toString(),
-                                detail: products[index]['detail'].toString(),
+                                title: product['title'].toString(),
+                                productId: product['id'].toString(),
+                                sellerId: product['sellerId'].toString(),
+                                imageUrl: product['imageUrl'],
+                                price: product['price'].toString(),
+                                salePrice: isLighteningDeal && hasDiscount
+                                    ? "${product['discount']}₹"
+                                    : product['price'].toString(),
+                                weight: product['weight'].toString(),
+                                detail: product['detail'].toString(),
                               );
                             },
                           ),
                         );
                       },
+
                       oofProd: true,
                       productId: products[index]['id'],
                       sellerId: products[index]['sellerId'],
                       name: products[index]['title'].toString(),
                       price: products[index]['price'].toString(),
                       dPrice: "${products[index]['price']}₹",
+
+                      productId: product['id'],
+                      sellerId: product['sellerId'],
+                      name: product['title'].toString(),
+                      price: product['price'].toString(),
+                      dPrice: category == "Lightening Deals"
+                          ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                          : product['price'].toString(),
+
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: products[index]['imageUrl'],
+                      img: product['imageUrl'],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
-                        if (products.isNotEmpty &&
+                        if (categoryProducts.isNotEmpty &&
                             index >= 0 &&
-                            index < products.length) {
+                            index < categoryProducts.length) {
                           addToCart(
-                            products[index]['imageUrl'],
-                            products[index]['title'],
-                            products[index]['price'],
-                            products[index]['sellerId'],
-                            products[index]['id'],
+                            product['imageUrl'],
+                            product['title'],
+                            isLighteningDeal && hasDiscount
+                                ? "${product['discount']}₹"
+                                : product['price'].toString(),
+                            product['sellerId'],
+                            product['id'],
                           );
                         }
                       },
