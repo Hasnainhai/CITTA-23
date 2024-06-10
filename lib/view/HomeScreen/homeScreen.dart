@@ -957,6 +957,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
+
+                      oofProd: true,
+                      productId: products[index]['id'],
+                      sellerId: products[index]['sellerId'],
+                      name: products[index]['title'].toString(),
+                      price: products[index]['price'].toString(),
+                      dPrice: "${products[index]['price']}₹",
+
                       productId: product['id'],
                       sellerId: product['sellerId'],
                       name: product['title'].toString(),
@@ -964,6 +972,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       dPrice: category == "Lightening Deals"
                           ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
                           : product['price'].toString(),
+
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
                       img: product['imageUrl'],
