@@ -901,6 +901,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
+                      oofProd: true,
                       productId: products[index]['id'],
                       sellerId: products[index]['sellerId'],
                       name: products[index]['title'].toString(),
