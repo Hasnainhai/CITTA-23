@@ -5,6 +5,7 @@ import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
+// ignore: must_be_immutable
 class HomeCard extends StatelessWidget {
   HomeCard({
     super.key,
@@ -91,14 +92,28 @@ class HomeCard extends StatelessWidget {
                 ),
               ),
               const VerticalSpeacing(6.0),
-              Text(
-                name.length > 8 ? '${name.substring(0, 8)}...' : name,
-                style: const TextStyle(
-                  fontFamily: 'CenturyGothic',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w800,
-                  color: AppColor.fontColor,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    name.length > 8 ? '${name.substring(0, 8)}...' : name,
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                  const Text(
+                    '★5.0',
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
