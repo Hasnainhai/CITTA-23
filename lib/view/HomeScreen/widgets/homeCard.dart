@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -41,7 +40,7 @@ class HomeCard extends StatelessWidget {
         decoration: BoxDecoration(
             color: const Color(0xffF7F7F7),
             border:
-                Border.all(width: 1, color: AppColor.homeCartborderColor)),
+                Border.all(width: 1, color: AppColor.primaryColor)),
         child: Padding(
           padding: const EdgeInsets.only(
             left: 15.0,
