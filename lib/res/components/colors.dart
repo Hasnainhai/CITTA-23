@@ -20,4 +20,5 @@ class AppColor {
   static const Color bannerBgColor = Color.fromARGB(255, 26, 16, 8);
   static const Color blackColor = Color(0xff000000);
   static const Color categoryLightColor = Color(0xffFFE6F2);
+  static const Color homeCartborderColor = Color(0xffCDCDCD);
 }
