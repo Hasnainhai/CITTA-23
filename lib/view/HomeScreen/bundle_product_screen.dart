@@ -116,8 +116,14 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     });
   }
 
-  void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+  void addToCart(
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String weight,
+  ) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -149,6 +155,10 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         'title': title,
         'salePrice': dPrice,
         'deleteId': uuid,
+        "size": widget.size,
+        "color": "N/A",
+        "weight": weight,
+
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -920,6 +930,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.saleprice,
                               widget.sellerId,
                               widget.productId,
+                              widget.weight,
                             );
                           },
                           child: Center(

@@ -85,7 +85,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
-        'deletedId': uuid
+        'deletedId': uuid,
+
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -93,6 +94,55 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     } catch (e) {
       // Handle errors
       Utils.flushBarErrorMessage('Error adding to favorites: $e', context);
+    }
+  }
+
+  void addToCart(
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String weight,
+  ) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        'deleteId': uuid,
+        "size": "N/A",
+        "color": "N/A",
+        "weight": weight,
+
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
     }
   }
 
@@ -426,16 +476,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width / 8,
                         color: AppColor.primaryColor,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.add_shopping_cart_outlined,
-                                color: AppColor.whiteColor,
-                                size: 30,
-                              ),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              addToCart(
+                                widget.imageUrl,
+                                widget.title,
+                                widget.salePrice,
+                                widget.sellerId,
+                                widget.productId,
+                                items == 1 ? widget.weight : items.toString(),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: AppColor.whiteColor,
+                              size: 30,
                             ),
                           ),
                         ),
