@@ -2,11 +2,9 @@
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
-
 import 'package:citta_23/res/consts/firebase_const.dart';
-
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
@@ -170,7 +168,8 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  Navigator.pushNamed(context, RoutesName.forgetAnything);
                 },
                 child: const Text(
                   'Return to cart',
