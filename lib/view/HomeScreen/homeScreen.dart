@@ -683,7 +683,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       price: _popularPacks[index]['price']
                                           .toString(),
                                       dPrice:
-                                          "${_popularPacks[index]['salePrice']}₹",
+                                          "₹${_popularPacks[index]['price']}",
                                       borderColor: AppColor.buttonBgColor,
                                       fillColor: AppColor.appBarButtonColor,
                                       img: _popularPacks[index]['imageUrl'],

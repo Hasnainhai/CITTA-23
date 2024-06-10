@@ -109,6 +109,81 @@ class _CardScreenState extends State<CardScreen> {
     }
   }
 
+//popUp
+  void showCheckOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const ImageIcon(
+            AssetImage('images/shopping.png'),
+            size: 80,
+            color: AppColor.menuColor,
+          ),
+          title: Wrap(
+            direction: Axis.horizontal,
+            children: <Widget>[
+              Text(
+                'You havent finish checking out yet dont miss out on free shipping & a ₹$subTotal Discount',
+                style:
+                    const TextStyle(fontSize: 16.0, color: AppColor.menuColor),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (c) => CardCheckOutScreen(
+                        productType: 'cart',
+                        productList: productList,
+                        subTotal: "$subTotal",
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Keep checking out',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Return to cart',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -299,16 +374,7 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => CardCheckOutScreen(
-                              productType: 'cart',
-                              productList: productList,
-                              subTotal: "$subTotal",
-                            ),
-                          ),
-                        );
+                        showCheckOutDialog(context);
                       }),
                 ),
                 const VerticalSpeacing(60.0),
