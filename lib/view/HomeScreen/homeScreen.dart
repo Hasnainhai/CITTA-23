@@ -154,7 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
             'imageUrl': qn.docs[i]['imageUrl'],
             'title': qn.docs[i]['title'],
             'price': qn.docs[i]['price'],
-            'salePrice': qn.docs[i]['salePrice'],
             'detail': qn.docs[i]['detail'],
             'weight': qn.docs[i]['weight'],
             'size': qn.docs[i]['size'],

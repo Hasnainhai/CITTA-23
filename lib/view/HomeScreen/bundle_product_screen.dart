@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
@@ -86,6 +87,7 @@ class BundleProductScreen extends StatefulWidget {
 class _BundleProductScreenState extends State<BundleProductScreen> {
   bool like = false;
   int currentIndex = 0;
+  bool _isLoading = false;
 
   final _firestoreInstance = FirebaseFirestore.instance;
   int? newPrice;
@@ -97,8 +99,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     setState(() {
       items++;
 
-      int price = int.parse(widget.saleprice);
-      newPrice = (newPrice ?? int.parse(widget.saleprice)) + price;
+      int price = int.parse(widget.price);
+      newPrice = (newPrice ?? int.parse(widget.price)) + price;
     });
   }
 
@@ -106,8 +108,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     setState(() {
       if (items > 1) {
         items--;
-        int price = int.parse(widget.saleprice);
-        newPrice = (newPrice ?? int.parse(widget.saleprice)) - price;
+        int price = int.parse(widget.price);
+        newPrice = (newPrice ?? int.parse(widget.price)) - price;
       } else {
         Utils.flushBarErrorMessage("Fixed Limit", context);
       }
@@ -215,6 +217,86 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     }
   }
 
+  final List<Map<String, dynamic>> _popularRelatedPacks = [];
+  fetchPopularRelatedPack() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      QuerySnapshot qn =
+          await _firestoreInstance.collection('bundle pack').get();
+
+      setState(() {
+        _popularRelatedPacks.clear();
+        for (int i = 0; i < qn.docs.length; i++) {
+          // Access individual products in the bundle
+          Map<String, dynamic> product1 = qn.docs[i]['product1'] ?? {};
+          Map<String, dynamic> product2 = qn.docs[i]['product2'] ?? {};
+          Map<String, dynamic> product3 = qn.docs[i]['product3'] ?? {};
+          Map<String, dynamic> product4 = qn.docs[i]['product4'] ?? {};
+          Map<String, dynamic> product5 = qn.docs[i]['product5'] ?? {};
+          Map<String, dynamic> product6 = qn.docs[i]['product6'] ?? {};
+          _popularRelatedPacks.add({
+            'product1': {
+              'amount': product1['amount'] ?? '',
+              'image': product1['image'] ?? '',
+              'title': product1['title'] ?? '',
+            },
+            'product2': {
+              'amount': product2['amount'] ?? '',
+              'image': product2['image'] ?? '',
+              'title': product2['title'] ?? '',
+            },
+            'product3': {
+              'amount': product3['amount'] ?? '',
+              'image': product3['image'] ?? '',
+              'title': product3['title'] ?? '',
+            },
+            'product4': {
+              'amount': product4['amount'] ?? '',
+              'image': product4['image'] ?? '',
+              'title': product4['title'] ?? '',
+            },
+            'product5': {
+              'amount': product5['amount'] ?? '',
+              'image': product5['image'] ?? '',
+              'title': product5['title'] ?? '',
+            },
+            'product6': {
+              'amount': product6['amount'] ?? '',
+              'image': product6['image'] ?? '',
+              'title': product6['title'] ?? '',
+            },
+            //simple card
+            'sellerId': qn.docs[i]['sellerId'],
+            'id': qn.docs[i]['id'],
+            'imageUrl': qn.docs[i]['imageUrl'],
+            'title': qn.docs[i]['title'],
+            'price': qn.docs[i]['price'],
+            'detail': qn.docs[i]['detail'],
+            'weight': qn.docs[i]['weight'],
+            'size': qn.docs[i]['size'],
+          });
+        }
+      });
+      return qn.docs;
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    fetchPopularRelatedPack();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -240,125 +322,164 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 320,
-                  width: 400,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffEEEEEE),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 14,
-                      right: 14,
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 320,
+                    width: 400,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffEEEEEE),
                     ),
-                    child: Column(
-                      children: [
-                        const VerticalSpeacing(10),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                // Toggle the value of like
-                                setState(() {
-                                  like = !like;
-                                  if (like) {
-                                    // Add to favorites
-                                    addToFavorites();
-                                    like = true;
-                                  } else {
-                                    // Remove from favorites
-                                    removeFromFavorites();
-                                    like = false;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                color: Colors.white,
-                                child: like
-                                    ? const Icon(
-                                        Icons.favorite,
-                                        color: AppColor.primaryColor,
-                                      )
-                                    : const Icon(Icons.favorite_border_rounded),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 14,
+                        right: 14,
+                      ),
+                      child: Column(
+                        children: [
+                          const VerticalSpeacing(10),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  // Toggle the value of like
+                                  setState(() {
+                                    like = !like;
+                                    if (like) {
+                                      // Add to favorites
+                                      addToFavorites();
+                                      like = true;
+                                    } else {
+                                      // Remove from favorites
+                                      removeFromFavorites();
+                                      like = false;
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  color: Colors.white,
+                                  child: like
+                                      ? const Icon(
+                                          Icons.favorite,
+                                          color: AppColor.primaryColor,
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_border_rounded),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Center(
+                            child: SizedBox(
+                              height: 250,
+                              width: 250,
+                              child: FancyShimmerImage(
+                                imageUrl: widget.imageUrl,
+                                boxFit: BoxFit.fill,
                               ),
                             ),
-                          ],
-                        ),
-                        Center(
-                          child: SizedBox(
-                            height: 250,
-                            width: 250,
-                            child: FancyShimmerImage(
-                              imageUrl: widget.imageUrl,
-                              boxFit: BoxFit.fill,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const VerticalSpeacing(30),
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                  const VerticalSpeacing(30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            widget.price,
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.fontColor,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(30),
-                Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.fontColor,
-                  ),
-                ),
-                const VerticalSpeacing(30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          widget.price,
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                            decoration: TextDecoration.underline,
+                          const SizedBox(
+                            width: 10,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          newPrice == null
-                              ? "${widget.saleprice}₹"
-                              : "$newPrice₹",
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.primaryColor,
+                          Text(
+                            newPrice == null
+                                ? "₹${widget.price}"
+                                : "₹$newPrice",
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.primaryColor,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            decrement();
-                          },
-                          child: Container(
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              decrement();
+                            },
+                            child: Container(
+                                height: 34,
+                                width: 34,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColor.grayColor,
+                                  ),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Divider(
+                                    height: 2,
+                                    thickness: 2.5,
+                                    color: AppColor.primaryColor,
+                                  ),
+                                )),
+                          ),
+                          const SizedBox(
+                            width: 18,
+                          ),
+                          Text(
+                            items.toString(),
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 18,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              increment();
+                            },
+                            child: Container(
                               height: 34,
                               width: 34,
                               decoration: BoxDecoration(
@@ -366,648 +487,157 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                   color: AppColor.grayColor,
                                 ),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Divider(
-                                  height: 2,
-                                  thickness: 2.5,
-                                  color: AppColor.primaryColor,
-                                ),
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 18,
-                        ),
-                        Text(
-                          items.toString(),
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 18,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            increment();
-                          },
-                          child: Container(
-                            height: 34,
-                            width: 34,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColor.grayColor,
-                              ),
-                            ),
-                            child: const Icon(
-                              Icons.add,
-                              color: AppColor.primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          widget.weight,
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor,
-                          ),
-                        ),
-                        const Text(
-                          "Weight",
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.grayColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          widget.size,
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor,
-                          ),
-                        ),
-                        const Text(
-                          "Size",
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.grayColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Column(
-                      children: [
-                        Text(
-                          "6",
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor,
-                          ),
-                        ),
-                        Text(
-                          "Item’s",
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.grayColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(20),
-                const Text(
-                  "Pack Details",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.fontColor,
-                  ),
-                ),
-
-                const VerticalSpeacing(20),
-                // first bundle product
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: FancyShimmerImage(
-                          imageUrl: widget.img1,
-                          boxFit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.title1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                4, // Adjust spacing between title and amount
-                          ),
-                          Text(
-                            widget.amount1,
-                            // widget.amount1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-                const VerticalSpeacing(10),
-                // second bundle product
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: FancyShimmerImage(
-                          imageUrl: widget.img2,
-                          boxFit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.title2,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                4, // Adjust spacing between title and amount
-                          ),
-                          Text(
-                            widget.amount2,
-                            // widget.amount1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(10),
-                // third bundle product
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: FancyShimmerImage(
-                          imageUrl: widget.img3,
-                          boxFit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.title3,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                4, // Adjust spacing between title and amount
-                          ),
-                          Text(
-                            widget.amount3,
-                            // widget.amount1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(10),
-                // fourth Bundle product
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: FancyShimmerImage(
-                          imageUrl: widget.img4,
-                          boxFit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.title4,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                4, // Adjust spacing between title and amount
-                          ),
-                          Text(
-                            widget.amount4,
-                            // widget.amount1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(10),
-                // fifth Bundle product detail
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: FancyShimmerImage(
-                          imageUrl: widget.img5,
-                          boxFit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.title5,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                4, // Adjust spacing between title and amount
-                          ),
-                          Text(
-                            widget.amount5,
-                            // widget.amount1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(10),
-                // sixth Bundle product
-                Row(
-                  children: [
-                    Container(
-                      height: 40,
-                      width: 40,
-                      color: AppColor.buttonTxColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: FancyShimmerImage(
-                          imageUrl: widget.img6,
-                          boxFit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.title6,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            height:
-                                4, // Adjust spacing between title and amount
-                          ),
-                          Text(
-                            widget.amount6,
-                            // widget.amount1,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.fontColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(
-                  20,
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 8,
-                      color: AppColor.primaryColor,
-                      child: InkWell(
-                        onTap: () {
-                          addToCart(
-                            widget.imageUrl,
-                            widget.title,
-                            widget.saleprice,
-                            widget.sellerId,
-                            widget.productId,
-                          );
-                        },
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.add_shopping_cart_outlined,
-                              color: AppColor.whiteColor,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        color: AppColor.primaryColor,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (c) => CheckOutScreen(
-                                  tile: widget.title,
-                                  price: widget.price,
-                                  img: widget.imageUrl,
-                                  id: widget.productId,
-                                  customerId: widget.sellerId,
-                                  weight: items.toString(),
-                                  salePrice: newPrice == null
-                                      ? widget.saleprice
-                                      : newPrice.toString(),
-                                  productType: "popular_pak",
-                                  size: "Null",
-                                ),
-                              ),
-                            );
-                          },
-                          child: const Center(
-                            child: Text(
-                              "Buy Now",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: AppColor.whiteColor,
+                              child: const Icon(
+                                Icons.add,
+                                color: AppColor.primaryColor,
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Top reviews',
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.fontColor,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => TotalRatingScreen(
-                              productType: "bundle pack",
-                              productId: widget.productId,
+                    ],
+                  ),
+                  const VerticalSpeacing(30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            widget.weight,
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
                             ),
                           ),
-                        );
-                      },
-                      child: const Text(
-                        "See More",
-                        style: TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.buttonBgColor,
-                        ),
+                          const Text(
+                            "Weight",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
+                            ),
+                          ),
+                        ],
                       ),
+                      Column(
+                        children: [
+                          Text(
+                            widget.size,
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          const Text(
+                            "Size",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Column(
+                        children: [
+                          Text(
+                            "6",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          Text(
+                            "Item’s",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.grayColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  const VerticalSpeacing(20),
+                  const Text(
+                    "Pack Details",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
                     ),
-                  ],
-                ),
-                const VerticalSpeacing(14),
-                SizedBox(
-                  height: 145,
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection("bundle pack")
-                        .doc(widget.productId)
-                        .collection('commentsAndRatings')
-                        .orderBy("time", descending: true)
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return const Center(
-                          child: Text('No comments and ratings available'),
-                        );
-                      }
-
-                      // Limit the number of items to 2
-                      final limitedDocs = snapshot.data!.docs.take(2).toList();
-
-                      return ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: limitedDocs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          Map<String, dynamic> data =
-                              limitedDocs[index].data() as Map<String, dynamic>;
-                          return DetailRating(
-                            userName: data['userName'],
-                            img: data['profilePic'],
-                            comment: data['comment'],
-                            rating: data['currentUserRating'].toString(),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) =>
-                            const SizedBox(height: 10),
-                      );
-                    },
                   ),
-                ),
-                const VerticalSpeacing(13),
-                const Text(
-                  'Related products',
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.fontColor,
+
+                  const VerticalSpeacing(
+                    8,
                   ),
-                ),
-                const VerticalSpeacing(12),
-                Container(
-                  height: 63,
-                  width: 206,
-                  color: const Color(0xffEEEEEE),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  Text(
+                    widget.detail,
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.grayColor,
+                    ),
+                  ),
+
+                  const VerticalSpeacing(20),
+                  // first bundle product
+                  Row(
                     children: [
                       Container(
-                        height: 63,
-                        width: 83,
-                        color: const Color(0xffC4C4C4),
-                        child: Center(
-                          child: Image.asset('images/fashionimg.png'),
+                        height: 40,
+                        width: 40,
+                        color: AppColor.buttonTxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FancyShimmerImage(
+                            imageUrl: widget.img1,
+                            boxFit: BoxFit.fill,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 8.0),
-                      const Text.rich(
-                        TextSpan(
-                          text: 'T-Shirt\n',
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                          ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextSpan(
-                              text: '₹12000',
-                              style: TextStyle(
+                            Text(
+                              widget.title1,
+                              style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.buttonBgColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height:
+                                  4, // Adjust spacing between title and amount
+                            ),
+                            Text(
+                              widget.amount1,
+                              // widget.amount1,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
                               ),
                             ),
                           ],
@@ -1015,9 +645,600 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                ),
-                const VerticalSpeacing(20),
-              ],
+
+                  const VerticalSpeacing(10),
+                  // second bundle product
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        color: AppColor.buttonTxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FancyShimmerImage(
+                            imageUrl: widget.img2,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.title2,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height:
+                                  4, // Adjust spacing between title and amount
+                            ),
+                            Text(
+                              widget.amount2,
+                              // widget.amount1,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(10),
+                  // third bundle product
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        color: AppColor.buttonTxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FancyShimmerImage(
+                            imageUrl: widget.img3,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.title3,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height:
+                                  4, // Adjust spacing between title and amount
+                            ),
+                            Text(
+                              widget.amount3,
+                              // widget.amount1,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(10),
+                  // fourth Bundle product
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        color: AppColor.buttonTxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FancyShimmerImage(
+                            imageUrl: widget.img4,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.title4,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height:
+                                  4, // Adjust spacing between title and amount
+                            ),
+                            Text(
+                              widget.amount4,
+                              // widget.amount1,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(10),
+                  // fifth Bundle product detail
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        color: AppColor.buttonTxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FancyShimmerImage(
+                            imageUrl: widget.img5,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.title5,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height:
+                                  4, // Adjust spacing between title and amount
+                            ),
+                            Text(
+                              widget.amount5,
+                              // widget.amount1,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(10),
+                  // sixth Bundle product
+                  Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 40,
+                        color: AppColor.buttonTxColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: FancyShimmerImage(
+                            imageUrl: widget.img6,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.title6,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height:
+                                  4, // Adjust spacing between title and amount
+                            ),
+                            Text(
+                              widget.amount6,
+                              // widget.amount1,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(
+                    20,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width / 8,
+                        color: AppColor.primaryColor,
+                        child: InkWell(
+                          onTap: () {
+                            addToCart(
+                              widget.imageUrl,
+                              widget.title,
+                              widget.saleprice,
+                              widget.sellerId,
+                              widget.productId,
+                            );
+                          },
+                          child: Center(
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.add_shopping_cart_outlined,
+                                color: AppColor.whiteColor,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width / 1.4,
+                          color: AppColor.primaryColor,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (c) => CheckOutScreen(
+                                    tile: widget.title,
+                                    price: widget.price,
+                                    img: widget.imageUrl,
+                                    id: widget.productId,
+                                    customerId: widget.sellerId,
+                                    weight: items.toString(),
+                                    salePrice: newPrice == null
+                                        ? widget.saleprice
+                                        : newPrice.toString(),
+                                    productType: "popular_pak",
+                                    size: "Null",
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Center(
+                              child: Text(
+                                "Buy Now",
+                                style: TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Top reviews',
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (c) => TotalRatingScreen(
+                                productType: "bundle pack",
+                                productId: widget.productId,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "See More",
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.buttonBgColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const VerticalSpeacing(14),
+                  SizedBox(
+                    height: 145,
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("bundle pack")
+                          .doc(widget.productId)
+                          .collection('commentsAndRatings')
+                          .orderBy("time", descending: true)
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                            child: Text('No comments and ratings available'),
+                          );
+                        }
+
+                        // Limit the number of items to 2
+                        final limitedDocs =
+                            snapshot.data!.docs.take(2).toList();
+
+                        return ListView.separated(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: limitedDocs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            Map<String, dynamic> data = limitedDocs[index]
+                                .data() as Map<String, dynamic>;
+                            return DetailRating(
+                              userName: data['userName'],
+                              img: data['profilePic'],
+                              comment: data['comment'],
+                              rating: data['currentUserRating'].toString(),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(height: 10),
+                        );
+                      },
+                    ),
+                  ),
+                  const VerticalSpeacing(13),
+                  const Text(
+                    'Related products',
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                  const VerticalSpeacing(12),
+                  SizedBox(
+                    height: 63,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _popularRelatedPacks.length,
+                      itemBuilder: (context, index) {
+                        if (_popularRelatedPacks.isEmpty) {
+                          return const Center(
+                            child: Text('Empty related products'),
+                          );
+                        } else {
+                          final popularRelatedProducts =
+                              _popularRelatedPacks[index];
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    // Check if _popularRelatedPacks is not null and index is within bounds
+                                    if (popularRelatedProducts.isNotEmpty &&
+                                        index >= 0 &&
+                                        index < popularRelatedProducts.length) {
+                                      Map<String, dynamic> selectedPack =
+                                          popularRelatedProducts;
+
+                                      return BundleProductScreen(
+                                        imageUrl:
+                                            selectedPack['imageUrl'] ?? '',
+                                        sellerId:
+                                            selectedPack['sellerId'] ?? "",
+                                        productId: selectedPack['id'] ?? "",
+                                        title: selectedPack['title'] ?? '',
+                                        price: selectedPack['price'] ?? '',
+                                        saleprice:
+                                            selectedPack['salePrice'] ?? '',
+                                        detail: selectedPack['detail'] ?? '',
+                                        weight: selectedPack['weight'] ?? '',
+                                        size: selectedPack['size'] ?? '',
+                                        img1: selectedPack['product1']
+                                                ?['image'] ??
+                                            '',
+                                        title1: selectedPack['product1']
+                                                ?['title'] ??
+                                            '',
+                                        amount1: selectedPack['product1']
+                                                ?['amount'] ??
+                                            '',
+                                        img2: selectedPack['product2']
+                                                ?['image'] ??
+                                            '',
+                                        title2: selectedPack['product2']
+                                                ?['title'] ??
+                                            '',
+                                        amount2: selectedPack['product2']
+                                                ?['amount'] ??
+                                            '',
+                                        img3: selectedPack['product3']
+                                                ?['image'] ??
+                                            '',
+                                        title3: selectedPack['product3']
+                                                ?['title'] ??
+                                            '',
+                                        amount3: selectedPack['product3']
+                                                ?['amount'] ??
+                                            '',
+                                        img4: selectedPack['product4']
+                                                ?['image'] ??
+                                            '',
+                                        title4: selectedPack['product4']
+                                                ?['title'] ??
+                                            '',
+                                        amount4: selectedPack['product4']
+                                                ?['amount'] ??
+                                            '',
+                                        img5: selectedPack['product5']
+                                                ?['image'] ??
+                                            '',
+                                        title5: selectedPack['product5']
+                                                ?['title'] ??
+                                            '',
+                                        amount5: selectedPack['product5']
+                                                ?['amount'] ??
+                                            '',
+                                        img6: selectedPack['product6']
+                                                ?['image'] ??
+                                            '',
+                                        title6: selectedPack['product6']
+                                                ?['title'] ??
+                                            '',
+                                        amount6: selectedPack['product6']
+                                                ?['amount'] ??
+                                            '',
+                                      );
+                                    } else if (popularRelatedProducts.isEmpty) {
+                                      return const Center(
+                                        child: Text('No Products...'),
+                                      );
+                                    }
+                                    return Container();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 206,
+                              color: const Color(0xffEEEEEE),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 6.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 63,
+                                    width: 84,
+                                    color: const Color(0xffC4C4C4),
+                                    child: Center(
+                                      child: Image.network(
+                                        popularRelatedProducts['imageUrl'],
+                                        height: 50,
+                                        width: 60,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  Expanded(
+                                    child: Text.rich(
+                                      TextSpan(
+                                        text:
+                                            '${popularRelatedProducts['title']}\n',
+                                        style: const TextStyle(
+                                          fontFamily: 'CenturyGothic',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.fontColor,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text:
+                                                '₹${popularRelatedProducts['price']}',
+                                            style: const TextStyle(
+                                              fontFamily: 'CenturyGothic',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColor.buttonBgColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                  const VerticalSpeacing(20),
+                ],
+              ),
             ),
           ),
         ),
