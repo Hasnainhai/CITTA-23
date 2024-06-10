@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme:
             ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(
-          background: const Color(0xFFF7F7F7),
+          background: const Color(0xffFFFFFF),
         ), // Set the background color here
       ),
       initialRoute: RoutesName.splashScreen,
