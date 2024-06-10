@@ -43,7 +43,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           'imageUrl': qn.docs[i]['imageUrl'],
           'title': qn.docs[i]['title'],
           'price': qn.docs[i]['price'],
-          'salePrice': qn.docs[i]['salePrice'],
+          // 'price': qn.docs[i]['salePrice'],
           'detail': qn.docs[i]['detail'],
           'weight': qn.docs[i]['weight'],
         });
@@ -232,7 +232,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                               return ProductDetailScreen(
                                 title: productData['title'].toString(),
                                 imageUrl: productData['imageUrl'],
-                                price: productData['salePrice'].toString(),
+                                price: productData['price'].toString(),
                                 salePrice: productData['price'].toString(),
                                 productId: productData['id'].toString(),
                                 sellerId: productData['sellerId'].toString(),
@@ -247,7 +247,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                       productId: productData['id'],
                       name: productData['title'].toString(),
                       price: productData['price'].toString(),
-                      dPrice: productData['salePrice'].toString(),
+                      dPrice: productData['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
                       img: productData['imageUrl'],
