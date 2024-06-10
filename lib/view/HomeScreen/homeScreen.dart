@@ -957,7 +957,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      oofProd: true,
+                      percentage: category == "Lightening Deals"
+                          ? product['discount'].toString()
+                          : '',
+                      oofProd: category == "Lightening Deals" ? true : false,
                       productId: product['id'],
                       sellerId: product['sellerId'],
                       name: product['title'].toString(),
