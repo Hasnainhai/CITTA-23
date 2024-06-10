@@ -49,7 +49,8 @@ class _FashionDetailState extends State<FashionDetail> {
   bool button2 = false;
   bool button3 = false;
   bool button4 = false;
-
+  String? selectSize;
+  String? color;
   bool button5 = false;
   bool button6 = false;
 
@@ -73,6 +74,58 @@ class _FashionDetailState extends State<FashionDetail> {
         Utils.flushBarErrorMessage("Fixed Limit", context);
       }
     });
+  }
+
+  void addToCart(
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String size,
+    String color,
+    String disPrice,
+  ) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        'deleteId': uuid,
+        "size": size,
+        "color": color,
+        "weight": "N/A",
+        'dPrice': disPrice,
+
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
+    }
   }
 
   void addToFavorites() async {
@@ -427,7 +480,9 @@ class _FashionDetailState extends State<FashionDetail> {
                   spacing: 8,
                   children: widget.colors.map((color) {
                     return GestureDetector(
-                      onTap: () => _onColorTap(color),
+                      onTap: () {
+                        _onColorTap(color);
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
@@ -467,7 +522,9 @@ class _FashionDetailState extends State<FashionDetail> {
                   spacing: 8,
                   children: widget.sizes.map((size) {
                     return GestureDetector(
-                      onTap: () => _onSizeTap(size),
+                      onTap: () {
+                        _onSizeTap(size);
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 8),
@@ -506,7 +563,23 @@ class _FashionDetailState extends State<FashionDetail> {
                       color: AppColor.primaryColor,
                       child: Center(
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (_selectedSize == null &&
+                                _selectedImageUrl == null) {
+                              Utils.toastMessage(
+                                  "Please select size and color");
+                            } else {
+                              addToCart(
+                                  widget.imageUrl,
+                                  widget.title,
+                                  widget.salePrice,
+                                  widget.sellerId,
+                                  widget.productId,
+                                  _selectedSize!,
+                                  _selectedImageUrl!,
+                                  "0");
+                            }
+                          },
                           icon: const Icon(
                             Icons.add_shopping_cart_outlined,
                             color: AppColor.whiteColor,
