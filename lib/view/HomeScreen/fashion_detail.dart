@@ -413,7 +413,6 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   20,
                 ),
-
                 const Text(
                   "Colors:",
                   style: TextStyle(
@@ -505,16 +504,13 @@ class _FashionDetailState extends State<FashionDetail> {
                       height: 50,
                       width: MediaQuery.of(context).size.width / 8,
                       color: AppColor.primaryColor,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.add_shopping_cart_outlined,
-                              color: AppColor.whiteColor,
-                              size: 30,
-                            ),
+                      child: Center(
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.add_shopping_cart_outlined,
+                            color: AppColor.whiteColor,
+                            size: 30,
                           ),
                         ),
                       ),
@@ -744,7 +740,6 @@ class _FashionDetailState extends State<FashionDetail> {
                     },
                   ),
                 ),
-
                 const VerticalSpeacing(40),
               ],
             ),

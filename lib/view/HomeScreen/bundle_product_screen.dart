@@ -123,6 +123,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     String sellerId,
     String productId,
     String weight,
+    String disPrice,
   ) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
@@ -158,6 +159,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         "size": widget.size,
         "color": "N/A",
         "weight": weight,
+        'dPrice': disPrice,
 
         // Add other product details as needed
       });
@@ -922,25 +924,23 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width / 8,
                         color: AppColor.primaryColor,
-                        child: InkWell(
-                          onTap: () {
-                            addToCart(
-                              widget.imageUrl,
-                              widget.title,
-                              widget.saleprice,
-                              widget.sellerId,
-                              widget.productId,
-                              widget.weight,
-                            );
-                          },
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.add_shopping_cart_outlined,
-                                color: AppColor.whiteColor,
-                                size: 30,
-                              ),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              addToCart(
+                                widget.imageUrl,
+                                widget.title,
+                                widget.saleprice,
+                                widget.sellerId,
+                                widget.productId,
+                                widget.weight,
+                                '0',
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: AppColor.whiteColor,
+                              size: 30,
                             ),
                           ),
                         ),

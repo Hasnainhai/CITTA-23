@@ -269,29 +269,29 @@ class _MenuScreenState extends State<MenuScreen> {
                                         img: item['imageUrl'],
                                         iconColor: AppColor.buttonBgColor,
                                         ontap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return ProductDetailScreen(
-                                                    title: item['title']
-                                                        .toString(),
-                                                    productId:
-                                                        item['id'].toString(),
-                                                    sellerId: item['sellerId']
-                                                        .toString(),
-                                                    imageUrl: item['imageUrl'],
-                                                    price: item['price']
-                                                        .toString(),
-                                                    salePrice: item['price']
-                                                        .toString(),
-                                                    weight: item['weight']
-                                                        .toString(),
-                                                    detail: item['detail']
-                                                        .toString());
-                                              },
-                                            ),
-                                          );
+                                          // Navigator.push(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) {
+                                          //       return ProductDetailScreen(
+                                          //           title: item['title']
+                                          //               .toString(),
+                                          //           productId:
+                                          //               item['id'].toString(),
+                                          //           sellerId: item['sellerId']
+                                          //               .toString(),
+                                          //           imageUrl: item['imageUrl'],
+                                          //           price: item['price']
+                                          //               .toString(),
+                                          //           salePrice: item['price']
+                                          //               .toString(),
+                                          //           weight: item['weight']
+                                          //               .toString(),
+                                          //           detail: item['detail']
+                                          //               .toString());
+                                          //     },
+                                          //   ),
+                                          // );
                                         },
                                         addCart: () {
                                           addToCart(

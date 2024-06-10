@@ -53,13 +53,17 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
   }
 
   void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+      String productId, String size, String weight) async {
     productList.add({
       'id': productId,
       'sellerId': sellerId,
       'imageUrl': img,
       'title': title,
       'salePrice': dPrice,
+      'size': size,
+      'weight': weight,
+      'color': 'N/A',
+      'dPrice': "0",
     });
 
     // Calculate the total sale price after adding the new product
@@ -225,23 +229,23 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                         productSnapshot.data() as Map<String, dynamic>;
                     return HomeCard(
                       ontap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ProductDetailScreen(
-                                title: productData['title'].toString(),
-                                imageUrl: productData['imageUrl'],
-                                price: productData['price'].toString(),
-                                salePrice: productData['price'].toString(),
-                                productId: productData['id'].toString(),
-                                sellerId: productData['sellerId'].toString(),
-                                weight: productData['weight'].toString(),
-                                detail: productData['detail'].toString(),
-                              );
-                            },
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return ProductDetailScreen(
+                        //         title: productData['title'].toString(),
+                        //         imageUrl: productData['imageUrl'],
+                        //         price: productData['price'].toString(),
+                        //         salePrice: productData['price'].toString(),
+                        //         productId: productData['id'].toString(),
+                        //         sellerId: productData['sellerId'].toString(),
+                        //         weight: productData['weight'].toString(),
+                        //         detail: productData['detail'].toString(),
+                        //       );
+                        //     },
+                        //   ),
+                        // );
                       },
                       sellerId: productData['sellerId'],
                       productId: productData['id'],
@@ -259,7 +263,9 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                               productData['title'].toString(),
                               productData['price'].toString(),
                               productData['sellerId'],
-                              productData['id']);
+                              productData['id'],
+                              productData['size'],
+                              productData['weight']);
                         });
                       },
                     );

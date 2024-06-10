@@ -65,7 +65,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,23 +83,23 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         itemBuilder: (context, index) {
           return HomeCard(
             ontap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ProductDetailScreen(
-                      title: widget.products[index]['title'].toString(),
-                      productId: widget.products[index]['id'].toString(),
-                      sellerId: widget.products[index]['sellerId'].toString(),
-                      imageUrl: widget.products[index]['imageUrl'],
-                      price: widget.products[index]['price'].toString(),
-                      salePrice: widget.products[index]['price'],
-                      weight: widget.products[index]['weight'].toString(),
-                      detail: widget.products[index]['detail'].toString(),
-                    );
-                  },
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) {
+              //       return ProductDetailScreen(
+              //         title: widget.products[index]['title'].toString(),
+              //         productId: widget.products[index]['id'].toString(),
+              //         sellerId: widget.products[index]['sellerId'].toString(),
+              //         imageUrl: widget.products[index]['imageUrl'],
+              //         price: widget.products[index]['price'].toString(),
+              //         salePrice: widget.products[index]['price'],
+              //         weight: widget.products[index]['weight'].toString(),
+              //         detail: widget.products[index]['detail'].toString(),
+              //       );
+              //     },
+              //   ),
+              // );
             },
             productId: widget.products[index]['id'],
             sellerId: widget.products[index]['sellerId'],

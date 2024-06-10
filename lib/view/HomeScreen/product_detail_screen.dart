@@ -26,6 +26,8 @@ class ProductDetailScreen extends StatefulWidget {
     required this.detail,
     required this.productId,
     required this.sellerId,
+    required this.disPrice,
+    required this.category,
   });
 
   final String title;
@@ -36,6 +38,8 @@ class ProductDetailScreen extends StatefulWidget {
   final String detail;
   final String productId;
   final String sellerId;
+  final String disPrice;
+  final String category;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -104,6 +108,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     String sellerId,
     String productId,
     String weight,
+    String disPrice,
   ) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
@@ -139,6 +144,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         "size": "N/A",
         "color": "N/A",
         "weight": weight,
+        'dPrice': disPrice,
 
         // Add other product details as needed
       });
@@ -480,13 +486,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           child: IconButton(
                             onPressed: () {
                               addToCart(
-                                widget.imageUrl,
-                                widget.title,
-                                widget.salePrice,
-                                widget.sellerId,
-                                widget.productId,
-                                items == 1 ? widget.weight : items.toString(),
-                              );
+                                  widget.imageUrl,
+                                  widget.title,
+                                  widget.salePrice,
+                                  widget.sellerId,
+                                  widget.productId,
+                                  items == 1 ? widget.weight : items.toString(),
+                                  widget.disPrice);
                             },
                             icon: const Icon(
                               Icons.add_shopping_cart_outlined,
@@ -652,32 +658,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               _relatedProducts[index];
                           return InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return ProductDetailScreen(
-                                      title: categoryRelatedProducts['title']
-                                          .toString(),
-                                      productId: categoryRelatedProducts['id']
-                                          .toString(),
-                                      sellerId:
-                                          categoryRelatedProducts['sellerId']
-                                              .toString(),
-                                      imageUrl:
-                                          categoryRelatedProducts['imageUrl'],
-                                      price: categoryRelatedProducts['price']
-                                          .toString(),
-                                      salePrice:
-                                          categoryRelatedProducts['price'],
-                                      weight: categoryRelatedProducts['weight']
-                                          .toString(),
-                                      detail: categoryRelatedProducts['detail']
-                                          .toString(),
-                                    );
-                                  },
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return ProductDetailScreen(
+                              //         title: categoryRelatedProducts['title']
+                              //             .toString(),
+                              //         productId: categoryRelatedProducts['id']
+                              //             .toString(),
+                              //         sellerId:
+                              //             categoryRelatedProducts['sellerId']
+                              //                 .toString(),
+                              //         imageUrl:
+                              //             categoryRelatedProducts['imageUrl'],
+                              //         price: categoryRelatedProducts['price']
+                              //             .toString(),
+                              //         salePrice:
+                              //             categoryRelatedProducts['price'],
+                              //         weight: categoryRelatedProducts['weight']
+                              //             .toString(),
+                              //         detail: categoryRelatedProducts['detail']
+                              //             .toString(),
+                              //       );
+                              //     },
+                              //   ),
+                              // );
                             },
                             child: Container(
                               width: 206,
