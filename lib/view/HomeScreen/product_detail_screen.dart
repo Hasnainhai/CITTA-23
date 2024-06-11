@@ -27,7 +27,6 @@ class ProductDetailScreen extends StatefulWidget {
     required this.productId,
     required this.sellerId,
     required this.disPrice,
-    required this.category,
   });
 
   final String title;
@@ -39,7 +38,6 @@ class ProductDetailScreen extends StatefulWidget {
   final String productId;
   final String sellerId;
   final String disPrice;
-  final String category;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -244,12 +242,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => const DashBoardScreen(),
-                ),
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back,

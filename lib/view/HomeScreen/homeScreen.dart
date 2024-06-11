@@ -993,7 +993,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             int.parse(product['price']))
                                         .toString()
                                     : '0',
-                                category: category,
                               );
                             },
                           ),
