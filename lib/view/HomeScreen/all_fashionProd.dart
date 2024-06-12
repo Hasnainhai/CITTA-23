@@ -175,6 +175,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
                       sellerId: _fashionProducts[index]['sellerId'],
                       productId: _fashionProducts[index]['id'],
                       name: _fashionProducts[index]['title'].toString(),
+                      // productRating: _fashionProducts[index]['id'],
                       price: '',
                       dPrice: _fashionProducts[index]['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
