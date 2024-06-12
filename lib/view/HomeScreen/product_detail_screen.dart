@@ -150,6 +150,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
+  }
+
   void removeFromFavorites() async {
     try {
       // Get the user's UID
@@ -200,20 +218,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         _relatedProducts.clear();
 
         for (var doc in qn.docs) {
-          var product = {
-            'sellerId': doc['sellerId'],
-            'id': doc['id'],
-            'imageUrl': doc['imageUrl'],
-            'title': doc['title'],
-            'price': doc['price'],
-            'detail': doc['detail'],
-            'weight': doc['weight'],
-            'category': doc['category'],
-          };
+          var data = doc.data() as Map<String, dynamic>?;
 
-          debugPrint('Fetched product: $product'); // Debugging statement
+          if (data != null) {
+            var product = {
+              'sellerId': data['sellerId'],
+              'id': data['id'],
+              'imageUrl': data['imageUrl'],
+              'title': data['title'],
+              'price': data['price'],
+              'detail': data['detail'],
+              'weight': data['weight'],
+              'category': data['category'],
+            };
 
-          _relatedProducts.add(product);
+            if (data.containsKey('discount') && data['discount'] != null) {
+              product['discount'] = data['discount'].toString();
+            }
+
+            debugPrint('Fetched product: $product'); // Debugging statement
+
+            _relatedProducts.add(product);
+          }
         }
         _isLoading = false;
 
@@ -651,32 +677,50 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               _relatedProducts[index];
                           return InkWell(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return ProductDetailScreen(
-                              //         title: categoryRelatedProducts['title']
-                              //             .toString(),
-                              //         productId: categoryRelatedProducts['id']
-                              //             .toString(),
-                              //         sellerId:
-                              //             categoryRelatedProducts['sellerId']
-                              //                 .toString(),
-                              //         imageUrl:
-                              //             categoryRelatedProducts['imageUrl'],
-                              //         price: categoryRelatedProducts['price']
-                              //             .toString(),
-                              //         salePrice:
-                              //             categoryRelatedProducts['price'],
-                              //         weight: categoryRelatedProducts['weight']
-                              //             .toString(),
-                              //         detail: categoryRelatedProducts['detail']
-                              //             .toString(),
-                              //       );
-                              //     },
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductDetailScreen(
+                                      title: categoryRelatedProducts['title']
+                                          .toString(),
+                                      productId: categoryRelatedProducts['id']
+                                          .toString(),
+                                      sellerId:
+                                          categoryRelatedProducts['sellerId']
+                                              .toString(),
+                                      imageUrl:
+                                          categoryRelatedProducts['imageUrl'],
+                                      price: categoryRelatedProducts['price']
+                                          .toString(),
+                                      salePrice: categoryRelatedProducts[
+                                                  'category'] ==
+                                              "Lightening Deals"
+                                          ? calculateDiscountedPrice(
+                                              categoryRelatedProducts['price'],
+                                              categoryRelatedProducts[
+                                                  'discount'])
+                                          : categoryRelatedProducts['price']
+                                              .toString(),
+                                      weight: categoryRelatedProducts['weight']
+                                          .toString(),
+                                      detail: categoryRelatedProducts['detail']
+                                          .toString(),
+                                      disPrice: categoryRelatedProducts[
+                                                  'category'] ==
+                                              "Lightening Deals"
+                                          ? (int.parse(categoryRelatedProducts[
+                                                      'discount']) /
+                                                  100 *
+                                                  int.parse(
+                                                      categoryRelatedProducts[
+                                                          'price']))
+                                              .toString()
+                                          : '0',
+                                    );
+                                  },
+                                ),
+                              );
                             },
                             child: Container(
                               width: 206,

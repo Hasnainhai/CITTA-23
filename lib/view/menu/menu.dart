@@ -31,6 +31,24 @@ class _MenuScreenState extends State<MenuScreen> {
     });
   }
 
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
+  }
+
   void _handleFashionButton() {
     // Change the collection to 'fashion'
     setState(() {
@@ -39,8 +57,32 @@ class _MenuScreenState extends State<MenuScreen> {
     });
   }
 
-  void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+  String dPrice(String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double discountedPrice = originalPrice * (discountPercentage / 100);
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
+  }
+
+  void addToCart(
+      String img,
+      String title,
+      String dPrice,
+      String sellerId,
+      String productId,
+      String size,
+      String weight,
+      String color,
+      String disPrice) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -70,8 +112,12 @@ class _MenuScreenState extends State<MenuScreen> {
         'id': productId,
         'imageUrl': img,
         'title': title,
-        'price': dPrice,
+        'salePrice': dPrice,
         'deleteId': uuid,
+        "size": size,
+        'weght': weight,
+        'dPrice': disPrice,
+        'color': color,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -263,43 +309,71 @@ class _MenuScreenState extends State<MenuScreen> {
                                     ? HomeCard(
                                         name: item['title'],
                                         price: item['price'],
-                                        dPrice: item['price'] + "₹",
+                                        dPrice: item['category'] ==
+                                                'Lightening Deals'
+                                            ? "${calculateDiscountedPrice(item['price'], item['discount'])}₹"
+                                            : item['price'] + '₹',
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
                                         img: item['imageUrl'],
                                         iconColor: AppColor.buttonBgColor,
                                         ontap: () {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) {
-                                          //       return ProductDetailScreen(
-                                          //           title: item['title']
-                                          //               .toString(),
-                                          //           productId:
-                                          //               item['id'].toString(),
-                                          //           sellerId: item['sellerId']
-                                          //               .toString(),
-                                          //           imageUrl: item['imageUrl'],
-                                          //           price: item['price']
-                                          //               .toString(),
-                                          //           salePrice: item['price']
-                                          //               .toString(),
-                                          //           weight: item['weight']
-                                          //               .toString(),
-                                          //           detail: item['detail']
-                                          //               .toString());
-                                          //     },
-                                          //   ),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return ProductDetailScreen(
+                                                  title:
+                                                      item['title'].toString(),
+                                                  productId:
+                                                      item['id'].toString(),
+                                                  sellerId: item['sellerId']
+                                                      .toString(),
+                                                  imageUrl: item['imageUrl'],
+                                                  price:
+                                                      item['price'].toString(),
+                                                  salePrice: item['category'] ==
+                                                          'Lightening Deals'
+                                                      ? calculateDiscountedPrice(
+                                                          item['price'],
+                                                          item['discount'])
+                                                      : item['price'],
+                                                  weight:
+                                                      item['weight'].toString(),
+                                                  detail:
+                                                      item['detail'].toString(),
+                                                  disPrice: item['category'] ==
+                                                          "Lightening Deals"
+                                                      ? (int.parse(item[
+                                                                  'discount']) /
+                                                              100 *
+                                                              int.parse(item[
+                                                                  'price']))
+                                                          .toString()
+                                                      : '0',
+                                                );
+                                              },
+                                            ),
+                                          );
                                         },
                                         addCart: () {
                                           addToCart(
                                             item['imageUrl'],
                                             item['title'],
                                             item['price'],
-                                            item['price'],
+                                            item['sellerId'],
                                             item['id'],
+                                            'N/A',
+                                            item['weight'],
+                                            'N/A',
+                                            item['category'] ==
+                                                    "Lightening Deals"
+                                                ? (int.parse(item['discount']) /
+                                                        100 *
+                                                        int.parse(
+                                                            item['price']))
+                                                    .toString()
+                                                : '0',
                                           );
                                         },
                                         productId: item['id'],
@@ -341,8 +415,19 @@ class _MenuScreenState extends State<MenuScreen> {
                                             item['imageUrl'],
                                             item['title'],
                                             item['price'],
-                                            item['price'],
+                                            item['sellerId'],
                                             item['id'],
+                                            item['size'][0],
+                                            'N/A',
+                                            item['color'][0],
+                                            item['category'] ==
+                                                    "Lightening Deals"
+                                                ? (int.parse(item['discount']) /
+                                                        100 *
+                                                        int.parse(
+                                                            item['price']))
+                                                    .toString()
+                                                : '0',
                                           );
                                         },
                                         productId: item['id'],

@@ -229,23 +229,24 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                         productSnapshot.data() as Map<String, dynamic>;
                     return HomeCard(
                       ontap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) {
-                        //       return ProductDetailScreen(
-                        //         title: productData['title'].toString(),
-                        //         imageUrl: productData['imageUrl'],
-                        //         price: productData['price'].toString(),
-                        //         salePrice: productData['price'].toString(),
-                        //         productId: productData['id'].toString(),
-                        //         sellerId: productData['sellerId'].toString(),
-                        //         weight: productData['weight'].toString(),
-                        //         detail: productData['detail'].toString(),
-                        //       );
-                        //     },
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailScreen(
+                                title: productData['title'].toString(),
+                                imageUrl: productData['imageUrl'],
+                                price: productData['price'].toString(),
+                                salePrice: productData['price'].toString(),
+                                productId: productData['id'].toString(),
+                                sellerId: productData['sellerId'].toString(),
+                                weight: productData['weight'].toString(),
+                                detail: productData['detail'].toString(),
+                                disPrice: "0",
+                              );
+                            },
+                          ),
+                        );
                       },
                       sellerId: productData['sellerId'],
                       productId: productData['id'],
