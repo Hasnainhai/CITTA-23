@@ -23,7 +23,7 @@ class HomeCard extends StatelessWidget {
     required this.sellerId,
     this.oofProd,
     this.percentage,
-    //  required this.productRating,
+    required this.productRating,
   });
   final String img;
   final String name;
@@ -38,7 +38,7 @@ class HomeCard extends StatelessWidget {
   final String sellerId;
   bool? oofProd;
   String? percentage;
-  // final double productRating;
+  final double productRating;
 
   @override
   Widget build(BuildContext context) {
@@ -103,27 +103,37 @@ class HomeCard extends StatelessWidget {
                     name.length > 8 ? '${name.substring(0, 8)}...' : name,
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w800,
                       color: AppColor.fontColor,
                     ),
                   ),
-            //     RatingBar.builder(
-            //   ignoreGestures: true,
-            //   initialRating: productRating,
-            //   minRating: 1,
-            //   unratedColor: AppColor.buttonTxColor,
-            //   allowHalfRating: true,
-            //   glowColor: Colors.amber,
-            //   itemCount: 5,
-            //   itemSize: 20,
-            //   itemPadding: const EdgeInsets.symmetric(horizontal: 0),
-            //   itemBuilder: (context, _) => const Icon(
-            //     Icons.star_rate_rounded,
-            //     color: Colors.amber,
-            //   ),
-            //   onRatingUpdate: (rating) {},
-            // ),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber,size: 16,),
+                      Text(
+                        '$productRating',
+                        style: const TextStyle(color: AppColor.fontColor),
+                      ),
+                    ],
+                  )
+
+                  // RatingBar.builder(
+                  //   ignoreGestures: true,
+                  //   initialRating: productRating,
+                  //   minRating: 1,
+                  //   unratedColor: AppColor.buttonTxColor,
+                  //   allowHalfRating: true,
+                  //   glowColor: Colors.amber,
+                  //   itemCount: 5,
+                  //   itemSize: 20,
+                  //   itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+                  //   itemBuilder: (context, _) => const Icon(
+                  //     Icons.star_rate_rounded,
+                  //     color: Colors.amber,
+                  //   ),
+                  //   onRatingUpdate: (rating) {},
+                  // ),
                 ],
               ),
               Row(

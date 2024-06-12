@@ -65,7 +65,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,6 +119,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                 widget.products[index]['id'],
               );
             },
+            productRating: widget.products[index]['averageReview'],
           );
         },
       ),

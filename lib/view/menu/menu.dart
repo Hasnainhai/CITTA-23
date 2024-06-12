@@ -235,123 +235,136 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             Expanded(
                 child: FutureBuilder<QuerySnapshot>(
-                    future: _collectionReference.get(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        // Display the data in a GridView.builder
-                        var data = snapshot.data!.docs;
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 16,
-                              ),
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                var item = data[index];
+              future: _collectionReference.get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  // Display the data in a GridView.builder
+                  var data = snapshot.data!.docs;
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 16,
+                      ),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        var item = data[index];
+                        var productData = item.data() as Map<String, dynamic>;
 
-                                return productType == "food"
-                                    ? HomeCard(
-                                        name: item['title'],
-                                        price: item['price'],
-                                        dPrice: item['price'] + "₹",
-                                        borderColor: AppColor.buttonBgColor,
-                                        fillColor: AppColor.appBarButtonColor,
-                                        img: item['imageUrl'],
-                                        iconColor: AppColor.buttonBgColor,
-                                        ontap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return ProductDetailScreen(
-                                                    title: item['title']
-                                                        .toString(),
-                                                    productId:
-                                                        item['id'].toString(),
-                                                    sellerId: item['sellerId']
-                                                        .toString(),
-                                                    imageUrl: item['imageUrl'],
-                                                    price: item['price']
-                                                        .toString(),
-                                                    salePrice: item['price']
-                                                        .toString(),
-                                                    weight: item['weight']
-                                                        .toString(),
-                                                    detail: item['detail']
-                                                        .toString());
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        addCart: () {
-                                          addToCart(
-                                            item['imageUrl'],
-                                            item['title'],
-                                            item['price'],
-                                            item['price'],
-                                            item['id'],
-                                          );
-                                        },
-                                        productId: item['id'],
-                                        sellerId: item['sellerId'],
-                                      )
-                                    : HomeCard(
-                                        name: item['title'],
-                                        price: "",
-                                        dPrice: item['price'] + "₹",
-                                        borderColor: AppColor.buttonBgColor,
-                                        fillColor: AppColor.appBarButtonColor,
-                                        img: item['imageUrl'],
-                                        iconColor: AppColor.buttonBgColor,
-                                        ontap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return FashionDetail(
-                                                  sellerId: item['sellerId'],
-                                                  productId: item['id'],
-                                                  title:
-                                                      item['title'].toString(),
-                                                  imageUrl: item['imageUrl'],
-                                                  salePrice: item['price'],
-                                                  detail:
-                                                      item['detail'].toString(),
-                                                  colors: List<String>.from(
-                                                      item['color']),
-                                                  sizes: List<String>.from(
-                                                      item['size']),
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        addCart: () {
-                                          addToCart(
-                                            item['imageUrl'],
-                                            item['title'],
-                                            item['price'],
-                                            item['price'],
-                                            item['id'],
-                                          );
-                                        },
-                                        productId: item['id'],
-                                        sellerId: item['sellerId'],
-                                      );
-                              }),
-                        );
-                      }
-                    }))
+                        var product = {
+                          'sellerId': productData['sellerId'],
+                          'id': productData['id'],
+                          'imageUrl': productData['imageUrl'],
+                          'title': productData['title'],
+                          'price': productData['price'],
+                          'detail': productData['detail'],
+                          'weight': productData['weight'],
+                          'averageReview':
+                              productData.containsKey('averageReview')
+                                  ? productData['averageReview']
+                                  : 0.0,
+                        };
+
+                        if (productType == "food") {
+                          return HomeCard(
+                            name: product['title'],
+                            price: product['price'],
+                            dPrice: "${product['price']}₹",
+                            borderColor: AppColor.buttonBgColor,
+                            fillColor: AppColor.appBarButtonColor,
+                            img: product['imageUrl'],
+                            iconColor: AppColor.buttonBgColor,
+                            ontap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return ProductDetailScreen(
+                                      title: product['title'].toString(),
+                                      productId: product['id'].toString(),
+                                      sellerId: product['sellerId'].toString(),
+                                      imageUrl: product['imageUrl'],
+                                      price: product['price'].toString(),
+                                      salePrice: product['price'].toString(),
+                                      weight: product['weight'].toString(),
+                                      detail: product['detail'].toString(),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            addCart: () {
+                              addToCart(
+                                product['imageUrl'],
+                                product['title'],
+                                product['price'],
+                                product['price'],
+                                product['id'],
+                              );
+                            },
+                            productId: product['id'],
+                            sellerId: product['sellerId'],
+                            productRating: product['averageReview'],
+                          );
+                        } else {
+                          return HomeCard(
+                            name: product['title'],
+                            price: "",
+                            dPrice: "${product['price']}₹",
+                            borderColor: AppColor.buttonBgColor,
+                            fillColor: AppColor.appBarButtonColor,
+                            img: product['imageUrl'],
+                            iconColor: AppColor.buttonBgColor,
+                            ontap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return FashionDetail(
+                                      sellerId: product['sellerId'],
+                                      productId: product['id'],
+                                      title: product['title'].toString(),
+                                      imageUrl: product['imageUrl'],
+                                      salePrice: product['price'],
+                                      detail: product['detail'].toString(),
+                                      colors: List<String>.from(
+                                          productData['color']),
+                                      sizes: List<String>.from(
+                                          productData['size']),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            addCart: () {
+                              addToCart(
+                                product['imageUrl'],
+                                product['title'],
+                                product['price'],
+                                product['price'],
+                                product['id'],
+                              );
+                            },
+                            productId: product['id'],
+                            sellerId: product['sellerId'],
+                            productRating: product['averageReview'],
+                          );
+                        }
+                      },
+                    ),
+                  );
+                }
+              },
+            )),
           ],
         ),
       ),
