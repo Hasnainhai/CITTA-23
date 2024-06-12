@@ -1,4 +1,3 @@
-import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +7,6 @@ class RatingRepository {
   void giveRatings(String productId, String comment, context, String userName,
       String userProfile, String produtType, double? countRatingStars) {
     CollectionReference rateDriverRef = FirebaseFirestore.instance
-        .collection(produtType)
-        .doc(productId)
-        .collection("ratings");
-    CollectionReference DriverRef = FirebaseFirestore.instance
         .collection(produtType)
         .doc(productId)
         .collection("ratings");

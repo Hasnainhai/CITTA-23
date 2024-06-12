@@ -4,7 +4,6 @@ import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
-import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
