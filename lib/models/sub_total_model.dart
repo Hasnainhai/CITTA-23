@@ -10,3 +10,14 @@ class SubTotalModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+class DiscountSum extends ChangeNotifier {
+  int _dis = 0;
+
+  int get dis => _dis;
+
+  void updateDisTotal(int dis) {
+    _dis = dis;
+    notifyListeners();
+  }
+}

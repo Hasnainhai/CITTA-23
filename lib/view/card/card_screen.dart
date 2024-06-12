@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../res/components/colors.dart';
 import '../../res/components/roundedButton.dart';
-import 'widgets/dottedLineWidget.dart';
 
 int items = 0;
 
@@ -70,20 +69,54 @@ class _CardScreenState extends State<CardScreen> {
     _productsCollection.get().then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.isNotEmpty) {
         int sum = 0;
+        int discount = 0;
 
-        // ignore: avoid_function_literals_in_foreach_calls
         querySnapshot.docs.forEach((QueryDocumentSnapshot document) {
+          // Print entire document data for debugging
+          debugPrint("Document data: ${document.data()}");
+
+          // Parse salePrice as integer
           String priceString = document['salePrice'];
-          int priceInt = int.tryParse(priceString) ?? 0;
+          int priceInt = int.tryParse(priceString.split('.').first) ?? 0;
           sum += priceInt;
+
+          // Check if document data contains dPrice
+          var data = document.data() as Map<String, dynamic>?;
+          if (data != null) {
+            if (data.containsKey('dPrice')) {
+              String disPrice = data['dPrice'];
+              int dP = int.tryParse(disPrice.split('.').first) ?? 0;
+              discount += dP;
+
+              // Debug output to check parsed discount price
+              debugPrint(
+                  "Parsed discount price: $dP from document ${document.id}");
+            } else {
+              // Debug output to indicate missing dPrice key
+              debugPrint("Missing dPrice key in document: ${document.id}");
+            }
+          } else {
+            // Debug output to indicate null data
+            debugPrint("Null data for document: ${document.id}");
+          }
         });
 
+        // Update state and notify providers
         setState(() {
           subTotal = sum;
           Provider.of<SubTotalModel>(context, listen: false)
               .updateSubTotal(subTotal);
+          d = discount;
+          Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
         });
+
+        // Debug output to check final sums
+        debugPrint("Final subTotal: $subTotal");
+        debugPrint("Final discount sum: $d");
       }
+    }).catchError((error) {
+      // Handle any errors that occur during the fetch
+      debugPrint("Error fetching data: $error");
     });
   }
 
@@ -202,7 +235,7 @@ class _CardScreenState extends State<CardScreen> {
                         fontFamily: 'CenturyGothic',
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.blackColor,
+                        color: AppColor.grayColor,
                       ),
                     ),
                     Consumer<IndexModel>(
@@ -219,14 +252,6 @@ class _CardScreenState extends State<CardScreen> {
                       },
                     ),
                   ],
-                ),
-                const VerticalSpeacing(12.0),
-                SizedBox(
-                  height: 1,
-                  width: double.infinity,
-                  child: CustomPaint(
-                    painter: DottedLinePainter(),
-                  ),
                 ),
                 const VerticalSpeacing(12.0),
                 Row(
@@ -257,12 +282,36 @@ class _CardScreenState extends State<CardScreen> {
                   ],
                 ),
                 const VerticalSpeacing(12.0),
-                SizedBox(
-                  height: 1,
-                  width: double.infinity,
-                  child: CustomPaint(
-                    painter: DottedLinePainter(),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Discount",
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.grayColor,
+                      ),
+                    ),
+                    Consumer<DiscountSum>(
+                      builder: (context, indexModel, child) {
+                        return Text(
+                          '${indexModel.dis}',
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: AppColor.blackColor,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                const VerticalSpeacing(12.0),
+                const Divider(
+                  color: AppColor.primaryColor,
                 ),
                 const VerticalSpeacing(12.0),
                 Row(
