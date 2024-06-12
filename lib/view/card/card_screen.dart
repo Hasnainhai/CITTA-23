@@ -30,7 +30,7 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   int? index;
   int totalPrice = 0;
-
+  int fileTotal = 0;
   CollectionReference _productsCollection = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -212,14 +212,14 @@ class _CardScreenState extends State<CardScreen> {
                                 Map<String, dynamic> data =
                                     document.data() as Map<String, dynamic>;
                                 return CartWidget(
-                                  title: data['title'],
-                                  price: data['salePrice'],
-                                  img: data['imageUrl'],
-                                  items: 1,
-                                  sellerId: data['sellerId'],
-                                  productId: data['id'],
-                                  deletedId: data['deleteId'],
-                                );
+                                    title: data['title'],
+                                    price: data['salePrice'],
+                                    img: data['imageUrl'],
+                                    items: 1,
+                                    sellerId: data['sellerId'],
+                                    productId: data['id'],
+                                    deletedId: data['deleteId'],
+                                    discount: data['dPrice']);
                               }).toList(),
                             );
                     },

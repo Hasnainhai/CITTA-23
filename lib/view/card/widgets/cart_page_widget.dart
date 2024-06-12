@@ -13,7 +13,6 @@ import '../../../res/components/colors.dart';
 int subTotal = 0;
 int d = 0;
 
-// ignore: must_be_immutable
 class CartWidget extends StatefulWidget {
   CartWidget({
     super.key,
@@ -24,6 +23,7 @@ class CartWidget extends StatefulWidget {
     required this.sellerId,
     required this.productId,
     required this.deletedId,
+    required this.discount,
   });
   final String title;
   String price;
@@ -32,41 +32,46 @@ class CartWidget extends StatefulWidget {
   final String sellerId;
   final String productId;
   final String deletedId;
+  String discount;
   @override
   State<CartWidget> createState() => _CartWidgetState();
 }
 
 class _CartWidgetState extends State<CartWidget> {
   int? newPrice;
-  String? addPrice;
+  int? newDiscount;
 
   void increment() {
     setState(() {
       widget.items++;
-      // ignore: unused_local_variable
-      int listItems = widget.items;
-      debugPrint("this is amount of the product${widget.items}");
       int price = int.tryParse(widget.price) ?? 0;
-      newPrice = (newPrice ?? price) + price;
-      debugPrint("this is sub-total ${widget.sellerId}");
-      debugPrint("this is productList$productList");
-      subTotal += price;
+      int discount = int.tryParse(widget.discount.split('.').first) ?? 0;
 
-      updateSalePrice(newPrice!);
+      newPrice = (newPrice ?? price) + price;
+      newDiscount = (newDiscount ?? discount) + discount;
+
+      subTotal += price;
+      d += discount;
+
+      updateSalePrice(newPrice!, newDiscount!);
       Provider.of<SubTotalModel>(context, listen: false)
           .updateSubTotal(subTotal);
+      Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
+      Provider.of<TotalPriceModel>(context, listen: false)
+          .updateTotalPrice(subTotal, d);
 
-      debugPrint("this is sub-total $subTotal");
+      debugPrint("Updated sub-total: $subTotal");
+      debugPrint("Updated discount: $d");
     });
   }
 
-  void updateSalePrice(int subTotal) {
-    // Iterate through the list, find the product with the specified ID, and update its sale price
+  void updateSalePrice(int subTotal, int discount) {
     for (int i = 0; i < productList.length; i++) {
       if (productList[i]["imageUrl"] == widget.img) {
         productList[i]["salePrice"] = subTotal.toString();
+        productList[i]["discount"] = discount.toString();
         productList[i]['weight'] = widget.items.toString();
-        break; // Break out of the loop once the update is done
+        break;
       }
     }
   }
@@ -77,16 +82,21 @@ class _CartWidgetState extends State<CartWidget> {
         widget.items--;
 
         int price = int.tryParse(widget.price) ?? 0;
+        int discount = int.tryParse(widget.discount.split('.').first) ?? 0;
 
         newPrice = (newPrice ?? price) - price;
+        newDiscount = (newDiscount ?? discount) - discount;
 
         subTotal -= price;
-        updateSalePrice(newPrice!);
+        d -= discount;
+
+        updateSalePrice(newPrice!, newDiscount!);
 
         Provider.of<SubTotalModel>(context, listen: false)
             .updateSubTotal(subTotal);
-      } else {
-        // Utils.flushBarErrorMessage("Fixed Limit", context);
+        Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
+        Provider.of<TotalPriceModel>(context, listen: false)
+            .updateTotalPrice(subTotal, d);
       }
     });
   }
@@ -100,7 +110,6 @@ class _CartWidgetState extends State<CartWidget> {
           .doc(widget.deletedId)
           .delete();
     } catch (e) {
-      // ignore: use_build_context_synchronously
       Utils.flushBarErrorMessage('$e', context);
     }
   }
@@ -141,7 +150,6 @@ class _CartWidgetState extends State<CartWidget> {
                   ),
                 ],
               ),
-              // Incremental Buttons
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 9.0),
                 child: Row(

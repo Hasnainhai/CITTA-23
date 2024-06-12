@@ -21,3 +21,14 @@ class DiscountSum extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+class TotalPriceModel with ChangeNotifier {
+  int _totalPrice = 0;
+
+  int get totalPrice => _totalPrice;
+
+  void updateTotalPrice(int subTotal, int discount) {
+    _totalPrice = subTotal - discount;
+    notifyListeners();
+  }
+}
