@@ -28,22 +28,24 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
       setState(() {
         _isLoading = true;
       });
+
       QuerySnapshot qn =
           await _firestoreInstance.collection('bundle pack').get();
 
       setState(() {
         _popularPacks.clear();
-        for (int i = 0; i < qn.docs.length; i++) {
-          // Access individual products in the bundle
-          Map<String, dynamic> product1 = qn.docs[i]['product1'] ?? {};
-          Map<String, dynamic> product2 = qn.docs[i]['product2'] ?? {};
-          Map<String, dynamic> product3 = qn.docs[i]['product3'] ?? {};
-          Map<String, dynamic> product4 = qn.docs[i]['product4'] ?? {};
-          Map<String, dynamic> product5 = qn.docs[i]['product5'] ?? {};
-          Map<String, dynamic> product6 = qn.docs[i]['product6'] ?? {};
-          _popularPacks.add({
-            //for popular packs details screen
+        for (var doc in qn.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
+          // Access individual products in the bundle
+          Map<String, dynamic> product1 = data['product1'] ?? {};
+          Map<String, dynamic> product2 = data['product2'] ?? {};
+          Map<String, dynamic> product3 = data['product3'] ?? {};
+          Map<String, dynamic> product4 = data['product4'] ?? {};
+          Map<String, dynamic> product5 = data['product5'] ?? {};
+          Map<String, dynamic> product6 = data['product6'] ?? {};
+
+          _popularPacks.add({
             'product1': {
               'amount': product1['amount'] ?? '',
               'image': product1['image'] ?? '',
@@ -74,22 +76,25 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
               'image': product6['image'] ?? '',
               'title': product6['title'] ?? '',
             },
-            //simple card
-            'sellerId': qn.docs[i]['sellerId'],
-            'id': qn.docs[i]['id'],
-            'imageUrl': qn.docs[i]['imageUrl'],
-            'title': qn.docs[i]['title'],
-            'price': qn.docs[i]['price'],
-            'salePrice': qn.docs[i]['salePrice'],
-            'detail': qn.docs[i]['detail'],
-            'weight': qn.docs[i]['weight'],
-            'size': qn.docs[i]['size'],
-            'averageReview': qn.docs[i]['averageReview'],
+            // simple card
+            'sellerId': data['sellerId'],
+            'id': data['id'],
+            'imageUrl': data['imageUrl'],
+            'title': data['title'],
+            'price': data['price'],
+            'salePrice': data['salePrice'] ?? '',
+            'detail': data['detail'],
+            'weight': data['weight'] ?? '',
+            'size': data['size'],
+            'averageReview': data['averageReview'] ?? 0.0,
           });
         }
       });
+
       return qn.docs;
     } catch (e) {
+      // Log the error or handle it as necessary
+      print('Error fetching popular packs: $e');
       setState(() {
         _isLoading = false;
       });
