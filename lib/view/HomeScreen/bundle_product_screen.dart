@@ -116,8 +116,15 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     });
   }
 
-  void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+  void addToCart(
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String weight,
+    String disPrice,
+  ) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
@@ -149,6 +156,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         'title': title,
         'salePrice': dPrice,
         'deleteId': uuid,
+        "size": widget.size,
+        "color": "N/A",
+        "weight": weight,
+        'dPrice': disPrice,
+
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -912,24 +924,23 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width / 8,
                         color: AppColor.primaryColor,
-                        child: InkWell(
-                          onTap: () {
-                            addToCart(
-                              widget.imageUrl,
-                              widget.title,
-                              widget.saleprice,
-                              widget.sellerId,
-                              widget.productId,
-                            );
-                          },
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.add_shopping_cart_outlined,
-                                color: AppColor.whiteColor,
-                                size: 30,
-                              ),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              addToCart(
+                                widget.imageUrl,
+                                widget.title,
+                                widget.saleprice,
+                                widget.sellerId,
+                                widget.productId,
+                                widget.weight,
+                                '0',
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: AppColor.whiteColor,
+                              size: 30,
                             ),
                           ),
                         ),

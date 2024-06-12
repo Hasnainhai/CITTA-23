@@ -11,6 +11,10 @@ class RatingRepository {
         .collection(produtType)
         .doc(productId)
         .collection("ratings");
+    CollectionReference DriverRef = FirebaseFirestore.instance
+        .collection(produtType)
+        .doc(productId)
+        .collection("ratings");
 
     rateDriverRef.get().then(
       (snap) {
@@ -58,5 +62,43 @@ class RatingRepository {
         .collection("commentsAndRatings")
         .doc(uuid)
         .set(commentMap);
+    _updateOrAddAverageReview(produtType, productId, countRatingStars);
+  }
+
+  void _updateOrAddAverageReview(
+      String produtType, String productId, double? newRating) {
+    DocumentReference productRef =
+        FirebaseFirestore.instance.collection(produtType).doc(productId);
+
+    productRef.get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        // Document exists, update the average review if the node exists
+        var docData = docSnapshot.data() as Map<String, dynamic>?;
+        if (docData != null && docData.containsKey("averageReview")) {
+          double pastAverageRating = docData["averageReview"] ?? 0.0;
+          int reviewCount = docData["reviewCount"] ?? 0;
+          double updatedAverageRating =
+              ((pastAverageRating * reviewCount) + newRating!) /
+                  (reviewCount + 1);
+
+          productRef.update({
+            "averageReview": updatedAverageRating,
+            "reviewCount": reviewCount + 1,
+          });
+        } else {
+          // If averageReview node does not exist, create it
+          productRef.update({
+            "averageReview": newRating,
+            "reviewCount": 1,
+          });
+        }
+      } else {
+        // Document does not exist, set the initial average review
+        productRef.set({
+          "averageReview": newRating,
+          "reviewCount": 1,
+        });
+      }
+    });
   }
 }

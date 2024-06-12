@@ -22,6 +22,11 @@ void main() async {
         ChangeNotifierProvider<IndexModel>(
           create: ((context) => IndexModel()),
         ),
+        ChangeNotifierProvider<DiscountSum>(
+          create: ((context) => DiscountSum()),
+        ),
+        ChangeNotifierProvider(
+            create: (_) => TotalPriceModel()), // Add this line
       ],
       child: const MyApp(),
     ),

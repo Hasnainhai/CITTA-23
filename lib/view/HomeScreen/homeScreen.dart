@@ -250,8 +250,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+  void addToCart(
+      String img,
+      String title,
+      String dPrice,
+      String sellerId,
+      String productId,
+      String size,
+      String color,
+      String weight,
+      String dprice) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       Utils.toastMessage('Please SignUp first');
@@ -289,6 +297,10 @@ class _HomeScreenState extends State<HomeScreen> {
         'title': title,
         'salePrice': dPrice,
         'deleteId': uuid,
+        'weght': weight,
+        "size": size,
+        "color": color,
+        "dPrice": dprice,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -711,6 +723,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             _popularPacks[index]['salePrice'],
                                             _popularPacks[index]['sellerId'],
                                             _popularPacks[index]['id'],
+                                            "N/A",
+                                            "N/A",
+                                            _popularPacks[index]['weight'],
+                                            "0",
                                           );
                                         }
                                       },
@@ -821,11 +837,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         index >= 0 &&
                                         index < _fashionProducts.length) {
                                       addToCart(
-                                          _fashionProducts[index]['imageUrl'],
-                                          _fashionProducts[index]['title'],
-                                          _fashionProducts[index]['price'],
-                                          _fashionProducts[index]['id'],
-                                          _fashionProducts[index]['sellerId']);
+                                        _fashionProducts[index]['imageUrl'],
+                                        _fashionProducts[index]['title'],
+                                        _fashionProducts[index]['price'],
+                                        _fashionProducts[index]['id'],
+                                        _fashionProducts[index]['sellerId'],
+                                        _fashionProducts[0]['size'][0],
+                                        _fashionProducts[0]['color'][0],
+                                        "N/A",
+                                        '0',
+                                      );
                                     }
                                   },
                                   productRating: _fashionProducts[index]
@@ -895,6 +916,22 @@ class _HomeScreenState extends State<HomeScreen> {
           0); // You can adjust the number of decimal places as needed
     }
 
+    String dPrice(String originalPriceString, String discountPercentageString) {
+      // Convert strings to double
+      debugPrint("this is the discount:$discountPercentageString");
+      debugPrint("this is the total:$originalPriceString");
+
+      double originalPrice = double.parse(originalPriceString);
+      double discountPercentage = double.parse(discountPercentageString);
+
+      // Calculate discounted price
+      double discountedPrice = originalPrice * (discountPercentage / 100);
+
+      // Return the discounted price as a formatted string
+      return discountedPrice.toStringAsFixed(
+          0); // You can adjust the number of decimal places as needed
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -948,9 +985,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   itemBuilder: (_, index) {
                     final product = categoryProducts[index];
-                    final isLighteningDeal =
-                        product['category'] == 'Lightening Deals';
-                    final hasDiscount = product.containsKey('discount');
 
                     return HomeCard(
                       ontap: () {
@@ -964,11 +998,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 sellerId: product['sellerId'].toString(),
                                 imageUrl: product['imageUrl'],
                                 price: product['price'].toString(),
-                                salePrice: isLighteningDeal && hasDiscount
-                                    ? "${product['discount']}₹"
+                                salePrice: category == "Lightening Deals"
+                                    ? calculateDiscountedPrice(
+                                        product['price'], product['discount'])
                                     : product['price'].toString(),
                                 weight: product['weight'].toString(),
                                 detail: product['detail'].toString(),
+                                disPrice: category == "Lightening Deals"
+                                    ? (int.parse(product['discount']) /
+                                            100 *
+                                            int.parse(product['price']))
+                                        .toString()
+                                    : '0',
                               );
                             },
                           ),
@@ -996,11 +1037,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           addToCart(
                             product['imageUrl'],
                             product['title'],
-                            isLighteningDeal && hasDiscount
-                                ? "${product['discount']}₹"
+                            category == "Lightening Deals"
+                                ? calculateDiscountedPrice(
+                                    product['price'], product['discount'])
                                 : product['price'].toString(),
                             product['sellerId'],
                             product['id'],
+                            "N/A",
+                            "N/A",
+                            product['weight'],
+                            category == "Lightening Deals"
+                                ? dPrice(product['price'], product['discount'])
+                                : '0',
                           );
                         }
                       },

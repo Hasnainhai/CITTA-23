@@ -26,6 +26,7 @@ class ProductDetailScreen extends StatefulWidget {
     required this.detail,
     required this.productId,
     required this.sellerId,
+    required this.disPrice,
   });
 
   final String title;
@@ -36,6 +37,7 @@ class ProductDetailScreen extends StatefulWidget {
   final String detail;
   final String productId;
   final String sellerId;
+  final String disPrice;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -85,7 +87,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
-        'deletedId': uuid
+        'deletedId': uuid,
+
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -94,6 +97,75 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       // Handle errors
       Utils.flushBarErrorMessage('Error adding to favorites: $e', context);
     }
+  }
+
+  void addToCart(
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String weight,
+    String disPrice,
+  ) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        'deleteId': uuid,
+        "size": "N/A",
+        "color": "N/A",
+        "weight": weight,
+        'dPrice': disPrice,
+
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
+    }
+  }
+
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
   }
 
   void removeFromFavorites() async {
@@ -146,20 +218,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         _relatedProducts.clear();
 
         for (var doc in qn.docs) {
-          var product = {
-            'sellerId': doc['sellerId'],
-            'id': doc['id'],
-            'imageUrl': doc['imageUrl'],
-            'title': doc['title'],
-            'price': doc['price'],
-            'detail': doc['detail'],
-            'weight': doc['weight'],
-            'category': doc['category'],
-          };
+          var data = doc.data() as Map<String, dynamic>?;
 
-          debugPrint('Fetched product: $product'); // Debugging statement
+          if (data != null) {
+            var product = {
+              'sellerId': data['sellerId'],
+              'id': data['id'],
+              'imageUrl': data['imageUrl'],
+              'title': data['title'],
+              'price': data['price'],
+              'detail': data['detail'],
+              'weight': data['weight'],
+              'category': data['category'],
+            };
 
-          _relatedProducts.add(product);
+            if (data.containsKey('discount') && data['discount'] != null) {
+              product['discount'] = data['discount'].toString();
+            }
+
+            debugPrint('Fetched product: $product'); // Debugging statement
+
+            _relatedProducts.add(product);
+          }
         }
         _isLoading = false;
 
@@ -188,12 +268,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => const DashBoardScreen(),
-                ),
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back,
@@ -426,16 +501,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width / 8,
                         color: AppColor.primaryColor,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.add_shopping_cart_outlined,
-                                color: AppColor.whiteColor,
-                                size: 30,
-                              ),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              addToCart(
+                                  widget.imageUrl,
+                                  widget.title,
+                                  widget.salePrice,
+                                  widget.sellerId,
+                                  widget.productId,
+                                  items == 1 ? widget.weight : items.toString(),
+                                  widget.disPrice);
+                            },
+                            icon: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: AppColor.whiteColor,
+                              size: 30,
                             ),
                           ),
                         ),
@@ -612,12 +693,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           categoryRelatedProducts['imageUrl'],
                                       price: categoryRelatedProducts['price']
                                           .toString(),
-                                      salePrice:
-                                          categoryRelatedProducts['price'],
+                                      salePrice: categoryRelatedProducts[
+                                                  'category'] ==
+                                              "Lightening Deals"
+                                          ? calculateDiscountedPrice(
+                                              categoryRelatedProducts['price'],
+                                              categoryRelatedProducts[
+                                                  'discount'])
+                                          : categoryRelatedProducts['price']
+                                              .toString(),
                                       weight: categoryRelatedProducts['weight']
                                           .toString(),
                                       detail: categoryRelatedProducts['detail']
                                           .toString(),
+                                      disPrice: categoryRelatedProducts[
+                                                  'category'] ==
+                                              "Lightening Deals"
+                                          ? (int.parse(categoryRelatedProducts[
+                                                      'discount']) /
+                                                  100 *
+                                                  int.parse(
+                                                      categoryRelatedProducts[
+                                                          'price']))
+                                              .toString()
+                                          : '0',
                                     );
                                   },
                                 ),

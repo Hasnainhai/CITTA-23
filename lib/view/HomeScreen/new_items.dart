@@ -21,7 +21,7 @@ class CategoryProductsScreen extends StatefulWidget {
 class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   bool isTrue = true;
   void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+      String productId, String weight, String disPrice) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       Utils.toastMessage('Please SignUp first');
@@ -59,6 +59,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         'title': title,
         'salePrice': dPrice,
         'deleteId': uuid,
+        'size': 'N/A',
+        'color': 'N/A',
+        'weight': weight,
+        'dPrice': disPrice,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -67,6 +71,40 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String calculateDiscountedPrice(
+        String originalPriceString, String discountPercentageString) {
+      // Convert strings to double
+      debugPrint("this is the discount:$discountPercentageString");
+      debugPrint("this is the total:$originalPriceString");
+
+      double originalPrice = double.parse(originalPriceString);
+      double discountPercentage = double.parse(discountPercentageString);
+
+      // Calculate discounted price
+      double p = originalPrice * (discountPercentage / 100);
+      double discountedPrice = originalPrice - p;
+
+      // Return the discounted price as a formatted string
+      return discountedPrice.toStringAsFixed(
+          0); // You can adjust the number of decimal places as needed
+    }
+
+    String dPrice(String originalPriceString, String discountPercentageString) {
+      // Convert strings to double
+      debugPrint("this is the discount:$discountPercentageString");
+      debugPrint("this is the total:$originalPriceString");
+
+      double originalPrice = double.parse(originalPriceString);
+      double discountPercentage = double.parse(discountPercentageString);
+
+      // Calculate discounted price
+      double discountedPrice = originalPrice * (discountPercentage / 100);
+
+      // Return the discounted price as a formatted string
+      return discountedPrice.toStringAsFixed(
+          0); // You can adjust the number of decimal places as needed
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -88,15 +126,25 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                 MaterialPageRoute(
                   builder: (context) {
                     return ProductDetailScreen(
-                      title: widget.products[index]['title'].toString(),
-                      productId: widget.products[index]['id'].toString(),
-                      sellerId: widget.products[index]['sellerId'].toString(),
-                      imageUrl: widget.products[index]['imageUrl'],
-                      price: widget.products[index]['price'].toString(),
-                      salePrice: widget.products[index]['price'],
-                      weight: widget.products[index]['weight'].toString(),
-                      detail: widget.products[index]['detail'].toString(),
-                    );
+                        title: widget.products[index]['title'].toString(),
+                        productId: widget.products[index]['id'].toString(),
+                        sellerId: widget.products[index]['sellerId'].toString(),
+                        imageUrl: widget.products[index]['imageUrl'],
+                        price: widget.products[index]['price'].toString(),
+                        salePrice: widget.products[index]['category'] ==
+                                "Lightening Deals"
+                            ? calculateDiscountedPrice(
+                                widget.products[index]['price'].toString(),
+                                widget.products[index]['discount'].toString(),
+                              )
+                            : widget.products[index]['price'].toString(),
+                        weight: widget.products[index]['weight'].toString(),
+                        detail: widget.products[index]['detail'].toString(),
+                        disPrice: widget.products[index]['category'] ==
+                                "Lightening Deals"
+                            ? dPrice(widget.products[index]['discount'],
+                                widget.products[index]['price'])
+                            : "0");
                   },
                 ),
               );
@@ -105,19 +153,28 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             sellerId: widget.products[index]['sellerId'],
             name: widget.products[index]['title'].toString(),
             price: widget.products[index]['price'].toString(),
-            dPrice: "${widget.products[index]['price']}₹",
+            dPrice: widget.products[index]['category'] == "Lightening Deals"
+                ? calculateDiscountedPrice(
+                    widget.products[index]['price'].toString(),
+                    widget.products[index]['discount'].toString(),
+                  )
+                : widget.products[index]['price'].toString(),
             borderColor: AppColor.buttonBgColor,
             fillColor: AppColor.appBarButtonColor,
             img: widget.products[index]['imageUrl'],
             iconColor: AppColor.buttonBgColor,
             addCart: () {
               addToCart(
-                widget.products[index]['imageUrl'],
-                widget.products[index]['title'],
-                widget.products[index]['price'],
-                widget.products[index]['sellerId'],
-                widget.products[index]['id'],
-              );
+                  widget.products[index]['imageUrl'],
+                  widget.products[index]['title'],
+                  widget.products[index]['price'],
+                  widget.products[index]['sellerId'],
+                  widget.products[index]['id'],
+                  widget.products[index]['weight'],
+                  widget.products[index]['category'] == "Lightening Deals"
+                      ? dPrice(widget.products[index]['discount'],
+                          widget.products[index]['price'])
+                      : "0");
             },
             productRating: widget.products[index]['averageReview'],
           );
