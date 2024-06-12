@@ -40,4 +40,5 @@ class RoutesName {
   static const String contactusscreen = "/Contact_Screen";
   static const String myOrder = "/my_order";
   static const String fashionProd = "/fashion_prod";
+  static const String forgetAnything = "/forget_anything";
 }

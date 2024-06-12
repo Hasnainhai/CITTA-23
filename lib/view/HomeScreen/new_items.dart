@@ -176,6 +176,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                           widget.products[index]['price'])
                       : "0");
             },
+            productRating: widget.products[index]['averageReview'],
           );
         },
       ),
