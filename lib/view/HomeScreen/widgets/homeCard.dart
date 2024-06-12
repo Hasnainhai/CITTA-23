@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -22,6 +23,7 @@ class HomeCard extends StatelessWidget {
     required this.sellerId,
     this.oofProd,
     this.percentage,
+    //  required this.productRating,
   });
   final String img;
   final String name;
@@ -36,6 +38,8 @@ class HomeCard extends StatelessWidget {
   final String sellerId;
   bool? oofProd;
   String? percentage;
+  // final double productRating;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -104,15 +108,22 @@ class HomeCard extends StatelessWidget {
                       color: AppColor.fontColor,
                     ),
                   ),
-                  const Text(
-                    '★5.0',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 10,
-                      fontWeight: FontWeight.w800,
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
+            //     RatingBar.builder(
+            //   ignoreGestures: true,
+            //   initialRating: productRating,
+            //   minRating: 1,
+            //   unratedColor: AppColor.buttonTxColor,
+            //   allowHalfRating: true,
+            //   glowColor: Colors.amber,
+            //   itemCount: 5,
+            //   itemSize: 20,
+            //   itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+            //   itemBuilder: (context, _) => const Icon(
+            //     Icons.star_rate_rounded,
+            //     color: Colors.amber,
+            //   ),
+            //   onRatingUpdate: (rating) {},
+            // ),
                 ],
               ),
               Row(
