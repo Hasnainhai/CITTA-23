@@ -46,6 +46,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
           // 'price': qn.docs[i]['salePrice'],
           'detail': qn.docs[i]['detail'],
           'weight': qn.docs[i]['weight'],
+          'averageReview': qn.docs[i]['averageReview'],
         });
       }
     });
@@ -243,6 +244,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                           ),
                         );
                       },
+                      productRating: productData['averageReview'] ?? 0.0,
                       sellerId: productData['sellerId'],
                       productId: productData['id'],
                       name: productData['title'].toString(),

@@ -49,8 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
 
       QuerySnapshot qn = await _firestoreInstance.collection('products').get();
-      debugPrint(
-          'Data fetched from Firestore ${qn.docs}'); // Debugging statement
+      debugPrint('Data fetched from Firestore: ${qn.docs}');
 
       setState(() {
         _newItems.clear();
@@ -58,18 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
         _lighteningDeals.clear();
 
         for (var doc in qn.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           var product = {
-            'sellerId': doc['sellerId'],
-            'id': doc['id'],
-            'imageUrl': doc['imageUrl'],
-            'title': doc['title'],
-            'price': doc['price'],
-            'detail': doc['detail'],
-            'weight': doc['weight'],
-            'category': doc['category'],
+            'sellerId': data['sellerId'],
+            'id': data['id'],
+            'imageUrl': data['imageUrl'],
+            'title': data['title'],
+            'price': data['price'],
+            'detail': data['detail'],
+            'weight': data['weight'],
+            'category': data['category'],
+            'averageReview': data['averageReview'] ?? 0.0, // Default to 0.0
           };
 
-          debugPrint('Fetched product: $product'); // Debugging statement
+          debugPrint('Fetched product: $product');
 
           switch (product['category']) {
             case 'New Items':
@@ -79,29 +80,27 @@ class _HomeScreenState extends State<HomeScreen> {
               _hotSelling.add(product);
               break;
             case 'Lightening Deals':
-              // Add discount field if available
-              if (doc['discount'] != null) {
-                product['discount'] = doc['discount'];
-              } else {
-                product['discount'] = 'N/A';
-              }
+              product['discount'] =
+                  data['discount'] ?? 'N/A'; // Default to 'N/A'
               _lighteningDeals.add(product);
               break;
           }
         }
 
-        // Check if _newItems or _hotSelling is empty, if yes, add products without discount
+        // Ensure at least one product is added to _newItems and _hotSelling if initially empty
         if (_newItems.isEmpty || _hotSelling.isEmpty) {
           for (var doc in qn.docs) {
+            Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
             var product = {
-              'sellerId': doc['sellerId'],
-              'id': doc['id'],
-              'imageUrl': doc['imageUrl'],
-              'title': doc['title'],
-              'price': doc['price'],
-              'detail': doc['detail'],
-              'weight': doc['weight'],
-              'category': doc['category'],
+              'sellerId': data['sellerId'],
+              'id': data['id'],
+              'imageUrl': data['imageUrl'],
+              'title': data['title'],
+              'price': data['price'],
+              'detail': data['detail'],
+              'weight': data['weight'],
+              'category': data['category'],
+              'averageReview': data['averageReview'] ?? 0.0,
             };
             if (product['category'] == 'New Items' &&
                 !_newItems.contains(product)) {
@@ -115,13 +114,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
         _isLoading = false;
 
-        debugPrint('New Items: $_newItems'); // Debugging statement
-        debugPrint('Hot Selling: $_hotSelling'); // Debugging statement
-        debugPrint(
-            'Lightening Deals: $_lighteningDeals'); // Debugging statement
+        debugPrint('New Items: $_newItems');
+        debugPrint('Hot Selling: $_hotSelling');
+        debugPrint('Lightening Deals: $_lighteningDeals');
       });
     } catch (e) {
-      debugPrint('Error fetching products: $e'); // Debugging statement
+      debugPrint('Error fetching products: $e');
       setState(() {
         _isLoading = false;
       });
@@ -134,19 +132,23 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
+
       QuerySnapshot qn =
           await _firestoreInstance.collection('bundle pack').get();
 
       setState(() {
         _popularPacks.clear();
-        for (int i = 0; i < qn.docs.length; i++) {
+        for (var doc in qn.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
           // Access individual products in the bundle
-          Map<String, dynamic> product1 = qn.docs[i]['product1'] ?? {};
-          Map<String, dynamic> product2 = qn.docs[i]['product2'] ?? {};
-          Map<String, dynamic> product3 = qn.docs[i]['product3'] ?? {};
-          Map<String, dynamic> product4 = qn.docs[i]['product4'] ?? {};
-          Map<String, dynamic> product5 = qn.docs[i]['product5'] ?? {};
-          Map<String, dynamic> product6 = qn.docs[i]['product6'] ?? {};
+          Map<String, dynamic> product1 = data['product1'] ?? {};
+          Map<String, dynamic> product2 = data['product2'] ?? {};
+          Map<String, dynamic> product3 = data['product3'] ?? {};
+          Map<String, dynamic> product4 = data['product4'] ?? {};
+          Map<String, dynamic> product5 = data['product5'] ?? {};
+          Map<String, dynamic> product6 = data['product6'] ?? {};
+
           _popularPacks.add({
             'product1': {
               'amount': product1['amount'] ?? '',
@@ -178,21 +180,25 @@ class _HomeScreenState extends State<HomeScreen> {
               'image': product6['image'] ?? '',
               'title': product6['title'] ?? '',
             },
-            //simple card
-            'sellerId': qn.docs[i]['sellerId'],
-            'id': qn.docs[i]['id'],
-            'imageUrl': qn.docs[i]['imageUrl'],
-            'title': qn.docs[i]['title'],
-            'price': qn.docs[i]['price'],
-            'salePrice': qn.docs[i]['salePrice'],
-            'detail': qn.docs[i]['detail'],
-            'weight': qn.docs[i]['weight'],
-            'size': qn.docs[i]['size'],
+            // simple card
+            'sellerId': data['sellerId'],
+            'id': data['id'],
+            'imageUrl': data['imageUrl'],
+            'title': data['title'],
+            'price': data['price'],
+            'salePrice': data['salePrice'] ?? '',
+            'detail': data['detail'],
+            'weight': data['weight'] ?? '',
+            'size': data['size'],
+            'averageReview': data['averageReview'] ?? 0.0,
           });
         }
       });
+
       return qn.docs;
     } catch (e) {
+      // Log the error or handle it as necessary
+      print('Error fetching popular packs: $e');
       setState(() {
         _isLoading = false;
       });
@@ -208,26 +214,32 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isLoading = true;
       });
+
       QuerySnapshot qn = await _firestoreInstance.collection('fashion').get();
 
       setState(() {
         _fashionProducts.clear();
-        for (int i = 0; i < qn.docs.length; i++) {
+        for (var doc in qn.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           _fashionProducts.add({
-            'sellerId': qn.docs[i]['sellerId'],
-            'id': qn.docs[i]['id'],
-            'imageUrl': qn.docs[i]['imageUrl'],
-            'title': qn.docs[i]['title'],
-            'price': qn.docs[i]['price'],
-            // 'salePrice': qn.docs[i]['salePrice'],
-            'detail': qn.docs[i]['detail'],
-            'color': qn.docs[i]['color'],
-            'size': qn.docs[i]['size'],
+            'sellerId': data['sellerId'],
+            'id': data['id'],
+            'imageUrl': data['imageUrl'],
+            'title': data['title'],
+            'price': data['price'],
+            // 'salePrice': data['salePrice'] ?? '', // Uncomment if you need this field
+            'detail': data['detail'],
+            'color': data['color'],
+            'size': data['size'],
+            'averageReview': data['averageReview'] ?? 0.0,
           });
         }
       });
+
       return qn.docs;
     } catch (e) {
+      // Log the error or handle it as necessary
+      print('Error fetching fashion products: $e');
       setState(() {
         _isLoading = false;
       });
@@ -702,6 +714,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           );
                                         }
                                       },
+                                      productRating: _popularPacks[index]
+                                              ['averageReview'] ??
+                                          0.0,
                                     );
                                   } else {
                                     // Handle the case when the list is empty or index is out of range
@@ -813,6 +828,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           _fashionProducts[index]['sellerId']);
                                     }
                                   },
+                                  productRating: _fashionProducts[index]
+                                      ['averageReview'],
                                 );
                               } else if (_fashionProducts.isEmpty) {
                                 return const Center(
@@ -987,6 +1004,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         }
                       },
+                      productRating: product['averageReview'] ?? 0.0,
                     );
                   },
                 ),

@@ -84,6 +84,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
             'detail': qn.docs[i]['detail'],
             'weight': qn.docs[i]['weight'],
             'size': qn.docs[i]['size'],
+            'averageReview': qn.docs[i]['averageReview'],
           });
         }
       });
@@ -348,6 +349,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                             );
                           }
                         },
+                        productRating:
+                            _popularPacks[index]['averageReview'] ?? 0.0,
                       );
                     } else {
                       return Padding(
