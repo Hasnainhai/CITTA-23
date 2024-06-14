@@ -428,34 +428,35 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ),
                   VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
                   RoundedButton(
-                      title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
-                      onpress: () async {
-                        if (name != null &&
-                            postalCode != null &&
-                            city != null &&
-                            state != null &&
-                            address != null) {
-                          if ((paymentType == 'Stripe')) {
-                            int roundPrice = int.parse(widget.salePrice);
-                            String fixPrice = (roundPrice * 100).toString();
-                            // saveDetail();
-                            initPayment(
-                                email: "basitalyshah51214@gmail.com",
-                                amount: fixPrice);
-                          } else {
-                            saveDetail();
-                            Utils.toastMessage('Orders has been Placed');
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (c) => const CheckOutDoneScreen()),
-                                (route) => false);
-                          }
+                    title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
+                    onpress: () async {
+                      if (name != null &&
+                          postalCode != null &&
+                          city != null &&
+                          state != null &&
+                          address != null) {
+                        if ((paymentType == 'Stripe')) {
+                          int roundPrice = int.parse(widget.salePrice);
+                          String fixPrice = (roundPrice * 100).toString();
+                          // saveDetail();
+                          initPayment(
+                              email: "basitalyshah51214@gmail.com",
+                              amount: fixPrice);
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "Please enter address details");
+                          saveDetail();
+                          Utils.toastMessage('Orders has been Placed');
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (c) => const CheckOutDoneScreen()),
+                              (route) => false);
                         }
-                      }),
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Please enter address details");
+                      }
+                    },
+                  ),
                   const VerticalSpeacing(50.0),
                 ],
               ),
