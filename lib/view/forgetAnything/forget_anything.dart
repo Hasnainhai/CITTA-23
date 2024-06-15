@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
@@ -29,6 +31,40 @@ class _ForgetAnythingState extends State<ForgetAnything> {
   void initState() {
     super.initState();
     _currentSubTotal = widget.subTotal;
+  }
+
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
+  }
+
+  String dPrice(String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double discountedPrice = originalPrice * (discountPercentage / 100);
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
   }
 
   Future<List<Map<String, dynamic>>> fetchRelatedProducts(
@@ -193,7 +229,9 @@ class _ForgetAnythingState extends State<ForgetAnything> {
               return HomeCard(
                 name: product['title'],
                 price: '\$${product['price']}',
-                dPrice: '00', // Adjust as needed
+                dPrice: product['category'] == "Lightening Deals"
+                    ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                    : product['price'] + '₹', // Adjust as needed
                 borderColor: AppColor.primaryColor,
                 fillColor: AppColor.bgColor,
                 img: product['imageUrl'],
@@ -206,10 +244,19 @@ class _ForgetAnythingState extends State<ForgetAnything> {
                     product['price'],
                     product['sellerId'],
                     product['id'],
-                    'N/A', //  actual size logic
-                    'N/A', //  actual color logic
-                    'N/A',
-                    '00', //  needed
+                    product.containsKey('size')
+                        ? product['size'][2]
+                        : 'N/A', //  actual size logic
+                    product.containsKey('color')
+                        ? product['color'][0]
+                        : 'N/A', //  actual color logic
+                    product.containsKey('weight') ? product['weight'] : 'N/A',
+                    product.containsKey('discount')
+                        ? (int.parse(product['discount']) /
+                                100 *
+                                int.parse(product['price']))
+                            .toString()
+                        : '0', //  needed
                   );
                 },
                 productId: product['id'],
