@@ -43,6 +43,10 @@ class _CardScreenState extends State<CardScreen> {
         'status': "pending",
         'date': DateTime.now().toString(),
         'buyyerId': FirebaseAuth.instance.currentUser!.uid,
+        'size': product['size'],
+        'color': product['color'],
+        'discount': product['dPrice'],
+        "weight": product['weight'],
       };
     }).toList();
   }
@@ -134,7 +138,10 @@ class _CardScreenState extends State<CardScreen> {
                       builder: (c) => CardCheckOutScreen(
                         productType: 'cart',
                         productList: productList,
-                        subTotal: "$subTotal",
+                        subTotal:
+                            Provider.of<TotalPriceModel>(context, listen: false)
+                                .totalPrice
+                                .toString(),
                       ),
                     ),
                   );
