@@ -4,7 +4,6 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
-import 'package:citta_23/view/card/card_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -72,7 +71,8 @@ class _CartWidgetState extends State<CartWidget> {
       if (productList[i]["imageUrl"] == widget.img) {
         productList[i]["salePrice"] = subTotal.toString();
         productList[i]["discount"] = discount.toString();
-        productList[i]['weight'] = widget.items.toString();
+        productList[i]["quantity"] = widget.items.toString();
+
         break;
       }
     }
