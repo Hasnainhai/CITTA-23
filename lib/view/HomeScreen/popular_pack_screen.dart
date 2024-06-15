@@ -101,7 +101,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
   }
 
   void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId) async {
+      String productId, String weight, String size) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       Utils.toastMessage('Please SignUp first');
@@ -139,6 +139,10 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
         'title': title,
         'salePrice': dPrice,
         'deleteId': uuid,
+        'weight': weight,
+        'color': "N/A",
+        'dPrice': "0",
+        'size': size,
         // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
@@ -346,6 +350,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                               _popularPacks[index]['salePrice'],
                               _popularPacks[index]['sellerId'],
                               _popularPacks[index]['id'],
+                              _popularPacks[index]['weight'],
+                              _popularPacks[index]['size'],
                             );
                           }
                         },
