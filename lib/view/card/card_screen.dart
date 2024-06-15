@@ -2,7 +2,6 @@
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
@@ -45,7 +44,7 @@ class _CardScreenState extends State<CardScreen> {
         'size': product['size'],
         'color': product['color'],
         'discount': product['dPrice'],
-        "weight": product['weight'],
+        // "weight": product['weight'],
       };
     }).toList();
   }
@@ -136,14 +135,6 @@ class _CardScreenState extends State<CardScreen> {
                         productList: productList,
                         subTotal: subTotal.toString());
                   }));
-
-                        subTotal:
-                            Provider.of<TotalPriceModel>(context, listen: false)
-                                .totalPrice
-                                .toString(),
-                      ),
-                    ),
-                  );
                 },
                 child: const Text(
                   'Keep checking out',
