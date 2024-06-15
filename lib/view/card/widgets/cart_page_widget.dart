@@ -45,7 +45,7 @@ class _CartWidgetState extends State<CartWidget> {
     setState(() {
       widget.items++;
       int price = int.tryParse(widget.price) ?? 0;
-      int discount = int.tryParse(widget.discount.split('.').first) ?? 0;
+      int discount = int.tryParse(widget.discount) ?? 0;
 
       newPrice = (newPrice ?? price) + price;
       newDiscount = (newDiscount ?? discount) + discount;
@@ -82,7 +82,7 @@ class _CartWidgetState extends State<CartWidget> {
         widget.items--;
 
         int price = int.tryParse(widget.price) ?? 0;
-        int discount = int.tryParse(widget.discount.split('.').first) ?? 0;
+        int discount = int.tryParse(widget.discount) ?? 0;
 
         newPrice = (newPrice ?? price) - price;
         newDiscount = (newDiscount ?? discount) - discount;
@@ -103,14 +103,41 @@ class _CartWidgetState extends State<CartWidget> {
 
   Future<void> _deleteProduct(String deleteId) async {
     try {
+      // Retrieve the document to get the price and discount before deletion
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('cart')
+          .doc(deleteId)
+          .get();
+
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        int price = int.tryParse(data['salePrice']?.toString() ?? '0') ?? 0;
+        int discount = int.tryParse(data['discount']?.toString() ?? '0') ?? 0;
+
+        // Subtract the price and discount from the totals
+        subTotal -= newPrice ?? price;
+        d -= newDiscount ?? discount;
+
+        Provider.of<SubTotalModel>(context, listen: false)
+            .updateSubTotal(subTotal);
+        Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
+        Provider.of<TotalPriceModel>(context, listen: false)
+            .updateTotalPrice(subTotal, d);
+        Provider.of<IndexModel>(context, listen: false)
+            .updateIndex(--widget.items);
+      }
+
+      // Delete the document
       await FirebaseFirestore.instance
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('cart')
-          .doc(widget.deletedId)
+          .doc(deleteId)
           .delete();
     } catch (e) {
-      Utils.flushBarErrorMessage('$e', context);
+      Utils.flushBarErrorMessage('${e.toString()}', context);
     }
   }
 
@@ -217,16 +244,6 @@ class _CartWidgetState extends State<CartWidget> {
                 children: [
                   InkWell(
                     onTap: () {
-                      newPrice == null
-                          ? subTotal -= int.parse(widget.price)
-                          : subTotal -= newPrice!;
-                      items -= 1;
-                      _deleteProduct(widget.deletedId);
-
-                      Provider.of<SubTotalModel>(context, listen: false)
-                          .updateSubTotal(subTotal);
-                      Provider.of<IndexModel>(context, listen: false)
-                          .updateIndex(items);
                       _deleteProduct(widget.deletedId);
                     },
                     child: const Icon(
