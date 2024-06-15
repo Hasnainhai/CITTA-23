@@ -26,7 +26,7 @@ class _FavouriteListState extends State<FavouriteList> {
 
     if (currentUser == null) {
       _isLoading = false;
-      return Stream<List<Map<String, dynamic>?>>.empty();
+      return const Stream<List<Map<String, dynamic>?>>.empty();
     }
 
     String uid = currentUser.uid;
