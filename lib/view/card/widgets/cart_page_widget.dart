@@ -168,7 +168,9 @@ class _CartWidgetState extends State<CartWidget> {
                   const SizedBox(width: 30.0),
                   Text.rich(
                     TextSpan(
-                      text: widget.title,
+                      text: widget.title.length > 7
+                          ? '${widget.title.substring(0, 7)}...'
+                          : widget.title,
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 16,

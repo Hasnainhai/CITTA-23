@@ -4,9 +4,9 @@ import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
-import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
+import 'package:citta_23/view/forgetAnything/forget_anything.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -131,12 +131,12 @@ class _CardScreenState extends State<CardScreen> {
                   shape: const RoundedRectangleBorder(),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (c) => CardCheckOutScreen(
-                        productType: 'cart',
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ForgetAnything(
                         productList: productList,
+                        subTotal: subTotal.toString());
+                  }));
+
                         subTotal:
                             Provider.of<TotalPriceModel>(context, listen: false)
                                 .totalPrice
@@ -162,7 +162,7 @@ class _CardScreenState extends State<CardScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, RoutesName.forgetAnything);
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   'Return to cart',

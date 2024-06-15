@@ -1,16 +1,24 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:flutter/material.dart';
-
 import '../../res/components/colors.dart';
+import '../Checkout/widgets/card_checkout_screen.dart';
 
 class ForgetAnything extends StatelessWidget {
-  const ForgetAnything({super.key});
+  const ForgetAnything({
+    super.key,
+    required this.productList,
+    required this.subTotal,
+  });
+
+  final List<Map<String, dynamic>> productList;
+  final String subTotal;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(165),
+        preferredSize: const Size.fromHeight(125),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -36,9 +44,9 @@ class ForgetAnything extends StatelessWidget {
           flexibleSpace: const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                VerticalSpeacing(16),
                 Text(
                   "You haven't finished checking out yet.\nDon't miss out anything?",
                   style: TextStyle(
@@ -49,10 +57,38 @@ class ForgetAnything extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                VerticalSpeacing(16),
               ],
             ),
           ),
         ),
+      ),
+      body: GridView.builder(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        itemCount: productList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // Number of columns
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 4 / 4,
+        ),
+        itemBuilder: (context, index) {
+          final product = productList[index];
+          return HomeCard(
+            name: product['title'],
+            price: '\$${product['salePrice']}',
+            dPrice: '\$${product['salePrice']}',
+            borderColor: AppColor.primaryColor,
+            fillColor: AppColor.bgColor,
+            img: product['imageUrl'],
+            iconColor: AppColor.primaryColor,
+            ontap: () {},
+            addCart: () {},
+            productId: '',
+            sellerId: '',
+            productRating: 0.0,
+          );
+        },
       ),
       floatingActionButton: SizedBox(
         height: 60,
@@ -64,10 +100,10 @@ class ForgetAnything extends StatelessWidget {
               child: Container(
                 height: double.infinity,
                 color: const Color(0xffF7F7F7),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Total',
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
@@ -77,8 +113,8 @@ class ForgetAnything extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '400',
-                      style: TextStyle(
+                      subTotal,
+                      style: const TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -90,17 +126,31 @@ class ForgetAnything extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
-                height: double.infinity,
-                color: AppColor.primaryColor,
-                child: const Center(
-                  child: Text(
-                    'Continue to checkout',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColor.whiteColor,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (c) {
+                      return CardCheckOutScreen(
+                        productType: 'cart',
+                        productList: productList,
+                        subTotal: subTotal,
+                      );
+                    }),
+                  );
+                },
+                child: Container(
+                  height: double.infinity,
+                  color: AppColor.primaryColor,
+                  child: const Center(
+                    child: Text(
+                      'Continue to checkout',
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: AppColor.whiteColor,
+                      ),
                     ),
                   ),
                 ),
