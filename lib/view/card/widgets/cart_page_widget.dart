@@ -4,7 +4,6 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
-import 'package:citta_23/view/card/card_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -168,7 +167,9 @@ class _CartWidgetState extends State<CartWidget> {
                   const SizedBox(width: 30.0),
                   Text.rich(
                     TextSpan(
-                      text: widget.title,
+                      text: widget.title.length > 7
+                          ? '${widget.title.substring(0, 7)}...'
+                          : widget.title,
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 16,
