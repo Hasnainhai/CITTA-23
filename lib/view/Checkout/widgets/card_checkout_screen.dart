@@ -65,6 +65,33 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
     });
   }
 
+  void removeCartItems() async {
+    try {
+      // Get the reference to the user's cart collection
+      CollectionReference cartCollection = FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("cart");
+
+      // Get all documents in the cart collection
+      QuerySnapshot cartItemsSnapshot = await cartCollection.get();
+
+      // Batch delete each document in the cart
+      WriteBatch batch = FirebaseFirestore.instance.batch();
+      for (DocumentSnapshot doc in cartItemsSnapshot.docs) {
+        batch.delete(doc.reference);
+      }
+
+      // Commit the batch
+      await batch.commit();
+
+      // Optional: Show a success message or perform any other action
+    } catch (e) {
+      // Handle any errors that occur during the deletion process
+      Utils.flushBarErrorMessage('$e', context);
+    }
+  }
+
   bool _isLoading = false;
   void saveOrdersToFirestore() async {
     final CollectionReference<Map<String, dynamic>> myOrdersCollection =
@@ -144,6 +171,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
       saveOrdersToFirestore();
+      removeCartItems();
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (c) => const CheckOutDoneScreen()),

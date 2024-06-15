@@ -267,7 +267,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                               productData['price'].toString(),
                               productData['sellerId'],
                               productData['id'],
-                              productData['size'],
+                              'N/A',
                               productData['weight']);
                         });
                       },

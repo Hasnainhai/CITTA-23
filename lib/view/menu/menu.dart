@@ -281,44 +281,45 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             Expanded(
                 child: FutureBuilder<QuerySnapshot>(
-              future: _collectionReference.get(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  // Display the data in a GridView.builder
-                  var data = snapshot.data!.docs;
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 16,
-                      ),
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        var item = data[index];
-                        var productData = item.data() as Map<String, dynamic>;
+                    future: _collectionReference.get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        // Display the data in a GridView.builder
+                        var data = snapshot.data!.docs;
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 16,
+                              ),
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                var item = data[index];
+                                var productData =
+                                    item.data() as Map<String, dynamic>;
 
-                        var product = {
-                          'sellerId': productData['sellerId'],
-                          'id': productData['id'],
-                          'imageUrl': productData['imageUrl'],
-                          'title': productData['title'],
-                          'price': productData['price'],
-                          'detail': productData['detail'],
-                          'weight': productData['weight'],
-                          'averageReview':
-                              productData.containsKey('averageReview')
-                                  ? productData['averageReview']
-                                  : 0.0,
-                        };
+                                var product = {
+                                  'sellerId': productData['sellerId'],
+                                  'id': productData['id'],
+                                  'imageUrl': productData['imageUrl'],
+                                  'title': productData['title'],
+                                  'price': productData['price'],
+                                  'detail': productData['detail'],
+                                  'weight': productData['weight'],
+                                  'averageReview':
+                                      productData.containsKey('averageReview')
+                                          ? productData['averageReview']
+                                          : 0.0,
+                                };
 
                                 return productType == "food"
                                     ? HomeCard(
@@ -393,8 +394,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                         },
                                         productId: item['id'],
                                         sellerId: item['sellerId'],
-                              productRating: product['averageReview'],
-
+                                        productRating: product['averageReview'],
                                       )
                                     : HomeCard(
                                         name: item['title'],
@@ -437,26 +437,17 @@ class _MenuScreenState extends State<MenuScreen> {
                                             item['size'][0],
                                             'N/A',
                                             item['color'][0],
-                                            item['category'] ==
-                                                    "Lightening Deals"
-                                                ? (int.parse(item['discount']) /
-                                                        100 *
-                                                        int.parse(
-                                                            item['price']))
-                                                    .toString()
-                                                : '0',
+                                            '0',
                                           );
                                         },
                                         productId: item['id'],
                                         sellerId: item['sellerId'],
-                                                                  productRating: product['averageReview'],
-
+                                        productRating: product['averageReview'],
                                       );
                               }),
                         );
                       }
                     }))
-
           ],
         ),
       ),

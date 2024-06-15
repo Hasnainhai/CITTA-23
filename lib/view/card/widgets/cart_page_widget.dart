@@ -71,7 +71,8 @@ class _CartWidgetState extends State<CartWidget> {
       if (productList[i]["imageUrl"] == widget.img) {
         productList[i]["salePrice"] = subTotal.toString();
         productList[i]["discount"] = discount.toString();
-        productList[i]['weight'] = widget.items.toString();
+        productList[i]["quantity"] = widget.items.toString();
+
         break;
       }
     }
