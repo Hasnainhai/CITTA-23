@@ -3,7 +3,6 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
-import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
@@ -72,7 +71,7 @@ class _CardScreenState extends State<CardScreen> {
         int sum = 0;
         int discount = 0;
 
-        querySnapshot.docs.forEach((QueryDocumentSnapshot document) {
+        for (var document in querySnapshot.docs) {
           String priceString = document['salePrice'];
           int priceInt = int.tryParse(priceString.split('.').first) ?? 0;
           sum += priceInt;
@@ -83,7 +82,7 @@ class _CardScreenState extends State<CardScreen> {
             int dP = int.tryParse(disPrice.split('.').first) ?? 0;
             discount += dP;
           }
-        });
+        }
 
         setState(() {
           subTotal = sum;
