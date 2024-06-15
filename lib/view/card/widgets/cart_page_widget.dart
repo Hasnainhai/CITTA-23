@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
@@ -137,7 +139,7 @@ class _CartWidgetState extends State<CartWidget> {
           .doc(deleteId)
           .delete();
     } catch (e) {
-      Utils.flushBarErrorMessage('${e.toString()}', context);
+      Utils.flushBarErrorMessage(e.toString(), context);
     }
   }
 
