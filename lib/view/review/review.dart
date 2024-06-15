@@ -68,7 +68,6 @@ class _RatingState extends State<Rating> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 }

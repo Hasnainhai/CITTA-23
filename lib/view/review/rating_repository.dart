@@ -10,7 +10,6 @@ class RatingRepository {
         .collection(produtType)
         .doc(productId)
         .collection("ratings");
-
     rateDriverRef.get().then(
       (snap) {
         if (snap.docs.isEmpty) {
@@ -29,7 +28,6 @@ class RatingRepository {
           rateDriverRef.doc(snap.docs.first.id).set(
             {"rating": newAverageRating},
           );
-
           Navigator.pop(context);
           Navigator.push(
             context,
@@ -40,7 +38,6 @@ class RatingRepository {
         }
       },
     );
-
     var uuid = const Uuid().v1();
     String time = DateTime.now().toString();
     Map<String, dynamic> commentMap = {
