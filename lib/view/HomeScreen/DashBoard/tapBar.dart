@@ -144,6 +144,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           int itemCount = snapshot.data ?? 0;
 
           return Stack(
+            clipBehavior: Clip.none,
             children: [
               Container(
                 width: 60.0,
@@ -171,13 +172,21 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               ),
               if (itemCount > 0)
                 Positioned(
-                  right: 22,
-                  top: 0,
+                  right: -3,
+                  top: -13,
                   child: Container(
-                    padding: const EdgeInsets.all(4.0),
-                    decoration: const BoxDecoration(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColor.primaryColor.withOpacity(0.2),
+                          blurRadius: 10.0,
+                          offset: const Offset(4, 4),
+                          spreadRadius: 0.5,
+                        ),
+                      ],
                     ),
                     child: Text(
                       itemCount.toString(),
@@ -190,13 +199,21 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 ),
               if (itemCount == 0)
                 Positioned(
-                  right: 22,
-                  top: 0,
+                  right: -3,
+                  top: -13,
                   child: Container(
-                    padding: const EdgeInsets.all(4.0),
-                    decoration: const BoxDecoration(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.whiteColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColor.primaryColor.withOpacity(0.2),
+                          blurRadius: 10.0,
+                          offset: const Offset(4, 4),
+                          spreadRadius: 0.5,
+                        ),
+                      ],
                     ),
                     child: const Text(
                       '0',
