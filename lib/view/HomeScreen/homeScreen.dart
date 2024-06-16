@@ -16,6 +16,7 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
 import '../../res/consts/vars.dart';
 import '../drawer/drawer.dart';
+import '../filter/filter.dart';
 import 'widgets/homeCard.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -409,7 +410,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: AppColor.primaryColor,
                                 child: Center(
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return const FilterPopUp();
+                                      }));
+                                    },
                                     icon: const Icon(
                                       Icons.tune_outlined,
                                       color: AppColor.whiteColor,
