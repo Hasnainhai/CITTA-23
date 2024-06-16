@@ -1,5 +1,7 @@
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
+import 'package:citta_23/repository/search_repository.dart';
+import 'package:citta_23/repository/ui_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -25,8 +27,13 @@ void main() async {
         ChangeNotifierProvider<DiscountSum>(
           create: ((context) => DiscountSum()),
         ),
+        ChangeNotifierProvider(create: (_) => TotalPriceModel()),
         ChangeNotifierProvider(
-            create: (_) => TotalPriceModel()),
+          create: (_) => HomeUiSwithchRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -42,7 +49,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme:
             ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(
-          background: const Color(0xffFFFFFF,),
+          background: const Color(
+            0xffFFFFFF,
+          ),
         ), // Set the background color here
       ),
       initialRoute: RoutesName.splashScreen,

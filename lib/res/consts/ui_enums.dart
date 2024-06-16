@@ -1,0 +1,4 @@
+enum UIType {
+  SearchSection,
+  DefaultSection,
+}
