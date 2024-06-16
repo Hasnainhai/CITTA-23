@@ -1,7 +1,5 @@
 // ignore_for_file: file_names, dead_code
 
-import 'package:citta_23/models/search_model.dart';
-import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -12,7 +10,6 @@ import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
@@ -38,8 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> _newItems = [];
   final List<Map<String, dynamic>> _hotSelling = [];
   final List<Map<String, dynamic>> _lighteningDeals = [];
-
-  bool isSearch = false;
   @override
   initState() {
     super.initState();
@@ -245,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return qn.docs;
     } catch (e) {
       // Log the error or handle it as necessary
-      print('Error fetching fashion products: $e');
+      debugPrint('Error fetching fashion products: $e');
       setState(() {
         _isLoading = false;
       });
@@ -316,12 +311,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    debugPrint('New Items: $_newItems');
-    debugPrint('New Items: $_hotSelling');
-    debugPrint('New Items: $_lighteningDeals');
-    final productProvider = Provider.of<ProductProvider>(context);
-
-
     return LoadingManager(
       isLoading: _isLoading,
       child: Scaffold(
@@ -372,15 +361,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: TextField(
-                                    controller: _searchController,
-                                    onChanged: (value) {
-                                      if (_searchController.text.length == 1) {
-                                        productProvider.filterProducts(value);
-                                      } else {
-                                        _searchController.clear();
-                                      }
-                                    },
-
                                     decoration: const InputDecoration(
                                       hintText: 'Search Products...',
                                       hintStyle: TextStyle(
@@ -397,7 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.bold,
                                       color: AppColor.grayColor,
                                     ),
-
+                                    onChanged: (value) {},
                                   ),
                                 ),
                               ),
@@ -437,178 +417,129 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const VerticalSpeacing(20.0),
-                    _searchController.text.isEmpty
-                        ? Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            if (categoryType == CategoryType.fashion) {
+                              return;
+                            }
+                            setState(() {
+                              categoryType = CategoryType.fashion;
+                            });
+                          },
+                          child: Stack(
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      if (categoryType ==
-                                          CategoryType.fashion) {
-                                        return;
-                                      }
-                                      setState(() {
-                                        categoryType = CategoryType.fashion;
-                                      });
-                                    },
-                                    child: Stack(
+                              SizedBox(
+                                height: 60.0,
+                                width: MediaQuery.of(context).size.width * 0.43,
+                                child: Center(
+                                  child: Container(
+                                    height: 45.0,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            categoryType == CategoryType.fashion
+                                                ? AppColor.buttonBgColor
+                                                : Colors.transparent,
+                                        border: Border.all(
+                                            width: 1,
+                                            color: AppColor.buttonBgColor)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        SizedBox(
-                                          height: 60.0,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.43,
-                                          child: Center(
-                                            child: Container(
-                                              height: 45.0,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.4,
-                                              decoration: BoxDecoration(
-                                                  color: categoryType ==
-                                                          CategoryType.fashion
-                                                      ? AppColor.buttonBgColor
-                                                      : Colors.transparent,
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: AppColor
-                                                          .buttonBgColor)),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Container(
-                                                    height: 33.0,
-                                                    width: 63.0,
-                                                    color: AppColor
-                                                        .categoryLightColor,
-                                                  ),
-                                                  Text(
-                                                    'Fashion',
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'CenturyGothic',
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: categoryType ==
-                                                              CategoryType
-                                                                  .fashion
-                                                          ? AppColor.whiteColor
-                                                          : AppColor
-                                                              .buttonBgColor,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                        Container(
+                                          height: 33.0,
+                                          width: 63.0,
+                                          color: AppColor.categoryLightColor,
                                         ),
-                                        Positioned(
-                                          left: 30,
-                                          top: 0,
-                                          bottom: 12.0,
-                                          child: FittedBox(
-                                            fit: BoxFit.contain,
-                                            child: Image.asset(
-                                              'images/fashionimg.png',
-                                              height: 56.0,
-                                              width: 42.0,
-                                              fit: BoxFit.contain,
-                                            ),
+                                        Text(
+                                          'Fashion',
+                                          style: TextStyle(
+                                            fontFamily: 'CenturyGothic',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: categoryType ==
+                                                    CategoryType.fashion
+                                                ? AppColor.whiteColor
+                                                : AppColor.buttonBgColor,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      if (categoryType == CategoryType.food) {
-                                        return;
-                                      }
-                                      setState(() {
-                                        categoryType = CategoryType.food;
-                                      });
-                                    },
-                                    child: Stack(
+                                ),
+                              ),
+                              Positioned(
+                                left: 30,
+                                top: 0,
+                                bottom: 12.0,
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Image.asset(
+                                    'images/fashionimg.png',
+                                    height: 56.0,
+                                    width: 42.0,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if (categoryType == CategoryType.food) {
+                              return;
+                            }
+                            setState(() {
+                              categoryType = CategoryType.food;
+                            });
+                          },
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                height: 60.0,
+                                width: MediaQuery.of(context).size.width * 0.43,
+                                child: Center(
+                                  child: Container(
+                                    height: 45.0,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    decoration: BoxDecoration(
+                                        color: categoryType == CategoryType.food
+                                            ? AppColor.buttonBgColor
+                                            : Colors.transparent,
+                                        border: Border.all(
+                                            width: 1,
+                                            color: AppColor.buttonBgColor)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        SizedBox(
-                                          height: 60.0,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.43,
-                                          child: Center(
-                                            child: Container(
-                                              height: 45.0,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.4,
-                                              decoration: BoxDecoration(
-                                                  color: categoryType ==
-                                                          CategoryType.food
-                                                      ? AppColor.buttonBgColor
-                                                      : Colors.transparent,
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: AppColor
-                                                          .buttonBgColor)),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Container(
-                                                    height: 33.0,
-                                                    width: 63.0,
-                                                    color: AppColor
-                                                        .categoryLightColor,
-                                                  ),
-                                                  Text(
-                                                    'Food',
-                                                    style: TextStyle(
-                                                      fontFamily:
-                                                          'CenturyGothic',
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: categoryType ==
-                                                              CategoryType.food
-                                                          ? AppColor.whiteColor
-                                                          : AppColor
-                                                              .buttonBgColor,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                        Container(
+                                          height: 33.0,
+                                          width: 63.0,
+                                          color: AppColor.categoryLightColor,
                                         ),
-                                        Positioned(
-                                          left: 25,
-                                          top: 0,
-                                          bottom: 5.0,
-                                          child: FittedBox(
-                                            fit: BoxFit.contain,
-                                            child: Image.asset(
-                                              'images/foodimg.png',
-                                              height: 59.0,
-                                              width: 59.0,
-                                              fit: BoxFit.contain,
-                                            ),
+                                        Text(
+                                          'Food',
+                                          style: TextStyle(
+                                            fontFamily: 'CenturyGothic',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: categoryType ==
+                                                    CategoryType.food
+                                                ? AppColor.whiteColor
+                                                : AppColor.buttonBgColor,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-
                                 ),
                               ),
                               Positioned(
@@ -666,464 +597,183 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              categoryType == CategoryType.food
-                                  ? Column(
-                                      children: [
-                                        const VerticalSpeacing(20.0),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              "Popular Pack",
-                                              style: TextStyle(
-                                                fontFamily: 'CenturyGothic',
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColor.fontColor,
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.pushNamed(
-                                                  context,
-                                                  RoutesName.popularpackscreen,
-                                                );
-                                              },
-                                              child: const Text(
-                                                "View All",
-                                                style: TextStyle(
-                                                  fontFamily: 'CenturyGothic',
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: AppColor.buttonBgColor,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const VerticalSpeacing(16.0),
-                                        // Popular packs here
-                                        SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              4,
-                                          child: GridView.builder(
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemCount: 2,
-                                            gridDelegate:
-                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                            ),
-                                            itemBuilder: (_, index) {
-                                              // Check if _products is not empty and index is within valid range
-                                              if (_popularPacks.isNotEmpty &&
-                                                  index <
-                                                      _popularPacks.length) {
-                                                return HomeCard(
-                                                  ontap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) {
-                                                          // Check if _popularPacks is not null and index is within bounds
-                                                          if (_popularPacks
-                                                                  .isNotEmpty &&
-                                                              index >= 0 &&
-                                                              index <
-                                                                  _popularPacks
-                                                                      .length) {
-                                                            Map<String, dynamic>
-                                                                selectedPack =
-                                                                _popularPacks[
-                                                                    index];
-
-                                                            return BundleProductScreen(
-                                                              imageUrl:
-                                                                  selectedPack[
-                                                                          'imageUrl'] ??
-                                                                      '',
-                                                              sellerId:
-                                                                  selectedPack[
-                                                                          'sellerId'] ??
-                                                                      "",
-                                                              productId:
-                                                                  selectedPack[
-                                                                          'id'] ??
-                                                                      "",
-                                                              title: selectedPack[
-                                                                      'title'] ??
-                                                                  '',
-                                                              price: selectedPack[
-                                                                      'price'] ??
-                                                                  '',
-                                                              saleprice:
-                                                                  selectedPack[
-                                                                          'salePrice'] ??
-                                                                      '',
-                                                              detail: selectedPack[
-                                                                      'detail'] ??
-                                                                  '',
-                                                              weight: selectedPack[
-                                                                      'weight'] ??
-                                                                  '',
-                                                              size: selectedPack[
-                                                                      'size'] ??
-                                                                  '',
-                                                              img1: selectedPack[
-                                                                          'product1']
-                                                                      ?[
-                                                                      'image'] ??
-                                                                  '',
-                                                              title1: selectedPack[
-                                                                          'product1']
-                                                                      ?[
-                                                                      'title'] ??
-                                                                  '',
-                                                              amount1: selectedPack[
-                                                                          'product1']
-                                                                      ?[
-                                                                      'amount'] ??
-                                                                  '',
-                                                              img2: selectedPack[
-                                                                          'product2']
-                                                                      ?[
-                                                                      'image'] ??
-                                                                  '',
-                                                              title2: selectedPack[
-                                                                          'product2']
-                                                                      ?[
-                                                                      'title'] ??
-                                                                  '',
-                                                              amount2: selectedPack[
-                                                                          'product2']
-                                                                      ?[
-                                                                      'amount'] ??
-                                                                  '',
-                                                              img3: selectedPack[
-                                                                          'product3']
-                                                                      ?[
-                                                                      'image'] ??
-                                                                  '',
-                                                              title3: selectedPack[
-                                                                          'product3']
-                                                                      ?[
-                                                                      'title'] ??
-                                                                  '',
-                                                              amount3: selectedPack[
-                                                                          'product3']
-                                                                      ?[
-                                                                      'amount'] ??
-                                                                  '',
-                                                              img4: selectedPack[
-                                                                          'product4']
-                                                                      ?[
-                                                                      'image'] ??
-                                                                  '',
-                                                              title4: selectedPack[
-                                                                          'product4']
-                                                                      ?[
-                                                                      'title'] ??
-                                                                  '',
-                                                              amount4: selectedPack[
-                                                                          'product4']
-                                                                      ?[
-                                                                      'amount'] ??
-                                                                  '',
-                                                              img5: selectedPack[
-                                                                          'product5']
-                                                                      ?[
-                                                                      'image'] ??
-                                                                  '',
-                                                              title5: selectedPack[
-                                                                          'product5']
-                                                                      ?[
-                                                                      'title'] ??
-                                                                  '',
-                                                              amount5: selectedPack[
-                                                                          'product5']
-                                                                      ?[
-                                                                      'amount'] ??
-                                                                  '',
-                                                              img6: selectedPack[
-                                                                          'product6']
-                                                                      ?[
-                                                                      'image'] ??
-                                                                  '',
-                                                              title6: selectedPack[
-                                                                          'product6']
-                                                                      ?[
-                                                                      'title'] ??
-                                                                  '',
-                                                              amount6: selectedPack[
-                                                                          'product6']
-                                                                      ?[
-                                                                      'amount'] ??
-                                                                  '',
-                                                            );
-                                                          } else if (_popularPacks
-                                                              .isEmpty) {
-                                                            return const Center(
-                                                              child: Text(
-                                                                  'No Products...'),
-                                                            );
-                                                          }
-                                                          return Container();
-                                                        },
-                                                      ),
-                                                    );
-                                                  },
-                                                  sellerId: _popularPacks[index]
-                                                          ['sellerId']
-                                                      .toString(),
-                                                  productId:
-                                                      _popularPacks[index]['id']
-                                                          .toString(),
-                                                  name: _popularPacks[index]
-                                                          ['title']
-                                                      .toString(),
-                                                  price: _popularPacks[index]
-                                                          ['price']
-                                                      .toString(),
-                                                  dPrice:
-                                                      "₹${_popularPacks[index]['price']}",
-                                                  borderColor:
-                                                      AppColor.buttonBgColor,
-                                                  fillColor: AppColor
-                                                      .appBarButtonColor,
-                                                  img: _popularPacks[index]
-                                                      ['imageUrl'],
-                                                  iconColor:
-                                                      AppColor.buttonBgColor,
-                                                  // add to cart logic
-                                                  addCart: () {
-                                                    if (_popularPacks
-                                                            .isNotEmpty &&
-                                                        index >= 0 &&
-                                                        index <
-                                                            _popularPacks
-                                                                .length) {
-                                                      addToCart(
-                                                        _popularPacks[index]
-                                                            ['imageUrl'],
-                                                        _popularPacks[index]
-                                                            ['title'],
-                                                        _popularPacks[index]
-                                                            ['salePrice'],
-                                                        _popularPacks[index]
-                                                            ['sellerId'],
-                                                        _popularPacks[index]
-                                                            ['id'],
-                                                        "N/A",
-                                                        "N/A",
-                                                        _popularPacks[index]
-                                                            ['weight'],
-                                                        "0",
-                                                      );
-                                                    }
-                                                  },
-                                                  productRating: _popularPacks[
-                                                              index]
-                                                          ['averageReview'] ??
-                                                      0.0,
-                                                );
-                                              } else {
-                                                // Handle the case when the list is empty or index is out of range
-                                                return Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Shimmer(
-                                                    duration: const Duration(
-                                                        seconds:
-                                                            3), //Default value
-                                                    interval: const Duration(
-                                                        seconds:
-                                                            5), //Default value: Duration(seconds: 0)
-                                                    color: AppColor.grayColor
-                                                        .withOpacity(
-                                                            0.2), //Default value
-                                                    colorOpacity:
-                                                        0.2, //Default value
-                                                    enabled:
-                                                        true, //Default value
-                                                    direction:
-                                                        const ShimmerDirection
-                                                            .fromLTRB(), //Default Value
-                                                    child: Container(
-                                                      height: 100,
-                                                      width: 150,
-                                                      color: AppColor.grayColor
-                                                          .withOpacity(0.2),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-
-                                        const VerticalSpeacing(16.0),
-                                        SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              1,
-                                          child: Column(
-                                            children: [
-                                              _buildCategorySection(context,
-                                                  'New Items', _newItems),
-                                              _buildCategorySection(context,
-                                                  'Hot Selling', _hotSelling),
-                                              _buildCategorySection(
-                                                  context,
-                                                  'Lightening Deals',
-                                                  _lighteningDeals),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 20.0, bottom: 10.0),
-                                      child: GridView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: _fashionProducts.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          crossAxisSpacing: 5,
-                                          mainAxisSpacing: 16,
-                                        ),
-                                        itemBuilder: (_, index) {
-                                          // Check if _products is not empty and index is within valid range
-                                          if (_fashionProducts.isNotEmpty &&
-                                              index < _fashionProducts.length) {
-                                            return HomeCard(
-                                              ontap: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return FashionDetail(
-                                                    sellerId:
-                                                        _fashionProducts[index]
-                                                            ['sellerId'],
-                                                    productId:
-                                                        _fashionProducts[index]
-                                                            ['id'],
-                                                    title:
-                                                        _fashionProducts[index]
-                                                                ['title']
-                                                            .toString(),
-                                                    imageUrl:
-                                                        _fashionProducts[index]
-                                                            ['imageUrl'],
-                                                    salePrice:
-                                                        _fashionProducts[index]
-                                                            ['price'],
-                                                    detail:
-                                                        _fashionProducts[index]
-                                                                ['detail']
-                                                            .toString(),
-                                                    colors:
-                                                        _fashionProducts[index]
-                                                                ['color']
-                                                            .cast<String>(),
-                                                    sizes:
-                                                        _fashionProducts[index]
-                                                                ['size']
-                                                            .cast<String>(),
-                                                  );
-                                                }));
-                                              },
-                                              sellerId: _fashionProducts[index]
-                                                  ['sellerId'],
-                                              productId: _fashionProducts[index]
-                                                  ['id'],
-                                              name: _fashionProducts[index]
-                                                      ['title']
-                                                  .toString(),
-                                              price: '',
-                                              dPrice:
-                                                  "${_fashionProducts[index]['price']}₹",
-                                              borderColor:
-                                                  AppColor.buttonBgColor,
-                                              fillColor:
-                                                  AppColor.appBarButtonColor,
-                                              img: _fashionProducts[index]
-                                                  ['imageUrl'],
-                                              iconColor: AppColor.buttonBgColor,
-                                              addCart: () {
-                                                if (_fashionProducts
-                                                        .isNotEmpty &&
+                              const VerticalSpeacing(16.0),
+                              // Popular packs here
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height / 4,
+                                child: GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: 2,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  itemBuilder: (_, index) {
+                                    // Check if _products is not empty and index is within valid range
+                                    if (_popularPacks.isNotEmpty &&
+                                        index < _popularPacks.length) {
+                                      return HomeCard(
+                                        ontap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                // Check if _popularPacks is not null and index is within bounds
+                                                if (_popularPacks.isNotEmpty &&
                                                     index >= 0 &&
                                                     index <
-                                                        _fashionProducts
-                                                            .length) {
-                                                  addToCart(
-                                                    _fashionProducts[index]
-                                                        ['imageUrl'],
-                                                    _fashionProducts[index]
-                                                        ['title'],
-                                                    _fashionProducts[index]
-                                                        ['price'],
-                                                    _fashionProducts[index]
-                                                        ['id'],
-                                                    _fashionProducts[index]
-                                                        ['sellerId'],
-                                                    _fashionProducts[0]['size']
-                                                        [0],
-                                                    _fashionProducts[0]['color']
-                                                        [0],
-                                                    "N/A",
-                                                    '0',
+                                                        _popularPacks.length) {
+                                                  Map<String, dynamic>
+                                                      selectedPack =
+                                                      _popularPacks[index];
+
+                                                  return BundleProductScreen(
+                                                    imageUrl: selectedPack[
+                                                            'imageUrl'] ??
+                                                        '',
+                                                    sellerId: selectedPack[
+                                                            'sellerId'] ??
+                                                        "",
+                                                    productId:
+                                                        selectedPack['id'] ??
+                                                            "",
+                                                    title:
+                                                        selectedPack['title'] ??
+                                                            '',
+                                                    price:
+                                                        selectedPack['price'] ??
+                                                            '',
+                                                    saleprice: selectedPack[
+                                                            'salePrice'] ??
+                                                        '',
+                                                    detail: selectedPack[
+                                                            'detail'] ??
+                                                        '',
+                                                    weight: selectedPack[
+                                                            'weight'] ??
+                                                        '',
+                                                    size:
+                                                        selectedPack['size'] ??
+                                                            '',
+                                                    img1:
+                                                        selectedPack['product1']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title1:
+                                                        selectedPack['product1']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount1:
+                                                        selectedPack['product1']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img2:
+                                                        selectedPack['product2']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title2:
+                                                        selectedPack['product2']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount2:
+                                                        selectedPack['product2']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img3:
+                                                        selectedPack['product3']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title3:
+                                                        selectedPack['product3']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount3:
+                                                        selectedPack['product3']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img4:
+                                                        selectedPack['product4']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title4:
+                                                        selectedPack['product4']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount4:
+                                                        selectedPack['product4']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img5:
+                                                        selectedPack['product5']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title5:
+                                                        selectedPack['product5']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount5:
+                                                        selectedPack['product5']
+                                                                ?['amount'] ??
+                                                            '',
+                                                    img6:
+                                                        selectedPack['product6']
+                                                                ?['image'] ??
+                                                            '',
+                                                    title6:
+                                                        selectedPack['product6']
+                                                                ?['title'] ??
+                                                            '',
+                                                    amount6:
+                                                        selectedPack['product6']
+                                                                ?['amount'] ??
+                                                            '',
+                                                  );
+                                                } else if (_popularPacks
+                                                    .isEmpty) {
+                                                  return const Center(
+                                                    child:
+                                                        Text('No Products...'),
                                                   );
                                                 }
+                                                return Container();
                                               },
-                                              productRating:
-                                                  _fashionProducts[index]
-                                                      ['averageReview'],
-                                            );
-                                          } else if (_fashionProducts.isEmpty) {
-                                            return const Center(
-                                              child: Text(
-                                                'No Products...',
-                                              ),
-                                            );
-                                          } else {
-                                            return Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Shimmer(
-                                                duration: const Duration(
-                                                    seconds: 3), //Default value
-                                                interval: const Duration(
-                                                    seconds:
-                                                        5), //Default value: Duration(seconds: 0)
-                                                color: AppColor.grayColor
-                                                    .withOpacity(
-                                                        0.2), //Default value
-                                                colorOpacity:
-                                                    0.2, //Default value
-                                                enabled: true, //Default value
-                                                direction: const ShimmerDirection
-                                                    .fromLTRB(), //Default Value
-                                                child: Container(
-                                                  height: 100,
-                                                  width: 150,
-                                                  color: AppColor.grayColor
-                                                      .withOpacity(0.2),
-                                                ),
-                                              ),
+                                            ),
+                                          );
+                                        },
+                                        sellerId: _popularPacks[index]
+                                                ['sellerId']
+                                            .toString(),
+                                        productId: _popularPacks[index]['id']
+                                            .toString(),
+                                        name: _popularPacks[index]['title']
+                                            .toString(),
+                                        price: _popularPacks[index]['price']
+                                            .toString(),
+                                        dPrice:
+                                            "₹${_popularPacks[index]['price']}",
+                                        borderColor: AppColor.buttonBgColor,
+                                        fillColor: AppColor.appBarButtonColor,
+                                        img: _popularPacks[index]['imageUrl'],
+                                        iconColor: AppColor.buttonBgColor,
+                                        // add to cart logic
+                                        addCart: () {
+                                          if (_popularPacks.isNotEmpty &&
+                                              index >= 0 &&
+                                              index < _popularPacks.length) {
+                                            addToCart(
+                                              _popularPacks[index]['imageUrl'],
+                                              _popularPacks[index]['title'],
+                                              _popularPacks[index]['salePrice'],
+                                              _popularPacks[index]['sellerId'],
+                                              _popularPacks[index]['id'],
+                                              "N/A",
+                                              "N/A",
+                                              _popularPacks[index]['weight'],
+                                              "0",
                                             );
                                           }
                                         },
-
                                         productRating: _popularPacks[index]
                                                 ['averageReview'] ??
                                             0.0,
@@ -1167,135 +817,112 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             ],
                           )
-                        : SizedBox(
-                            height: MediaQuery.of(context).size.height / 1.6,
+                        : Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, bottom: 10.0),
                             child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _fashionProducts.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 5,
                                 mainAxisSpacing: 16,
                               ),
-                              itemCount: productProvider.products.length,
-                              itemBuilder: (context, index) {
-                                Product product =
-                                    productProvider.products[index];
-                                String calculateDiscountedPrice(
-                                    String originalPriceString,
-                                    String discountPercentageString) {
-                                  // Convert strings to double
-                                  debugPrint(
-                                      "this is the discount:$discountPercentageString");
-                                  debugPrint(
-                                      "this is the total:$originalPriceString");
-
-                                  double originalPrice =
-                                      double.parse(originalPriceString);
-                                  double discountPercentage =
-                                      double.parse(discountPercentageString);
-
-                                  // Calculate discounted price
-                                  double p = originalPrice *
-                                      (discountPercentage / 100);
-                                  double discountedPrice = originalPrice - p;
-
-                                  // Return the discounted price as a formatted string
-                                  return discountedPrice.toStringAsFixed(
-                                      0); // You can adjust the number of decimal places as needed
+                              itemBuilder: (_, index) {
+                                // Check if _products is not empty and index is within valid range
+                                if (_fashionProducts.isNotEmpty &&
+                                    index < _fashionProducts.length) {
+                                  return HomeCard(
+                                    ontap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return FashionDetail(
+                                          sellerId: _fashionProducts[index]
+                                              ['sellerId'],
+                                          productId: _fashionProducts[index]
+                                              ['id'],
+                                          title: _fashionProducts[index]
+                                                  ['title']
+                                              .toString(),
+                                          imageUrl: _fashionProducts[index]
+                                              ['imageUrl'],
+                                          salePrice: _fashionProducts[index]
+                                              ['price'],
+                                          detail: _fashionProducts[index]
+                                                  ['detail']
+                                              .toString(),
+                                          colors: _fashionProducts[index]
+                                                  ['color']
+                                              .cast<String>(),
+                                          sizes: _fashionProducts[index]['size']
+                                              .cast<String>(),
+                                        );
+                                      }));
+                                    },
+                                    sellerId: _fashionProducts[index]
+                                        ['sellerId'],
+                                    productId: _fashionProducts[index]['id'],
+                                    name: _fashionProducts[index]['title']
+                                        .toString(),
+                                    price: '',
+                                    dPrice:
+                                        "${_fashionProducts[index]['price']}₹",
+                                    borderColor: AppColor.buttonBgColor,
+                                    fillColor: AppColor.appBarButtonColor,
+                                    img: _fashionProducts[index]['imageUrl'],
+                                    iconColor: AppColor.buttonBgColor,
+                                    addCart: () {
+                                      if (_fashionProducts.isNotEmpty &&
+                                          index >= 0 &&
+                                          index < _fashionProducts.length) {
+                                        addToCart(
+                                          _fashionProducts[index]['imageUrl'],
+                                          _fashionProducts[index]['title'],
+                                          _fashionProducts[index]['price'],
+                                          _fashionProducts[index]['id'],
+                                          _fashionProducts[index]['sellerId'],
+                                          _fashionProducts[0]['size'][0],
+                                          _fashionProducts[0]['color'][0],
+                                          "N/A",
+                                          '0',
+                                        );
+                                      }
+                                    },
+                                    productRating: _fashionProducts[index]
+                                        ['averageReview'],
+                                  );
+                                } else if (_fashionProducts.isEmpty) {
+                                  return const Center(
+                                    child: Text(
+                                      'No Products...',
+                                    ),
+                                  );
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Shimmer(
+                                      duration: const Duration(
+                                          seconds: 3), //Default value
+                                      interval: const Duration(
+                                          seconds:
+                                              5), //Default value: Duration(seconds: 0)
+                                      color: AppColor.grayColor
+                                          .withOpacity(0.2), //Default value
+                                      colorOpacity: 0.2, //Default value
+                                      enabled: true, //Default value
+                                      direction: const ShimmerDirection
+                                          .fromLTRB(), //Default Value
+                                      child: Container(
+                                        height: 100,
+                                        width: 150,
+                                        color:
+                                            AppColor.grayColor.withOpacity(0.2),
+                                      ),
+                                    ),
+                                  );
                                 }
-
-                                String dPrice(String originalPriceString,
-                                    String discountPercentageString) {
-                                  // Convert strings to double
-                                  debugPrint(
-                                      "this is the discount:$discountPercentageString");
-                                  debugPrint(
-                                      "this is the total:$originalPriceString");
-
-                                  double originalPrice =
-                                      double.parse(originalPriceString);
-                                  double discountPercentage =
-                                      double.parse(discountPercentageString);
-
-                                  // Calculate discounted price
-                                  double discountedPrice = originalPrice *
-                                      (discountPercentage / 100);
-
-                                  // Return the discounted price as a formatted string
-                                  return discountedPrice.toStringAsFixed(
-                                      0); // You can adjust the number of decimal places as needed
-                                }
-
-                                return HomeCard(
-                                  oofProd:
-                                      product.discount != "N/A" ? true : false,
-                                  percentage: product.discount,
-                                  ontap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return product.isFashion
-                                          ? FashionDetail(
-                                              sellerId: product.sellerId,
-                                              productId: product.id,
-                                              title: product.title,
-                                              imageUrl: product.imageUrl,
-                                              salePrice: product.price,
-                                              detail: product.detail,
-                                              colors: product.colors,
-                                              sizes: product.sizes,
-                                            )
-                                          : ProductDetailScreen(
-                                              title: product.title,
-                                              productId: product.id,
-                                              sellerId: product.sellerId,
-                                              imageUrl: product.imageUrl,
-                                              price: product.price,
-                                              salePrice: product.salePrice,
-                                              weight: product.weight,
-                                              detail: product.detail,
-                                              disPrice: product.discountPrice,
-                                            );
-                                    }));
-                                  },
-                                  sellerId: product.sellerId,
-                                  productId: product.id,
-                                  name: product.title,
-                                  price: product.price,
-                                  dPrice: product.discount != "N/A"
-                                      ? calculateDiscountedPrice(
-                                          product.price, product.discount)
-                                      : product.price,
-                                  borderColor: AppColor.buttonBgColor,
-                                  fillColor: AppColor.appBarButtonColor,
-                                  img: product.imageUrl,
-                                  iconColor: AppColor.buttonBgColor,
-                                  addCart: () {
-                                    if (productProvider.products.isNotEmpty &&
-                                        index >= 0 &&
-                                        index <
-                                            productProvider.products.length) {
-                                      addToCart(
-                                        product.imageUrl,
-                                        product.title,
-                                        product.price,
-                                        product.id,
-                                        product.sellerId,
-                                        product.sizes.isNotEmpty
-                                            ? product.sizes[0]
-                                            : "N/A",
-                                        product.colors.isNotEmpty
-                                            ? product.colors[0]
-                                            : "N/A",
-                                        product.weight,
-                                        product.discount != 'N/A'
-                                            ? dPrice(
-                                                product.price, product.discount)
-                                            : "0",
-                                      );
-                                    }
-                                  },
-                                  productRating: product.averageReview,
-                                );
                               },
                             ),
                           ),
