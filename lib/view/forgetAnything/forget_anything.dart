@@ -1,11 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../Checkout/widgets/card_checkout_screen.dart';
@@ -270,74 +272,82 @@ class _ForgetAnythingState extends State<ForgetAnything> {
         },
       ),
       floatingActionButton: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 30.0),
-            Expanded(
-              child: Container(
-                height: double.infinity,
-                color: const Color(0xffF7F7F7),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Total',
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.blackColor,
-                      ),
-                    ),
-                    Text(
-                      _currentSubTotal,
-                      style: const TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.grayColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (c) {
-                      return CardCheckOutScreen(
-                        productType: 'cart',
-                        productList: widget.productList,
-                        subTotal: _currentSubTotal,
-                      );
-                    }),
-                  );
-                },
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 30.0),
+              Expanded(
                 child: Container(
                   height: double.infinity,
-                  color: AppColor.primaryColor,
-                  child: const Center(
-                    child: Text(
-                      'Continue to checkout',
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: AppColor.whiteColor,
+                  color: const Color(0xffF7F7F7),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Total',
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.blackColor,
+                        ),
                       ),
-                    ),
+                      Consumer<TotalPriceModel>(
+                        builder: (context, totalPriceModel, child) {
+                          return Text(
+                            '₹${totalPriceModel.totalPrice}',
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: AppColor.blackColor,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+              Expanded(
+                child: Consumer<TotalPriceModel>(
+                  builder: (context, totalPriceModel, child) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (c) {
+                            return CardCheckOutScreen(
+                              productType: 'cart',
+                              productList: widget.productList,
+                              subTotal: totalPriceModel.totalPrice
+                                  .toString(), // Pass total price here
+                            );
+                          }),
+                        );
+                      },
+                      child: Container(
+                        height: double.infinity,
+                        color: AppColor.primaryColor,
+                        child: const Center(
+                          child: Text(
+                            'Continue to checkout',
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: AppColor.whiteColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

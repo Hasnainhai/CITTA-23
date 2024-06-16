@@ -651,6 +651,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             builder: (c) => TotalRatingScreen(
                               productType: "fashion",
                               productId: widget.productId,
+                              productPic: widget.imageUrl,
                             ),
                           ),
                         );

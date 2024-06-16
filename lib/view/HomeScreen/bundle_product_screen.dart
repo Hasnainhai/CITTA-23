@@ -1008,6 +1008,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               builder: (c) => TotalRatingScreen(
                                 productType: "bundle pack",
                                 productId: widget.productId,
+                                productPic: widget.imageUrl,
                               ),
                             ),
                           );
