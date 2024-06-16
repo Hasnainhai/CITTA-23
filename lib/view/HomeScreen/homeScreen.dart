@@ -307,6 +307,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  final List<Map<String, dynamic>> _filteredProducts = [];
+  final List<Map<String, dynamic>> _products = [];
+  final TextEditingController _searchController = TextEditingController();
+  void _filterProducts(String query) {
+    setState(() {
+      _filteredProducts.clear();
+      if (query.isEmpty) {
+        _filteredProducts.addAll(_products);
+      } else {
+        _filteredProducts.addAll(_products.where((product) {
+          final titleLower = product['title'].toString().toLowerCase();
+          final searchLower = query.toLowerCase();
+          return titleLower.contains(searchLower);
+        }).toList());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -354,22 +372,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               IconButton(
-                                onPressed: () {
-                                  // Navigator.pushNamed(
-                                  //   context,
-                                  //   RoutesName.searchscreen,
-                                  // );
-                                },
+                                onPressed: () {},
                                 icon: const Icon(
                                   Icons.search,
                                   color: AppColor.menuColor,
                                 ),
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.only(bottom: 8),
+                                  padding: const EdgeInsets.only(bottom: 8),
                                   child: TextField(
-                                    decoration: InputDecoration(
+                                    controller: _searchController,
+                                    decoration: const InputDecoration(
                                       hintText: 'Search Products...',
                                       hintStyle: TextStyle(
                                         fontFamily: 'CenturyGothic',
@@ -379,12 +393,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       border: InputBorder.none,
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'CenturyGothic',
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       color: AppColor.grayColor,
                                     ),
+                                    onChanged: _filterProducts,
                                   ),
                                 ),
                               ),
