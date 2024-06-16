@@ -5,6 +5,7 @@ import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/profile/editProfile/editProfile.dart';
+import 'package:citta_23/view/profile/my_review.dart';
 import 'package:citta_23/view/profile/widgets/profileCenterBtn.dart';
 import 'package:citta_23/view/profile/widgets/profile_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -326,7 +327,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           profileCenterBtns(
             ontap: () {
-              Navigator.pushNamed(context, RoutesName.totalreviewscreen);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (c) => const MyReview(),
+                ),
+              );
             },
             tColor: const Color(0xffFF6A9F),
             bColor: const Color(0xffD50059),

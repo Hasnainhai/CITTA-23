@@ -9,9 +9,13 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class TotalRatingScreen extends StatefulWidget {
   const TotalRatingScreen(
-      {super.key, required this.productType, required this.productId});
+      {super.key,
+      required this.productType,
+      required this.productId,
+      required this.productPic});
   final String productType;
   final String productId;
+  final String productPic;
   @override
   State<TotalRatingScreen> createState() => _TotalRatingScreenState();
 }
@@ -29,6 +33,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (c) => Rating(
+                    productImage: widget.productPic,
                     productId: widget.productId,
                     productType: widget.productType,
                   ),
@@ -320,6 +325,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                               document.data() as Map<String, dynamic>;
 
                           return ReviewCard(
+                            imgUrl: widget.productPic,
                             profilePic: data['profilePic'],
                             name: data['userName'],
                             rating: data['currentUserRating'].toString(),

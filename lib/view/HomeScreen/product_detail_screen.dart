@@ -581,8 +581,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (c) => TotalRatingScreen(
-                                  productType: "products",
-                                  productId: widget.productId),
+                                productType: "products",
+                                productId: widget.productId,
+                                productPic: widget.imageUrl,
+                              ),
                             ),
                           );
                         },

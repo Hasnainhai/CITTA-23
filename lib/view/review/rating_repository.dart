@@ -1,11 +1,19 @@
 import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class RatingRepository {
-  void giveRatings(String productId, String comment, context, String userName,
-      String userProfile, String produtType, double? countRatingStars) {
+  void giveRatings(
+      String productId,
+      String comment,
+      context,
+      String userName,
+      String userProfile,
+      String produtType,
+      double? countRatingStars,
+      String productImg) {
     CollectionReference rateDriverRef = FirebaseFirestore.instance
         .collection(produtType)
         .doc(productId)
@@ -47,6 +55,13 @@ class RatingRepository {
       "userName": userName, // Replace with actual user data
       "profilePic": userProfile, // Replace with actual user data
     };
+    Map<String, dynamic> reviewMap = {
+      "comment": comment,
+      "currentUserRating": countRatingStars,
+      "time": time,
+      "userName": userName, // Replace with actual user data
+      "productImg": productImg, // Replace with actual user data
+    };
 
     FirebaseFirestore.instance
         .collection(produtType)
@@ -54,6 +69,12 @@ class RatingRepository {
         .collection("commentsAndRatings")
         .doc(uuid)
         .set(commentMap);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("yourReviews")
+        .doc(uuid)
+        .set(reviewMap);
     _updateOrAddAverageReview(produtType, productId, countRatingStars);
   }
 

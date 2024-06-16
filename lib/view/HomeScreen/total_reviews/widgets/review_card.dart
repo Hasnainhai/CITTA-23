@@ -5,18 +5,21 @@ import '../../../../res/components/widgets/verticalSpacing.dart';
 import 'package:intl/intl.dart';
 
 class ReviewCard extends StatefulWidget {
-  const ReviewCard(
-      {super.key,
-      required this.profilePic,
-      required this.name,
-      required this.rating,
-      required this.time,
-      required this.comment});
+  const ReviewCard({
+    super.key,
+    required this.profilePic,
+    required this.name,
+    required this.rating,
+    required this.time,
+    required this.comment,
+    required this.imgUrl,
+  });
   final String profilePic;
   final String name;
   final String rating;
   final String time;
   final String comment;
+  final String imgUrl;
   @override
   State<ReviewCard> createState() => _ReviewCardState();
 }

@@ -15,9 +15,11 @@ class Rating extends StatefulWidget {
     super.key,
     required this.productId,
     required this.productType,
+    required this.productImage,
   });
   final String productId;
   final String productType;
+  final String productImage;
   @override
   State<Rating> createState() => _RatingState();
 }
@@ -150,17 +152,19 @@ class _RatingState extends State<Rating> {
                               onpress: () async {
                                 if (commentController.text.isNotEmpty) {
                                   ratingRepository.giveRatings(
-                                      widget.productId,
-                                      commentController.text,
-                                      context,
-                                      userData['name'] ??
-                                          FirebaseAuth.instance.currentUser!
-                                              .displayName,
-                                      userData['profilePic'] ??
-                                          FirebaseAuth
-                                              .instance.currentUser!.photoURL,
-                                      widget.productType,
-                                      countRatingStars);
+                                    widget.productId,
+                                    commentController.text,
+                                    context,
+                                    userData['name'] ??
+                                        FirebaseAuth
+                                            .instance.currentUser!.displayName,
+                                    userData['profilePic'] ??
+                                        FirebaseAuth
+                                            .instance.currentUser!.photoURL,
+                                    widget.productType,
+                                    countRatingStars,
+                                    widget.productImage,
+                                  );
                                 } else {
                                   Utils.flushBarErrorMessage(
                                       "Must write your Review", context);
