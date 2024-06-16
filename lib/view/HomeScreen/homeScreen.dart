@@ -313,23 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  final List<Map<String, dynamic>> _filteredProducts = [];
-  final List<Map<String, dynamic>> _products = [];
-  final TextEditingController _searchController = TextEditingController();
-  void _filterProducts(String query) {
-    setState(() {
-      _filteredProducts.clear();
-      if (query.isEmpty) {
-        _filteredProducts.addAll(_products);
-      } else {
-        _filteredProducts.addAll(_products.where((product) {
-          final titleLower = product['title'].toString().toLowerCase();
-          final searchLower = query.toLowerCase();
-          return titleLower.contains(searchLower);
-        }).toList());
-      }
-    });
-  }
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -389,6 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: TextField(
+                                    controller: searchController,
                                     decoration: const InputDecoration(
                                       hintText: 'Search Products...',
                                       hintStyle: TextStyle(
@@ -406,11 +391,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: AppColor.grayColor,
                                     ),
                                     onChanged: (value) {
-                                      if (_searchController.text.isNotEmpty) {
-                                        setState(() {
-                                          productProvider.filterProducts(value);
-                                        });
-                                      } else {}
+                                      debugPrint("this is the field");
+                                      if (searchController.text.length <= 1) {
+                                        productProvider.filterProducts(value);
+                                      }
                                     },
                                   ),
                                 ),
@@ -451,7 +435,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const VerticalSpeacing(20.0),
-                    _searchController.text.isEmpty
+                    searchController.text.isEmpty
                         ? Column(
                             children: [
                               Row(

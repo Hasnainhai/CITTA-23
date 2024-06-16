@@ -1,6 +1,7 @@
-import 'package:citta_23/models/search_model.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:citta_23/models/search_model.dart';
 
 class ProductProvider with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -8,6 +9,7 @@ class ProductProvider with ChangeNotifier {
   List<Product> _filteredProducts = [];
   bool _isLoading = true;
   bool _isSearch = false;
+  Timer? _debounce;
 
   List<Product> get products => _isSearch ? _filteredProducts : _products;
   bool get isLoading => _isLoading;
@@ -38,11 +40,20 @@ class ProductProvider with ChangeNotifier {
   }
 
   void filterProducts(String query) {
-    _isSearch = query.isNotEmpty;
-    _filteredProducts = _products
-        .where((product) =>
-            product.title.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    notifyListeners();
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      _isSearch = query.isNotEmpty;
+      _filteredProducts = _products
+          .where((product) =>
+              product.title.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      notifyListeners();
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 }
