@@ -59,7 +59,7 @@ class FavouristListCart extends StatelessWidget {
                           ),
                           children: <TextSpan>[
                             TextSpan(
-                              text: price,
+                              text: '₹$price',
                               style: const TextStyle(
                                 color: AppColor.fontColor,
                                 fontSize: 14.0,
