@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: const Icon(
           Icons.arrow_back,
-          color: AppColor.buttonTxColor,
+          color: Colors.transparent,
         ),
       ),
       body: LoadingManager(

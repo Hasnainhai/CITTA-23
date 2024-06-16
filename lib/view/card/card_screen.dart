@@ -44,7 +44,6 @@ class _CardScreenState extends State<CardScreen> {
         'size': product['size'],
         'color': product['color'],
         'discount': product['dPrice'],
-        // "weight": product['weight'],
       };
     }).toList();
   }

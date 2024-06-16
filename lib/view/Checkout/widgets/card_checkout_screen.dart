@@ -121,7 +121,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       orderMap['paymentType'] = paymentType;
 
       // orderMap['address'] = addressMap;
-
+      debugPrint("this is the order map:$orderMap");
       await myOrdersCollection
           .doc(buyerId)
           .collection('my_orders')
