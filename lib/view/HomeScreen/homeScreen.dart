@@ -308,31 +308,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  final List<Map<String, dynamic>> _filteredProducts = [];
-  final List<Map<String, dynamic>> _products = [];
-  final TextEditingController _searchController = TextEditingController();
-  void _filterProducts(String query) {
-    setState(() {
-      _filteredProducts.clear();
-      if (query.isEmpty) {
-        _filteredProducts.addAll(_products);
-      } else {
-        _filteredProducts.addAll(_products.where((product) {
-          final titleLower = product['title'].toString().toLowerCase();
-          final searchLower = query.toLowerCase();
-          return titleLower.contains(searchLower);
-        }).toList());
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    debugPrint('New Items: $_newItems');
-    debugPrint('New Items: $_hotSelling');
-    debugPrint('New Items: $_lighteningDeals');
-
     return LoadingManager(
       isLoading: _isLoading,
       child: Scaffold(
@@ -383,7 +361,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: TextField(
-                                    controller: _searchController,
                                     decoration: const InputDecoration(
                                       hintText: 'Search Products...',
                                       hintStyle: TextStyle(
@@ -400,7 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.bold,
                                       color: AppColor.grayColor,
                                     ),
-                                    onChanged: _filterProducts,
+                                    onChanged: (value) {},
                                   ),
                                 ),
                               ),
@@ -596,8 +573,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "Popular Pack",
                                     style: TextStyle(
                                       fontFamily: 'CenturyGothic',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColor.fontColor,
                                     ),
                                   ),
@@ -802,21 +779,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                             0.0,
                                       );
                                     } else {
-                                      // Handle the case when the list is empty or index is out of range
                                       return Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Shimmer(
-                                          duration: const Duration(
-                                              seconds: 3), //Default value
-                                          interval: const Duration(
-                                              seconds:
-                                                  5), //Default value: Duration(seconds: 0)
+                                          duration: const Duration(seconds: 3),
+                                          interval: const Duration(seconds: 5),
                                           color: AppColor.grayColor
-                                              .withOpacity(0.2), //Default value
-                                          colorOpacity: 0.2, //Default value
-                                          enabled: true, //Default value
-                                          direction: const ShimmerDirection
-                                              .fromLTRB(), //Default Value
+                                              .withOpacity(0.2),
+                                          colorOpacity: 0.2,
+                                          enabled: true,
+                                          direction:
+                                              const ShimmerDirection.fromLTRB(),
                                           child: Container(
                                             height: 100,
                                             width: 150,
@@ -829,8 +802,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                 ),
                               ),
-
-                              const VerticalSpeacing(16.0),
                               SizedBox(
                                 height: MediaQuery.of(context).size.height / 1,
                                 child: Column(
@@ -1007,7 +978,7 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.only(bottom: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -1015,8 +986,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 category,
                 style: const TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: AppColor.fontColor,
                 ),
               ),
