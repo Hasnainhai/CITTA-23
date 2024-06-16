@@ -403,6 +403,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
+                              Container(
+                                height: 40.0,
+                                width: 40.0,
+                                color: AppColor.primaryColor,
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.tune_outlined,
+                                      color: AppColor.whiteColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
