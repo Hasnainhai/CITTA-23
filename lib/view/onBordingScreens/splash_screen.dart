@@ -22,13 +22,14 @@ class _SplashScreenState extends State<SplashScreen> {
       try {
         await Firebase.initializeApp();
         if (FirebaseAuth.instance.currentUser != null) {
-          await Navigator.pushNamed(context, RoutesName.dashboardScreen);
+          await Navigator.pushNamedAndRemoveUntil(
+              context, RoutesName.dashboardScreen, (routes) => false);
         } else {
-          await Navigator.pushNamed(context, RoutesName.onboarding1);
+          await Navigator.pushNamedAndRemoveUntil(
+              context, RoutesName.onboarding1, (routes) => false);
         }
       } catch (e) {
-        Utils.flushBarErrorMessage(
-            '$e', context); // Handle Firebase initialization error
+        Utils.flushBarErrorMessage('$e', context);
       }
     });
   }
