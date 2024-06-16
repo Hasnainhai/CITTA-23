@@ -9,6 +9,7 @@ import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
+import 'package:citta_23/view/filter/filter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ import '../../res/components/colors.dart';
 import '../../res/components/widgets/verticalSpacing.dart';
 import '../../res/consts/vars.dart';
 import '../drawer/drawer.dart';
-import '../filter/filter.dart';
 import 'widgets/homeCard.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -313,6 +313,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  final List<Map<String, dynamic>> _filteredProducts = [];
+  final List<Map<String, dynamic>> _products = [];
+  final TextEditingController _searchController = TextEditingController();
+  void _filterProducts(String query) {
+    setState(() {
+      _filteredProducts.clear();
+      if (query.isEmpty) {
+        _filteredProducts.addAll(_products);
+      } else {
+        _filteredProducts.addAll(_products.where((product) {
+          final titleLower = product['title'].toString().toLowerCase();
+          final searchLower = query.toLowerCase();
+          return titleLower.contains(searchLower);
+        }).toList());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -320,7 +338,6 @@ class _HomeScreenState extends State<HomeScreen> {
     debugPrint('New Items: $_hotSelling');
     debugPrint('New Items: $_lighteningDeals');
     final productProvider = Provider.of<ProductProvider>(context);
-
 
     return LoadingManager(
       isLoading: _isLoading,
@@ -372,15 +389,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 8),
                                   child: TextField(
-                                    controller: _searchController,
-                                    onChanged: (value) {
-                                      if (_searchController.text.length == 1) {
-                                        productProvider.filterProducts(value);
-                                      } else {
-                                        _searchController.clear();
-                                      }
-                                    },
-
                                     decoration: const InputDecoration(
                                       hintText: 'Search Products...',
                                       hintStyle: TextStyle(
@@ -397,7 +405,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.bold,
                                       color: AppColor.grayColor,
                                     ),
-
+                                    onChanged: (value) {
+                                      if (_searchController.text.isNotEmpty) {
+                                        setState(() {
+                                          productProvider.filterProducts(value);
+                                        });
+                                      } else {}
+                                    },
                                   ),
                                 ),
                               ),
@@ -606,62 +620,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  ),
-
-                                ),
-                              ),
-                              Positioned(
-                                left: 25,
-                                top: 0,
-                                bottom: 5.0,
-                                child: FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Image.asset(
-                                    'images/foodimg.png',
-                                    height: 59.0,
-                                    width: 59.0,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    categoryType == CategoryType.food
-                        ? Column(
-                            children: [
-                              const VerticalSpeacing(20.0),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Popular Pack",
-                                    style: TextStyle(
-                                      fontFamily: 'CenturyGothic',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.fontColor,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        RoutesName.popularpackscreen,
-                                      );
-                                    },
-                                    child: const Text(
-                                      "View All",
-                                      style: TextStyle(
-                                        fontFamily: 'CenturyGothic',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColor.buttonBgColor,
-                                      ),
                                     ),
                                   ),
                                 ],
@@ -1123,48 +1081,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             );
                                           }
                                         },
-
-                                        productRating: _popularPacks[index]
-                                                ['averageReview'] ??
-                                            0.0,
-                                      );
-                                    } else {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Shimmer(
-                                          duration: const Duration(seconds: 3),
-                                          interval: const Duration(seconds: 5),
-                                          color: AppColor.grayColor
-                                              .withOpacity(0.2),
-                                          colorOpacity: 0.2,
-                                          enabled: true,
-                                          direction:
-                                              const ShimmerDirection.fromLTRB(),
-                                          child: Container(
-                                            height: 100,
-                                            width: 150,
-                                            color: AppColor.grayColor
-                                                .withOpacity(0.2),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height / 1,
-                                child: Column(
-                                  children: [
-                                    _buildCategorySection(
-                                        context, 'New Items', _newItems),
-                                    _buildCategorySection(
-                                        context, 'Hot Selling', _hotSelling),
-                                    _buildCategorySection(context,
-                                        'Lightening Deals', _lighteningDeals),
-                                  ],
-                                ),
-                              )
+                                      ),
+                                    ),
                             ],
                           )
                         : SizedBox(
@@ -1351,7 +1269,7 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(12.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -1359,8 +1277,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 category,
                 style: const TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                   color: AppColor.fontColor,
                 ),
               ),
