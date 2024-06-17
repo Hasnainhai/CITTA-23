@@ -31,7 +31,7 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: widget.bgColor,
-          border: Border.all(width: 2, color: widget.borderColor)),
+          border: Border.all(width: 2, color: widget.borderColor),),
       child: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 15.0),
         child: Row(
