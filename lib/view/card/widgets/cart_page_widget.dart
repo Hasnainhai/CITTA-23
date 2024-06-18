@@ -116,19 +116,20 @@ class _CartWidgetState extends State<CartWidget> {
       if (doc.exists) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         int price = int.tryParse(data['salePrice']?.toString() ?? '0') ?? 0;
-        int discount = int.tryParse(data['discount']?.toString() ?? '0') ?? 0;
 
         // Subtract the price and discount from the totals
         subTotal -= newPrice ?? price;
-        d -= newDiscount ?? discount;
+        d -= int.parse(widget.discount) * widget.items;
 
         Provider.of<SubTotalModel>(context, listen: false)
             .updateSubTotal(subTotal);
         Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
         Provider.of<TotalPriceModel>(context, listen: false)
             .updateTotalPrice(subTotal, d);
+        int currentIndex =
+            Provider.of<IndexModel>(context, listen: false).items;
         Provider.of<IndexModel>(context, listen: false)
-            .updateIndex(--widget.items);
+            .updateIndex(currentIndex - 1);
       }
 
       // Delete the document
