@@ -112,10 +112,18 @@ class _CardScreenState extends State<CardScreen> {
           title: Wrap(
             direction: Axis.horizontal,
             children: <Widget>[
-              Text(
-                'You haven\'t finished checking out yet. Don\'t miss out on free shipping & a ₹$subTotal discount',
-                style:
-                    const TextStyle(fontSize: 16.0, color: AppColor.menuColor),
+              Consumer<TotalPriceModel>(
+                builder: (context, totalPriceModel, child) {
+                  return Text(
+                    'You haven\'t finished checking out yet. Don\'t miss out on free shipping & a ₹${totalPriceModel.totalPrice} discount',
+                    style:const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.menuColor,
+                    ),
+                  );
+                },
               ),
             ],
           ),
