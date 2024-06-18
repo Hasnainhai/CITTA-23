@@ -43,10 +43,16 @@ class ProductProvider with ChangeNotifier {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 300), () {
       _isSearch = query.isNotEmpty;
-      _filteredProducts = _products
-          .where((product) =>
-              product.title.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      _filteredProducts = [];
+      if (query.isNotEmpty) {
+        for (var product in _products) {
+          if (product.title.toLowerCase().contains(query.toLowerCase())) {
+            _filteredProducts.add(product);
+          }
+        }
+      } else {
+        _filteredProducts = _products;
+      }
       notifyListeners();
     });
   }
