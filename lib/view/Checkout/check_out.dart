@@ -463,7 +463,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ],
                     ),
                   ),
-                  VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
+                  const VerticalSpeacing(46),
                   RoundedButton(
                     title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                     onpress: () async {
