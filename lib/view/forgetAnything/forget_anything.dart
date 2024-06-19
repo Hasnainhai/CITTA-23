@@ -2,6 +2,7 @@
 
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
@@ -32,7 +33,46 @@ class _ForgetAnythingState extends State<ForgetAnything> {
   @override
   void initState() {
     super.initState();
+    _fetchData();
     _currentSubTotal = widget.subTotal;
+  }
+
+  final CollectionReference _productsCollection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("cart");
+  void _fetchData() {
+    _productsCollection.get().then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        int sum = 0;
+        int discount = 0;
+
+        for (var document in querySnapshot.docs) {
+          String priceString = document['salePrice'];
+          int priceInt = int.tryParse(priceString.split('.').first) ?? 0;
+          sum += priceInt;
+
+          var data = document.data() as Map<String, dynamic>?;
+          if (data != null && data.containsKey('dPrice')) {
+            String disPrice = data['dPrice'];
+            int dP = int.tryParse(disPrice.split('.').first) ?? 0;
+            discount += dP;
+          }
+        }
+
+        setState(() {
+          subTotal = sum;
+          d = discount;
+          Provider.of<SubTotalModel>(context, listen: false)
+              .updateSubTotal(subTotal);
+          Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
+          Provider.of<TotalPriceModel>(context, listen: false)
+              .updateTotalPrice(subTotal, d);
+        });
+      }
+    }).catchError((error) {
+      debugPrint("Error fetching data: $error");
+    });
   }
 
   String calculateDiscountedPrice(
@@ -260,6 +300,7 @@ class _ForgetAnythingState extends State<ForgetAnything> {
                             .toString()
                         : '0', //  needed
                   );
+                  _fetchData();
                 },
                 productId: product['id'],
                 sellerId: product['sellerId'],

@@ -376,7 +376,10 @@ class _SearchSectionState extends State<SearchSection> {
                         sellerId: product.sellerId,
                         imageUrl: product.imageUrl,
                         price: product.price,
-                        salePrice: product.salePrice,
+                        salePrice: product.discount != "N/A"
+                            ? calculateDiscountedPrice(
+                                product.price, product.discount)
+                            : product.price,
                         weight: product.weight,
                         detail: product.detail,
                         disPrice: product.discountPrice,

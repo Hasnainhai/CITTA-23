@@ -961,12 +961,14 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                     img: widget.imageUrl,
                                     id: widget.productId,
                                     customerId: widget.sellerId,
-                                    weight: items.toString(),
+                                    weight: widget.weight,
                                     salePrice: newPrice == null
                                         ? widget.saleprice
                                         : newPrice.toString(),
                                     productType: "popular_pak",
-                                    size: "Null",
+                                    size: widget.size,
+                                    color: 'N/A',
+                                    quantity: items.toString(),
                                   ),
                                 ),
                               );
