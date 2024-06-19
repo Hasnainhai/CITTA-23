@@ -1,6 +1,7 @@
 import 'package:citta_23/models/search_model.dart';
 import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/consts/vars.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
@@ -308,117 +309,123 @@ class _SearchSectionState extends State<SearchSection> {
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.6,
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 16,
+    return LoadingManager(
+      isLoading: _isLoading,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height / 1.6,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 16,
+          ),
+          itemCount: productProvider.products.length,
+          itemBuilder: (context, index) {
+            Product product = productProvider.products[index];
+            String calculateDiscountedPrice(
+                String originalPriceString, String discountPercentageString) {
+              // Convert strings to double
+              debugPrint("this is the discount:$discountPercentageString");
+              debugPrint("this is the total:$originalPriceString");
+
+              double originalPrice = double.parse(originalPriceString);
+              double discountPercentage =
+                  double.parse(discountPercentageString);
+
+              // Calculate discounted price
+              double p = originalPrice * (discountPercentage / 100);
+              double discountedPrice = originalPrice - p;
+
+              // Return the discounted price as a formatted string
+              return discountedPrice.toStringAsFixed(
+                  0); // You can adjust the number of decimal places as needed
+            }
+
+            String dPrice(
+                String originalPriceString, String discountPercentageString) {
+              // Convert strings to double
+              debugPrint("this is the discount:$discountPercentageString");
+              debugPrint("this is the total:$originalPriceString");
+
+              double originalPrice = double.parse(originalPriceString);
+              double discountPercentage =
+                  double.parse(discountPercentageString);
+
+              // Calculate discounted price
+              double discountedPrice =
+                  originalPrice * (discountPercentage / 100);
+
+              // Return the discounted price as a formatted string
+              return discountedPrice.toStringAsFixed(
+                  0); // You can adjust the number of decimal places as needed
+            }
+
+            return HomeCard(
+              oofProd: product.discount != "N/A" ? true : false,
+              percentage: product.discount,
+              ontap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return product.isFashion
+                      ? FashionDetail(
+                          sellerId: product.sellerId,
+                          productId: product.id,
+                          title: product.title,
+                          imageUrl: product.imageUrl,
+                          salePrice: product.price,
+                          detail: product.detail,
+                          colors: product.colors,
+                          sizes: product.sizes,
+                        )
+                      : ProductDetailScreen(
+                          title: product.title,
+                          productId: product.id,
+                          sellerId: product.sellerId,
+                          imageUrl: product.imageUrl,
+                          price: product.price,
+                          salePrice: product.discount != "N/A"
+                              ? calculateDiscountedPrice(
+                                  product.price, product.discount)
+                              : product.price,
+                          weight: product.weight,
+                          detail: product.detail,
+                          disPrice: product.discountPrice,
+                        );
+                }));
+              },
+              sellerId: product.sellerId,
+              productId: product.id,
+              name: product.title,
+              price: product.price,
+              dPrice: product.discount != "N/A"
+                  ? calculateDiscountedPrice(product.price, product.discount)
+                  : product.price,
+              borderColor: AppColor.buttonBgColor,
+              fillColor: AppColor.appBarButtonColor,
+              img: product.imageUrl,
+              iconColor: AppColor.buttonBgColor,
+              addCart: () {
+                if (productProvider.products.isNotEmpty &&
+                    index >= 0 &&
+                    index < productProvider.products.length) {
+                  addToCart(
+                    product.imageUrl,
+                    product.title,
+                    product.price,
+                    product.id,
+                    product.sellerId,
+                    product.sizes.isNotEmpty ? product.sizes[0] : "N/A",
+                    product.colors.isNotEmpty ? product.colors[0] : "N/A",
+                    product.weight,
+                    product.discount != 'N/A'
+                        ? dPrice(product.price, product.discount)
+                        : "0",
+                  );
+                }
+              },
+              productRating: product.averageReview,
+            );
+          },
         ),
-        itemCount: productProvider.products.length,
-        itemBuilder: (context, index) {
-          Product product = productProvider.products[index];
-          String calculateDiscountedPrice(
-              String originalPriceString, String discountPercentageString) {
-            // Convert strings to double
-            debugPrint("this is the discount:$discountPercentageString");
-            debugPrint("this is the total:$originalPriceString");
-
-            double originalPrice = double.parse(originalPriceString);
-            double discountPercentage = double.parse(discountPercentageString);
-
-            // Calculate discounted price
-            double p = originalPrice * (discountPercentage / 100);
-            double discountedPrice = originalPrice - p;
-
-            // Return the discounted price as a formatted string
-            return discountedPrice.toStringAsFixed(
-                0); // You can adjust the number of decimal places as needed
-          }
-
-          String dPrice(
-              String originalPriceString, String discountPercentageString) {
-            // Convert strings to double
-            debugPrint("this is the discount:$discountPercentageString");
-            debugPrint("this is the total:$originalPriceString");
-
-            double originalPrice = double.parse(originalPriceString);
-            double discountPercentage = double.parse(discountPercentageString);
-
-            // Calculate discounted price
-            double discountedPrice = originalPrice * (discountPercentage / 100);
-
-            // Return the discounted price as a formatted string
-            return discountedPrice.toStringAsFixed(
-                0); // You can adjust the number of decimal places as needed
-          }
-
-          return HomeCard(
-            oofProd: product.discount != "N/A" ? true : false,
-            percentage: product.discount,
-            ontap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return product.isFashion
-                    ? FashionDetail(
-                        sellerId: product.sellerId,
-                        productId: product.id,
-                        title: product.title,
-                        imageUrl: product.imageUrl,
-                        salePrice: product.price,
-                        detail: product.detail,
-                        colors: product.colors,
-                        sizes: product.sizes,
-                      )
-                    : ProductDetailScreen(
-                        title: product.title,
-                        productId: product.id,
-                        sellerId: product.sellerId,
-                        imageUrl: product.imageUrl,
-                        price: product.price,
-                        salePrice: product.discount != "N/A"
-                            ? calculateDiscountedPrice(
-                                product.price, product.discount)
-                            : product.price,
-                        weight: product.weight,
-                        detail: product.detail,
-                        disPrice: product.discountPrice,
-                      );
-              }));
-            },
-            sellerId: product.sellerId,
-            productId: product.id,
-            name: product.title,
-            price: product.price,
-            dPrice: product.discount != "N/A"
-                ? calculateDiscountedPrice(product.price, product.discount)
-                : product.price,
-            borderColor: AppColor.buttonBgColor,
-            fillColor: AppColor.appBarButtonColor,
-            img: product.imageUrl,
-            iconColor: AppColor.buttonBgColor,
-            addCart: () {
-              if (productProvider.products.isNotEmpty &&
-                  index >= 0 &&
-                  index < productProvider.products.length) {
-                addToCart(
-                  product.imageUrl,
-                  product.title,
-                  product.price,
-                  product.id,
-                  product.sellerId,
-                  product.sizes.isNotEmpty ? product.sizes[0] : "N/A",
-                  product.colors.isNotEmpty ? product.colors[0] : "N/A",
-                  product.weight,
-                  product.discount != 'N/A'
-                      ? dPrice(product.price, product.discount)
-                      : "0",
-                );
-              }
-            },
-            productRating: product.averageReview,
-          );
-        },
       ),
     );
   }

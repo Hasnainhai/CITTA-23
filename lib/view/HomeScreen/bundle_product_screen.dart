@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../res/components/colors.dart';
+import '../../routes/routes_name.dart';
 
 // ignore: must_be_immutable
 class BundleProductScreen extends StatefulWidget {
@@ -1080,15 +1081,38 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ),
                   ),
                   const VerticalSpeacing(13),
-                  const Text(
-                    'Related products',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.fontColor,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Related products',
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RoutesName.popularpackscreen,
+                          );
+                        },
+                        child: const Text(
+                          "See More",
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.buttonBgColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+
                   const VerticalSpeacing(12),
                   SizedBox(
                     height: 63,

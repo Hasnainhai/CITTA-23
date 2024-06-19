@@ -4,6 +4,7 @@ import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
+import 'package:citta_23/view/HomeScreen/all_related_prod.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -655,14 +656,36 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                   const VerticalSpeacing(13),
-                  const Text(
-                    'Related products',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.fontColor,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Related products',
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const AllRelatedProd();
+                          }));
+                        },
+                        child: const Text(
+                          "See More",
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.buttonBgColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const VerticalSpeacing(12),
                   SizedBox(
