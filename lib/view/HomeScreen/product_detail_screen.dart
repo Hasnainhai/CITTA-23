@@ -506,7 +506,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               addToCart(
                                   widget.imageUrl,
                                   widget.title,
-                                  widget.salePrice,
+                                  widget.price,
                                   widget.sellerId,
                                   widget.productId,
                                   items == 1 ? widget.weight : items.toString(),
@@ -532,16 +532,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 MaterialPageRoute(
                                   builder: (c) => CheckOutScreen(
                                     tile: widget.title,
-                                    price: widget.salePrice,
+                                    price: widget.price,
                                     img: widget.imageUrl,
                                     id: widget.productId,
                                     customerId: widget.sellerId,
-                                    weight: items.toString(),
+                                    weight: widget.weight,
                                     productType: "product",
                                     salePrice: newPrice == null
                                         ? widget.salePrice
                                         : newPrice.toString(),
-                                    size: "Null",
+                                    size: "N/A",
+                                    quantity: items.toString(),
+                                    color: "N/A",
                                   ),
                                 ),
                               );

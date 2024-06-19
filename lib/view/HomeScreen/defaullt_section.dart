@@ -296,7 +296,7 @@ class _DefaultSectionState extends State<DefaultSection> {
         'title': title,
         'salePrice': dPrice,
         'deleteId': uuid,
-        'weght': weight,
+        'weight': weight,
         "size": size,
         "color": color,
         "dPrice": dprice,

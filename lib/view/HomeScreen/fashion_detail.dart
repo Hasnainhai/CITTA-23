@@ -595,24 +595,32 @@ class _FashionDetailState extends State<FashionDetail> {
                         color: AppColor.primaryColor,
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (c) => CheckOutScreen(
-                                  tile: widget.title,
-                                  price: widget.salePrice,
-                                  img: widget.imageUrl,
-                                  id: widget.productId,
-                                  customerId: widget.sellerId,
-                                  weight: items.toString(),
-                                  productType: 'fashion',
-                                  salePrice: newPrice == null
-                                      ? widget.salePrice
-                                      : newPrice.toString(),
-                                  size: size,
+                            if (_selectedSize == null ||
+                                _selectedImageUrl == null) {
+                              Utils.flushBarErrorMessage(
+                                  "Please select the size and color", context);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (c) => CheckOutScreen(
+                                    tile: widget.title,
+                                    price: widget.salePrice,
+                                    img: widget.imageUrl,
+                                    id: widget.productId,
+                                    customerId: widget.sellerId,
+                                    weight: 'N/A',
+                                    productType: 'fashion',
+                                    salePrice: newPrice == null
+                                        ? widget.salePrice
+                                        : newPrice.toString(),
+                                    size: size,
+                                    quantity: items.toString(),
+                                    color: color,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                           child: const Center(
                             child: Text(

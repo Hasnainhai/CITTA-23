@@ -30,7 +30,7 @@ class _CardScreenState extends State<CardScreen> {
 
   void fetchDataFromFirestore() async {
     QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
-
+    debugPrint("this is the productsSnapshot:$productsSnapshot");
     productList = productsSnapshot.docs.map((DocumentSnapshot product) {
       return {
         'productId': product.id,
@@ -44,6 +44,8 @@ class _CardScreenState extends State<CardScreen> {
         'size': product['size'],
         'color': product['color'],
         'discount': product['dPrice'],
+        'quantit': items.toString(),
+        "weight": product['weight'],
       };
     }).toList();
   }
@@ -116,7 +118,7 @@ class _CardScreenState extends State<CardScreen> {
                 builder: (context, totalPriceModel, child) {
                   return Text(
                     'You haven\'t finished checking out yet. Don\'t miss out on free shipping & a ₹${totalPriceModel.totalPrice} discount',
-                    style:const TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'CenturyGothic',
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

@@ -1,5 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
+
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
@@ -7,14 +17,8 @@ import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/done_screen.dart';
 import 'package:citta_23/view/Checkout/widgets/address_checkout_widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+
 import '../../res/components/colors.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({
@@ -28,6 +32,8 @@ class CheckOutScreen extends StatefulWidget {
     required this.salePrice,
     required this.productType,
     required this.size,
+    this.color,
+    this.quantity,
   });
   final String tile;
   final String price;
@@ -38,7 +44,8 @@ class CheckOutScreen extends StatefulWidget {
   final String salePrice;
   final String productType;
   final String size;
-
+  final String? color;
+  final String? quantity;
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
 }
@@ -54,7 +61,33 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   String? state;
   String? name;
   String? phone;
-  String paymentType = 'Stripe';
+  String? paymentType = 'Stripe';
+  void removeCartItems() async {
+    try {
+      // Get the reference to the user's cart collection
+      CollectionReference cartCollection = FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("cart");
+
+      // Get all documents in the cart collection
+      QuerySnapshot cartItemsSnapshot = await cartCollection.get();
+
+      // Batch delete each document in the cart
+      WriteBatch batch = FirebaseFirestore.instance.batch();
+      for (DocumentSnapshot doc in cartItemsSnapshot.docs) {
+        batch.delete(doc.reference);
+      }
+
+      // Commit the batch
+      await batch.commit();
+
+      // Optional: Show a success message or perform any other action
+    } catch (e) {
+      // Handle any errors that occur during the deletion process
+      Utils.flushBarErrorMessage('$e', context);
+    }
+  }
 
   onChanged(bool? value) {
     setState(() {
@@ -93,6 +126,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'phone': phone,
       "paymentType": paymentType,
       "size": widget.size,
+      'color': widget.color,
+      'quantity': widget.quantity,
     });
     fireStore
         .collection('saller')
@@ -118,6 +153,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'phone': phone,
       'paymentType': paymentType,
       "size": widget.size,
+      'color': widget.color,
+      'quantity': widget.quantity,
     });
   }
 
@@ -153,6 +190,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ));
       await Stripe.instance.presentPaymentSheet();
       Utils.toastMessage('Payment is successful');
+      removeCartItems();
 
       saveDetail();
       Navigator.pushAndRemoveUntil(
