@@ -1,40 +1,84 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:order_tracker/order_tracker.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/trackOrder/widgets/productDetailsWidget.dart';
-import 'package:flutter/material.dart';
-import 'package:order_tracker/order_tracker.dart';
 
 class TrackOrder extends StatefulWidget {
-  const TrackOrder({super.key});
+  const TrackOrder({
+    super.key,
+    required this.title,
+    required this.date,
+    required this.status,
+    required this.weight,
+    required this.items,
+    required this.price,
+    required this.orderId,
+    required this.img,
+  });
+  final String title;
+  final String date;
+  final String status;
+  final String weight;
+  final String items;
+  final String price;
+  final String orderId;
+  final String img;
 
   @override
   State<TrackOrder> createState() => _TrackOrderState();
 }
 
 class _TrackOrderState extends State<TrackOrder> {
-  List<TextDto> orderList = [
-    TextDto("Your order has been placed", "Fri, 25th Mar '22 - 10:47pm"),
-    TextDto("Seller ha processed your order", "Sun, 27th Mar '22 - 10:19am"),
-    TextDto("Your item has been picked up by courier partner.",
-        "Tue, 29th Mar '22 - 5:00pm"),
-  ];
-
-  List<TextDto> shippedList = [
-    TextDto("Your order has been shipped", "Tue, 29th Mar '22 - 5:04pm"),
-    TextDto("Your item has been received in the nearest hub to you.", null),
-  ];
-
-  List<TextDto> outOfDeliveryList = [
-    TextDto("Your order is out for delivery", "Thu, 31th Mar '22 - 2:27pm"),
-  ];
-
-  List<TextDto> deliveredList = [
-    TextDto("Your order has been delivered", "Thu, 31th Mar '22 - 3:58pm"),
-  ];
+  List<TextDto> orderList = [];
+  List<TextDto> shippedList = [];
+  List<TextDto> outOfDeliveryList = [];
+  List<TextDto> deliveredList = [];
   final bool isTrue = true;
+
+  Status _getOrderStatus(String status) {
+    switch (status) {
+      case "pending":
+        return Status.shipped;
+      case "processing":
+        return Status.outOfDelivery;
+      case "Delivered":
+        return Status.delivered;
+      default:
+        return Status.shipped; // or some default status
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    orderList.clear();
+    orderList.add(TextDto(
+      "Your order has been placed",
+      widget.date,
+    ));
+    if (widget.status == "pending") {
+      shippedList.clear();
+      shippedList.add(TextDto("Your order has been ", widget.status));
+    } else {
+      shippedList.clear();
+      shippedList.add(TextDto("Your order has been ", "out for delivery"));
+    }
+    if (widget.status != "pending") {
+      outOfDeliveryList.clear();
+      outOfDeliveryList.add(
+        TextDto("Your order has been", "Processing"),
+      );
+    }
+    if (widget.status == 'Delivered') {
+      deliveredList.clear();
+
+      deliveredList.add(
+        TextDto("Your order has been ", "delivered"),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -69,9 +113,9 @@ class _TrackOrderState extends State<TrackOrder> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VerticalSpeacing(20.0),
-                const Text(
-                  '   Order id #30398505202',
-                  style: TextStyle(
+                Text(
+                  widget.orderId,
+                  style: const TextStyle(
                     fontFamily: 'CenturyGothic',
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -81,7 +125,11 @@ class _TrackOrderState extends State<TrackOrder> {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: OrderTracker(
-                    status: Status.delivered,
+                    status: _getOrderStatus(widget.status),
+                    headingDateTextStyle:
+                        const TextStyle(color: Colors.transparent),
+                    subDateTextStyle:
+                        const TextStyle(color: AppColor.primaryColor),
                     activeColor: AppColor.primaryColor,
                     inActiveColor: Colors.grey[300],
                     orderTitleAndDateList: orderList,
@@ -100,82 +148,18 @@ class _TrackOrderState extends State<TrackOrder> {
                   ),
                 ),
                 const VerticalSpeacing(20.0),
-                // This is not favourite list card but i use it in order track in Prodcut details
-                const ProductDetailsWidget(
-                  img: 'images/Arnotts.png',
-                  title: 'Arnotts grans',
-                  subTitle: 'Form The Farmer',
-                  price: '3 KG',
-                  productPrice: '\$30',
-                  procustAverate: '3x',
-                  id: '',
-                  productId: '',
+                // This is not favourite list card but I use it in order track in Product details
+                ProductDetailsWidget(
+                  img: widget.img,
+                  title: widget.title,
+                  subTitle: '',
+                  price: widget.weight,
+                  productPrice: widget.price,
+                  procustAverate: '1',
+                  id: widget.orderId,
+                  productId: widget.orderId,
                 ),
-                const VerticalSpeacing(20.0),
-                const ProductDetailsWidget(
-                  img: 'images/cauliflower.png',
-                  title: 'cauliflower',
-                  subTitle: 'Form The Farmer',
-                  price: '5 KG',
-                  productPrice: '\$20',
-                  procustAverate: '6x',
-                  id: '',
-                  productId: '',
-                ),
-                const VerticalSpeacing(20.0),
-                const ProductDetailsWidget(
-                  img: 'images/girlGuide.png',
-                  title: 'girlGuide',
-                  subTitle: 'Form The Farmer',
-                  price: '2 KG',
-                  productPrice: '\$80',
-                  procustAverate: '9x',
-                  id: '',
-                  productId: '',
-                ),
-
                 const VerticalSpeacing(30.0),
-                const ListTile(
-                  title: Text(
-                    'Total Amount',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                  trailing: Text(
-                    '\$130',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                ),
-                const ListTile(
-                  title: Text(
-                    'Paid From',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                  trailing: Text(
-                    'Credit Card',
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.blackColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(50.0),
               ],
             ),
           ),

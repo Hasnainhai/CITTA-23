@@ -117,9 +117,7 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const CheckOutDoneScreen(),
         );
-      case RoutesName.trackOrder:
-        return MaterialPageRoute(
-            builder: (BuildContext context) => const TrackOrder());
+
       case RoutesName.notificationscreen:
         return MaterialPageRoute(
           builder: (BuildContext context) => const NotificationScreen(),

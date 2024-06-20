@@ -4,6 +4,7 @@ import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/trackOrder/track_order.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -169,6 +170,7 @@ class _MyOrdersState extends State<MyOrders>
                             sellerId: data['sellerId'] ?? "?",
                             title: data['title'],
                             phoneNumber: data['phone'],
+                            weight: data['weight'],
                           ),
                         );
                       }).toList(),
@@ -249,16 +251,19 @@ class _MyOrdersState extends State<MyOrders>
                             ),
                             status: data['status'],
                             ontap: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.trackOrder);
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (c) => TrackOrder()));
                             },
                             img: data['imageUrl'],
                             amount: data['weight'] ?? "1",
                             shippingAddress: data['address'],
                             salePrice: data['salePrice'],
-                            sellerId: data['sallerId'],
+                            sellerId: data['sellerId'],
                             title: data['title'],
                             phoneNumber: data['phone'],
+                            weight: data['weight'],
                           ),
                         );
                       }).toList(),
@@ -346,9 +351,10 @@ class _MyOrdersState extends State<MyOrders>
                             amount: data['weight'] ?? "1",
                             shippingAddress: data['address'],
                             salePrice: data['salePrice'],
-                            sellerId: data['sallerId'],
+                            sellerId: data['sellerId'],
                             title: data['title'],
                             phoneNumber: data['phone'],
+                            weight: data['weight'],
                           ),
                         );
                       }).toList(),
