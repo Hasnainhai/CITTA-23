@@ -27,8 +27,9 @@ class ProductDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 8,
+      height: MediaQuery.of(context).size.height / 7.6,
       child: Card(
+        shape: const RoundedRectangleBorder(),
         color: Colors.white,
         elevation: 0.5,
         child: Padding(
@@ -52,7 +53,7 @@ class ProductDetailsWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '$title',
+                            title,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
                               fontSize: 16,
@@ -61,7 +62,7 @@ class ProductDetailsWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '$price',
+                            price,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
                               fontSize: 16,
