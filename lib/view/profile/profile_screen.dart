@@ -317,13 +317,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           profileCenterBtns(
             ontap: () {
-              Navigator.pushNamed(context, RoutesName.promosOffer);
+              Navigator.pushNamed(context, RoutesName.deliveryAddress);
             },
             tColor: const Color(0xffFF6A9F),
             bColor: const Color(0xffD50059),
-            icon: Icons.card_giftcard_outlined,
-            title: 'Offer &',
-            subtitle: 'Promos',
+            icon: Icons.location_on_outlined,
+            title: 'Delivery',
+            subtitle: 'Address',
           ),
           profileCenterBtns(
             ontap: () {
@@ -356,16 +356,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Column(
               children: [
-                ProfileWidgets(
-                    ontap: () {
-                      Navigator.pushNamed(context, RoutesName.deliveryAddress);
-                    },
-                    tColor: const Color(0xffFF6A9F),
-                    bColor: const Color(0xffD50059),
-                    icon: Icons.location_on_outlined,
-                    trIcon: Icons.arrow_forward_ios,
-                    title: 'Delivery Address'),
-                const Divider(),
+                // ProfileWidgets(
+                //     ontap: () {
+                //       Navigator.pushNamed(context, RoutesName.deliveryAddress);
+                //     },
+                //     tColor: const Color(0xffFF6A9F),
+                //     bColor: const Color(0xffD50059),
+                //     icon: Icons.location_on_outlined,
+                //     trIcon: Icons.arrow_forward_ios,
+                //     title: 'Delivery Address'),
+                // const Divider(),
                 ProfileWidgets(
                     ontap: () {
                       Navigator.pushNamed(
@@ -388,9 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Reset Password'),
                 const Divider(),
                 ProfileWidgets(
-                    ontap: () {
-                      Navigator.pushNamed(context, RoutesName.restscreen);
-                    },
+                    ontap: () {},
                     tColor: const Color(0xffFF6A9F),
                     bColor: const Color(0xffD50059),
                     icon: Icons.help_outline,
