@@ -31,24 +31,6 @@ class _MenuScreenState extends State<MenuScreen> {
     });
   }
 
-  String calculateDiscountedPrice(
-      String originalPriceString, String discountPercentageString) {
-    // Convert strings to double
-    debugPrint("this is the discount:$discountPercentageString");
-    debugPrint("this is the total:$originalPriceString");
-
-    double originalPrice = double.parse(originalPriceString);
-    double discountPercentage = double.parse(discountPercentageString);
-
-    // Calculate discounted price
-    double p = originalPrice * (discountPercentage / 100);
-    double discountedPrice = originalPrice - p;
-
-    // Return the discounted price as a formatted string
-    return discountedPrice.toStringAsFixed(
-        0); // You can adjust the number of decimal places as needed
-  }
-
   void _handleFashionButton() {
     // Change the collection to 'fashion'
     setState(() {
@@ -71,6 +53,23 @@ class _MenuScreenState extends State<MenuScreen> {
     // Return the discounted price as a formatted string
     return discountedPrice.toStringAsFixed(
         0); // You can adjust the number of decimal places as needed
+  }
+
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount: $discountPercentageString");
+    debugPrint("this is the total: $originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+    String orPrice = discountedPrice.toInt().toString();
+    // Convert to integer to remove decimal places and then back to string
+    return orPrice;
   }
 
   void addToCart(
@@ -115,7 +114,7 @@ class _MenuScreenState extends State<MenuScreen> {
         'salePrice': dPrice,
         'deleteId': uuid,
         "size": size,
-        'weght': weight,
+        'weight': weight,
         'dPrice': disPrice,
         'color': color,
         // Add other product details as needed
@@ -384,11 +383,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                             'N/A',
                                             item['category'] ==
                                                     "Lightening Deals"
-                                                ? (int.parse(item['discount']) /
-                                                        100 *
-                                                        int.parse(
-                                                            item['price']))
-                                                    .toString()
+                                                ? dPrice(item['price'],
+                                                    item['discount'])
                                                 : '0',
                                           );
                                         },
