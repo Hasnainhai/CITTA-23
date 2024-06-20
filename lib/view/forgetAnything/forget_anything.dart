@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
@@ -28,13 +29,10 @@ class ForgetAnything extends StatefulWidget {
 }
 
 class _ForgetAnythingState extends State<ForgetAnything> {
-  String _currentSubTotal = '';
-
   @override
   void initState() {
     super.initState();
     _fetchData();
-    _currentSubTotal = widget.subTotal;
   }
 
   final CollectionReference _productsCollection = FirebaseFirestore.instance
@@ -68,6 +66,9 @@ class _ForgetAnythingState extends State<ForgetAnything> {
           Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
           Provider.of<TotalPriceModel>(context, listen: false)
               .updateTotalPrice(subTotal, d);
+          Provider.of<IndexModel>(context, listen: false).items;
+          Provider.of<IndexModel>(context, listen: false)
+              .updateIndex(querySnapshot.docs.length);
         });
       }
     }).catchError((error) {
@@ -184,13 +185,7 @@ class _ForgetAnythingState extends State<ForgetAnything> {
         'color': color,
         'dPrice': dprice,
       });
-
-      setState(() {
-        // Update subtotal after adding to cart
-        _currentSubTotal =
-            (double.parse(_currentSubTotal) + double.parse(dPrice))
-                .toStringAsFixed(2);
-      });
+      _fetchData();
 
       Utils.toastMessage('Successfully added to cart');
     }
@@ -294,10 +289,7 @@ class _ForgetAnythingState extends State<ForgetAnything> {
                         : 'N/A', //  actual color logic
                     product.containsKey('weight') ? product['weight'] : 'N/A',
                     product.containsKey('discount')
-                        ? (int.parse(product['discount']) /
-                                100 *
-                                int.parse(product['price']))
-                            .toString()
+                        ? dPrice(product['price'], product['discount'])
                         : '0', //  needed
                   );
                   _fetchData();

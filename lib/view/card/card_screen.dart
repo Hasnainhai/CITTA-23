@@ -92,6 +92,7 @@ class _CardScreenState extends State<CardScreen> {
           Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
           Provider.of<TotalPriceModel>(context, listen: false)
               .updateTotalPrice(subTotal, d);
+          Provider.of<IndexModel>(context, listen: false).items;
         });
       }
     }).catchError((error) {
