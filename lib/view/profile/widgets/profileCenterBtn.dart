@@ -53,6 +53,7 @@ class profileCenterBtns extends StatelessWidget {
         ),
         const VerticalSpeacing(10.0),
         Text.rich(
+          textAlign: TextAlign.center,
           TextSpan(
             text: '$title\n',
             style: const TextStyle(
