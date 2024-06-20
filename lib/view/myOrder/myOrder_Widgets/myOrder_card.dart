@@ -1,6 +1,6 @@
 // ignore_for_file: file_names, camel_case_types
 
-import 'package:citta_23/view/myOrder/myOrder_Widgets/order_tracking.dart';
+import 'package:citta_23/view/trackOrder/track_order.dart';
 import 'package:flutter/material.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
@@ -19,6 +19,7 @@ class myOrderCard extends StatefulWidget {
     required this.sellerId,
     required this.title,
     required this.phoneNumber,
+    required this.weight,
   });
   final String orderId;
   final String date;
@@ -31,6 +32,7 @@ class myOrderCard extends StatefulWidget {
   final String sellerId;
   final String title;
   final String phoneNumber;
+  final String weight;
 
   @override
   State<myOrderCard> createState() => _myOrderCardState();
@@ -66,7 +68,14 @@ class _myOrderCardState extends State<myOrderCard> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (c) => OrderTrackingScreen(
+                        builder: (c) => TrackOrder(
+                          title: widget.title,
+                          date: widget.date,
+                          status: widget.status,
+                          weight: "weight",
+                          items: "items",
+                          price: widget.salePrice,
+                          orderId: widget.orderId,
                           img: widget.img,
                         ),
                       ),

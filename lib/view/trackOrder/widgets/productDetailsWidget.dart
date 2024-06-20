@@ -27,81 +27,78 @@ class ProductDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: MediaQuery.of(context).size.height / 8,
       child: Card(
         color: Colors.white,
         elevation: 0.5,
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Center(
-            child: ListTile(
-              leading: SizedBox(
-                height: 80.0,
-                width: 58.0,
-                child: Image.asset(img),
-              ),
-              title: Row(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(width: 30.0),
-                  Column(
+                  Row(
                     children: [
-                      Text.rich(
-                        TextSpan(
-                          text: '$title \n',
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: AppColor.fontColor,
+                      SizedBox(
+                        height: 58.0,
+                        width: 58.0,
+                        child: Image.network(img),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$title',
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.fontColor,
+                            ),
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '$subTitle \n \n',
-                              style: const TextStyle(
-                                color: AppColor.fontColor,
-                                // fontWeight: FontWeight.w100,
-                                fontSize: 16.0,
-                              ),
+                          Text(
+                            '$price',
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColor.fontColor,
                             ),
-                            TextSpan(
-                              text: price,
-                              style: const TextStyle(
-                                color: AppColor.fontColor,
-                                // fontWeight: FontWeight.w100,
-                                fontSize: 14.0,
-                              ),
-                            ),
-                          ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        productPrice,
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      Text(
+                        procustAverate,
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.grayColor,
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    productPrice,
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                  Text(
-                    procustAverate,
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.grayColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
         ),
       ),
