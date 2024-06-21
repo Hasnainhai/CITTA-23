@@ -922,4 +922,168 @@ class _DefaultSectionState extends State<DefaultSection> {
       ],
     );
   }
+
+  Widget _buildFashionCategorySection(BuildContext context, String category,
+      List<Map<String, dynamic>> products) {
+    final categoryProducts =
+        products.where((product) => product['category'] == category).toList();
+    String calculateDiscountedPrice(
+        String originalPriceString, String discountPercentageString) {
+      // Convert strings to double
+      debugPrint("this is the discount:$discountPercentageString");
+      debugPrint("this is the total:$originalPriceString");
+
+      double originalPrice = double.parse(originalPriceString);
+      double discountPercentage = double.parse(discountPercentageString);
+
+      // Calculate discounted price
+      double p = originalPrice * (discountPercentage / 100);
+      double discountedPrice = originalPrice - p;
+
+      // Return the discounted price as a formatted string
+      return discountedPrice.toStringAsFixed(
+          0); // You can adjust the number of decimal places as needed
+    }
+
+    String dPrice(String originalPriceString, String discountPercentageString) {
+      // Convert strings to double
+      debugPrint("this is the discount:$discountPercentageString");
+      debugPrint("this is the total:$originalPriceString");
+
+      double originalPrice = double.parse(originalPriceString);
+      double discountPercentage = double.parse(discountPercentageString);
+
+      // Calculate discounted price
+      double discountedPrice = originalPrice * (discountPercentage / 100);
+
+      // Return the discounted price as a formatted string
+      return discountedPrice.toStringAsFixed(
+          0); // You can adjust the number of decimal places as needed
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                category,
+                style: const TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColor.fontColor,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  String title = category;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return CategoryProductsScreen(
+                      title: title,
+                      products: products,
+                    );
+                  }));
+                },
+                child: const Text(
+                  "View All",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.buttonBgColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 4,
+          child: categoryProducts.isEmpty
+              ? Center(child: Text('No $category...'))
+              : GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: categoryProducts.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (_, index) {
+                    final product = categoryProducts[index];
+
+                    return HomeCard(
+                      ontap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProductDetailScreen(
+                                title: product['title'].toString(),
+                                productId: product['id'].toString(),
+                                sellerId: product['sellerId'].toString(),
+                                imageUrl: product['imageUrl'],
+                                price: product['price'].toString(),
+                                salePrice: category == "Lightening Deals"
+                                    ? calculateDiscountedPrice(
+                                        product['price'], product['discount'])
+                                    : product['price'].toString(),
+                                weight: product['weight'].toString(),
+                                detail: product['detail'].toString(),
+                                disPrice: category == "Lightening Deals"
+                                    ? (int.parse(product['discount']) /
+                                            100 *
+                                            int.parse(product['price']))
+                                        .toString()
+                                    : '0',
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      percentage: category == "Lightening Deals"
+                          ? product['discount'].toString()
+                          : '',
+                      oofProd: category == "Lightening Deals" ? true : false,
+                      productId: product['id'],
+                      sellerId: product['sellerId'],
+                      name: product['title'].toString(),
+                      price: product['price'].toString(),
+                      dPrice: category == "Lightening Deals"
+                          ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                          : product['price'].toString(),
+                      borderColor: AppColor.buttonBgColor,
+                      fillColor: AppColor.appBarButtonColor,
+                      img: product['imageUrl'],
+                      iconColor: AppColor.buttonBgColor,
+                      addCart: () {
+                        if (categoryProducts.isNotEmpty &&
+                            index >= 0 &&
+                            index < categoryProducts.length) {
+                          addToCart(
+                            product['imageUrl'],
+                            product['title'],
+                            product['price'].toString(),
+                            product['sellerId'],
+                            product['id'],
+                            "N/A",
+                            "N/A",
+                            product['weight'],
+                            category == "Lightening Deals"
+                                ? dPrice(product['price'], product['discount'])
+                                : '0',
+                          );
+                        }
+                      },
+                      productRating: product['averageReview'] ?? 0.0,
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
 }
