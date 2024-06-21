@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:citta_23/res/components/colors.dart';
 
@@ -9,7 +8,7 @@ class DetailRating extends StatelessWidget {
   final String rating;
   final String comment;
 
-  DetailRating({
+  const DetailRating({
     super.key,
     required this.img,
     required this.userName,

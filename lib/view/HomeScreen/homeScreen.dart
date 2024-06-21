@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isLoading = false;
+  final bool _isLoading = false;
   TextEditingController searchController = TextEditingController();
 
   @override
