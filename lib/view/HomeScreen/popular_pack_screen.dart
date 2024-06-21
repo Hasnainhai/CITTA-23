@@ -94,7 +94,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
       return qn.docs;
     } catch (e) {
       // Log the error or handle it as necessary
-      print('Error fetching popular packs: $e');
+      debugPrint('Error fetching popular packs: $e');
       setState(() {
         _isLoading = false;
       });

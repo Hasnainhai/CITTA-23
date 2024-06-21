@@ -197,7 +197,7 @@ class _DefaultSectionState extends State<DefaultSection> {
       return qn.docs;
     } catch (e) {
       // Log the error or handle it as necessary
-      print('Error fetching popular packs: $e');
+      debugPrint('Error fetching popular packs: $e');
       setState(() {
         _isLoading = false;
       });
@@ -238,7 +238,7 @@ class _DefaultSectionState extends State<DefaultSection> {
       return qn.docs;
     } catch (e) {
       // Log the error or handle it as necessary
-      print('Error fetching fashion products: $e');
+      debugPrint('Error fetching fashion products: $e');
       setState(() {
         _isLoading = false;
       });
