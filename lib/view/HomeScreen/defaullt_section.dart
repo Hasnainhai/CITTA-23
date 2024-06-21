@@ -27,13 +27,14 @@ class DefaultSection extends StatefulWidget {
 class _DefaultSectionState extends State<DefaultSection> {
   var categoryType = CategoryType.fashion;
   // final List _products = [];
-  final List _fashionProducts = [];
   final _firestoreInstance = FirebaseFirestore.instance;
   bool _isLoading = false;
   final List<Map<String, dynamic>> _newItems = [];
   final List<Map<String, dynamic>> _hotSelling = [];
   final List<Map<String, dynamic>> _lighteningDeals = [];
-
+  final List<Map<String, dynamic>> _fashionnewItems = [];
+  final List<Map<String, dynamic>> _fashionhotSelling = [];
+  final List<Map<String, dynamic>> _fashionlighteningDeals = [];
   bool isSearch = false;
   @override
   initState() {
@@ -107,7 +108,6 @@ class _DefaultSectionState extends State<DefaultSection> {
       });
 
       QuerySnapshot qn = await _firestoreInstance.collection('products').get();
-      debugPrint('Data fetched from Firestore: ${qn.docs}');
 
       setState(() {
         _newItems.clear();
@@ -127,8 +127,6 @@ class _DefaultSectionState extends State<DefaultSection> {
             'category': data['category'],
             'averageReview': data['averageReview'] ?? 0.0, // Default to 0.0
           };
-
-          debugPrint('Fetched product: $product');
 
           switch (product['category']) {
             case 'New Items':
@@ -171,13 +169,8 @@ class _DefaultSectionState extends State<DefaultSection> {
         }
 
         _isLoading = false;
-
-        debugPrint('New Items: $_newItems');
-        debugPrint('Hot Selling: $_hotSelling');
-        debugPrint('Lightening Deals: $_lighteningDeals');
       });
     } catch (e) {
-      debugPrint('Error fetching products: $e');
       setState(() {
         _isLoading = false;
       });
@@ -276,25 +269,70 @@ class _DefaultSectionState extends State<DefaultSection> {
       QuerySnapshot qn = await _firestoreInstance.collection('fashion').get();
 
       setState(() {
-        _fashionProducts.clear();
+        _fashionnewItems.clear();
+        _fashionhotSelling.clear();
+        _fashionlighteningDeals.clear();
         for (var doc in qn.docs) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-          _fashionProducts.add({
+
+          var fashion = {
+            'category': data['category'],
             'sellerId': data['sellerId'],
             'id': data['id'],
             'imageUrl': data['imageUrl'],
             'title': data['title'],
             'price': data['price'],
-            // 'salePrice': data['salePrice'] ?? '', // Uncomment if you need this field
             'detail': data['detail'],
             'color': data['color'],
             'size': data['size'],
             'averageReview': data['averageReview'] ?? 0.0,
-          });
+          };
+
+          if (fashion['category'] == "Lightening Deals") {
+            fashion['discount'] = data['discount'] ?? 'N/A';
+            _fashionlighteningDeals.add(fashion);
+            debugPrint("this is the discount:${fashion['discount']}");
+            debugPrint("this is the fashion:${fashion.entries}");
+          } else {
+            switch (fashion['category']) {
+              case 'New Items':
+                _fashionnewItems.add(fashion);
+                break;
+              case 'Hot Selling':
+                _fashionhotSelling.add(fashion);
+                break;
+            }
+          }
+        }
+
+        if (_fashionnewItems.isEmpty || _fashionhotSelling.isEmpty) {
+          for (var doc in qn.docs) {
+            Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+            var product = {
+              'category': data['category'],
+              'sellerId': data['sellerId'],
+              'id': data['id'],
+              'imageUrl': data['imageUrl'],
+              'title': data['title'],
+              'price': data['price'],
+              'detail': data['detail'],
+              'color': data['color'],
+              'size': data['size'],
+              'averageReview': data['averageReview'] ?? 0.0,
+            };
+            if (product['category'] == "Lightening Deals") {
+              product['discount'] = data['discount'] ?? 'N/A';
+            }
+            if (product['category'] == 'New Items' &&
+                !_fashionnewItems.contains(product)) {
+              _fashionnewItems.add(product);
+            } else if (product['category'] == 'Hot Selling' &&
+                !_fashionhotSelling.contains(product)) {
+              _fashionhotSelling.add(product);
+            }
+          }
         }
       });
-
-      return qn.docs;
     } catch (e) {
       // Log the error or handle it as necessary
       debugPrint('Error fetching fashion products: $e');
@@ -726,99 +764,15 @@ class _DefaultSectionState extends State<DefaultSection> {
                 )
               : Padding(
                   padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
-                  child: GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _fashionProducts.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 16,
-                    ),
-                    itemBuilder: (_, index) {
-                      // Check if _products is not empty and index is within valid range
-                      if (_fashionProducts.isNotEmpty &&
-                          index < _fashionProducts.length) {
-                        return HomeCard(
-                          ontap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return FashionDetail(
-                                sellerId: _fashionProducts[index]['sellerId'],
-                                productId: _fashionProducts[index]['id'],
-                                title:
-                                    _fashionProducts[index]['title'].toString(),
-                                imageUrl: _fashionProducts[index]['imageUrl'],
-                                salePrice: _fashionProducts[index]['price'],
-                                detail: _fashionProducts[index]['detail']
-                                    .toString(),
-                                colors: _fashionProducts[index]['color']
-                                    .cast<String>(),
-                                sizes: _fashionProducts[index]['size']
-                                    .cast<String>(),
-                              );
-                            }));
-                          },
-                          sellerId: _fashionProducts[index]['sellerId'],
-                          productId: _fashionProducts[index]['id'],
-                          name: _fashionProducts[index]['title'].toString(),
-                          price: '',
-                          dPrice: "${_fashionProducts[index]['price']}₹",
-                          borderColor: AppColor.buttonBgColor,
-                          fillColor: AppColor.appBarButtonColor,
-                          img: _fashionProducts[index]['imageUrl'],
-                          iconColor: AppColor.buttonBgColor,
-                          addCart: () {
-                            if (_fashionProducts.isNotEmpty &&
-                                index >= 0 &&
-                                index < _fashionProducts.length) {
-                              addToCart(
-                                _fashionProducts[index]['imageUrl'],
-                                _fashionProducts[index]['title'],
-                                _fashionProducts[index]['price'],
-                                _fashionProducts[index]['id'],
-                                _fashionProducts[index]['sellerId'],
-                                _fashionProducts[0]['size'][0],
-                                _fashionProducts[0]['color'][0],
-                                "N/A",
-                                '0',
-                              );
-                            }
-                          },
-                          productRating: _fashionProducts[index]
-                              ['averageReview'],
-                        );
-                      } else if (_fashionProducts.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            'No Products...',
-                          ),
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Shimmer(
-                            duration:
-                                const Duration(seconds: 3), //Default value
-                            interval: const Duration(
-                                seconds:
-                                    5), //Default value: Duration(seconds: 0)
-                            color: AppColor.grayColor
-                                .withOpacity(0.2), //Default value
-                            colorOpacity: 0.2, //Default value
-                            enabled: true, //Default value
-                            direction: const ShimmerDirection
-                                .fromLTRB(), //Default Value
-                            child: Container(
-                              height: 100,
-                              width: 150,
-                              color: AppColor.grayColor.withOpacity(0.2),
-                            ),
-                          ),
-                        );
-                      }
-                    },
+                  child: Column(
+                    children: [
+                      _buildFashionCategorySection(
+                          context, 'New Items', _fashionnewItems),
+                      _buildFashionCategorySection(
+                          context, 'Hot Selling', _fashionhotSelling),
+                      _buildFashionCategorySection(
+                          context, 'Lightening Deals', _fashionlighteningDeals),
+                    ],
                   ),
                 ),
         ],
@@ -1084,68 +1038,51 @@ class _DefaultSectionState extends State<DefaultSection> {
 
                     return HomeCard(
                       ontap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ProductDetailScreen(
-                                title: product['title'].toString(),
-                                productId: product['id'].toString(),
-                                sellerId: product['sellerId'].toString(),
-                                imageUrl: product['imageUrl'],
-                                price: product['price'].toString(),
-                                salePrice: category == "Lightening Deals"
-                                    ? calculateDiscountedPrice(
-                                        product['price'], product['discount'])
-                                    : product['price'].toString(),
-                                weight: product['weight'].toString(),
-                                detail: product['detail'].toString(),
-                                disPrice: category == "Lightening Deals"
-                                    ? (int.parse(product['discount']) /
-                                            100 *
-                                            int.parse(product['price']))
-                                        .toString()
-                                    : '0',
-                              );
-                            },
-                          ),
-                        );
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FashionDetail(
+                            sellerId: product['sellerId'],
+                            productId: product['id'],
+                            title: product['title'].toString(),
+                            imageUrl: product['imageUrl'],
+                            salePrice: product['price'],
+                            detail: product['detail'].toString(),
+                            colors: product['color'].cast<String>(),
+                            sizes: product['size'].cast<String>(),
+                          );
+                        }));
                       },
-                      percentage: category == "Lightening Deals"
-                          ? product['discount'].toString()
-                          : '',
-                      oofProd: category == "Lightening Deals" ? true : false,
-                      productId: product['id'],
                       sellerId: product['sellerId'],
+                      productId: product['id'],
                       name: product['title'].toString(),
-                      price: product['price'].toString(),
-                      dPrice: category == "Lightening Deals"
-                          ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
-                          : product['price'].toString(),
+                      price: '',
+                      dPrice: "${product['price']}₹",
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
                       img: product['imageUrl'],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
+                        debugPrint(
+                            "this is the product of fashion:${product.toString()}");
                         if (categoryProducts.isNotEmpty &&
                             index >= 0 &&
                             index < categoryProducts.length) {
                           addToCart(
                             product['imageUrl'],
                             product['title'],
-                            product['price'].toString(),
-                            product['sellerId'],
+                            product['price'],
                             product['id'],
+                            product['sellerId'],
+                            product['size'][0],
+                            product['color'][0],
                             "N/A",
-                            "N/A",
-                            product['weight'],
-                            category == "Lightening Deals"
+                            product['category'] == "Lightening Deals"
                                 ? dPrice(product['price'], product['discount'])
                                 : '0',
                           );
                         }
                       },
-                      productRating: product['averageReview'] ?? 0.0,
+                      productRating: product['averageReview'],
                     );
                   },
                 ),
