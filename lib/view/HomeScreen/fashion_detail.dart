@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
+import '../../routes/routes_name.dart';
 
 // ignore: must_be_immutable
 class FashionDetail extends StatefulWidget {
@@ -727,14 +728,36 @@ class _FashionDetailState extends State<FashionDetail> {
                   ),
                 ),
                 const VerticalSpeacing(13),
-                const Text(
-                  'Related products',
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.fontColor,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Related products',
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RoutesName.fashionProd,
+                        );
+                      },
+                      child: const Text(
+                        "See More",
+                        style: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.buttonBgColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const VerticalSpeacing(12),
                 SizedBox(

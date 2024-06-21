@@ -29,10 +29,8 @@ import 'package:citta_23/view/promos/CouponDetails/coupon_details.dart';
 import 'package:citta_23/view/promos/offer_promos.dart';
 import 'package:flutter/material.dart';
 import '../view/AuthenticationScreens/login_or_signin_screen.dart';
-import '../view/HomeScreen/popular_pack_screen.dart';
 import '../view/deliveryAddress/delivery_address.dart';
 import '../view/onBordingScreens/onbording_screen1.dart';
-import '../view/trackOrder/track_order.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -81,10 +79,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const HomeScreen(),
         );
-      case RoutesName.popularpackscreen:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const PopularPackScreen(),
-        );
+      // case RoutesName.popularpackscreen:
+      //   return MaterialPageRoute(
+      //     builder: (BuildContext context) => const PopularPackScreen(),
+      //   );
       case RoutesName.favouriteList:
         return MaterialPageRoute(
           builder: (BuildContext context) => const FavouriteList(),

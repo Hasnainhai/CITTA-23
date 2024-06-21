@@ -4,9 +4,9 @@ import 'package:citta_23/res/components/custom_field.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
+import 'package:citta_23/view/deliveryAddress/delivery_address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -307,10 +307,11 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
                                 title: "Save Address",
                                 onpress: () {
                                   addAddress();
-                                  Navigator.pushNamed(
-                                    context,
-                                    RoutesName.checkOutScreen,
-                                  );
+                                  // Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return const DeliveryAddress();
+                                  }));
                                 }),
                             const VerticalSpeacing(40),
                           ],

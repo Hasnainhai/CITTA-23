@@ -199,7 +199,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     MaterialPageRoute(builder: (context) {
                                   return CategoryProductsScreen(
                                     title: title,
-                                    products: [],
+                                    products: const [],
                                   );
                                 }));
                               },

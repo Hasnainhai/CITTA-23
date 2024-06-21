@@ -12,7 +12,8 @@ import 'widgets/homeCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class PopularPackScreen extends StatefulWidget {
-  const PopularPackScreen({super.key});
+  const PopularPackScreen({super.key, required this.title});
+  final String title;
   @override
   State<PopularPackScreen> createState() => _PopularPackScreenState();
 }
@@ -94,7 +95,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
       return qn.docs;
     } catch (e) {
       // Log the error or handle it as necessary
-      print('Error fetching popular packs: $e');
+      debugPrint('Error fetching popular packs: $e');
       setState(() {
         _isLoading = false;
       });
@@ -224,9 +225,9 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
               color: AppColor.fontColor,
             ),
           ),
-          title: const Text(
-            "Popular Pack",
-            style: TextStyle(
+          title: Text(
+            widget.title,
+            style: const TextStyle(
               fontFamily: 'CenturyGothic',
               fontSize: 18,
               fontWeight: FontWeight.w400,

@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -463,7 +462,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ],
                     ),
                   ),
-                  VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
+                  const VerticalSpeacing(46),
                   RoundedButton(
                     title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                     onpress: () async {
