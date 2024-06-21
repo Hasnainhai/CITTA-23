@@ -27,25 +27,32 @@ class _AllFashionProdState extends State<AllFashionProd> {
       setState(() {
         _isLoading = true;
       });
+
       QuerySnapshot qn = await _firestoreInstance.collection('fashion').get();
 
       setState(() {
         _fashionProducts.clear();
-        for (int i = 0; i < qn.docs.length; i++) {
+        for (var doc in qn.docs) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
           _fashionProducts.add({
-            'id': qn.docs[i]['id'],
-            'sellerId': qn.docs[i]['sellerId'],
-            'imageUrl': qn.docs[i]['imageUrl'],
-            'title': qn.docs[i]['title'],
-            'price': qn.docs[i]['price'],
-            // 'salePrice': qn.docs[i]['salePrice'],
-            'detail': qn.docs[i]['detail'],
-            'averageReview': qn.docs[i]['averageReview'],
+            'sellerId': data['sellerId'],
+            'id': data['id'],
+            'imageUrl': data['imageUrl'],
+            'title': data['title'],
+            'price': data['price'],
+            // 'salePrice': data['salePrice'] ?? '', // Uncomment if you need this field
+            'detail': data['detail'],
+            'color': data['color'],
+            'size': data['size'],
+            'averageReview': data['averageReview'] ?? 0.0,
           });
         }
       });
+
       return qn.docs;
     } catch (e) {
+      // Log the error or handle it as necessary
+      debugPrint('Error fetching fashion products: $e');
       setState(() {
         _isLoading = false;
       });
@@ -124,7 +131,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
           ),
         ),
         title: const Text(
-          "Fashion",
+          "Related Products",
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
