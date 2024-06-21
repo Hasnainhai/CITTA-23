@@ -2,6 +2,7 @@
 
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -202,7 +203,7 @@ class _ForgetAnythingState extends State<ForgetAnything> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, RoutesName.dashboardScreen);
             },
             icon: const Icon(
               Icons.arrow_back,

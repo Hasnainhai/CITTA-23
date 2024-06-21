@@ -196,7 +196,7 @@ class _CardScreenState extends State<CardScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            showCheckOutDialog(context);
             subTotal = 0;
             Provider.of<SubTotalModel>(context, listen: false)
                 .updateSubTotal(subTotal);
@@ -381,7 +381,12 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
-                        showCheckOutDialog(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ForgetAnything(
+                              productList: productList,
+                              subTotal: subTotal.toString());
+                        }));
                       }),
                 ),
                 const VerticalSpeacing(60.0),
