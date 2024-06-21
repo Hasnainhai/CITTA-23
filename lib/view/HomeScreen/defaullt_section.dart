@@ -2,11 +2,11 @@ import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/vars.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/bundle_product_screen.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/new_items.dart';
+import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../routes/routes_name.dart';
 
 class DefaultSection extends StatefulWidget {
   const DefaultSection({super.key});
@@ -39,6 +41,63 @@ class _DefaultSectionState extends State<DefaultSection> {
     fetchCategoryProducts();
     fetchPopularPack();
     fetchFashionProducts();
+  }
+
+  // popUp
+  void showSignupDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   fetchCategoryProducts() async {
@@ -261,7 +320,7 @@ class _DefaultSectionState extends State<DefaultSection> {
       String dprice) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      Utils.toastMessage('Please SignUp first');
+      showSignupDialog(context);
       return;
     }
 
@@ -467,10 +526,11 @@ class _DefaultSectionState extends State<DefaultSection> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              RoutesName.popularpackscreen,
-                            );
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return const PopularPackScreen(
+                                  title: 'Popular Pack');
+                            }));
                           },
                           child: const Text(
                             "View All",

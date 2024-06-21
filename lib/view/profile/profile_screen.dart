@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final googleAuth = FirebaseAuth.instance.currentUser;
     _name = googleAuth?.displayName ?? 'You';
-    _email = googleAuth?.email ?? 'ID: 5788478';
+    _email = googleAuth?.email ?? 'Email';
     _pImage = googleAuth?.photoURL ?? defaultProfile;
     setState(() {
       _isLoading = false;
@@ -153,30 +153,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             color: AppColor.whiteColor,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              if (_name != null && _email != null) {
-                // Navigate to EditProfile with existing user details
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return EditProfile(
-                    profilePic: _pImage ?? defaultProfile,
-                    name: _name ?? 'Default Name',
-                    email: _email!.length > 12
-                        ? "${_email!.substring(0, 12)}..."
-                        : _email ?? 'Default Email',
-                  );
-                }));
-              } else {
-                Utils.flushBarErrorMessage('Error occurred', context);
-              }
-            },
-            icon: const Icon(
-              Icons.edit_outlined,
-              color: AppColor.whiteColor,
-            ),
-          )
-        ],
         centerTitle: true,
         leading: const Icon(
           Icons.arrow_back,
@@ -255,7 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Text(
                   _email == null
-                      ? 'ID: 1540580'
+                      ? 'Email'
                       : (_email!.length > 20
                           ? '${_email!.substring(0, 20)}...'
                           : _email!),
@@ -356,16 +332,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             Column(
               children: [
-                // ProfileWidgets(
-                //     ontap: () {
-                //       Navigator.pushNamed(context, RoutesName.deliveryAddress);
-                //     },
-                //     tColor: const Color(0xffFF6A9F),
-                //     bColor: const Color(0xffD50059),
-                //     icon: Icons.location_on_outlined,
-                //     trIcon: Icons.arrow_forward_ios,
-                //     title: 'Delivery Address'),
-                // const Divider(),
                 ProfileWidgets(
                     ontap: () {
                       Navigator.pushNamed(
@@ -386,6 +352,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     icon: Icons.lock_outline,
                     trIcon: Icons.arrow_forward_ios,
                     title: 'Reset Password'),
+                const Divider(),
+                ProfileWidgets(
+                    ontap: () {
+                      if (_name != null && _email != null) {
+                        // Navigate to EditProfile with existing user details
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return EditProfile(
+                            profilePic: _pImage ?? defaultProfile,
+                            name: _name ?? 'Default Name',
+                            email: _email!.length > 12
+                                ? "${_email!.substring(0, 12)}..."
+                                : _email ?? 'Default Email',
+                          );
+                        }));
+                      } else {
+                        Utils.flushBarErrorMessage('Error occurred', context);
+                      }
+                    },
+                    tColor: const Color(0xffFF6A9F),
+                    bColor: const Color(0xffD50059),
+                    icon: Icons.edit,
+                    trIcon: Icons.arrow_forward_ios,
+                    title: 'Edit Profile'),
                 const Divider(),
                 ProfileWidgets(
                     ontap: () {},

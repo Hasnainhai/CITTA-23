@@ -4,6 +4,7 @@ import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
+import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../res/components/colors.dart';
-import '../../routes/routes_name.dart';
 
 // ignore: must_be_immutable
 class BundleProductScreen extends StatefulWidget {
@@ -1095,10 +1095,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            RoutesName.popularpackscreen,
-                          );
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return const PopularPackScreen(
+                                title: 'Related products');
+                          }));
                         },
                         child: const Text(
                           "See More",

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/vars.dart';
+import '../../routes/routes_name.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -72,6 +73,63 @@ class _MenuScreenState extends State<MenuScreen> {
     return orPrice;
   }
 
+  // popUp
+  void showSignupDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void addToCart(
       String img,
       String title,
@@ -82,7 +140,13 @@ class _MenuScreenState extends State<MenuScreen> {
       String weight,
       String color,
       String disPrice) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      showSignupDialog(context);
+      return;
+    }
+
+    final userId = currentUser.uid;
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')
