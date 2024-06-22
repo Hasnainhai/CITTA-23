@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_final_fields, use_build_context_synchronously
+import 'dart:ui';
+
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
@@ -100,6 +102,43 @@ class _CardScreenState extends State<CardScreen> {
     });
   }
 
+  void showCustomBottomSheet(BuildContext context,
+      List<Map<String, dynamic>> productList, String subTotal) {
+    showModalBottomSheet(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent, // Make the background transparent
+      builder: (BuildContext context) {
+        return Stack(
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Blur effect
+              child: Container(
+                color: Colors.black
+                    .withOpacity(0.5), // Semi-transparent background color
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 100),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: ForgetAnythingBottomSheet(
+                  productList: productList,
+                  subTotal: subTotal,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void showCheckOutDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -140,11 +179,8 @@ class _CardScreenState extends State<CardScreen> {
                   shape: const RoundedRectangleBorder(),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ForgetAnything(
-                        productList: productList,
-                        subTotal: subTotal.toString());
-                  }));
+                  showCustomBottomSheet(
+                      context, productList, subTotal.toString());
                 },
                 child: const Text(
                   'Keep checking out',
@@ -381,12 +417,8 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ForgetAnything(
-                              productList: productList,
-                              subTotal: subTotal.toString());
-                        }));
+                        showCustomBottomSheet(
+                            context, productList, subTotal.toString());
                       }),
                 ),
                 const VerticalSpeacing(60.0),
