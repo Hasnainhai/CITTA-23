@@ -83,8 +83,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
     String calculateDiscountedPrice(
         String originalPriceString, String discountPercentageString) {
       // Convert strings to double
-      debugPrint("this is the discount:$discountPercentageString");
-      debugPrint("this is the total:$originalPriceString");
 
       double originalPrice = double.parse(originalPriceString);
       double discountPercentage = double.parse(discountPercentageString);
@@ -100,8 +98,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
     String dPrice(String originalPriceString, String discountPercentageString) {
       // Convert strings to double
-      debugPrint("this is the discount:$discountPercentageString");
-      debugPrint("this is the total:$originalPriceString");
 
       double originalPrice = double.parse(originalPriceString);
       double discountPercentage = double.parse(discountPercentageString);
