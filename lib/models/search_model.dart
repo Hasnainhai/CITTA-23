@@ -10,6 +10,7 @@ class Product {
   final String weight;
   final String discount;
   final double averageReview;
+  final String category; // Added category field
   final bool isFashion;
 
   Product({
@@ -24,6 +25,7 @@ class Product {
     this.weight = "N/A",
     this.discount = "N/A",
     this.averageReview = 0.0,
+    required this.category, // Initialize category
     required this.isFashion,
   });
 
@@ -43,6 +45,7 @@ class Product {
       averageReview: (data['averageReview'] != null)
           ? data['averageReview'].toDouble()
           : 0.0,
+      category: data['category'] ?? 'N/A', // Assign category
       isFashion: isFashion,
     );
   }

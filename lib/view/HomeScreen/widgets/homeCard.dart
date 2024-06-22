@@ -109,7 +109,11 @@ class HomeCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(Icons.star, color: Colors.amber,size: 16,),
+                      const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 16,
+                      ),
                       Text(
                         '$productRating',
                         style: const TextStyle(color: AppColor.fontColor),
@@ -144,9 +148,7 @@ class HomeCard extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      addCart();
-                    },
+                    onTap: addCart,
                     child: Container(
                       height: 28.0,
                       width: 28.0,

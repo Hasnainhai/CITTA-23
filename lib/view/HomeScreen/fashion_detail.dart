@@ -24,7 +24,9 @@ class FashionDetail extends StatefulWidget {
       required this.sellerId,
       required this.productId,
       required this.colors,
-      required this.sizes});
+      required this.sizes,
+      required this.price,
+      required this.disPrice});
 
   final String title;
   final String imageUrl;
@@ -34,6 +36,8 @@ class FashionDetail extends StatefulWidget {
   final String productId;
   final List<String> colors;
   final List<String> sizes;
+  final String price;
+  final String disPrice;
 
   @override
   State<FashionDetail> createState() => _FashionDetailState();
@@ -54,6 +58,23 @@ class _FashionDetailState extends State<FashionDetail> {
   String? color;
   bool button5 = false;
   bool button6 = false;
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
+  }
 
   final _firestoreInstance = FirebaseFirestore.instance;
   void increment() {
@@ -216,34 +237,54 @@ class _FashionDetailState extends State<FashionDetail> {
   //fashion detail related products
   bool isLoading = false;
   final List _fashionRelatedProducts = [];
+
   fetchFashionRelatedProducts() async {
     try {
       setState(() {
         isLoading = true;
       });
+
       QuerySnapshot qn = await _firestoreInstance.collection('fashion').get();
+      debugPrint(
+          'Data fetched from Firestore ${qn.docs}'); // Debugging statement
 
       setState(() {
         _fashionRelatedProducts.clear();
-        for (int i = 0; i < qn.docs.length; i++) {
-          _fashionRelatedProducts.add({
-            'sellerId': qn.docs[i]['sellerId'],
-            'id': qn.docs[i]['id'],
-            'imageUrl': qn.docs[i]['imageUrl'],
-            'title': qn.docs[i]['title'],
-            'price': qn.docs[i]['price'],
-            'detail': qn.docs[i]['detail'],
-            'color': qn.docs[i]['color'],
-            'size': qn.docs[i]['size'],
-          });
+
+        for (var doc in qn.docs) {
+          var data = doc.data() as Map<String, dynamic>?;
+
+          if (data != null) {
+            var fashionProduct = {
+              'sellerId': data['sellerId'],
+              'id': data['id'],
+              'imageUrl': data['imageUrl'],
+              'title': data['title'],
+              'price': data['price'],
+              'detail': data['detail'],
+              'color': data['color'],
+              'size': data['size'],
+              'category': data['category'],
+            };
+
+            if (data.containsKey('discount') && data['discount'] != null) {
+              fashionProduct['discount'] = data['discount'].toString();
+            }
+
+            debugPrint(
+                'Fetched fashion product: $fashionProduct'); // Debugging statement
+
+            _fashionRelatedProducts.add(fashionProduct);
+          }
         }
-      });
-      return qn.docs;
-    } catch (e) {
-      setState(() {
+
         isLoading = false;
+
+        debugPrint(
+            'All Fashion Products: $_fashionRelatedProducts'); // Debugging statement
       });
-    } finally {
+    } catch (e) {
+      debugPrint('Error fetching fashion products: $e'); // Debugging statement
       setState(() {
         isLoading = false;
       });
@@ -368,14 +409,24 @@ class _FashionDetailState extends State<FashionDetail> {
                     Row(
                       children: [
                         Text(
-                          newPrice == null
-                              ? "${widget.salePrice}₹"
-                              : "$newPrice₹",
+                          widget.price,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: AppColor.fontColor,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        Text(
+                          newPrice == null
+                              ? "${widget.salePrice}₹"
+                              : "$newPrice₹",
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
                           ),
                         ),
                       ],
@@ -578,7 +629,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                   widget.productId,
                                   _selectedSize!,
                                   _selectedImageUrl!,
-                                  "0");
+                                  widget.disPrice);
                             }
                           },
                           icon: const Icon(
@@ -785,13 +836,32 @@ class _FashionDetailState extends State<FashionDetail> {
                                 imageUrl: _fashionRelatedProducts[index]
                                     ['imageUrl'],
                                 salePrice: _fashionRelatedProducts[index]
-                                    ['price'],
+                                            ['category'] ==
+                                        "Lightening Deals"
+                                    ? calculateDiscountedPrice(
+                                        _fashionRelatedProducts[index]['price'],
+                                        _fashionRelatedProducts[index]
+                                            ['discount'])
+                                    : _fashionRelatedProducts[index]['price']
+                                        .toString(),
                                 detail: _fashionRelatedProducts[index]['detail']
                                     .toString(),
                                 colors: _fashionRelatedProducts[index]['color']
                                     .cast<String>(),
                                 sizes: _fashionRelatedProducts[index]['size']
                                     .cast<String>(),
+                                price: _fashionRelatedProducts[index]['price'],
+                                disPrice: _fashionRelatedProducts[index]
+                                            ['category'] ==
+                                        "Lightening Deals"
+                                    ? (int.parse(_fashionRelatedProducts[index]
+                                                ['discount']) /
+                                            100 *
+                                            int.parse(
+                                                _fashionRelatedProducts[index]
+                                                    ['price']))
+                                        .toString()
+                                    : '0',
                               );
                             }));
                           },

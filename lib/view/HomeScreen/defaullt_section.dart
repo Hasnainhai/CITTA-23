@@ -985,43 +985,41 @@ class _DefaultSectionState extends State<DefaultSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                category,
-                style: const TextStyle(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              category,
+              style: const TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColor.fontColor,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                String title = category;
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CategoryProductsScreen(
+                    title: title,
+                    products: products,
+                  );
+                }));
+              },
+              child: const Text(
+                "View All",
+                style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.fontColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.buttonBgColor,
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  String title = category;
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CategoryProductsScreen(
-                      title: title,
-                      products: products,
-                    );
-                  }));
-                },
-                child: const Text(
-                  "View All",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.buttonBgColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+        const VerticalSpeacing(12),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4,
           child: categoryProducts.isEmpty
@@ -1045,18 +1043,34 @@ class _DefaultSectionState extends State<DefaultSection> {
                             productId: product['id'],
                             title: product['title'].toString(),
                             imageUrl: product['imageUrl'],
-                            salePrice: product['price'],
+                            salePrice: category == "Lightening Deals"
+                                ? calculateDiscountedPrice(
+                                    product['price'], product['discount'])
+                                : product['price'].toString(),
                             detail: product['detail'].toString(),
                             colors: product['color'].cast<String>(),
                             sizes: product['size'].cast<String>(),
+                            price: product['price'],
+                            disPrice: product['category'] == "Lightening Deals"
+                                ? (int.parse(product['discount']) /
+                                        100 *
+                                        int.parse(product['price']))
+                                    .toStringAsFixed(0)
+                                : '0',
                           );
                         }));
                       },
+                      percentage: category == "Lightening Deals"
+                          ? product['discount'].toString()
+                          : '',
+                      oofProd: category == "Lightening Deals" ? true : false,
                       sellerId: product['sellerId'],
                       productId: product['id'],
                       name: product['title'].toString(),
-                      price: '',
-                      dPrice: "${product['price']}₹",
+                      price: '${product['price']}₹',
+                      dPrice: category == "Lightening Deals"
+                          ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                          : product['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
                       img: product['imageUrl'],

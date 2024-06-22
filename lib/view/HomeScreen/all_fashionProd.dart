@@ -108,6 +108,24 @@ class _AllFashionProdState extends State<AllFashionProd> {
     }
   }
 
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    // Convert strings to double
+    debugPrint("this is the discount:$discountPercentageString");
+    debugPrint("this is the total:$originalPriceString");
+
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+
+    // Calculate discounted price
+    double p = originalPrice * (discountPercentage / 100);
+    double discountedPrice = originalPrice - p;
+
+    // Return the discounted price as a formatted string
+    return discountedPrice.toStringAsFixed(
+        0); // You can adjust the number of decimal places as needed
+  }
+
   @override
   void initState() {
     super.initState();
@@ -166,9 +184,15 @@ class _AllFashionProdState extends State<AllFashionProd> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return FashionDetail(
+                            price: _fashionProducts[index]['price'],
                             title: _fashionProducts[index]['title'].toString(),
                             imageUrl: _fashionProducts[index]['imageUrl'],
-                            salePrice: _fashionProducts[index]['price'],
+                            salePrice: _fashionProducts[index]['category'] ==
+                                    "Lightening Deals"
+                                ? calculateDiscountedPrice(
+                                    _fashionProducts[index]['price'],
+                                    _fashionProducts[index]['discount'])
+                                : _fashionProducts[index]['price'].toString(),
                             detail:
                                 _fashionProducts[index]['detail'].toString(),
                             sellerId: _fashionProducts[index]['sellerId'],
@@ -177,6 +201,15 @@ class _AllFashionProdState extends State<AllFashionProd> {
                                 _fashionProducts[index]['color'].cast<String>(),
                             sizes:
                                 _fashionProducts[index]['size'].cast<String>(),
+                            disPrice: _fashionProducts[index]['category'] ==
+                                    "Lightening Deals"
+                                ? (int.parse(_fashionProducts[index]
+                                            ['discount']) /
+                                        100 *
+                                        int.parse(
+                                            _fashionProducts[index]['price']))
+                                    .toString()
+                                : '0',
                           );
                         }));
                       },

@@ -475,13 +475,29 @@ class _MenuScreenState extends State<MenuScreen> {
                                                   title:
                                                       item['title'].toString(),
                                                   imageUrl: item['imageUrl'],
-                                                  salePrice: item['price'],
+                                                  salePrice: item['category'] ==
+                                                          "Lightening Deals"
+                                                      ? calculateDiscountedPrice(
+                                                          item['price'],
+                                                          item['discount'])
+                                                      : item['price']
+                                                          .toString(),
+                                                  price: item['price'],
                                                   detail:
                                                       item['detail'].toString(),
                                                   colors: List<String>.from(
                                                       item['color']),
                                                   sizes: List<String>.from(
                                                       item['size']),
+                                                  disPrice: item['category'] ==
+                                                          "Lightening Deals"
+                                                      ? (int.parse(item[
+                                                                  'discount']) /
+                                                              100 *
+                                                              int.parse(item[
+                                                                  'price']))
+                                                          .toString()
+                                                      : '0',
                                                 );
                                               },
                                             ),
