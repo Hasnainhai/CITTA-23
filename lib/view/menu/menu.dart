@@ -344,28 +344,30 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ],
             ),
-            productType == "food"
-                ? const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CategoryCart(text: 'food'),
-                        CategoryCart(text: 'food'),
-                        CategoryCart(text: 'food'),
-                      ],
-                    ),
-                  )
-                : const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        CategoryCart(text: 'Paints'),
-                        CategoryCart(text: 'jacket'),
-                        CategoryCart(text: 'Under Wear'),
-                      ],
-                    ),
-                  ),
+            Consumer<MenuRepository>(builder: (context, menuRepository, child) {
+              return menuRepository.productType == "food"
+                  ? const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CategoryCart(text: 'food'),
+                          CategoryCart(text: 'food'),
+                          CategoryCart(text: 'food'),
+                        ],
+                      ),
+                    )
+                  : const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          CategoryCart(text: 'Paints'),
+                          CategoryCart(text: 'jacket'),
+                          CategoryCart(text: 'Under Wear'),
+                        ],
+                      ),
+                    );
+            }),
             MenuDefaultSection()
           ],
         ),
