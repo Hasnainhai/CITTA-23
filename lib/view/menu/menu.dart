@@ -1,12 +1,18 @@
+import 'package:citta_23/repository/menu_repository.dart';
+import 'package:citta_23/repository/menu_ui_repository.dart';
 import 'package:citta_23/res/components/category_Cart.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/res/consts/menu_enums.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
+import 'package:citta_23/view/menu/menu_category_section.dart';
+import 'package:citta_23/view/menu/menu_default_section.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/vars.dart';
@@ -43,8 +49,6 @@ class _MenuScreenState extends State<MenuScreen> {
 
   String dPrice(String originalPriceString, String discountPercentageString) {
     // Convert strings to double
-    debugPrint("this is the discount:$discountPercentageString");
-    debugPrint("this is the total:$originalPriceString");
 
     double originalPrice = double.parse(originalPriceString);
     double discountPercentage = double.parse(discountPercentageString);
@@ -60,8 +64,6 @@ class _MenuScreenState extends State<MenuScreen> {
   String calculateDiscountedPrice(
       String originalPriceString, String discountPercentageString) {
     // Convert strings to double
-    debugPrint("this is the discount: $discountPercentageString");
-    debugPrint("this is the total: $originalPriceString");
 
     double originalPrice = double.parse(originalPriceString);
     double discountPercentage = double.parse(discountPercentageString);
@@ -199,7 +201,6 @@ class _MenuScreenState extends State<MenuScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const VerticalSpeacing(50.0),
             const Align(
@@ -220,7 +221,10 @@ class _MenuScreenState extends State<MenuScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    _handleFoodButton();
+                    Provider.of<MenuRepository>(context, listen: false)
+                        .handleFoodButton();
+                    Provider.of<MenuUiRepository>(context, listen: false)
+                        .switchToType(MenuEnums.DefaultSection);
                   },
                   child: Stack(
                     children: [
@@ -283,7 +287,10 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    _handleFashionButton();
+                    Provider.of<MenuRepository>(context, listen: false)
+                        .handleFashionButton();
+                    Provider.of<MenuUiRepository>(context, listen: false)
+                        .switchToType(MenuEnums.DefaultSection);
                   },
                   child: Stack(
                     children: [
@@ -343,261 +350,89 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ],
             ),
-            Expanded(
-                child: FutureBuilder<QuerySnapshot>(
-                    future: _collectionReference.get(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else {
-                        // Display the data in a GridView.builder
-                        var data = snapshot.data!.docs;
-                        return Column(
+            Consumer<MenuRepository>(builder: (context, menuRepository, child) {
+              return menuRepository.productType == "food"
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            productType == "food"
-                                ? const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        CategoryCart(text: 'food'),
-                                        CategoryCart(text: 'food'),
-                                        CategoryCart(text: 'food'),
-                                      ],
-                                    ),
-                                  )
-                                : const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        CategoryCart(text: 'Paints'),
-                                        CategoryCart(text: 'jacket'),
-                                        CategoryCart(text: 'Under Wear'),
-                                      ],
-                                    ),
-                                  ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0, right: 16.0),
-                                child: GridView.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 16,
-                                    ),
-                                    itemCount: data.length,
-                                    itemBuilder: (context, index) {
-                                      var item = data[index];
-                                      var productData =
-                                          item.data() as Map<String, dynamic>;
-
-                                      var product = {
-                                        'sellerId': productData['sellerId'],
-                                        'id': productData['id'],
-                                        'imageUrl': productData['imageUrl'],
-                                        'title': productData['title'],
-                                        'price': productData['price'],
-                                        'detail': productData['detail'],
-                                        'weight': productData['weight'],
-                                        'averageReview': productData
-                                                .containsKey('averageReview')
-                                            ? productData['averageReview']
-                                            : 0.0,
-                                      };
-
-                                      return productType == "food"
-                                          ? HomeCard(
-                                              oofProd: item['category'] ==
-                                                      'Lightening Deals'
-                                                  ? true
-                                                  : false,
-                                              percentage: item['category'] ==
-                                                      'Lightening Deals'
-                                                  ? item['discount']
-                                                  : "0",
-                                              name: item['title'],
-                                              price: item['price'],
-                                              dPrice: item['category'] ==
-                                                      'Lightening Deals'
-                                                  ? "${calculateDiscountedPrice(item['price'], item['discount'])}₹"
-                                                  : item['price'] + '₹',
-                                              borderColor:
-                                                  AppColor.buttonBgColor,
-                                              fillColor:
-                                                  AppColor.appBarButtonColor,
-                                              img: item['imageUrl'],
-                                              iconColor: AppColor.buttonBgColor,
-                                              ontap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return ProductDetailScreen(
-                                                        title: item['title']
-                                                            .toString(),
-                                                        productId: item['id']
-                                                            .toString(),
-                                                        sellerId:
-                                                            item['sellerId']
-                                                                .toString(),
-                                                        imageUrl:
-                                                            item['imageUrl'],
-                                                        price: item['price']
-                                                            .toString(),
-                                                        salePrice: item[
-                                                                    'category'] ==
-                                                                'Lightening Deals'
-                                                            ? calculateDiscountedPrice(
-                                                                item['price'],
-                                                                item[
-                                                                    'discount'])
-                                                            : item['price'],
-                                                        weight: item['weight']
-                                                            .toString(),
-                                                        detail: item['detail']
-                                                            .toString(),
-                                                        disPrice: item[
-                                                                    'category'] ==
-                                                                "Lightening Deals"
-                                                            ? (int.parse(item[
-                                                                        'discount']) /
-                                                                    100 *
-                                                                    int.parse(item[
-                                                                        'price']))
-                                                                .toString()
-                                                            : '0',
-                                                      );
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                              addCart: () {
-                                                addToCart(
-                                                  item['imageUrl'],
-                                                  item['title'],
-                                                  item['price'],
-                                                  item['sellerId'],
-                                                  item['id'],
-                                                  'N/A',
-                                                  item['weight'],
-                                                  'N/A',
-                                                  item['category'] ==
-                                                          "Lightening Deals"
-                                                      ? dPrice(item['price'],
-                                                          item['discount'])
-                                                      : '0',
-                                                );
-                                              },
-                                              productId: item['id'],
-                                              sellerId: item['sellerId'],
-                                              productRating:
-                                                  product['averageReview'],
-                                            )
-                                          : HomeCard(
-                                              oofProd: item['category'] ==
-                                                      'Lightening Deals'
-                                                  ? true
-                                                  : false,
-                                              percentage: item['category'] ==
-                                                      'Lightening Deals'
-                                                  ? item['discount']
-                                                  : "0",
-                                              name: item['title'],
-                                              price: item['price'] + "₹",
-                                              dPrice: item['category'] ==
-                                                      'Lightening Deals'
-                                                  ? calculateDiscountedPrice(
-                                                      item['price'],
-                                                      item['discount'])
-                                                  : item['price'],
-                                              borderColor:
-                                                  AppColor.buttonBgColor,
-                                              fillColor:
-                                                  AppColor.appBarButtonColor,
-                                              img: item['imageUrl'],
-                                              iconColor: AppColor.buttonBgColor,
-                                              ontap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return FashionDetail(
-                                                        sellerId:
-                                                            item['sellerId'],
-                                                        productId: item['id'],
-                                                        title: item['title']
-                                                            .toString(),
-                                                        imageUrl:
-                                                            item['imageUrl'],
-                                                        salePrice: item[
-                                                                    'category'] ==
-                                                                "Lightening Deals"
-                                                            ? calculateDiscountedPrice(
-                                                                item['price'],
-                                                                item[
-                                                                    'discount'])
-                                                            : item['price']
-                                                                .toString(),
-                                                        price: item['price'],
-                                                        detail: item['detail']
-                                                            .toString(),
-                                                        colors:
-                                                            List<String>.from(
-                                                                item['color']),
-                                                        sizes:
-                                                            List<String>.from(
-                                                                item['size']),
-                                                        disPrice: item[
-                                                                    'category'] ==
-                                                                "Lightening Deals"
-                                                            ? (int.parse(item[
-                                                                        'discount']) /
-                                                                    100 *
-                                                                    int.parse(item[
-                                                                        'price']))
-                                                                .toString()
-                                                            : '0',
-                                                      );
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                              addCart: () {
-                                                addToCart(
-                                                  item['imageUrl'],
-                                                  item['title'],
-                                                  item['price'],
-                                                  item['sellerId'],
-                                                  item['id'],
-                                                  item['size'][0],
-                                                  'N/A',
-                                                  item['color'][0],
-                                                  item['category'] ==
-                                                          "Lightening Deals"
-                                                      ? dPrice(item['price'],
-                                                          item['discount'])
-                                                      : '0',
-                                                );
-                                              },
-                                              productId: item['id'],
-                                              sellerId: item['sellerId'],
-                                              productRating:
-                                                  product['averageReview'],
-                                            );
-                                    }),
-                              ),
-                            ),
+                            InkWell(
+                                onTap: () {},
+                                child: const CategoryCart(text: 'food')),
+                            InkWell(
+                                onTap: () {},
+                                child: const CategoryCart(text: 'food')),
+                            InkWell(
+                                onTap: () {},
+                                child: const CategoryCart(text: 'food')),
                           ],
-                        );
-                      }
-                    }))
+                        ),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                menuRepository.fetchItems("Paints");
+                                Provider.of<MenuUiRepository>(context,
+                                        listen: false)
+                                    .switchToType(MenuEnums.Category);
+                              },
+                              child: const CategoryCart(text: 'Paints'),
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("jacket");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'jacket')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Under Wear");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Under Wear')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Shirt");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Shirt')),
+                          ],
+                        ),
+                      ),
+                    );
+            }),
+            Consumer<MenuUiRepository>(
+              builder: (context, uiState, _) {
+                Widget selectedWidget;
+
+                switch (uiState.selectedType) {
+                  case MenuEnums.Category:
+                    selectedWidget = const MenuCategorySection();
+                    break;
+
+                  case MenuEnums.DefaultSection:
+                    selectedWidget = const MenuDefaultSection();
+                    break;
+                }
+
+                return selectedWidget;
+              },
+            ),
           ],
         ),
       ),
