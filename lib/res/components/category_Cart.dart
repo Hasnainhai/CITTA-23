@@ -16,8 +16,8 @@ class CategoryCart extends StatefulWidget {
 }
 
 class _CategoryCartState extends State<CategoryCart> {
-  Color _backgroundColor = AppColor.bgColor;
-  Color _textColor = AppColor.primaryColor;
+  final Color _backgroundColor = AppColor.bgColor;
+  final Color _textColor = AppColor.primaryColor;
   void checkUiType() {}
 
   @override
