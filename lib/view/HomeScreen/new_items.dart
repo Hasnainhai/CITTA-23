@@ -1,5 +1,6 @@
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/utils/utils.dart';
+import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,16 @@ class CategoryProductsScreen extends StatefulWidget {
 
 class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   bool isTrue = true;
-  void addToCart(String img, String title, String dPrice, String sellerId,
-      String productId, String weight, String disPrice) async {
+  void addToCart(
+      String img,
+      String title,
+      String dPrice,
+      String sellerId,
+      String productId,
+      String weight,
+      String disPrice,
+      String color,
+      String size) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       Utils.toastMessage('Please SignUp first');
@@ -125,26 +134,58 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ProductDetailScreen(
-                        title: widget.products[index]['title'].toString(),
-                        productId: widget.products[index]['id'].toString(),
-                        sellerId: widget.products[index]['sellerId'].toString(),
-                        imageUrl: widget.products[index]['imageUrl'],
-                        price: widget.products[index]['price'].toString(),
-                        salePrice: widget.products[index]['category'] ==
-                                "Lightening Deals"
-                            ? calculateDiscountedPrice(
-                                widget.products[index]['price'].toString(),
-                                widget.products[index]['discount'].toString(),
-                              )
-                            : widget.products[index]['price'].toString(),
-                        weight: widget.products[index]['weight'].toString(),
-                        detail: widget.products[index]['detail'].toString(),
-                        disPrice: widget.products[index]['category'] ==
-                                "Lightening Deals"
-                            ? dPrice(widget.products[index]['discount'],
-                                widget.products[index]['price'])
-                            : "0");
+                    var product = widget.products[index];
+                    // Handle size and color fields
+                    List<String> sizes = product['size'] is List
+                        ? List<String>.from(product['size'])
+                        : ['N/A'];
+                    List<String> colors = product['color'] is List
+                        ? List<String>.from(product['color'])
+                        : ['N/A'];
+
+                    // Determine which screen to navigate to
+                    return sizes.isNotEmpty && sizes[0] != 'N/A'
+                        ? FashionDetail(
+                            title: product['title'].toString(),
+                            imageUrl: product['imageUrl'],
+                            salePrice: product['category'] == "Lightening Deals"
+                                ? calculateDiscountedPrice(
+                                    product['price'].toString(),
+                                    product['discount'].toString(),
+                                  )
+                                : product['price'].toString(),
+                            detail: product['detail'].toString(),
+                            sellerId: product['sellerId'].toString(),
+                            productId: product['id'].toString(),
+                            colors: colors,
+                            sizes: sizes,
+                            price: product['price'].toString(),
+                            disPrice: product['category'] == "Lightening Deals"
+                                ? dPrice(product['discount'], product['price'])
+                                : "0",
+                          )
+                        : ProductDetailScreen(
+                            title: product['title'].toString(),
+                            productId: product['id'].toString(),
+                            sellerId: product['sellerId'].toString(),
+                            imageUrl: product['imageUrl'],
+                            price: product['price'].toString(),
+                            salePrice: product['category'] == "Lightening Deals"
+                                ? calculateDiscountedPrice(
+                                    product['price'].toString(),
+                                    product['discount'].toString(),
+                                  )
+                                : product['price'].toString(),
+                            weight: product.containsKey('weight') &&
+                                    product['weight'] != null &&
+                                    product['weight'].toString().isNotEmpty
+                                ? product['weight'].toString()
+                                : 'N/A',
+                            detail: product['detail'].toString(),
+                            disPrice: product['category'] == "Lightening Deals"
+                                ? dPrice(product['discount'], product['price'])
+                                : "0",
+                          );
                   },
                 ),
               );
@@ -164,17 +205,43 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             img: widget.products[index]['imageUrl'],
             iconColor: AppColor.buttonBgColor,
             addCart: () {
+              var product = widget.products[index];
+
+              // Handle size and color fields
+              List<String> sizes = product['size'] is List
+                  ? List<String>.from(product['size'])
+                  : ['N/A'];
+              List<String> colors = product['color'] is List
+                  ? List<String>.from(product['color'])
+                  : ['N/A'];
+
+              // Log size and color to ensure they are correct
+              debugPrint("Sizes: $sizes");
+              debugPrint("Colors: $colors");
+
+              // Adding to cart
               addToCart(
-                  widget.products[index]['imageUrl'],
-                  widget.products[index]['title'],
-                  widget.products[index]['price'],
-                  widget.products[index]['sellerId'],
-                  widget.products[index]['id'],
-                  widget.products[index]['weight'],
-                  widget.products[index]['category'] == "Lightening Deals"
-                      ? dPrice(widget.products[index]['discount'],
-                          widget.products[index]['price'])
-                      : "0");
+                product['imageUrl'],
+                product['title'],
+                product['price'],
+                product['sellerId'],
+                product['id'],
+                product.containsKey('weight') &&
+                        product['weight'] != null &&
+                        product['weight'].toString().isNotEmpty
+                    ? product['weight'].toString()
+                    : 'N/A',
+                product.containsKey('discount') &&
+                        product['discount'] != null &&
+                        product['discount'].isNotEmpty
+                    ? dPrice(
+                        product['price'].toString(),
+                        product['discount'].toString(),
+                      )
+                    : "0",
+                colors.isNotEmpty && colors[0] != 'N/A' ? colors[0] : 'N/A',
+                sizes.isNotEmpty && sizes[0] != 'N/A' ? sizes[0] : 'N/A',
+              );
             },
             productRating: widget.products[index]['averageReview'],
           );
