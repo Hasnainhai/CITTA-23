@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -119,6 +121,41 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
     return relatedProducts;
   }
 
+  Future<List<Map<String, dynamic>>> fetchFashionProducts() async {
+    List<Map<String, dynamic>> fashionProducts = [];
+
+    try {
+      QuerySnapshot fashionSnapshot =
+          await FirebaseFirestore.instance.collection('fashion').get();
+
+      for (var doc in fashionSnapshot.docs) {
+        fashionProducts.add(doc.data() as Map<String, dynamic>);
+      }
+    } catch (e) {
+      Utils.flushBarErrorMessage(
+          'Error fetching fashion products: $e', context);
+    }
+
+    return fashionProducts;
+  }
+
+  Future<List<Map<String, dynamic>>> fetchFoodProducts() async {
+    List<Map<String, dynamic>> foodProducts = [];
+
+    try {
+      QuerySnapshot foodSnapshot =
+          await FirebaseFirestore.instance.collection('products').get();
+
+      for (var doc in foodSnapshot.docs) {
+        foodProducts.add(doc.data() as Map<String, dynamic>);
+      }
+    } catch (e) {
+      Utils.flushBarErrorMessage('Error fetching food products: $e', context);
+    }
+
+    return foodProducts;
+  }
+
   Future<void> addToCart(
       String img,
       String title,
@@ -225,10 +262,9 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: TabBar(
-                          isScrollable:
-                              true, // Allows the TabBar to scroll if needed
+                          isScrollable: true,
                           labelColor: AppColor.primaryColor,
-                          unselectedLabelColor: Colors.grey,
+                          unselectedLabelColor: AppColor.fontColor,
                           indicatorColor: AppColor.primaryColor,
                           tabs: [
                             Tab(text: "Recommended"),
@@ -243,74 +279,90 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               ),
               const SizedBox(height: 16),
               SizedBox(
-                height: 400, // Adjust height as needed
+                height: 400,
                 child: TabBarView(
                   children: [
                     _buildRecommendedTab(context),
-                    _buildEmptyTab("Food"),
-                    _buildEmptyTab("Fashion"),
+                    _buildFoodTab(context),
+                    _buildFashionTab(context),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
               Consumer<TotalPriceModel>(
                 builder: (context, totalPriceModel, child) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 25),
+                    child: Container(
+                      height: 60,
+                      width: double.infinity,
+                      color: AppColor.appBarButtonColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Total',
-                            style: TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.blackColor,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 40),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Total',
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ),
+                                Text(
+                                  '₹${totalPriceModel.totalPrice}',
+                                  style: const TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColor.grayColor,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            '₹${totalPriceModel.totalPrice}',
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: AppColor.blackColor,
+                          SizedBox(
+                            height: 60,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (c) {
+                                    return CardCheckOutScreen(
+                                      productType: 'cart',
+                                      productList: widget.productList,
+                                      subTotal:
+                                          totalPriceModel.totalPrice.toString(),
+                                    );
+                                  }),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: const RoundedRectangleBorder(),
+                                backgroundColor: AppColor.primaryColor,
+                              ),
+                              child: const Text(
+                                'Continue to checkout',
+                                style: TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColor.whiteColor,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (c) {
-                              return CardCheckOutScreen(
-                                productType: 'cart',
-                                productList: widget.productList,
-                                subTotal: totalPriceModel.totalPrice.toString(),
-                              );
-                            }),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColor.primaryColor,
-                        ),
-                        child: const Text(
-                          'Continue to checkout',
-                          style: TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   );
                 },
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -382,30 +434,131 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
     );
   }
 
-  Widget _buildEmptyTab(String category) {
-    return Center(
-      child: Text('No products available in $category category.'),
+  Widget _buildFoodTab(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: fetchFoodProducts(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Error fetching food products'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No food products found'));
+        }
+
+        final foodProducts = snapshot.data!;
+        return GridView.builder(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: foodProducts.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            childAspectRatio: 4 / 4,
+          ),
+          itemBuilder: (context, index) {
+            final product = foodProducts[index];
+            return HomeCard(
+              name: product['title'],
+              price: '\$${product['price']}',
+              dPrice: product['category'] == "Lightening Deals"
+                  ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                  : product['price'] + '₹',
+              borderColor: AppColor.primaryColor,
+              fillColor: AppColor.bgColor,
+              img: product['imageUrl'],
+              iconColor: AppColor.primaryColor,
+              ontap: () {},
+              addCart: () {
+                addToCart(
+                  product['imageUrl'],
+                  product['title'],
+                  product['price'],
+                  product['sellerId'],
+                  product['id'],
+                  product.containsKey('size') ? product['size'][2] : 'N/A',
+                  product.containsKey('color') ? product['color'][0] : 'N/A',
+                  product.containsKey('weight') ? product['weight'] : 'N/A',
+                  product.containsKey('discount')
+                      ? dPrice(product['price'], product['discount'])
+                      : '0',
+                );
+                _fetchData();
+              },
+              productId: product['id'],
+              sellerId: product['sellerId'],
+              productRating: product.containsKey('averageReview')
+                  ? product['averageReview']
+                  : 0.0,
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildFashionTab(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: fetchFashionProducts(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Error fetching fashion products'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No fashion products found'));
+        }
+
+        final fashionProducts = snapshot.data!;
+        return GridView.builder(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: fashionProducts.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            childAspectRatio: 4 / 4,
+          ),
+          itemBuilder: (context, index) {
+            final product = fashionProducts[index];
+            return HomeCard(
+              name: product['title'],
+              price: '\$${product['price']}',
+              dPrice: product['category'] == "Lightening Deals"
+                  ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                  : product['price'] + '₹',
+              borderColor: AppColor.primaryColor,
+              fillColor: AppColor.bgColor,
+              img: product['imageUrl'],
+              iconColor: AppColor.primaryColor,
+              ontap: () {},
+              addCart: () {
+                addToCart(
+                  product['imageUrl'],
+                  product['title'],
+                  product['price'],
+                  product['sellerId'],
+                  product['id'],
+                  product.containsKey('size') ? product['size'][2] : 'N/A',
+                  product.containsKey('color') ? product['color'][0] : 'N/A',
+                  product.containsKey('weight') ? product['weight'] : 'N/A',
+                  product.containsKey('discount')
+                      ? dPrice(product['price'], product['discount'])
+                      : '0',
+                );
+                _fetchData();
+              },
+              productId: product['id'],
+              sellerId: product['sellerId'],
+              productRating: product.containsKey('averageReview')
+                  ? product['averageReview']
+                  : 0.0,
+            );
+          },
+        );
+      },
     );
   }
 }
-
-// void showCustomBottomSheet(BuildContext context, List<Map<String, dynamic>> productList, String subTotal) {
-//   showModalBottomSheet(
-//     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-//     context: context,
-//     isScrollControlled: true,
-//     builder: (BuildContext context) {
-//       return BackdropFilter(
-//         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-//         child: Container(
-//           color: Colors.white.withOpacity(0.8),
-//           padding: const EdgeInsets.only(top: 100),
-//           child: ForgetAnythingBottomSheet(
-//             productList: productList,
-//             subTotal: subTotal,
-//           ),
-//         ),
-//       );
-//     },
-//   );
-// }
