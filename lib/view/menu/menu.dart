@@ -1,3 +1,4 @@
+import 'package:citta_23/res/components/category_Cart.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
@@ -355,196 +356,245 @@ class _MenuScreenState extends State<MenuScreen> {
                       } else {
                         // Display the data in a GridView.builder
                         var data = snapshot.data!.docs;
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 16,
+                        return Column(
+                          children: [
+                            productType == "food"
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        CategoryCart(text: 'food'),
+                                        CategoryCart(text: 'food'),
+                                        CategoryCart(text: 'food'),
+                                      ],
+                                    ),
+                                  )
+                                : const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        CategoryCart(text: 'Fashion'),
+                                        CategoryCart(text: 'Fashion'),
+                                        CategoryCart(text: 'Fashion'),
+                                      ],
+                                    ),
+                                  ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16.0, right: 16.0),
+                                child: GridView.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 16,
+                                    ),
+                                    itemCount: data.length,
+                                    itemBuilder: (context, index) {
+                                      var item = data[index];
+                                      var productData =
+                                          item.data() as Map<String, dynamic>;
+
+                                      var product = {
+                                        'sellerId': productData['sellerId'],
+                                        'id': productData['id'],
+                                        'imageUrl': productData['imageUrl'],
+                                        'title': productData['title'],
+                                        'price': productData['price'],
+                                        'detail': productData['detail'],
+                                        'weight': productData['weight'],
+                                        'averageReview': productData
+                                                .containsKey('averageReview')
+                                            ? productData['averageReview']
+                                            : 0.0,
+                                      };
+
+                                      return productType == "food"
+                                          ? HomeCard(
+                                              oofProd: item['category'] ==
+                                                      'Lightening Deals'
+                                                  ? true
+                                                  : false,
+                                              percentage: item['category'] ==
+                                                      'Lightening Deals'
+                                                  ? item['discount']
+                                                  : "0",
+                                              name: item['title'],
+                                              price: item['price'],
+                                              dPrice: item['category'] ==
+                                                      'Lightening Deals'
+                                                  ? "${calculateDiscountedPrice(item['price'], item['discount'])}₹"
+                                                  : item['price'] + '₹',
+                                              borderColor:
+                                                  AppColor.buttonBgColor,
+                                              fillColor:
+                                                  AppColor.appBarButtonColor,
+                                              img: item['imageUrl'],
+                                              iconColor: AppColor.buttonBgColor,
+                                              ontap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return ProductDetailScreen(
+                                                        title: item['title']
+                                                            .toString(),
+                                                        productId: item['id']
+                                                            .toString(),
+                                                        sellerId:
+                                                            item['sellerId']
+                                                                .toString(),
+                                                        imageUrl:
+                                                            item['imageUrl'],
+                                                        price: item['price']
+                                                            .toString(),
+                                                        salePrice: item[
+                                                                    'category'] ==
+                                                                'Lightening Deals'
+                                                            ? calculateDiscountedPrice(
+                                                                item['price'],
+                                                                item[
+                                                                    'discount'])
+                                                            : item['price'],
+                                                        weight: item['weight']
+                                                            .toString(),
+                                                        detail: item['detail']
+                                                            .toString(),
+                                                        disPrice: item[
+                                                                    'category'] ==
+                                                                "Lightening Deals"
+                                                            ? (int.parse(item[
+                                                                        'discount']) /
+                                                                    100 *
+                                                                    int.parse(item[
+                                                                        'price']))
+                                                                .toString()
+                                                            : '0',
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                              addCart: () {
+                                                addToCart(
+                                                  item['imageUrl'],
+                                                  item['title'],
+                                                  item['price'],
+                                                  item['sellerId'],
+                                                  item['id'],
+                                                  'N/A',
+                                                  item['weight'],
+                                                  'N/A',
+                                                  item['category'] ==
+                                                          "Lightening Deals"
+                                                      ? dPrice(item['price'],
+                                                          item['discount'])
+                                                      : '0',
+                                                );
+                                              },
+                                              productId: item['id'],
+                                              sellerId: item['sellerId'],
+                                              productRating:
+                                                  product['averageReview'],
+                                            )
+                                          : HomeCard(
+                                              oofProd: item['category'] ==
+                                                      'Lightening Deals'
+                                                  ? true
+                                                  : false,
+                                              percentage: item['category'] ==
+                                                      'Lightening Deals'
+                                                  ? item['discount']
+                                                  : "0",
+                                              name: item['title'],
+                                              price: item['price'] + "₹",
+                                              dPrice: item['category'] ==
+                                                      'Lightening Deals'
+                                                  ? calculateDiscountedPrice(
+                                                      item['price'],
+                                                      item['discount'])
+                                                  : item['price'],
+                                              borderColor:
+                                                  AppColor.buttonBgColor,
+                                              fillColor:
+                                                  AppColor.appBarButtonColor,
+                                              img: item['imageUrl'],
+                                              iconColor: AppColor.buttonBgColor,
+                                              ontap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return FashionDetail(
+                                                        sellerId:
+                                                            item['sellerId'],
+                                                        productId: item['id'],
+                                                        title: item['title']
+                                                            .toString(),
+                                                        imageUrl:
+                                                            item['imageUrl'],
+                                                        salePrice: item[
+                                                                    'category'] ==
+                                                                "Lightening Deals"
+                                                            ? calculateDiscountedPrice(
+                                                                item['price'],
+                                                                item[
+                                                                    'discount'])
+                                                            : item['price']
+                                                                .toString(),
+                                                        price: item['price'],
+                                                        detail: item['detail']
+                                                            .toString(),
+                                                        colors:
+                                                            List<String>.from(
+                                                                item['color']),
+                                                        sizes:
+                                                            List<String>.from(
+                                                                item['size']),
+                                                        disPrice: item[
+                                                                    'category'] ==
+                                                                "Lightening Deals"
+                                                            ? (int.parse(item[
+                                                                        'discount']) /
+                                                                    100 *
+                                                                    int.parse(item[
+                                                                        'price']))
+                                                                .toString()
+                                                            : '0',
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                              addCart: () {
+                                                addToCart(
+                                                  item['imageUrl'],
+                                                  item['title'],
+                                                  item['price'],
+                                                  item['sellerId'],
+                                                  item['id'],
+                                                  item['size'][0],
+                                                  'N/A',
+                                                  item['color'][0],
+                                                  item['category'] ==
+                                                          "Lightening Deals"
+                                                      ? dPrice(item['price'],
+                                                          item['discount'])
+                                                      : '0',
+                                                );
+                                              },
+                                              productId: item['id'],
+                                              sellerId: item['sellerId'],
+                                              productRating:
+                                                  product['averageReview'],
+                                            );
+                                    }),
                               ),
-                              itemCount: data.length,
-                              itemBuilder: (context, index) {
-                                var item = data[index];
-                                var productData =
-                                    item.data() as Map<String, dynamic>;
-
-                                var product = {
-                                  'sellerId': productData['sellerId'],
-                                  'id': productData['id'],
-                                  'imageUrl': productData['imageUrl'],
-                                  'title': productData['title'],
-                                  'price': productData['price'],
-                                  'detail': productData['detail'],
-                                  'weight': productData['weight'],
-                                  'averageReview':
-                                      productData.containsKey('averageReview')
-                                          ? productData['averageReview']
-                                          : 0.0,
-                                };
-
-                                return productType == "food"
-                                    ? HomeCard(
-                                        oofProd: item['category'] ==
-                                                'Lightening Deals'
-                                            ? true
-                                            : false,
-                                        percentage: item['category'] ==
-                                                'Lightening Deals'
-                                            ? item['discount']
-                                            : "0",
-                                        name: item['title'],
-                                        price: item['price'],
-                                        dPrice: item['category'] ==
-                                                'Lightening Deals'
-                                            ? "${calculateDiscountedPrice(item['price'], item['discount'])}₹"
-                                            : item['price'] + '₹',
-                                        borderColor: AppColor.buttonBgColor,
-                                        fillColor: AppColor.appBarButtonColor,
-                                        img: item['imageUrl'],
-                                        iconColor: AppColor.buttonBgColor,
-                                        ontap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return ProductDetailScreen(
-                                                  title:
-                                                      item['title'].toString(),
-                                                  productId:
-                                                      item['id'].toString(),
-                                                  sellerId: item['sellerId']
-                                                      .toString(),
-                                                  imageUrl: item['imageUrl'],
-                                                  price:
-                                                      item['price'].toString(),
-                                                  salePrice: item['category'] ==
-                                                          'Lightening Deals'
-                                                      ? calculateDiscountedPrice(
-                                                          item['price'],
-                                                          item['discount'])
-                                                      : item['price'],
-                                                  weight:
-                                                      item['weight'].toString(),
-                                                  detail:
-                                                      item['detail'].toString(),
-                                                  disPrice: item['category'] ==
-                                                          "Lightening Deals"
-                                                      ? (int.parse(item[
-                                                                  'discount']) /
-                                                              100 *
-                                                              int.parse(item[
-                                                                  'price']))
-                                                          .toString()
-                                                      : '0',
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        addCart: () {
-                                          addToCart(
-                                            item['imageUrl'],
-                                            item['title'],
-                                            item['price'],
-                                            item['sellerId'],
-                                            item['id'],
-                                            'N/A',
-                                            item['weight'],
-                                            'N/A',
-                                            item['category'] ==
-                                                    "Lightening Deals"
-                                                ? dPrice(item['price'],
-                                                    item['discount'])
-                                                : '0',
-                                          );
-                                        },
-                                        productId: item['id'],
-                                        sellerId: item['sellerId'],
-                                        productRating: product['averageReview'],
-                                      )
-                                    : HomeCard(
-                                        oofProd: item['category'] ==
-                                                'Lightening Deals'
-                                            ? true
-                                            : false,
-                                        percentage: item['category'] ==
-                                                'Lightening Deals'
-                                            ? item['discount']
-                                            : "0",
-                                        name: item['title'],
-                                        price: item['price'] + "₹",
-                                        dPrice: item['category'] ==
-                                                'Lightening Deals'
-                                            ? calculateDiscountedPrice(
-                                                item['price'], item['discount'])
-                                            : item['price'],
-                                        borderColor: AppColor.buttonBgColor,
-                                        fillColor: AppColor.appBarButtonColor,
-                                        img: item['imageUrl'],
-                                        iconColor: AppColor.buttonBgColor,
-                                        ontap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return FashionDetail(
-                                                  sellerId: item['sellerId'],
-                                                  productId: item['id'],
-                                                  title:
-                                                      item['title'].toString(),
-                                                  imageUrl: item['imageUrl'],
-                                                  salePrice: item['category'] ==
-                                                          "Lightening Deals"
-                                                      ? calculateDiscountedPrice(
-                                                          item['price'],
-                                                          item['discount'])
-                                                      : item['price']
-                                                          .toString(),
-                                                  price: item['price'],
-                                                  detail:
-                                                      item['detail'].toString(),
-                                                  colors: List<String>.from(
-                                                      item['color']),
-                                                  sizes: List<String>.from(
-                                                      item['size']),
-                                                  disPrice: item['category'] ==
-                                                          "Lightening Deals"
-                                                      ? (int.parse(item[
-                                                                  'discount']) /
-                                                              100 *
-                                                              int.parse(item[
-                                                                  'price']))
-                                                          .toString()
-                                                      : '0',
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        addCart: () {
-                                          addToCart(
-                                            item['imageUrl'],
-                                            item['title'],
-                                            item['price'],
-                                            item['sellerId'],
-                                            item['id'],
-                                            item['size'][0],
-                                            'N/A',
-                                            item['color'][0],
-                                            item['category'] ==
-                                                    "Lightening Deals"
-                                                ? dPrice(item['price'],
-                                                    item['discount'])
-                                                : '0',
-                                          );
-                                        },
-                                        productId: item['id'],
-                                        sellerId: item['sellerId'],
-                                        productRating: product['averageReview'],
-                                      );
-                              }),
+                            ),
+                          ],
                         );
                       }
                     }))
