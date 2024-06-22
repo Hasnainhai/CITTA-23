@@ -1,6 +1,7 @@
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/repository/menu_repository.dart';
+import 'package:citta_23/repository/menu_ui_repository.dart';
 import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/repository/ui_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,6 +38,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => MenuRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MenuUiRepository(),
         ),
       ],
       child: const MyApp(),

@@ -1,0 +1,4 @@
+enum MenuEnums {
+  Category,
+  DefaultSection,
+}

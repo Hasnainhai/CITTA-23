@@ -1,10 +1,13 @@
 import 'package:citta_23/repository/menu_repository.dart';
+import 'package:citta_23/repository/menu_ui_repository.dart';
 import 'package:citta_23/res/components/category_Cart.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/res/consts/menu_enums.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
+import 'package:citta_23/view/menu/menu_category_section.dart';
 import 'package:citta_23/view/menu/menu_default_section.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -198,7 +201,6 @@ class _MenuScreenState extends State<MenuScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const VerticalSpeacing(50.0),
             const Align(
@@ -221,6 +223,8 @@ class _MenuScreenState extends State<MenuScreen> {
                   onTap: () {
                     Provider.of<MenuRepository>(context, listen: false)
                         .handleFoodButton();
+                    Provider.of<MenuUiRepository>(context, listen: false)
+                        .switchToType(MenuEnums.DefaultSection);
                   },
                   child: Stack(
                     children: [
@@ -285,6 +289,8 @@ class _MenuScreenState extends State<MenuScreen> {
                   onTap: () {
                     Provider.of<MenuRepository>(context, listen: false)
                         .handleFashionButton();
+                    Provider.of<MenuUiRepository>(context, listen: false)
+                        .switchToType(MenuEnums.DefaultSection);
                   },
                   child: Stack(
                     children: [
@@ -346,29 +352,87 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             Consumer<MenuRepository>(builder: (context, menuRepository, child) {
               return menuRepository.productType == "food"
-                  ? const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CategoryCart(text: 'food'),
-                          CategoryCart(text: 'food'),
-                          CategoryCart(text: 'food'),
-                        ],
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                                onTap: () {},
+                                child: const CategoryCart(text: 'food')),
+                            InkWell(
+                                onTap: () {},
+                                child: const CategoryCart(text: 'food')),
+                            InkWell(
+                                onTap: () {},
+                                child: const CategoryCart(text: 'food')),
+                          ],
+                        ),
                       ),
                     )
-                  : const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          CategoryCart(text: 'Paints'),
-                          CategoryCart(text: 'jacket'),
-                          CategoryCart(text: 'Under Wear'),
-                        ],
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                menuRepository.fetchItems("Paints");
+                                Provider.of<MenuUiRepository>(context,
+                                        listen: false)
+                                    .switchToType(MenuEnums.Category);
+                              },
+                              child: const CategoryCart(text: 'Paints'),
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("jacket");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'jacket')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Under Wear");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Under Wear')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Shirt");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Shirt')),
+                          ],
+                        ),
                       ),
                     );
             }),
-            MenuDefaultSection()
+            Consumer<MenuUiRepository>(
+              builder: (context, uiState, _) {
+                Widget selectedWidget;
+
+                switch (uiState.selectedType) {
+                  case MenuEnums.Category:
+                    selectedWidget = const MenuCategorySection();
+                    break;
+
+                  case MenuEnums.DefaultSection:
+                    selectedWidget = const MenuDefaultSection();
+                    break;
+                }
+
+                return selectedWidget;
+              },
+            ),
           ],
         ),
       ),
