@@ -1043,10 +1043,20 @@ class _DefaultSectionState extends State<DefaultSection> {
                             productId: product['id'],
                             title: product['title'].toString(),
                             imageUrl: product['imageUrl'],
-                            salePrice: product['price'],
+                            salePrice: category == "Lightening Deals"
+                                ? calculateDiscountedPrice(
+                                    product['price'], product['discount'])
+                                : product['price'].toString(),
                             detail: product['detail'].toString(),
                             colors: product['color'].cast<String>(),
                             sizes: product['size'].cast<String>(),
+                            price: product['price'],
+                            disPrice: product['category'] == "Lightening Deals"
+                                ? (int.parse(product['discount']) /
+                                        100 *
+                                        int.parse(product['price']))
+                                    .toStringAsFixed(0)
+                                : '0',
                           );
                         }));
                       },
