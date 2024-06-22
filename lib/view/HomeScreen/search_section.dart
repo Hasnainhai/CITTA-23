@@ -1,8 +1,6 @@
 import 'package:citta_23/models/search_model.dart';
 import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/res/components/colors.dart';
-import 'package:citta_23/res/components/loading_manager.dart';
-import 'package:citta_23/res/consts/vars.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
