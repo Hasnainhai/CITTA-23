@@ -375,9 +375,9 @@ class _MenuScreenState extends State<MenuScreen> {
                                     padding: EdgeInsets.all(8.0),
                                     child: Row(
                                       children: [
-                                        CategoryCart(text: 'Fashion'),
-                                        CategoryCart(text: 'Fashion'),
-                                        CategoryCart(text: 'Fashion'),
+                                        CategoryCart(text: 'Paints'),
+                                        CategoryCart(text: 'jacket'),
+                                        CategoryCart(text: 'Under Wear'),
                                       ],
                                     ),
                                   ),
