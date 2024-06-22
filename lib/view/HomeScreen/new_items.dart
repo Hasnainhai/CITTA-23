@@ -212,8 +212,6 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   : ['N/A'];
 
               // Log size and color to ensure they are correct
-              debugPrint("Sizes: $sizes");
-              debugPrint("Colors: $colors");
 
               // Adding to cart
               addToCart(

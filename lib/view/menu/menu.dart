@@ -386,6 +386,14 @@ class _MenuScreenState extends State<MenuScreen> {
 
                                 return productType == "food"
                                     ? HomeCard(
+                                        oofProd: item['category'] ==
+                                                'Lightening Deals'
+                                            ? true
+                                            : false,
+                                        percentage: item['category'] ==
+                                                'Lightening Deals'
+                                            ? item['discount']
+                                            : "0",
                                         name: item['title'],
                                         price: item['price'],
                                         dPrice: item['category'] ==
@@ -457,9 +465,21 @@ class _MenuScreenState extends State<MenuScreen> {
                                         productRating: product['averageReview'],
                                       )
                                     : HomeCard(
+                                        oofProd: item['category'] ==
+                                                'Lightening Deals'
+                                            ? true
+                                            : false,
+                                        percentage: item['category'] ==
+                                                'Lightening Deals'
+                                            ? item['discount']
+                                            : "0",
                                         name: item['title'],
-                                        price: "",
-                                        dPrice: item['price'] + "₹",
+                                        price: item['price'] + "₹",
+                                        dPrice: item['category'] ==
+                                                'Lightening Deals'
+                                            ? calculateDiscountedPrice(
+                                                item['price'], item['discount'])
+                                            : item['price'],
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
                                         img: item['imageUrl'],
@@ -513,7 +533,11 @@ class _MenuScreenState extends State<MenuScreen> {
                                             item['size'][0],
                                             'N/A',
                                             item['color'][0],
-                                            '0',
+                                            item['category'] ==
+                                                    "Lightening Deals"
+                                                ? dPrice(item['price'],
+                                                    item['discount'])
+                                                : '0',
                                           );
                                         },
                                         productId: item['id'],
