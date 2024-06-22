@@ -22,7 +22,6 @@ class _CategoryCartState extends State<CategoryCart> {
 
   @override
   void initState() {
-    // ignore: unrelated_type_equality_checks
     checkUiType();
 
     super.initState();
