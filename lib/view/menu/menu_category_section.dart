@@ -157,6 +157,8 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
                 return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
+              } else if (snapshot.data!.docs.isEmpty) {
+                return const Center(child: Text('No Products to show'));
               } else {
                 var data = snapshot.data!.docs;
                 return Padding(

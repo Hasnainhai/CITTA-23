@@ -187,28 +187,60 @@ class _MenuScreenState extends State<MenuScreen> {
                           children: [
                             InkWell(
                                 onTap: () {
-                                  menuRepository.fetchItems("food");
+                                  menuRepository.fetchItems("Fruits");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
                                       .switchToType(MenuEnums.Category);
                                 },
-                                child: const CategoryCart(text: 'food')),
+                                child: const CategoryCart(text: 'Fruits')),
                             InkWell(
                                 onTap: () {
-                                  menuRepository.fetchItems("aly");
+                                  menuRepository.fetchItems("Vegetables");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
                                       .switchToType(MenuEnums.Category);
                                 },
-                                child: const CategoryCart(text: 'aly')),
+                                child: const CategoryCart(text: 'Vegetables')),
                             InkWell(
                                 onTap: () {
-                                  menuRepository.fetchItems("basit");
+                                  menuRepository.fetchItems("Milk");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
                                       .switchToType(MenuEnums.Category);
                                 },
-                                child: const CategoryCart(text: 'basit')),
+                                child: const CategoryCart(text: 'Milk')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Cheese");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Cheese')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Yogurt");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Yogurt')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Meat");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Meat')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Milk");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Herbs')),
                           ],
                         ),
                       ),
