@@ -13,6 +13,8 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 
+import '../HomeScreen/product_detail_screen.dart';
+
 class ForgetAnythingBottomSheet extends StatefulWidget {
   const ForgetAnythingBottomSheet({
     super.key,
@@ -446,6 +448,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
         }
 
         final foodProducts = snapshot.data!;
+
         return GridView.builder(
           shrinkWrap: true,
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -468,7 +471,33 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               fillColor: AppColor.bgColor,
               img: product['imageUrl'],
               iconColor: AppColor.primaryColor,
-              ontap: () {},
+              ontap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ProductDetailScreen(
+                        title: product['title'].toString(),
+                        productId: product['id'].toString(),
+                        sellerId: product['sellerId'].toString(),
+                        imageUrl: product['imageUrl'],
+                        price: product['category'] == "Lightening Deals"
+                            ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
+                            : product['price'] + '₹',
+                        salePrice: product['price'].toString(),
+                        weight: product['weight'].toString(),
+                        detail: product['detail'].toString(),
+                        disPrice: product['category'] == "Lightening Deals"
+                            ? (int.parse(product['discount']) /
+                                    100 *
+                                    int.parse(product['price']))
+                                .toString()
+                            : '0',
+                      );
+                    },
+                  ),
+                );
+              },
               addCart: () {
                 addToCart(
                   product['imageUrl'],
