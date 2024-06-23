@@ -7,20 +7,23 @@ class MenuRepository extends ChangeNotifier {
 
   CollectionReference _collectionReference =
       FirebaseFirestore.instance.collection('products');
-
+  Query _categoryReference = FirebaseFirestore.instance
+      .collection('fashion')
+      .where('category', isEqualTo: 'Paints');
   String get productType => _productType;
   CollectionReference get collectionReference => _collectionReference;
+  Query get categoryReference => _categoryReference;
 
   void handleFoodButton() {
     _productType = 'food';
-    setProductType();
+    setProductType(_productType);
     _collectionReference = FirebaseFirestore.instance.collection('products');
     notifyListeners();
   }
 
   void handleFashionButton() {
     _productType = 'fashion';
-    setProductType();
+    setProductType(_productType);
 
     _collectionReference = FirebaseFirestore.instance.collection('fashion');
     notifyListeners();
@@ -31,14 +34,15 @@ class MenuRepository extends ChangeNotifier {
         _firestore.collection(_productType == 'food' ? 'products' : 'fashion');
   }
 
-  void setProductType() {
+  void setProductType(String type) {
+    _productType = type;
     _updateCollectionReference();
     notifyListeners();
   }
 
-  Future<QuerySnapshot> fetchItems(String relatedValue) {
-    return _collectionReference
-        .where('releated', isEqualTo: relatedValue)
-        .get();
+  void fetchItems(String relatedValue) {
+    _categoryReference =
+        _collectionReference.where('releated', isEqualTo: relatedValue);
+    notifyListeners();
   }
 }
