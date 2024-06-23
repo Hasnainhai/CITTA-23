@@ -166,7 +166,7 @@ class _FashionDetailState extends State<FashionDetail> {
           .doc(uuid)
           .set({
         'title': widget.title.toString(),
-        'salePrice': widget.salePrice.toString(),
+        'salePrice': widget.price.toString(),
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,

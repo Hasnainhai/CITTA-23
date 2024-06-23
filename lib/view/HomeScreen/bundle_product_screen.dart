@@ -168,7 +168,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     }
   }
 
-  void addToFavorites() async {
+  void addToFavorites(
+      String discount, String weight, String size, String color) async {
     try {
       // Get the user's UID
       String uid = FirebaseAuth
@@ -186,7 +187,11 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
-        'deletedId': uuid
+        'deletedId': uuid,
+        "weight": weight,
+        'color': 'N/A',
+        'size': size,
+        "discount": discount
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -370,7 +375,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                     like = !like;
                                     if (like) {
                                       // Add to favorites
-                                      addToFavorites();
+                                      addToFavorites("0", widget.weight,
+                                          widget.size, 'N/A');
                                       like = true;
                                     } else {
                                       // Remove from favorites
