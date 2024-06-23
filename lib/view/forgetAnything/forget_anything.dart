@@ -407,7 +407,9 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               fillColor: AppColor.bgColor,
               img: product['imageUrl'],
               iconColor: AppColor.primaryColor,
-              ontap: () {},
+              ontap: () {
+                navigateToDetailScreen(context, product);
+              },
               addCart: () {
                 addToCart(
                   product['imageUrl'],
@@ -434,6 +436,60 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
         );
       },
     );
+  }
+
+  void navigateToDetailScreen(
+      BuildContext context, Map<String, dynamic> product) {
+    if (product.containsKey('size')) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return FashionDetail(
+          price: product['price'],
+          title: product['title'].toString(),
+          imageUrl: product['imageUrl'],
+          salePrice: product['category'] == "Lightening Deals"
+              ? calculateDiscountedPrice(product['price'], product['discount'])
+              : product['price'].toString(),
+          detail: product['detail'].toString(),
+          sellerId: product['sellerId'],
+          productId: product['id'],
+          colors: product['color'].cast<String>(),
+          sizes: product['size'].cast<String>(),
+          disPrice: product['category'] == "Lightening Deals"
+              ? (int.parse(product['discount']) /
+                      100 *
+                      int.parse(product['price']))
+                  .toString()
+              : '0',
+        );
+      }));
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ProductDetailScreen(
+              title: product['title'].toString(),
+              productId: product['id'].toString(),
+              sellerId: product['sellerId'].toString(),
+              imageUrl: product['imageUrl'],
+              price: product['price'].toString(),
+              salePrice: product['category'] == "Lightening Deals"
+                  ? calculateDiscountedPrice(
+                      product['price'], product['discount'])
+                  : product['price'],
+              weight: product['weight'].toString(),
+              detail: product['detail'].toString(),
+              disPrice: product['category'] == "Lightening Deals"
+                  ? (int.parse(product['discount']) /
+                          100 *
+                          int.parse(product['price']))
+                      .toString()
+                  : '0',
+            );
+          },
+        ),
+      );
+    }
   }
 
   Widget _buildFoodTab(BuildContext context) {
@@ -482,10 +538,10 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                         productId: product['id'].toString(),
                         sellerId: product['sellerId'].toString(),
                         imageUrl: product['imageUrl'],
-                        price: product['category'] == "Lightening Deals"
+                        price: product['price'].toString(),
+                        salePrice: product['category'] == "Lightening Deals"
                             ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
-                            : product['price'] + '₹',
-                        salePrice: product['price'].toString(),
+                            : product['price'],
                         weight: product['weight'].toString(),
                         detail: product['detail'].toString(),
                         disPrice: product['category'] == "Lightening Deals"
