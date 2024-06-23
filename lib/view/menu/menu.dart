@@ -178,41 +178,71 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             Consumer<MenuRepository>(builder: (context, menuRepository, child) {
               return menuRepository.productType == "food"
-                  ? Align(
-                      alignment: Alignment.centerLeft,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                  onTap: () {
-                                    menuRepository.fetchItems("food");
-                                    Provider.of<MenuUiRepository>(context,
-                                            listen: false)
-                                        .switchToType(MenuEnums.Category);
-                                  },
-                                  child: const CategoryCart(text: 'food')),
-                              InkWell(
-                                  onTap: () {
-                                    menuRepository.fetchItems("aly");
-                                    Provider.of<MenuUiRepository>(context,
-                                            listen: false)
-                                        .switchToType(MenuEnums.Category);
-                                  },
-                                  child: const CategoryCart(text: 'aly')),
-                              InkWell(
-                                  onTap: () {
-                                    menuRepository.fetchItems("basit");
-                                    Provider.of<MenuUiRepository>(context,
-                                            listen: false)
-                                        .switchToType(MenuEnums.Category);
-                                  },
-                                  child: const CategoryCart(text: 'basit')),
-                            ],
-                          ),
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Fruits");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Fruits')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Vegetables");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Vegetables')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Milk");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Milk')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Cheese");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Cheese')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Yogurt");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Yogurt')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Meat");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Meat')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Milk");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Herbs')),
+                          ],
+            
                         ),
                       ),
                     )
