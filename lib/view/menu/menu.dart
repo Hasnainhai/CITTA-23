@@ -3,20 +3,12 @@ import 'package:citta_23/repository/menu_ui_repository.dart';
 import 'package:citta_23/res/components/category_Cart.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/menu_enums.dart';
-import 'package:citta_23/utils/utils.dart';
-import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
-import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
-import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:citta_23/view/menu/menu_category_section.dart';
 import 'package:citta_23/view/menu/menu_default_section.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../res/consts/vars.dart';
-import '../../routes/routes_name.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -27,174 +19,8 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   CategoryType? categoryType;
-  late CollectionReference _collectionReference;
-  String productType = 'food';
-  bool isTrue = true;
 
-  void _handleFoodButton() {
-    // Change the collection to 'products'
-    setState(() {
-      productType = 'food';
-      _collectionReference = FirebaseFirestore.instance.collection('products');
-    });
-  }
-
-  void _handleFashionButton() {
-    // Change the collection to 'fashion'
-    setState(() {
-      productType = 'fashion';
-      _collectionReference = FirebaseFirestore.instance.collection('fashion');
-    });
-  }
-
-  String dPrice(String originalPriceString, String discountPercentageString) {
-    // Convert strings to double
-
-    double originalPrice = double.parse(originalPriceString);
-    double discountPercentage = double.parse(discountPercentageString);
-
-    // Calculate discounted price
-    double discountedPrice = originalPrice * (discountPercentage / 100);
-
-    // Return the discounted price as a formatted string
-    return discountedPrice.toStringAsFixed(
-        0); // You can adjust the number of decimal places as needed
-  }
-
-  String calculateDiscountedPrice(
-      String originalPriceString, String discountPercentageString) {
-    // Convert strings to double
-
-    double originalPrice = double.parse(originalPriceString);
-    double discountPercentage = double.parse(discountPercentageString);
-
-    // Calculate discounted price
-    double p = originalPrice * (discountPercentage / 100);
-    double discountedPrice = originalPrice - p;
-    String orPrice = discountedPrice.toInt().toString();
-    // Convert to integer to remove decimal places and then back to string
-    return orPrice;
-  }
-
-  // popUp
-  void showSignupDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: AppColor.whiteColor,
-          shape: const RoundedRectangleBorder(),
-          icon: const Icon(
-            Icons.no_accounts_outlined,
-            size: 80,
-            color: AppColor.primaryColor,
-          ),
-          title: const Text('You don\'t have any account, please'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.primaryColor,
-                  shape: const RoundedRectangleBorder(),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, RoutesName.loginscreen);
-                },
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(color: AppColor.whiteColor),
-                ),
-              ),
-              const SizedBox(height: 12.0), // Vertical spacing
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0.0,
-                  shape: const RoundedRectangleBorder(),
-                  side: const BorderSide(
-                    color: AppColor.primaryColor, // Border color
-                    width: 2.0, // Border width
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, RoutesName.registerScreen);
-                },
-                child: const Text(
-                  'SIGN UP',
-                  style: TextStyle(color: AppColor.primaryColor),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void addToCart(
-      String img,
-      String title,
-      String dPrice,
-      String sellerId,
-      String productId,
-      String size,
-      String weight,
-      String color,
-      String disPrice) async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) {
-      showSignupDialog(context);
-      return;
-    }
-
-    final userId = currentUser.uid;
-    // Get the collection reference for the user's cart
-    CollectionReference cartCollectionRef = FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('cart');
-
-    // Check if the product is already in the cart
-    QuerySnapshot cartSnapshot = await cartCollectionRef
-        .where('imageUrl', isEqualTo: img)
-        .limit(1)
-        .get();
-
-    if (cartSnapshot.docs.isNotEmpty) {
-      // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
-    } else {
-      // Product is not in the cart, add it
-      var uuid = const Uuid().v1();
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('cart')
-          .doc(uuid)
-          .set({
-        'sellerId': sellerId,
-        'id': productId,
-        'imageUrl': img,
-        'title': title,
-        'salePrice': dPrice,
-        'deleteId': uuid,
-        "size": size,
-        'weight': weight,
-        'dPrice': disPrice,
-        'color': color,
-        // Add other product details as needed
-      });
-      Utils.toastMessage('Successfully added to cart');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _collectionReference = FirebaseFirestore.instance.collection('products');
-  }
+  String category = "Shirt";
 
   @override
   Widget build(BuildContext context) {
@@ -360,14 +186,29 @@ class _MenuScreenState extends State<MenuScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  menuRepository.fetchItems("food");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
                                 child: const CategoryCart(text: 'food')),
                             InkWell(
-                                onTap: () {},
-                                child: const CategoryCart(text: 'food')),
+                                onTap: () {
+                                  menuRepository.fetchItems("aly");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'aly')),
                             InkWell(
-                                onTap: () {},
-                                child: const CategoryCart(text: 'food')),
+                                onTap: () {
+                                  menuRepository.fetchItems("basit");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'basit')),
                           ],
                         ),
                       ),
@@ -380,6 +221,8 @@ class _MenuScreenState extends State<MenuScreen> {
                           children: [
                             InkWell(
                               onTap: () {
+                                category = "Paints";
+
                                 menuRepository.fetchItems("Paints");
                                 Provider.of<MenuUiRepository>(context,
                                         listen: false)
@@ -389,6 +232,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             ),
                             InkWell(
                                 onTap: () {
+                                  category = "jacket";
                                   menuRepository.fetchItems("jacket");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
@@ -397,6 +241,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                 child: const CategoryCart(text: 'jacket')),
                             InkWell(
                                 onTap: () {
+                                  category = "Under Wear";
+
                                   menuRepository.fetchItems("Under Wear");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
@@ -405,6 +251,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                 child: const CategoryCart(text: 'Under Wear')),
                             InkWell(
                                 onTap: () {
+                                  category = "Shirt";
+
                                   menuRepository.fetchItems("Shirt");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
@@ -422,7 +270,9 @@ class _MenuScreenState extends State<MenuScreen> {
 
                 switch (uiState.selectedType) {
                   case MenuEnums.Category:
-                    selectedWidget = const MenuCategorySection();
+                    selectedWidget = MenuCategorySection(
+                      category: category,
+                    );
                     break;
 
                   case MenuEnums.DefaultSection:
