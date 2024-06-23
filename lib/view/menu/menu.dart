@@ -242,6 +242,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                 },
                                 child: const CategoryCart(text: 'Herbs')),
                           ],
+            
                         ),
                       ),
                     )
