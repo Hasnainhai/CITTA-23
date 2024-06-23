@@ -150,9 +150,11 @@ class _FashionDetailState extends State<FashionDetail> {
     }
   }
 
-  void addToFavorites() async {
+  void addToFavorites(
+      String weight, String color, String size, String disount) async {
     try {
       // Get the user's UID
+
       String uid = FirebaseAuth
           .instance.currentUser!.uid; // You need to implement this function
       String uuid = const Uuid().v1();
@@ -164,11 +166,16 @@ class _FashionDetailState extends State<FashionDetail> {
           .doc(uuid)
           .set({
         'title': widget.title.toString(),
-        'salePrice': widget.salePrice.toString(),
+        'salePrice': widget.price.toString(),
         'imageUrl': widget.imageUrl.toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
-        'deletedId': uuid
+        'deletedId': uuid,
+        "weight": weight,
+        'size': size,
+        'color': color,
+        "discount": widget.disPrice,
+
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -354,13 +361,20 @@ class _FashionDetailState extends State<FashionDetail> {
                                 setState(() {
                                   like = !like;
                                   if (like) {
-                                    // Add to favorites
-                                    addToFavorites();
-                                    like = true;
+                                    if (_selectedImageUrl != null &&
+                                        _selectedSize != null) {
+                                      addToFavorites('N/A', _selectedImageUrl!,
+                                          _selectedSize!, widget.disPrice);
+                                    } else {
+                                      like =
+                                          false; // Reset like state if validation fails
+                                      Utils.flushBarErrorMessage(
+                                          "Please select the color and size",
+                                          context);
+                                    }
                                   } else {
                                     // Remove from favorites
                                     removeFromFavorites();
-                                    like = false;
                                   }
                                 });
                               },

@@ -6,6 +6,7 @@ import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import 'widgets/favourite_list_cart.dart';
 
@@ -19,6 +20,58 @@ class FavouriteList extends StatefulWidget {
 class _FavouriteListState extends State<FavouriteList> {
   bool _isLoading = true;
   final _firestoreInstance = FirebaseFirestore.instance;
+  void addToCart(
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String weight,
+    String disPrice,
+    String size,
+    String color,
+  ) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    // Get the collection reference for the user's cart
+    CollectionReference cartCollectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+
+    // Check if the product is already in the cart
+    QuerySnapshot cartSnapshot = await cartCollectionRef
+        .where('imageUrl', isEqualTo: img)
+        .limit(1)
+        .get();
+
+    if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
+      Utils.toastMessage('Product is already in the cart');
+    } else {
+      // Product is not in the cart, add it
+      var uuid = const Uuid().v1();
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('cart')
+          .doc(uuid)
+          .set({
+        'sellerId': sellerId,
+        'id': productId,
+        'imageUrl': img,
+        'title': title,
+        'salePrice': dPrice,
+        'deleteId': uuid,
+        "size": "N/A",
+        "color": "N/A",
+        "weight": weight,
+        'dPrice': disPrice,
+
+        // Add other product details as needed
+      });
+      Utils.toastMessage('Successfully added to cart');
+    }
+  }
 
   late Stream<List<Map<String, dynamic>?>> favoriteItemsStream;
   Stream<List<Map<String, dynamic>?>> getFavoriteItemsStream() {
@@ -174,22 +227,16 @@ class _FavouriteListState extends State<FavouriteList> {
                           );
                         },
                         ontap2: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (c) => CheckOutScreen(
-                                tile: favorite['title'],
-                                price: favorite['salePrice'],
-                                img: favorite['imageUrl'],
-                                id: favorite['id'],
-                                customerId: favorite['sellerId'],
-                                weight: '1',
-                                salePrice: favorite['salePrice'],
-                                productType: "faviroute list",
-                                size: "Null",
-                              ),
-                            ),
-                          );
+                          addToCart(
+                              favorite['imageUrl'],
+                              favorite['title'],
+                              favorite['salePrice'],
+                              favorite['sellerId'],
+                              favorite['id'],
+                              favorite['weight'],
+                              favorite['discount'],
+                              favorite['size'],
+                              favorite['color']);
                         },
                       );
                     },

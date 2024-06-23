@@ -69,7 +69,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     });
   }
 
-  void addToFavorites() async {
+  void addToFavorites(
+      String discount, String weight, String color, String size) async {
     try {
       // Get the user's UID
       String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -87,6 +88,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
         'deletedId': uuid,
+        'discount': discount,
+        'weight': weight,
+        'color': color,
+        'size': size,
       });
       // Display a success message or perform any other action
       Utils.toastMessage('SuccessFully add to favourite');
@@ -317,7 +322,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     like = !like;
                                     if (like) {
                                       // Add to favorites
-                                      addToFavorites();
+                                      addToFavorites(widget.disPrice,
+                                          widget.weight, "N/A", "N/A");
                                       like = true;
                                     } else {
                                       // Remove from favorites
