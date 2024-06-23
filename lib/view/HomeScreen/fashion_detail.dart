@@ -630,7 +630,7 @@ class _FashionDetailState extends State<FashionDetail> {
                       child: Center(
                         child: IconButton(
                           onPressed: () {
-                            if (_selectedSize == null &&
+                            if (_selectedSize == null ||
                                 _selectedImageUrl == null) {
                               Utils.toastMessage(
                                   "Please select size and color");
@@ -663,8 +663,10 @@ class _FashionDetailState extends State<FashionDetail> {
                           onTap: () {
                             if (_selectedSize == null ||
                                 _selectedImageUrl == null) {
-                              Utils.flushBarErrorMessage(
-                                  "Please select the size and color", context);
+                              Utils.toastMessage(
+                                  "Please select the size and color");
+                              // Utils.flushBarErrorMessage(
+                              //     "Please select the size and color", context);
                             } else {
                               Navigator.push(
                                 context,
