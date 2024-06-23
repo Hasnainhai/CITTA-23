@@ -16,9 +16,8 @@ class CategoryCart extends StatefulWidget {
 }
 
 class _CategoryCartState extends State<CategoryCart> {
-  Color _backgroundColor = AppColor.bgColor;
-  Color _textColor = AppColor.primaryColor;
-  
+  final Color _backgroundColor = AppColor.bgColor;
+  final Color _textColor = AppColor.primaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,7 @@ class _CategoryCartState extends State<CategoryCart> {
         children: [
           IntrinsicWidth(
             child: Container(
-              height: 46,
+              height: 40,
               decoration: BoxDecoration(
                 color: _backgroundColor,
               ),
@@ -50,8 +49,8 @@ class _CategoryCartState extends State<CategoryCart> {
                     widget.text,
                     style: TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                       color: _textColor,
                     ),
                   ),

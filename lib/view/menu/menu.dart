@@ -178,38 +178,41 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             Consumer<MenuRepository>(builder: (context, menuRepository, child) {
               return menuRepository.productType == "food"
-                  ? SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  menuRepository.fetchItems("food");
-                                  Provider.of<MenuUiRepository>(context,
-                                          listen: false)
-                                      .switchToType(MenuEnums.Category);
-                                },
-                                child: const CategoryCart(text: 'food')),
-                            InkWell(
-                                onTap: () {
-                                  menuRepository.fetchItems("aly");
-                                  Provider.of<MenuUiRepository>(context,
-                                          listen: false)
-                                      .switchToType(MenuEnums.Category);
-                                },
-                                child: const CategoryCart(text: 'aly')),
-                            InkWell(
-                                onTap: () {
-                                  menuRepository.fetchItems("basit");
-                                  Provider.of<MenuUiRepository>(context,
-                                          listen: false)
-                                      .switchToType(MenuEnums.Category);
-                                },
-                                child: const CategoryCart(text: 'basit')),
-                          ],
+                  ? Align(
+                      alignment: Alignment.centerLeft,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    menuRepository.fetchItems("food");
+                                    Provider.of<MenuUiRepository>(context,
+                                            listen: false)
+                                        .switchToType(MenuEnums.Category);
+                                  },
+                                  child: const CategoryCart(text: 'food')),
+                              InkWell(
+                                  onTap: () {
+                                    menuRepository.fetchItems("aly");
+                                    Provider.of<MenuUiRepository>(context,
+                                            listen: false)
+                                        .switchToType(MenuEnums.Category);
+                                  },
+                                  child: const CategoryCart(text: 'aly')),
+                              InkWell(
+                                  onTap: () {
+                                    menuRepository.fetchItems("basit");
+                                    Provider.of<MenuUiRepository>(context,
+                                            listen: false)
+                                        .switchToType(MenuEnums.Category);
+                                  },
+                                  child: const CategoryCart(text: 'basit')),
+                            ],
+                          ),
                         ),
                       ),
                     )
