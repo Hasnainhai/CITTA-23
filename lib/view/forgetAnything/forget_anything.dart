@@ -1,5 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api
 
+import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -12,9 +13,6 @@ import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
-
-import '../HomeScreen/fashion_detail.dart';
-import '../HomeScreen/product_detail_screen.dart';
 
 class ForgetAnythingBottomSheet extends StatefulWidget {
   const ForgetAnythingBottomSheet({
@@ -32,9 +30,6 @@ class ForgetAnythingBottomSheet extends StatefulWidget {
 }
 
 class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
-  int subTotal = 0;
-  int d = 0;
-
   @override
   void initState() {
     super.initState();
@@ -73,7 +68,6 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
           Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
           Provider.of<TotalPriceModel>(context, listen: false)
               .updateTotalPrice(subTotal, d);
-          Provider.of<IndexModel>(context, listen: false).items;
           Provider.of<IndexModel>(context, listen: false)
               .updateIndex(querySnapshot.docs.length);
         });
@@ -407,9 +401,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               fillColor: AppColor.bgColor,
               img: product['imageUrl'],
               iconColor: AppColor.primaryColor,
-              ontap: () {
-                navigateToDetailScreen(context, product);
-              },
+              ontap: () {},
               addCart: () {
                 addToCart(
                   product['imageUrl'],
@@ -438,60 +430,6 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
     );
   }
 
-  void navigateToDetailScreen(
-      BuildContext context, Map<String, dynamic> product) {
-    if (product.containsKey('size')) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return FashionDetail(
-          price: product['price'],
-          title: product['title'].toString(),
-          imageUrl: product['imageUrl'],
-          salePrice: product['category'] == "Lightening Deals"
-              ? calculateDiscountedPrice(product['price'], product['discount'])
-              : product['price'].toString(),
-          detail: product['detail'].toString(),
-          sellerId: product['sellerId'],
-          productId: product['id'],
-          colors: product['color'].cast<String>(),
-          sizes: product['size'].cast<String>(),
-          disPrice: product['category'] == "Lightening Deals"
-              ? (int.parse(product['discount']) /
-                      100 *
-                      int.parse(product['price']))
-                  .toString()
-              : '0',
-        );
-      }));
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return ProductDetailScreen(
-              title: product['title'].toString(),
-              productId: product['id'].toString(),
-              sellerId: product['sellerId'].toString(),
-              imageUrl: product['imageUrl'],
-              price: product['price'].toString(),
-              salePrice: product['category'] == "Lightening Deals"
-                  ? calculateDiscountedPrice(
-                      product['price'], product['discount'])
-                  : product['price'],
-              weight: product['weight'].toString(),
-              detail: product['detail'].toString(),
-              disPrice: product['category'] == "Lightening Deals"
-                  ? (int.parse(product['discount']) /
-                          100 *
-                          int.parse(product['price']))
-                      .toString()
-                  : '0',
-            );
-          },
-        ),
-      );
-    }
-  }
-
   Widget _buildFoodTab(BuildContext context) {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: fetchFoodProducts(),
@@ -505,7 +443,6 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
         }
 
         final foodProducts = snapshot.data!;
-
         return GridView.builder(
           shrinkWrap: true,
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -528,33 +465,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               fillColor: AppColor.bgColor,
               img: product['imageUrl'],
               iconColor: AppColor.primaryColor,
-              ontap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ProductDetailScreen(
-                        title: product['title'].toString(),
-                        productId: product['id'].toString(),
-                        sellerId: product['sellerId'].toString(),
-                        imageUrl: product['imageUrl'],
-                        price: product['price'].toString(),
-                        salePrice: product['category'] == "Lightening Deals"
-                            ? "${calculateDiscountedPrice(product['price'], product['discount'])}₹"
-                            : product['price'],
-                        weight: product['weight'].toString(),
-                        detail: product['detail'].toString(),
-                        disPrice: product['category'] == "Lightening Deals"
-                            ? (int.parse(product['discount']) /
-                                    100 *
-                                    int.parse(product['price']))
-                                .toString()
-                            : '0',
-                      );
-                    },
-                  ),
-                );
-              },
+              ontap: () {},
               addCart: () {
                 addToCart(
                   product['imageUrl'],
@@ -618,30 +529,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               fillColor: AppColor.bgColor,
               img: product['imageUrl'],
               iconColor: AppColor.primaryColor,
-              ontap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return FashionDetail(
-                    price: product['price'],
-                    title: product['title'].toString(),
-                    imageUrl: product['imageUrl'],
-                    salePrice: product['category'] == "Lightening Deals"
-                        ? calculateDiscountedPrice(
-                            product['price'], product['discount'])
-                        : product['price'].toString(),
-                    detail: product['detail'].toString(),
-                    sellerId: product['sellerId'],
-                    productId: product['id'],
-                    colors: product['color'].cast<String>(),
-                    sizes: product['size'].cast<String>(),
-                    disPrice: product['category'] == "Lightening Deals"
-                        ? (int.parse(product['discount']) /
-                                100 *
-                                int.parse(product['price']))
-                            .toString()
-                        : '0',
-                  );
-                }));
-              },
+              ontap: () {},
               addCart: () {
                 addToCart(
                   product['imageUrl'],
