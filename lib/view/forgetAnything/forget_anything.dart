@@ -13,6 +13,7 @@ import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
 
+import '../HomeScreen/fashion_detail.dart';
 import '../HomeScreen/product_detail_screen.dart';
 
 class ForgetAnythingBottomSheet extends StatefulWidget {
@@ -561,7 +562,30 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               fillColor: AppColor.bgColor,
               img: product['imageUrl'],
               iconColor: AppColor.primaryColor,
-              ontap: () {},
+              ontap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return FashionDetail(
+                    price: product['price'],
+                    title: product['title'].toString(),
+                    imageUrl: product['imageUrl'],
+                    salePrice: product['category'] == "Lightening Deals"
+                        ? calculateDiscountedPrice(
+                            product['price'], product['discount'])
+                        : product['price'].toString(),
+                    detail: product['detail'].toString(),
+                    sellerId: product['sellerId'],
+                    productId: product['id'],
+                    colors: product['color'].cast<String>(),
+                    sizes: product['size'].cast<String>(),
+                    disPrice: product['category'] == "Lightening Deals"
+                        ? (int.parse(product['discount']) /
+                                100 *
+                                int.parse(product['price']))
+                            .toString()
+                        : '0',
+                  );
+                }));
+              },
               addCart: () {
                 addToCart(
                   product['imageUrl'],
