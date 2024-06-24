@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
               context, RoutesName.dashboardScreen, (routes) => false);
         } else {
           await Navigator.pushNamedAndRemoveUntil(
-              context, RoutesName.onboarding1, (routes) => false);
+              context, RoutesName.loginorsiginscreen, (routes) => false);
         }
       } catch (e) {
         Utils.flushBarErrorMessage('$e', context);
