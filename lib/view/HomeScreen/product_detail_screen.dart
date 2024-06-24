@@ -514,7 +514,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   widget.sellerId,
                                   widget.productId,
                                   items == 1 ? widget.weight : items.toString(),
-                                  widget.disPrice);
+                                  widget.disPrice.toString());
                             },
                             icon: const Icon(
                               Icons.add_shopping_cart_outlined,

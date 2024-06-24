@@ -95,6 +95,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   bool _isLoading = false;
+
   void saveDetail() {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     var fireStore = FirebaseFirestore.instance;
@@ -128,12 +129,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'color': widget.color,
       'quantity': widget.quantity,
     });
-    fireStore
-        .collection('saller')
-        .doc(widget.customerId)
-        .collection('my_orders')
-        .doc(uid)
-        .set({
+    fireStore.collection('saller').doc().collection('my_orders').doc(uid).set({
       'title': widget.tile,
       'imageUrl': widget.img,
       'productId': widget.id,
@@ -212,6 +208,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       });
     }
   }
+
+  String? selectedAddress;
 
   @override
   Widget build(BuildContext context) {
@@ -306,26 +304,40 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 .map((DocumentSnapshot document) {
                               Map<String, dynamic> data =
                                   document.data() as Map<String, dynamic>;
+                              bool isSelected =
+                                  selectedAddress == data['address2'];
 
                               return Column(
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      debugPrint('address one is selected');
-                                      address = data['address2'];
-                                      name = data['name'];
-                                      city = data['city'];
-                                      postalCode = data['zipcode'];
-                                      state = data['state'];
-                                      phone = data['phone'];
+                                      setState(() {
+                                        selectedAddress = data['address2'];
+                                        address = data['address2'];
+                                        name = data['name'];
+                                        city = data['city'];
+                                        postalCode = data['zipcode'];
+                                        state = data['state'];
+                                        phone = data['phone'];
+                                      });
+                                      debugPrint(
+                                          'Address selected: $selectedAddress');
                                     },
                                     child: AddressCheckOutWidget(
                                       bgColor: AppColor.whiteColor,
-                                      borderColor: AppColor.grayColor,
+                                      borderColor: isSelected
+                                          ? AppColor.primaryColor
+                                          : AppColor.grayColor,
                                       titleColor: AppColor.blackColor,
                                       title: data['address2'],
                                       phNo: data['phone'],
                                       address: data['address1'],
+                                      isSelect: isSelected,
+                                      ontapSelect: () {
+                                        setState(() {
+                                          selectedAddress = data['address2'];
+                                        });
+                                      },
                                     ),
                                   ),
                                   const VerticalSpeacing(20.0),

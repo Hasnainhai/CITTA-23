@@ -264,17 +264,15 @@ class _FilterPopUpState extends State<FilterPopUp> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CategoryProductsScreen(
-                                        title: title,
-                                        products: const [],
-                                      )));
+                                  builder: (context) =>
+                                      PopularPackScreen(title: title)));
                           _allCategorits.remove('Grocery');
                         } else if (_allCategorits.contains('Vagetabals')) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const PopularPackScreen(
-                                        title: 'Grocery',
+                                        title: 'Vagetabals',
                                       )));
                           _allCategorits.remove('Vagetabals');
                         } else if (_allCategorits.contains('Fashion')) {

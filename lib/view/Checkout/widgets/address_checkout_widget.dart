@@ -1,4 +1,3 @@
-import 'package:citta_23/view/Checkout/widgets/myCheckout.dart';
 import 'package:flutter/material.dart';
 import '../../../res/components/colors.dart';
 
@@ -11,6 +10,8 @@ class AddressCheckOutWidget extends StatefulWidget {
     required this.title,
     required this.phNo,
     required this.address,
+    required this.isSelect,
+    required this.ontapSelect,
   });
   final Color bgColor;
   final Color borderColor;
@@ -18,6 +19,8 @@ class AddressCheckOutWidget extends StatefulWidget {
   final String title;
   final String phNo;
   final String address;
+  final bool isSelect;
+  final Function ontapSelect;
 
   @override
   State<AddressCheckOutWidget> createState() => _AddressCheckOutWidgetState();
@@ -39,7 +42,28 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const MyCheckBox(),
+            InkWell(
+              onTap: () {
+                widget.ontapSelect();
+              },
+              child: Container(
+                  width: 18,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
+                  child: Center(
+                    child: Container(
+                      width: 12.0,
+                      height: 12.0,
+                      color: widget.isSelect
+                          ? AppColor.primaryColor
+                          : Colors.transparent,
+                    ),
+                  )),
+            ),
             const SizedBox(width: 15.0),
             Text.rich(
               TextSpan(

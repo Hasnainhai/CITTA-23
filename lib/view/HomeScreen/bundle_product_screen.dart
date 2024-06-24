@@ -155,7 +155,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         'id': productId,
         'imageUrl': img,
         'title': title,
-        'salePrice': dPrice,
+        'salePrice': widget.price,
         'deleteId': uuid,
         "size": widget.size,
         "color": "N/A",

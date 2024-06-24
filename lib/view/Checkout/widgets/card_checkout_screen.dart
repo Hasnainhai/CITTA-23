@@ -193,6 +193,8 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
     }
   }
 
+  String? selectedAddress;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,26 +288,40 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                 .map((DocumentSnapshot document) {
                               Map<String, dynamic> data =
                                   document.data() as Map<String, dynamic>;
+                              bool isSelected =
+                                  selectedAddress == data['address2'];
 
                               return Column(
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      debugPrint('address one is selected');
-                                      address = data['address2'];
-                                      name = data['name'];
-                                      city = data['city'];
-                                      postalCode = data['zipcode'];
-                                      state = data['state'];
-                                      phoneNumber = data['phone'];
+                                      setState(() {
+                                        selectedAddress = data['address2'];
+                                        address = data['address2'];
+                                        name = data['name'];
+                                        city = data['city'];
+                                        postalCode = data['zipcode'];
+                                        state = data['state'];
+                                        phoneNumber = data['phone'];
+                                      });
+                                      debugPrint(
+                                          'Address selected: $selectedAddress');
                                     },
                                     child: AddressCheckOutWidget(
                                       bgColor: AppColor.whiteColor,
-                                      borderColor: AppColor.grayColor,
+                                      borderColor: isSelected
+                                          ? AppColor.primaryColor
+                                          : AppColor.grayColor,
                                       titleColor: AppColor.blackColor,
                                       title: data['address2'],
                                       phNo: data['phone'],
                                       address: data['address1'],
+                                      isSelect: isSelected,
+                                      ontapSelect: () {
+                                        setState(() {
+                                          selectedAddress = data['address2'];
+                                        });
+                                      },
                                     ),
                                   ),
                                   const VerticalSpeacing(20.0),

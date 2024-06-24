@@ -572,7 +572,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             child: Image.network(
                               color,
                               errorBuilder: (context, error, stackTrace) {
-                                return Icon(Icons.broken_image,
+                                return const Icon(Icons.broken_image,
                                     color: Colors
                                         .grey); // Display an icon if the image fails to load
                               },
