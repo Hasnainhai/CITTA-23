@@ -707,7 +707,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                   addToCart(
                                     _popularPacks[index]['imageUrl'],
                                     _popularPacks[index]['title'],
-                                    _popularPacks[index]['salePrice'],
+                                    _popularPacks[index]['price'],
                                     _popularPacks[index]['sellerId'],
                                     _popularPacks[index]['id'],
                                     "N/A",
@@ -865,7 +865,8 @@ class _DefaultSectionState extends State<DefaultSection> {
               : GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: categoryProducts.length,
+                  itemCount:
+                      categoryProducts.length < 2 ? categoryProducts.length : 2,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
@@ -894,7 +895,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                     ? (int.parse(product['discount']) /
                                             100 *
                                             int.parse(product['price']))
-                                        .toString()
+                                        .toStringAsFixed(0)
                                     : '0',
                               );
                             },

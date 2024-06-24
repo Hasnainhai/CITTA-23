@@ -50,8 +50,8 @@ class HomeCard extends StatelessWidget {
             border: Border.all(width: 1, color: AppColor.primaryColor)),
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 15.0,
-            right: 15.0,
+            left: 10.0,
+            right: 10.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
