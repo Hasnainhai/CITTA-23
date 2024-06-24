@@ -545,6 +545,11 @@ class _FashionDetailState extends State<FashionDetail> {
                 Wrap(
                   spacing: 8,
                   children: widget.colors.map((color) {
+                    // ignore: unnecessary_null_comparison
+                    if (color == null || color.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+
                     return GestureDetector(
                       onTap: () {
                         _onColorTap(color);
@@ -564,7 +569,14 @@ class _FashionDetailState extends State<FashionDetail> {
                             ),
                           ),
                           child: Center(
-                            child: Image.network(color),
+                            child: Image.network(
+                              color,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(Icons.broken_image,
+                                    color: Colors
+                                        .grey); // Display an icon if the image fails to load
+                              },
+                            ),
                           ),
                         ),
                       ),

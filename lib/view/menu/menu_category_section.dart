@@ -162,7 +162,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
               } else {
                 var data = snapshot.data!.docs;
                 return Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
