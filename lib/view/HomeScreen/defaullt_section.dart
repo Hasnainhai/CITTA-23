@@ -1083,12 +1083,16 @@ class _DefaultSectionState extends State<DefaultSection> {
                         if (categoryProducts.isNotEmpty &&
                             index >= 0 &&
                             index < categoryProducts.length) {
+                          Utils.flushBarErrorMessage(
+                            "this is the id:${product['sellerId']}",
+                            context,
+                          );
                           addToCart(
                             product['imageUrl'],
                             product['title'],
                             product['price'],
-                            product['id'],
                             product['sellerId'],
+                            product['id'],
                             product['size'][0],
                             product['color'][0],
                             "N/A",

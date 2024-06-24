@@ -107,7 +107,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       "phone": phoneNumber as String,
     };
     for (var orderMap in widget.productList) {
-      final String buyerId = orderMap['sellerId']!;
+      final String sellerId = orderMap['sellerId']!;
       var orderId = const Uuid().v1();
       orderMap["address"] = address;
       orderMap["postalCode"] = postalCode;
@@ -121,9 +121,9 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       orderMap['paymentType'] = paymentType;
 
       // orderMap['address'] = addressMap;
-      debugPrint("this is the order map:$orderMap");
+      debugPrint("this is the order map:${orderMap['sellerId']}");
       await myOrdersCollection
-          .doc(buyerId)
+          .doc(sellerId)
           .collection('my_orders')
           .doc(orderId)
           .set(orderMap);
