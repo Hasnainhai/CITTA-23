@@ -14,6 +14,8 @@ import 'package:citta_23/view/HomeScreen/widgets/homeCard.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/view/Checkout/widgets/card_checkout_screen.dart';
+
+import '../HomeScreen/new_items.dart';
 import '../HomeScreen/product_detail_screen.dart';
 
 class ForgetAnythingBottomSheet extends StatefulWidget {

@@ -5,6 +5,7 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
+import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
 import 'package:citta_23/view/forgetAnything/forget_anything.dart';
@@ -31,25 +32,41 @@ class _CardScreenState extends State<CardScreen> {
       .collection("cart");
 
   void fetchDataFromFirestore() async {
-    QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
-    debugPrint("this is the productsSnapshot:$productsSnapshot");
-    productList = productsSnapshot.docs.map((DocumentSnapshot product) {
-      return {
-        'productId': product.id,
-        'title': product['title'] as String,
-        'imageUrl': product['imageUrl'] as String,
-        'sellerId': product['sellerId'] as String,
-        'salePrice': product['salePrice'] as String,
-        'status': "pending",
-        'date': DateTime.now().toString(),
-        'buyyerId': FirebaseAuth.instance.currentUser!.uid,
-        'size': product['size'],
-        'color': product['color'],
-        'discount': product['dPrice'],
-        'quantit': items.toString(),
-        "weight": product['weight'],
-      };
-    }).toList();
+    try {
+      QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
+
+      // Print the entire snapshot for debugging
+      debugPrint("Products Snapshot: ${productsSnapshot.docs}");
+
+      productList = productsSnapshot.docs.map((DocumentSnapshot product) {
+        // Print each product's document ID and data for debugging
+        debugPrint("Product ID: ${product['sellerId']}");
+        debugPrint("Product Data: ${product.data()}");
+        Utils.flushBarErrorMessage(
+            "this is the id:${product['sellerId']}", context);
+        // Create and return the product map
+        return {
+          'productId': product.id,
+          'title': product['title'] as String,
+          'imageUrl': product['imageUrl'] as String,
+          'sellerId': product['sellerId'] as String,
+          'salePrice': product['salePrice'] as String,
+          'status': "pending",
+          'date': DateTime.now().toString(),
+          'buyerId': FirebaseAuth.instance.currentUser!.uid,
+          'size': product['size'],
+          'color': product['color'],
+          'discount': product['dPrice'],
+          'quantity': items.toString(),
+          'weight': product['weight'],
+        };
+      }).toList();
+
+      // Print the final productList for debugging
+      debugPrint("Final Product List: $productList");
+    } catch (error) {
+      debugPrint("Error fetching data from Firestore: $error");
+    }
   }
 
   @override
@@ -417,6 +434,9 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
+                        Utils.flushBarErrorMessage(
+                            "this is the produt ids:${productList[0]['sellerId']}}",
+                            context);
                         showCustomBottomSheet(
                             context, productList, subTotal.toString());
                       }),
