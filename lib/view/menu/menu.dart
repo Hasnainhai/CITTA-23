@@ -242,7 +242,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                 },
                                 child: const CategoryCart(text: 'Herbs')),
                           ],
-            
                         ),
                       ),
                     )
@@ -254,44 +253,177 @@ class _MenuScreenState extends State<MenuScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                category = "Paints";
-
-                                menuRepository.fetchItems("Paints");
+                                menuRepository.fetchItems("T-Shirts");
                                 Provider.of<MenuUiRepository>(context,
                                         listen: false)
                                     .switchToType(MenuEnums.Category);
                               },
-                              child: const CategoryCart(text: 'Paints'),
+                              child: const CategoryCart(text: 'T-Shirts'),
                             ),
                             InkWell(
                                 onTap: () {
-                                  category = "jacket";
-                                  menuRepository.fetchItems("jacket");
+                                  menuRepository.fetchItems("Shirts");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
                                       .switchToType(MenuEnums.Category);
                                 },
-                                child: const CategoryCart(text: 'jacket')),
+                                child: const CategoryCart(text: 'Shirts')),
                             InkWell(
                                 onTap: () {
-                                  category = "Under Wear";
-
-                                  menuRepository.fetchItems("Under Wear");
+                                  menuRepository.fetchItems("Sweaters");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
                                       .switchToType(MenuEnums.Category);
                                 },
-                                child: const CategoryCart(text: 'Under Wear')),
+                                child: const CategoryCart(text: 'Sweaters')),
                             InkWell(
                                 onTap: () {
-                                  category = "Shirt";
-
-                                  menuRepository.fetchItems("Shirt");
+                                  menuRepository.fetchItems("Hoodies");
                                   Provider.of<MenuUiRepository>(context,
                                           listen: false)
                                       .switchToType(MenuEnums.Category);
                                 },
-                                child: const CategoryCart(text: 'Shirt')),
+                                child: const CategoryCart(text: 'Hoodies')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Jeans");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Jeans')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Trousers");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Trousers')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Shorts");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Shorts')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Jackets");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Jackets')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Coats");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Coats')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Blazers");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Blazers')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository
+                                      .fetchItems("Underwear & Socks");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(
+                                    text: 'Underwear & Socks')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Belts");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Belts')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Hats");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Hats')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Gloves");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Gloves')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Blouses");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Blouses')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Skirts");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Skirts')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Leggings");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Leggings')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Casual Dresses");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child:
+                                    const CategoryCart(text: 'Casual Dresses')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Evening Dresses");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(
+                                    text: 'Evening Dresses')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Handbags");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Handbags')),
+                            InkWell(
+                                onTap: () {
+                                  menuRepository.fetchItems("Others...");
+                                  Provider.of<MenuUiRepository>(context,
+                                          listen: false)
+                                      .switchToType(MenuEnums.Category);
+                                },
+                                child: const CategoryCart(text: 'Others...')),
                           ],
                         ),
                       ),

@@ -1027,7 +1027,8 @@ class _DefaultSectionState extends State<DefaultSection> {
               : GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: categoryProducts.length,
+                  itemCount:
+                      categoryProducts.length < 2 ? categoryProducts.length : 2,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                   ),
