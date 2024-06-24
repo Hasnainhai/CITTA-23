@@ -129,7 +129,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       'color': widget.color,
       'quantity': widget.quantity,
     });
-    fireStore.collection('saller').doc().collection('my_orders').doc(uid).set({
+    fireStore
+        .collection('saller')
+        .doc(widget.customerId)
+        .collection('my_orders')
+        .doc(uid)
+        .set({
       'title': widget.tile,
       'imageUrl': widget.img,
       'productId': widget.id,
