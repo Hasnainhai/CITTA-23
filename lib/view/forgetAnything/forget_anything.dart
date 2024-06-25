@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,41 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection("cart");
+
+  void fetchDataFromFirestore() async {
+    try {
+      QuerySnapshot<Object?> productsSnapshot = await _productsCollection.get();
+
+      // Print the entire snapshot for debugging
+      debugPrint("Products Snapshot: ${productsSnapshot.docs}");
+
+      productList = productsSnapshot.docs.map((DocumentSnapshot product) {
+        // Print each product's document ID and data for debugging
+
+        // Create and return the product map
+        return {
+          'productId': product.id,
+          'title': product['title'] as String,
+          'imageUrl': product['imageUrl'] as String,
+          'sellerId': product['sellerId'] as String,
+          'salePrice': product['salePrice'] as String,
+          'status': "pending",
+          'date': DateTime.now().toString(),
+          'buyerId': FirebaseAuth.instance.currentUser!.uid,
+          'size': product['size'],
+          'color': product['color'],
+          'discount': product['dPrice'],
+          'quantity': "1",
+          'weight': product['weight'],
+        };
+      }).toList();
+
+      // Print the final productList for debugging
+      debugPrint("Final Product List: $productList");
+    } catch (error) {
+      debugPrint("Error fetching data from Firestore: $error");
+    }
+  }
 
   void _fetchData() {
     _productsCollection.get().then((QuerySnapshot querySnapshot) {
@@ -205,6 +241,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
         'dPrice': dprice,
       });
       _fetchData();
+      fetchDataFromFirestore();
 
       Utils.toastMessage('Successfully added to cart');
     }

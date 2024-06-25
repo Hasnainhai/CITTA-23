@@ -1,18 +1,15 @@
-// ignore_for_file: file_names, dead_code
-
 import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/repository/ui_repository.dart';
+import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/ui_enums.dart';
 import 'package:citta_23/view/HomeScreen/defaullt_section.dart';
 import 'package:citta_23/view/HomeScreen/search_section.dart';
+import 'package:citta_23/view/drawer/drawer.dart';
 import 'package:citta_23/view/filter/filter.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../res/components/colors.dart';
-import '../../res/components/widgets/verticalSpacing.dart';
-import '../drawer/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final bool _isLoading = false;
   TextEditingController searchController = TextEditingController();
 
-  @override
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -100,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: AppColor.grayColor,
                                       ),
                                       onChanged: (value) {
-                                        debugPrint("this is the field");
                                         if (searchController.text.isNotEmpty) {
                                           productProvider.filterProducts(value);
                                           Provider.of<HomeUiSwithchRepository>(
@@ -164,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           case UIType.SearchSection:
                             selectedWidget = const SearchSection();
                             break;
-
                           case UIType.DefaultSection:
                             selectedWidget = const DefaultSection();
                             break;

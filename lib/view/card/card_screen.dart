@@ -39,6 +39,7 @@ class _CardScreenState extends State<CardScreen> {
       debugPrint("Products Snapshot: ${productsSnapshot.docs}");
 
       productList = productsSnapshot.docs.map((DocumentSnapshot product) {
+
         return {
           'productId': product.id,
           'title': product['title'] as String,
@@ -428,9 +429,6 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
-                        Utils.flushBarErrorMessage(
-                            "this is the produt ids:${productList[0]['sellerId']}}",
-                            context);
                         showCustomBottomSheet(
                             context, productList, subTotal.toString());
                       }),

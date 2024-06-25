@@ -11,7 +11,6 @@ class myOrderCard extends StatefulWidget {
     required this.orderId,
     required this.date,
     required this.status,
-    required this.ontap,
     required this.img,
     required this.amount,
     required this.shippingAddress,
@@ -20,11 +19,11 @@ class myOrderCard extends StatefulWidget {
     required this.title,
     required this.phoneNumber,
     required this.weight,
+    required Function() ontap,
   });
   final String orderId;
   final String date;
   final String status;
-  final Function ontap;
   final String img;
   final String amount;
   final String shippingAddress;
@@ -72,7 +71,7 @@ class _myOrderCardState extends State<myOrderCard> {
                           title: widget.title,
                           date: widget.date,
                           status: widget.status,
-                          weight: "weight",
+                          weight: widget.weight,
                           items: "items",
                           price: widget.salePrice,
                           orderId: widget.orderId,
@@ -112,9 +111,7 @@ class _myOrderCardState extends State<myOrderCard> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {
-                    widget.ontap();
-                  },
+                  onPressed: () {},
                   child: Text(
                     widget.status,
                     style: const TextStyle(

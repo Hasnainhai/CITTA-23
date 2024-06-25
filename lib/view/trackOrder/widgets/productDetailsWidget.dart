@@ -62,7 +62,7 @@ class ProductDetailsWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            price,
+                            subTitle,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
                               fontSize: 16,

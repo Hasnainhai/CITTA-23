@@ -1,6 +1,7 @@
 import 'package:citta_23/models/search_model.dart';
 import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
@@ -19,40 +20,107 @@ class SearchSection extends StatefulWidget {
 }
 
 class _SearchSectionState extends State<SearchSection> {
-  TextEditingController searchController = TextEditingController();
+  String calculateDiscountedPrice(
+      String originalPriceString, String discountPercentageString) {
+    double originalPrice = double.parse(originalPriceString);
+    double discountPercentage = double.parse(discountPercentageString);
+    double discountedPrice =
+        originalPrice - (originalPrice * (discountPercentage / 100));
+    return discountedPrice.toStringAsFixed(0);
+  }
+
+  void showSignupDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   void addToCart(
       String img,
       String title,
-      String price,
-      String productId,
+      String dPrice,
       String sellerId,
+      String productId,
       String size,
       String color,
       String weight,
-      String discountPrice) async {
+      String dprice) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      Utils.toastMessage('Please SignUp first');
+      showSignupDialog();
       return;
     }
 
     final userId = currentUser.uid;
+    // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
         .collection('cart');
 
+    // Check if the product is already in the cart
     QuerySnapshot cartSnapshot = await cartCollectionRef
         .where('imageUrl', isEqualTo: img)
         .limit(1)
         .get();
 
     if (cartSnapshot.docs.isNotEmpty) {
+      // Product is already in the cart, show a popup message
       Utils.toastMessage('Product is already in the cart');
     } else {
+      // Product is not in the cart, add it
       var uuid = const Uuid().v1();
-      await FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
           .collection('cart')
@@ -62,24 +130,16 @@ class _SearchSectionState extends State<SearchSection> {
         'id': productId,
         'imageUrl': img,
         'title': title,
-        'salePrice': price,
+        'salePrice': dPrice,
         'deleteId': uuid,
         'weight': weight,
         "size": size,
         "color": color,
-        "dPrice": discountPrice,
+        "dPrice": dprice,
+        // Add other product details as needed
       });
       Utils.toastMessage('Successfully added to cart');
     }
-  }
-
-  String calculateDiscountedPrice(
-      String originalPriceString, String discountPercentageString) {
-    double originalPrice = double.parse(originalPriceString);
-    double discountPercentage = double.parse(discountPercentageString);
-    double discountedPrice =
-        originalPrice - (originalPrice * (discountPercentage / 100));
-    return discountedPrice.toStringAsFixed(0);
   }
 
   @override
@@ -161,8 +221,8 @@ class _SearchSectionState extends State<SearchSection> {
                 product.imageUrl,
                 product.title,
                 product.price,
-                product.id,
                 product.sellerId,
+                product.id,
                 product.sizes.isNotEmpty ? product.sizes[0] : "N/A",
                 product.colors.isNotEmpty ? product.colors[0] : "N/A",
                 product.weight,
