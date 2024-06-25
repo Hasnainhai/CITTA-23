@@ -431,9 +431,6 @@ class _CardScreenState extends State<CardScreen> {
                   child: RoundedButton(
                       title: 'Checkout',
                       onpress: () {
-                        Utils.flushBarErrorMessage(
-                            "this is the produt ids:${productList[0]['sellerId']}}",
-                            context);
                         showCustomBottomSheet(
                             context, productList, subTotal.toString());
                       }),
