@@ -105,6 +105,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       "state": state as String,
       "name": name as String,
       "phone": phoneNumber as String,
+      'paymentType': paymentType,
     };
     for (var orderMap in widget.productList) {
       final String sellerId = orderMap['sellerId']!;
