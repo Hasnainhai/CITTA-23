@@ -152,7 +152,7 @@ class _TrackOrderState extends State<TrackOrder> {
                 ProductDetailsWidget(
                   img: widget.img,
                   title: widget.title,
-                  subTitle: '',
+                  subTitle: widget.weight,
                   price: widget.weight,
                   productPrice: widget.price,
                   procustAverate: '1',

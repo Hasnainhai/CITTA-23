@@ -343,11 +343,11 @@ class _MyOrdersState extends State<MyOrders>
                             ),
                             status: data['status'],
                             ontap: () {
-                              Navigator.pushNamed(
-                                  context, RoutesName.trackOrder);
+                              debugPrint(
+                                  "this is data:${data['weight']}  );                          weight: data['weight'],");
                             },
                             img: data['imageUrl'],
-                            amount: data['weight'] ?? "1",
+                            amount: "1",
                             shippingAddress: data['address'],
                             salePrice: data['salePrice'],
                             sellerId: data['sellerId'],
