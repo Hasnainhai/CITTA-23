@@ -5,7 +5,6 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
-import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
 import 'package:citta_23/view/forgetAnything/forget_anything.dart';
