@@ -2,15 +2,20 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:citta_23/models/index_model.dart';
+import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/done_screen.dart';
+import 'package:citta_23/view/card/card_screen.dart';
+import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/roundedButton.dart';
@@ -58,13 +63,57 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   String? name;
   String? phoneNumber;
   String paymentType = 'Stripe';
-
+ CollectionReference _productsCollection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("cart");
   onChanged(bool? value) {
     setState(() {
       isChecked = value!;
     });
   }
+Future<void> getDocumentIndex() async {
+    QuerySnapshot querySnapshot = await _productsCollection.get();
+    setState(() {
+      items = querySnapshot.docs.length;
+      Provider.of<IndexModel>(context, listen: false).updateIndex(items);
+    });
+  }
 
+  void _fetchData() {
+    _productsCollection.get().then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        int sum = 0;
+        int discount = 0;
+
+        for (var document in querySnapshot.docs) {
+          String priceString = document['salePrice'];
+          int priceInt = int.tryParse(priceString.split('.').first) ?? 0;
+          sum += priceInt;
+
+          var data = document.data() as Map<String, dynamic>?;
+          if (data != null && data.containsKey('dPrice')) {
+            String disPrice = data['dPrice'];
+            int dP = int.tryParse(disPrice.split('.').first) ?? 0;
+            discount += dP;
+          }
+        }
+
+        setState(() {
+          subTotal = sum;
+          d = discount;
+          Provider.of<SubTotalModel>(context, listen: false)
+              .updateSubTotal(subTotal);
+          Provider.of<DiscountSum>(context, listen: false).updateDisTotal(d);
+          Provider.of<TotalPriceModel>(context, listen: false)
+              .updateTotalPrice(subTotal, d);
+          Provider.of<IndexModel>(context, listen: false).items;
+        });
+      }
+    }).catchError((error) {
+      debugPrint("Error fetching data: $error");
+    });
+  }
   void removeCartItems() async {
     try {
       // Get the reference to the user's cart collection
@@ -84,7 +133,6 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
 
       // Commit the batch
       await batch.commit();
-
       // Optional: Show a success message or perform any other action
     } catch (e) {
       // Handle any errors that occur during the deletion process
@@ -172,7 +220,9 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       await Stripe.instance.presentPaymentSheet();
       Fluttertoast.showToast(msg: "Payment is successful");
       saveOrdersToFirestore();
-      removeCartItems();
+      // removeCartItems();
+      // _fetchData();
+
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (c) => const CheckOutDoneScreen()),

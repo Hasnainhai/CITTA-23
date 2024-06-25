@@ -189,7 +189,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ));
       await Stripe.instance.presentPaymentSheet();
       Utils.toastMessage('Payment is successful');
-      removeCartItems();
+      // removeCartItems();
 
       saveDetail();
       Navigator.pushAndRemoveUntil(
