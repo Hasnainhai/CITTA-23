@@ -412,6 +412,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Log Out',
                 ),
+                const VerticalSpeacing(30.0),
               ],
             ),
           ],
