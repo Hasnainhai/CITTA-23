@@ -39,9 +39,7 @@ class _CardScreenState extends State<CardScreen> {
       debugPrint("Products Snapshot: ${productsSnapshot.docs}");
 
       productList = productsSnapshot.docs.map((DocumentSnapshot product) {
-        // Print each product's document ID and data for debugging
 
-        // Create and return the product map
         return {
           'productId': product.id,
           'title': product['title'] as String,

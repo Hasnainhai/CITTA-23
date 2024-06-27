@@ -95,7 +95,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   bool _isLoading = false;
-
   void saveDetail() {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     var fireStore = FirebaseFirestore.instance;
