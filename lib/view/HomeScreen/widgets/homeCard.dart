@@ -45,7 +45,7 @@ class HomeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.43,
+        width: MediaQuery.of(context).size.width * 0.45,
         decoration: const BoxDecoration(
           color: Color(0xffF7F7F7),
         ),
@@ -81,13 +81,19 @@ class HomeCard extends StatelessWidget {
                       ),
                     )
                   : Container(),
-              VerticalSpeacing(oofProd == true ? 0 : 20),
+              VerticalSpeacing(oofProd == true
+                  ? 0
+                  : MediaQuery.of(context).size.height / 38),
               Center(
                 child: InkWell(
                   onTap: ontap,
                   child: SizedBox(
-                    height: oofProd == true ? 60 : 70,
+                    height: oofProd == true
+                        ? MediaQuery.of(context).size.height / 13
+                        : MediaQuery.of(context).size.height / 11,
                     width: oofProd == true ? 60 : 70,
+                    //  height: oofProd == true ? 60 : 70,
+                    // width: oofProd == true ? 60 : 70,
                     child: FancyShimmerImage(
                       imageUrl: img,
                       boxFit: BoxFit.fill,
@@ -138,8 +144,8 @@ class HomeCard extends StatelessWidget {
                   InkWell(
                     onTap: addCart,
                     child: Container(
-                      height: 28.0,
-                      width: 28.0,
+                      height: MediaQuery.of(context).size.height / 33,
+                      width: MediaQuery.of(context).size.width / 15,
                       decoration: BoxDecoration(
                         color: AppColor.primaryColor,
                         border: Border.all(
@@ -170,19 +176,7 @@ class HomeCard extends StatelessWidget {
                 ),
                 onRatingUpdate: (rating) {},
               ),
-              // Row(
-              //   children: [
-              //     const Icon(
-              //       Icons.star,
-              //       color: Colors.amber,
-              //       size: 16,
-              //     ),
-              //     Text(
-              //       '$productRating',
-              //       style: const TextStyle(color: AppColor.fontColor),
-              //     ),
-              //   ],
-              // )
+              VerticalSpeacing(oofProd == false ? 0 : 0),
             ],
           ),
         ),
