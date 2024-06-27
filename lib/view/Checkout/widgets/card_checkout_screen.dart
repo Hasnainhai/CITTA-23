@@ -63,7 +63,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
   String? name;
   String? phoneNumber;
   String paymentType = 'Stripe';
- CollectionReference _productsCollection = FirebaseFirestore.instance
+  CollectionReference _productsCollection = FirebaseFirestore.instance
       .collection('users')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .collection("cart");
@@ -72,7 +72,8 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
       isChecked = value!;
     });
   }
-Future<void> getDocumentIndex() async {
+
+  Future<void> getDocumentIndex() async {
     QuerySnapshot querySnapshot = await _productsCollection.get();
     setState(() {
       items = querySnapshot.docs.length;
@@ -114,6 +115,7 @@ Future<void> getDocumentIndex() async {
       debugPrint("Error fetching data: $error");
     });
   }
+
   void removeCartItems() async {
     try {
       // Get the reference to the user's cart collection
@@ -229,13 +231,15 @@ Future<void> getDocumentIndex() async {
           (route) => false);
     } catch (e) {
       if (e is StripeException) {
-        Utils.flushBarErrorMessage("Payment  Cancelled", context);
+        // Utils.flushBarErrorMessage("Payment  Cancelled", context);
+        Utils.flushBarErrorMessage(e.toString(), context);
 
         setState(() {
           _isLoading = false;
         });
       } else {
-        Utils.flushBarErrorMessage("Problem in Payment", context);
+        // Utils.flushBarErrorMessage("Problem in Payment", context);
+        Utils.flushBarErrorMessage(e.toString(), context);
       }
     } finally {
       setState(() {
