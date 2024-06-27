@@ -54,19 +54,15 @@ class LoginOrSigninScreen extends StatelessWidget {
                     RoundedButton(
                       title: "Continue with Email or Phone",
                       onpress: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.loginOrSignup,
-                        );
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RoutesName.loginOrSignup, (routes) => false);
                       },
                     ),
                     const VerticalSpeacing(20),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutesName.registerScreen,
-                        );
+                        Navigator.pushNamedAndRemoveUntil(context,
+                            RoutesName.registerScreen, (routes) => false);
                       },
                       child: Container(
                         height: 56.0,
