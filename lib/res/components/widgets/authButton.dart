@@ -21,6 +21,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn();
 final FirebaseAuth _authInstance = FirebaseAuth.instance;
 Future<void> signUp(BuildContext context) async {
   try {
+    _googleSignIn.signOut();
     final GoogleSignInAccount? googleSignInAccount =
         await _googleSignIn.signIn();
 

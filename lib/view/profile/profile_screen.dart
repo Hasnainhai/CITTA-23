@@ -338,15 +338,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Column(
               children: [
                 ProfileWidgets(
-                    ontap: () {
+                  ontap: () {
+                    if (FirebaseAuth.instance.currentUser == null) {
+                      showSignupDialog(context);
+                    } else {
                       Navigator.pushNamed(
                           context, RoutesName.notificationscreen);
-                    },
-                    tColor: const Color(0xffFF6A9F),
-                    bColor: const Color(0xffD50059),
-                    icon: Icons.notifications_outlined,
-                    trIcon: Icons.arrow_forward_ios,
-                    title: 'Notification'),
+                    }
+                  },
+                  tColor: const Color(0xffFF6A9F),
+                  bColor: const Color(0xffD50059),
+                  icon: Icons.notifications_outlined,
+                  trIcon: Icons.arrow_forward_ios,
+                  title: 'Notification',
+                ),
                 const Divider(),
                 ProfileWidgets(
                     ontap: () {
@@ -364,8 +369,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const Divider(),
                 ProfileWidgets(
                     ontap: () {
-                      if (_name != null && _email != null) {
-                        // Navigate to EditProfile with existing user details
+                      if (FirebaseAuth.instance.currentUser == null) {
+                        showSignupDialog(context);
+                      } else if (_name != null && _email != null) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return EditProfile(
@@ -396,10 +402,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const Divider(),
                 ProfileWidgets(
                   ontap: () async {
-                    authInstance.signOut();
-                    Utils.toastMessage('SuccessFully LogOut');
-                    await Navigator.pushNamedAndRemoveUntil(
-                        context, RoutesName.loginscreen, (route) => false);
+                    if (FirebaseAuth.instance.currentUser == null) {
+                      showSignupDialog(context);
+                    } else {
+                      authInstance.signOut();
+                      Utils.toastMessage('SuccessFully LogOut');
+                      await Navigator.pushNamedAndRemoveUntil(
+                          context, RoutesName.loginscreen, (route) => false);
+                    }
                   },
                   tColor: const Color(0xffFF6A9F),
                   bColor: const Color(0xffD50059),
