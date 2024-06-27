@@ -283,7 +283,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           profileCenterBtns(
             ontap: () {
-              Navigator.pushNamed(context, RoutesName.myOrder);
+              if (FirebaseAuth.instance.currentUser == null) {
+                showSignupDialog(context);
+              } else {
+                Navigator.pushNamed(context, RoutesName.myOrder);
+              }
             },
             tColor: const Color(0xffFF6A9F),
             bColor: const Color(0xffD50059),
@@ -293,7 +297,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           profileCenterBtns(
             ontap: () {
-              Navigator.pushNamed(context, RoutesName.deliveryAddress);
+              if (FirebaseAuth.instance.currentUser == null) {
+                showSignupDialog(context);
+              } else {
+                Navigator.pushNamed(context, RoutesName.deliveryAddress);
+              }
             },
             tColor: const Color(0xffFF6A9F),
             bColor: const Color(0xffD50059),
@@ -303,12 +311,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           profileCenterBtns(
             ontap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => const MyReview(),
-                ),
-              );
+              if (FirebaseAuth.instance.currentUser == null) {
+                showSignupDialog(context);
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (c) => const MyReview(),
+                  ),
+                );
+              }
             },
             tColor: const Color(0xffFF6A9F),
             bColor: const Color(0xffD50059),
@@ -345,7 +357,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const Divider(),
                 ProfileWidgets(
                     ontap: () {
-                      Navigator.pushNamed(context, RoutesName.restscreen);
+                      if (FirebaseAuth.instance.currentUser == null) {
+                        showSignupDialog(context);
+                      } else {
+                        Navigator.pushNamed(context, RoutesName.restscreen);
+                      }
                     },
                     tColor: const Color(0xffFF6A9F),
                     bColor: const Color(0xffD50059),
