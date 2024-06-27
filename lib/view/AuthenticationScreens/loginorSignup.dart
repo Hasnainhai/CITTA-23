@@ -61,7 +61,8 @@ class _LoginOrSignUpState extends State<LoginOrSignUp> {
             RoundedButton(
                 title: 'Login With Email',
                 onpress: () {
-                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, RoutesName.loginscreen, (routes) => false);
                 }),
             const VerticalSpeacing(50.0),
             const Text(
