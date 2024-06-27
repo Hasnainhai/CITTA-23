@@ -66,45 +66,42 @@ class DeliveryAddress extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.8,
                 width: double.infinity,
                 color: AppColor.whiteColor,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection('my_Address')
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('my_Address')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                      return ListView(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: snapshot.data!.docs
-                            .map((DocumentSnapshot document) {
-                          Map<String, dynamic> data =
-                              document.data() as Map<String, dynamic>;
-                          return address_widget(
-                            title: data['city'],
-                            address: data['address2'],
-                            phNo: data['phone'],
-                            uuid: data['uuid'],
-                            address1: data['address1'],
-                            zipcode: data['zipcode'],
-                            name: data['name'],
-                            state: data['state'],
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
+                    return ListView(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data() as Map<String, dynamic>;
+                        return address_widget(
+                          title: data['city'],
+                          address: data['address2'],
+                          phNo: data['phone'],
+                          uuid: data['uuid'],
+                          address1: data['address1'],
+                          zipcode: data['zipcode'],
+                          name: data['name'],
+                          state: data['state'],
+                        );
+                      }).toList(),
+                    );
+                  },
                 ),
               )
             ],
