@@ -185,7 +185,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              const VerticalSpeacing(90.0),
+              _pImage == defaultProfile
+                  ? const VerticalSpeacing(90.0)
+                  : const VerticalSpeacing(70.0),
               _buildProfileFeatures(),
             ],
           ),

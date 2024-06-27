@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/view/deliveryAddress/edit_delivery_address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,80 +33,185 @@ class address_widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: const MyCheckBox(),
-      title: Text.rich(
-        TextSpan(
-          text: '\n$title \n',
-          style: const TextStyle(
-            fontFamily: 'CenturyGothic',
-            fontSize: 14,
-            fontWeight: FontWeight.w800,
-            color: AppColor.fontColor,
-          ),
-          children: <TextSpan>[
-            TextSpan(
-              text: '$address\n',
-              style: const TextStyle(
-                color: AppColor.grayColor,
-                fontSize: 14.0,
-              ),
-            ),
-            TextSpan(
-              text: '$phNo\n',
-              style: const TextStyle(
-                color: AppColor.grayColor,
-                fontSize: 14.0,
-              ),
-            ),
-          ],
+    return Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+              color: AppColor.primaryColor), // Set border color to grey
         ),
-      ),
-      titleAlignment: ListTileTitleAlignment.threeLine,
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => EditAddressScreen(
-                      name: name,
-                      address1: address1,
-                      zipCode: zipcode,
-                      city: title,
-                      address2: address,
-                      phoneNumber: phNo,
-                      state: state,
-                      uuid: uuid),
-                ),
-              );
-            },
-            child: const Icon(
-              Icons.edit_outlined,
-              color: AppColor.fontColor,
-              size: 24,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Column(
+                    children: [
+                      VerticalSpeacing(15),
+                      MyCheckBox(),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      Text(
+                        address,
+                        style: const TextStyle(
+                          color: AppColor.grayColor,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                      Text(
+                        '$phNo\n',
+                        style: const TextStyle(
+                          color: AppColor.grayColor,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => EditAddressScreen(
+                              name: name,
+                              address1: address1,
+                              zipCode: zipcode,
+                              city: title,
+                              address2: address,
+                              phoneNumber: phNo,
+                              state: state,
+                              uuid: uuid),
+                        ),
+                      );
+                    },
+                    child: const Icon(
+                      Icons.edit_outlined,
+                      color: AppColor.fontColor,
+                      size: 24,
+                    ),
+                  ),
+                  const VerticalSpeacing(8),
+                  InkWell(
+                    onTap: () {
+                      FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection("my_Address")
+                          .doc(uuid)
+                          .delete();
+                      Fluttertoast.showToast(msg: "Address has been delete");
+                    },
+                    child: const Icon(
+                      Icons.delete_outline,
+                      color: AppColor.fontColor,
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          InkWell(
-            onTap: () {
-              FirebaseFirestore.instance
-                  .collection("users")
-                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                  .collection("my_Address")
-                  .doc(uuid)
-                  .delete();
-              Fluttertoast.showToast(msg: "Address has been delete");
-            },
-            child: const Icon(
-              Icons.delete_outline,
-              color: AppColor.fontColor,
-              size: 24,
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
+// ListTile(
+//         dense: true,
+//         leading: const MyCheckBox(),
+//         title: Text.rich(
+//           TextSpan(
+//             text: '\n$title \n',
+//             style: const TextStyle(
+//               fontFamily: 'CenturyGothic',
+//               fontSize: 14,
+//               fontWeight: FontWeight.w800,
+//               color: AppColor.fontColor,
+//             ),
+//             children: <TextSpan>[
+//               TextSpan(
+//                 text: '$address\n',
+//                 style: const TextStyle(
+//                   color: AppColor.grayColor,
+//                   fontSize: 14.0,
+//                 ),
+//               ),
+//               TextSpan(
+//                 text: '$phNo\n',
+//                 style: const TextStyle(
+//                   color: AppColor.grayColor,
+//                   fontSize: 14.0,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         titleAlignment: ListTileTitleAlignment.threeLine,
+//         trailing: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             InkWell(
+//               onTap: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (c) => EditAddressScreen(
+//                         name: name,
+//                         address1: address1,
+//                         zipCode: zipcode,
+//                         city: title,
+//                         address2: address,
+//                         phoneNumber: phNo,
+//                         state: state,
+//                         uuid: uuid),
+//                   ),
+//                 );
+//               },
+//               child: const Icon(
+//                 Icons.edit_outlined,
+//                 color: AppColor.fontColor,
+//                 size: 24,
+//               ),
+//             ),
+//             InkWell(
+//               onTap: () {
+//                 FirebaseFirestore.instance
+//                     .collection("users")
+//                     .doc(FirebaseAuth.instance.currentUser!.uid)
+//                     .collection("my_Address")
+//                     .doc(uuid)
+//                     .delete();
+//                 Fluttertoast.showToast(msg: "Address has been delete");
+//               },
+//               child: const Icon(
+//                 Icons.delete_outline,
+//                 color: AppColor.fontColor,
+//                 size: 24,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
