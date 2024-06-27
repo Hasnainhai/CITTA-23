@@ -171,17 +171,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   _buildCoverBar(),
                   Container(
-                    padding: const EdgeInsets.only(
-                        top: 30.0, left: 24.0, right: 24.0),
+                    padding: const EdgeInsets.only(left: 24.0, right: 24.0),
                     child: _buildProfile(),
                   ),
                   Positioned(
-                    top: tHeight - top / 2 - 10,
+                    top: tHeight - top / 4 - 10,
                     child: _builProfileContainer(),
                   ),
                 ],
               ),
-              const VerticalSpeacing(70.0),
+              const VerticalSpeacing(90.0),
               _buildProfileFeatures(),
             ],
           ),
@@ -205,44 +204,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _buildProfile() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        // Avatar and Text
-        Row(
+        CircleAvatar(
+          radius: 40,
+          backgroundImage:
+              NetworkImage(_pImage == null ? defaultProfile : _pImage!),
+        ),
+        const SizedBox(width: 20.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage:
-                  NetworkImage(_pImage == null ? defaultProfile : _pImage!),
+            Text(
+              _name == null ? 'You' : _name!,
+              style: const TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: AppColor.whiteColor,
+              ),
             ),
-            const SizedBox(width: 20.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _name == null ? 'You' : _name!,
-                  style: const TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.whiteColor,
-                  ),
-                ),
-                Text(
-                  _email == null
-                      ? 'Email'
-                      : (_email!.length > 20
-                          ? '${_email!.substring(0, 20)}...'
-                          : _email!),
-                  style: const TextStyle(
-                    color: AppColor.whiteColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
-                  ),
-                ),
-              ],
-            ),
+            // Text(
+            //   _email == null
+            //       ? 'Email'
+            //       : (_email!.length > 20
+            //           ? '${_email!.substring(0, 20)}...'
+            //           : _email!),
+            //   style: const TextStyle(
+            //     color: AppColor.whiteColor,
+            //     fontWeight: FontWeight.w400,
+            //     fontSize: 14.0,
+            //   ),
+            // ),
           ],
         ),
         // Sign Up button
