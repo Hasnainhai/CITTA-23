@@ -89,11 +89,9 @@ class HomeCard extends StatelessWidget {
                   onTap: ontap,
                   child: SizedBox(
                     height: oofProd == true
-                        ? MediaQuery.of(context).size.height / 13
-                        : MediaQuery.of(context).size.height / 11,
+                        ? MediaQuery.of(context).size.height / 13.5
+                        : MediaQuery.of(context).size.height / 11.5,
                     width: oofProd == true ? 60 : 70,
-                    //  height: oofProd == true ? 60 : 70,
-                    // width: oofProd == true ? 60 : 70,
                     child: FancyShimmerImage(
                       imageUrl: img,
                       boxFit: BoxFit.fill,
@@ -176,7 +174,6 @@ class HomeCard extends StatelessWidget {
                 ),
                 onRatingUpdate: (rating) {},
               ),
-              VerticalSpeacing(oofProd == false ? 0 : 0),
             ],
           ),
         ),
