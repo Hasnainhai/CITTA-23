@@ -43,7 +43,10 @@ class ProfileWidgets extends StatelessWidget {
         ),
         titleAlignment: ListTileTitleAlignment.threeLine,
         title: Text(title),
-        trailing: Icon(trIcon),
+        trailing: Icon(
+          trIcon,
+          color: AppColor.grayColor,
+        ),
       ),
     );
   }
