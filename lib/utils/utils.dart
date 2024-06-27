@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:another_flushbar/flushbar_route.dart';
+import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -21,7 +22,7 @@ class Utils {
   static toastMessage(String message) {
     Fluttertoast.showToast(
       msg: message,
-      backgroundColor: Colors.blueAccent.shade100,
+      backgroundColor: AppColor.primaryColor,
       textColor: Colors.white,
       fontSize: 16,
     );
@@ -37,7 +38,7 @@ class Utils {
         padding: const EdgeInsets.all(16.0),
         positionOffset: 20,
         duration: const Duration(seconds: 2),
-        backgroundColor: Colors.red,
+        backgroundColor: AppColor.primaryColor,
         flushbarPosition: FlushbarPosition.TOP,
         icon: const Icon(
           Icons.error,
@@ -57,7 +58,7 @@ class Utils {
           'error occure',
           style: TextStyle(color: Colors.orangeAccent),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: AppColor.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
