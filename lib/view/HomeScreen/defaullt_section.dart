@@ -171,9 +171,7 @@ class _DefaultSectionState extends State<DefaultSection> {
         _isLoading = false;
       });
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      _isLoading = false;
     }
   }
 

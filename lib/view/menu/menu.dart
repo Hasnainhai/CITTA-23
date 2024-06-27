@@ -18,8 +18,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  CategoryType? categoryType;
-  List foodCategories = [
+  CategoryType? categoryType;  List foodCategories = [
     "Potatoes",
     'Beets',
     'Onion',
@@ -65,6 +64,7 @@ class _MenuScreenState extends State<MenuScreen> {
         'Handbags',
     "Others"
   ];
+  var buttonCategoryType = CategoryType.food;
 
   String? selectedCategory;
 
@@ -93,6 +93,12 @@ class _MenuScreenState extends State<MenuScreen> {
               children: [
                 InkWell(
                   onTap: () {
+                    if (buttonCategoryType == CategoryType.food) {
+                      return;
+                    }
+                    setState(() {
+                      buttonCategoryType = CategoryType.food;
+                    });
                     Provider.of<MenuRepository>(context, listen: false)
                         .handleFoodButton();
                     Provider.of<MenuUiRepository>(context, listen: false)
@@ -108,7 +114,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             height: 45.0,
                             width: MediaQuery.of(context).size.width * 0.4,
                             decoration: BoxDecoration(
-                              color: categoryType == CategoryType.food
+                              color: buttonCategoryType == CategoryType.food
                                   ? AppColor.buttonBgColor
                                   : Colors.transparent,
                               border: Border.all(
@@ -130,9 +136,10 @@ class _MenuScreenState extends State<MenuScreen> {
                                     fontFamily: 'CenturyGothic',
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: categoryType == CategoryType.food
-                                        ? AppColor.whiteColor
-                                        : AppColor.buttonBgColor,
+                                    color:
+                                        buttonCategoryType == CategoryType.food
+                                            ? AppColor.whiteColor
+                                            : AppColor.buttonBgColor,
                                   ),
                                 ),
                               ],
@@ -159,6 +166,12 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
                 InkWell(
                   onTap: () {
+                    if (buttonCategoryType == CategoryType.fashion) {
+                      return;
+                    }
+                    setState(() {
+                      buttonCategoryType = CategoryType.fashion;
+                    });
                     Provider.of<MenuRepository>(context, listen: false)
                         .handleFashionButton();
                     Provider.of<MenuUiRepository>(context, listen: false)
@@ -174,9 +187,10 @@ class _MenuScreenState extends State<MenuScreen> {
                             height: 45.0,
                             width: MediaQuery.of(context).size.width * 0.4,
                             decoration: BoxDecoration(
-                                color: categoryType == CategoryType.fashion
-                                    ? AppColor.buttonBgColor
-                                    : Colors.transparent,
+                                color:
+                                    buttonCategoryType == CategoryType.fashion
+                                        ? AppColor.buttonBgColor
+                                        : Colors.transparent,
                                 border: Border.all(
                                     width: 1, color: AppColor.buttonBgColor)),
                             child: Row(
@@ -193,7 +207,8 @@ class _MenuScreenState extends State<MenuScreen> {
                                     fontFamily: 'CenturyGothic',
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: categoryType == CategoryType.fashion
+                                    color: buttonCategoryType ==
+                                            CategoryType.fashion
                                         ? AppColor.whiteColor
                                         : AppColor.buttonBgColor,
                                   ),

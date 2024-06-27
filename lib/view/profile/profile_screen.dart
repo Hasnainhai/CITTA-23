@@ -231,18 +231,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: AppColor.whiteColor,
               ),
             ),
-            // Text(
-            //   _email == null
-            //       ? 'Email'
-            //       : (_email!.length > 20
-            //           ? '${_email!.substring(0, 20)}...'
-            //           : _email!),
-            //   style: const TextStyle(
-            //     color: AppColor.whiteColor,
-            //     fontWeight: FontWeight.w400,
-            //     fontSize: 14.0,
-            //   ),
-            // ),
           ],
         ),
         // Sign Up button
@@ -424,6 +412,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   trIcon: Icons.arrow_forward_ios,
                   title: 'Log Out',
                 ),
+                const VerticalSpeacing(30.0),
               ],
             ),
           ],

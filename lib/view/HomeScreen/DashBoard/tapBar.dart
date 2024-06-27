@@ -63,7 +63,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      Utils.toastMessage('please SignUp first');
+      // Utils.toastMessage('please SignUp first');
       return const Stream<int>.empty();
     }
 
@@ -204,8 +204,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             clipBehavior: Clip.none,
             children: [
               Container(
-                width: 60.0,
-                height: 60.0,
+                width: 50.0,
+                height: 50.0,
                 decoration: const BoxDecoration(
                   color: AppColor.primaryColor,
                   boxShadow: [
@@ -236,7 +236,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   right: -3,
                   top: -13,
                   child: Container(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.whiteColor,
@@ -263,7 +263,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   right: -3,
                   top: -13,
                   child: Container(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.whiteColor,

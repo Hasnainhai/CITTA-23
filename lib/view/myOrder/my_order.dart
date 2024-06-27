@@ -86,8 +86,8 @@ class _MyOrdersState extends State<MyOrders>
                     Tab(
                       text: 'All',
                     ),
-                    Tab(text: 'Running'),
-                    Tab(text: 'Previous'),
+                    Tab(text: 'pending'),
+                    Tab(text: 'completed'),
                   ],
                 ),
               ],
@@ -225,7 +225,7 @@ class _MyOrdersState extends State<MyOrders>
                         .where((document) =>
                             (document.data()
                                 as Map<String, dynamic>)['status'] ==
-                            'processing')
+                            'pending')
                         .toList();
 
                     if (deliverySendOrders.isEmpty) {
