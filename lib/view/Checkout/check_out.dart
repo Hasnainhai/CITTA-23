@@ -198,13 +198,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           (route) => false);
     } catch (e) {
       if (e is StripeException) {
-        Utils.flushBarErrorMessage("Payment  Cancelled", context);
+        // Utils.flushBarErrorMessage("Payment  Cancelled", context);
+        Utils.flushBarErrorMessage(e.toString(), context);
 
         setState(() {
           _isLoading = false;
         });
       } else {
-        Utils.flushBarErrorMessage("Problem in Payment", context);
+        // Utils.flushBarErrorMessage("Problem in Payment", context);
+        Utils.flushBarErrorMessage(e.toString(), context);
       }
     } finally {
       setState(() {

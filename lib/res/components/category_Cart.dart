@@ -1,24 +1,23 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 
-import 'package:citta_23/res/components/colors.dart';
 import 'package:flutter/material.dart';
 
 class CategoryCart extends StatefulWidget {
   const CategoryCart({
     super.key,
     required this.text,
+    required this.textColor,
+    required this.containerColor,
   });
 
   final String text;
-
+  final Color textColor;
+  final Color containerColor;
   @override
   _CategoryCartState createState() => _CategoryCartState();
 }
 
 class _CategoryCartState extends State<CategoryCart> {
-  final Color _backgroundColor = AppColor.bgColor;
-  final Color _textColor = AppColor.primaryColor;
-
   @override
   Widget build(BuildContext context) {
     // final currentUIType =
@@ -40,7 +39,7 @@ class _CategoryCartState extends State<CategoryCart> {
             child: Container(
               height: 40,
               decoration: BoxDecoration(
-                color: _backgroundColor,
+                color: widget.containerColor,
               ),
               child: Center(
                 child: Padding(
@@ -51,7 +50,7 @@ class _CategoryCartState extends State<CategoryCart> {
                       fontFamily: 'CenturyGothic',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: _textColor,
+                      color: widget.textColor,
                     ),
                   ),
                 ),
