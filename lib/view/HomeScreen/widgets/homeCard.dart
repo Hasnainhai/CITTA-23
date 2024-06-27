@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../res/components/colors.dart';
 import '../../../res/components/widgets/verticalSpacing.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -99,7 +100,7 @@ class HomeCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    name.length > 8 ? '${name.substring(0, 8)}...' : name,
+                    name.length > 14 ? '${name.substring(0, 14)}...' : name,
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
                       fontSize: 14,
@@ -107,19 +108,6 @@ class HomeCard extends StatelessWidget {
                       color: AppColor.fontColor,
                     ),
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                        size: 16,
-                      ),
-                      Text(
-                        '$productRating',
-                        style: const TextStyle(color: AppColor.fontColor),
-                      ),
-                    ],
-                  )
                 ],
               ),
               Row(
@@ -166,6 +154,35 @@ class HomeCard extends StatelessWidget {
                   )
                 ],
               ),
+              RatingBar.builder(
+                initialRating: productRating,
+                minRating: 1,
+                tapOnlyMode: true,
+                allowHalfRating: true,
+                ignoreGestures: true,
+                glowColor: Colors.amber,
+                itemCount: 5,
+                itemSize: 18,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star_rate_rounded,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {},
+              ),
+              // Row(
+              //   children: [
+              //     const Icon(
+              //       Icons.star,
+              //       color: Colors.amber,
+              //       size: 16,
+              //     ),
+              //     Text(
+              //       '$productRating',
+              //       style: const TextStyle(color: AppColor.fontColor),
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ),

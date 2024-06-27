@@ -136,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  final double tHeight = 200.0;
+  final double tHeight = 230.0;
   final double top = 130.0;
   @override
   Widget build(BuildContext context) {
@@ -171,11 +171,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   _buildCoverBar(),
                   Container(
-                    padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                    padding: EdgeInsets.only(
+                        top: _pImage == defaultProfile ? 0 : 20,
+                        left: 24.0,
+                        right: 24.0),
                     child: _buildProfile(),
                   ),
                   Positioned(
-                    top: tHeight - top / 4 - 10,
+                    top: _pImage == defaultProfile
+                        ? tHeight - top / 3 - 10
+                        : tHeight - top / 2 - 10,
                     child: _builProfileContainer(),
                   ),
                 ],
@@ -239,8 +244,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         // Sign Up button
-        if (_pImage == defaultProfile)
-          InkWell(
+        Visibility(
+          visible: _pImage == defaultProfile ? true : false,
+          child: InkWell(
             onTap: () {
               showSignupDialog(context);
             },
@@ -261,6 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
+        )
       ],
     );
   }
@@ -376,10 +383,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             MaterialPageRoute(builder: (context) {
                           return EditProfile(
                             profilePic: _pImage ?? defaultProfile,
-                            name: _name ?? 'Default Name',
-                            email: _email!.length > 12
-                                ? "${_email!.substring(0, 12)}..."
-                                : _email ?? 'Default Email',
+                            name: _name!,
+                            email: _email!,
                           );
                         }));
                       } else {
