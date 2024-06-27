@@ -159,7 +159,7 @@ class _EditProfileState extends State<EditProfile> {
                     controller: emailController,
                     text: 'Email',
                     hintText: widget.email,
-                    maxLines: 2,
+                    maxLines: 10,
                   ),
                   const VerticalSpeacing(24.0),
                   _isLoading
