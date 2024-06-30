@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:order_tracker/order_tracker.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/view/trackOrder/widgets/productDetailsWidget.dart';
 
 class TrackOrder extends StatefulWidget {
@@ -95,7 +94,7 @@ class _TrackOrderState extends State<TrackOrder> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, RoutesName.myOrder);
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back,

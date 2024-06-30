@@ -1,27 +1,38 @@
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:flutter/material.dart';
-import '../../../res/components/colors.dart';
-import '../../../res/components/widgets/toggle_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:citta_23/res/components/colors.dart';
+import 'package:citta_23/utils/utils.dart';
+import 'package:intl/intl.dart';
+import '../../trackOrder/track_order.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
+  String formatDateAndTime(String time) {
+    DateTime dateTime = DateTime.parse(time);
+    String formattedDateTime =
+        "${DateFormat.MMMd().format(dateTime)},${DateFormat.y().format(dateTime)},${DateFormat.jm().format(dateTime)}";
+    return formattedDateTime;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF2F2F2),
+      backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
         backgroundColor: const Color(0xffFFFFFF),
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.fontColor,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColor.fontColor,
+          ),
+        ),
         title: const Text(
           "Notification",
           style: TextStyle(
@@ -33,45 +44,78 @@ class NotificationScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          child: Column(
-            children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0),
-                ),
-                color: const Color(0xffFFFFFF),
-                surfaceTintColor: const Color(0xffFFFFFF),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('my_orders')
+              .orderBy('date', descending: true)
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              Utils.flushBarErrorMessage('${snapshot.error}', context);
+              return const Center(child: Text("Something went wrong"));
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return const Center(
+                child: Text("No notifications to show"),
+              );
+            }
+            return ListView(
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    title: const Text("Your order has been"),
+                    subtitle: Text(formatDateAndTime(data['date'])),
+                    leading: Image.network(
+                      data['imageUrl'] ?? 'images/logo.png',
+                      height: 50,
+                      width: 50,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset('images/logo.png',
+                            height: 50, width: 50);
+                      },
+                    ),
+                    trailing: Text(
+                      data['status'],
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.primaryColor,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => TrackOrder(
+                              title: data['title'],
+                              date: formatDateAndTime(data['date']),
+                              status: data['status'],
+                              weight: data['weight'],
+                              items: "1",
+                              price: data['salePrice'],
+                              orderId: data['uuid'],
+                              img: data['imageUrl'],
+                            ),
+                          ));
+                    },
                   ),
-                  child: Column(
-                    children: [
-                      const VerticalSpeacing(30),
-                      const ToggleWidget(
-                        title: "App Notification",
-                      ),
-                      const Divider(),
-                      const VerticalSpeacing(20),
-                      const ToggleWidget(
-                        title: "Phone Number Notification",
-                      ),
-                      const Divider(),
-                      const VerticalSpeacing(20),
-                      const ToggleWidget(
-                        title: "Offer Notification",
-                      ),
-                      const Divider(),
-                      VerticalSpeacing(MediaQuery.of(context).size.height / 2),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+                );
+              }).toList(),
+            );
+          },
         ),
       ),
     );
