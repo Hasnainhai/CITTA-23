@@ -42,7 +42,6 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController address1Controller = TextEditingController();
-  final TextEditingController address2Controller = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController zipCodeController = TextEditingController();
@@ -52,7 +51,6 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
 
     phoneController.clear();
     address1Controller.clear();
-    address2Controller.clear();
     cityController.clear();
     stateController.clear();
     zipCodeController.clear();
@@ -69,7 +67,6 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
       nameController.text = widget.name;
       phoneController.text = widget.phoneNumber;
       address1Controller.text = widget.address1;
-      address2Controller.text = widget.address2;
       cityController.text = widget.city;
       stateController.text = widget.state;
       zipCodeController.text = widget.zipCode;
@@ -91,7 +88,7 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
           'name': nameController.text,
           'phone': phoneController.text,
           'address1': address1Controller.text,
-          "address2": address2Controller.text,
+          "address2": address1Controller.text,
           'city': cityController.text,
           'state': stateController.text,
           'zipcode': zipCodeController.text,
@@ -128,7 +125,6 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
     nameController.dispose();
     phoneController.dispose();
     address1Controller.dispose();
-    address2Controller.dispose();
     cityController.dispose();
     stateController.dispose();
     zipCodeController.dispose();
@@ -211,18 +207,6 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
                               maxLines: 1,
                               text: "Address Link 1",
                               controller: address1Controller,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please enter your Address";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            TextFieldCustom(
-                              maxLines: 1,
-                              text: "Address Link 2",
-                              controller: address2Controller,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please enter your Address";
