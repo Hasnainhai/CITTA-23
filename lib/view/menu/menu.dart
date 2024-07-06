@@ -19,7 +19,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   CategoryType? categoryType;
-  List foodCategories = [
+  List<String> foodCategories = [
     "Potatoes",
     'Beets',
     'Onion',
@@ -42,7 +42,7 @@ class _MenuScreenState extends State<MenuScreen> {
     "Lamb",
     'Others',
   ];
-  List fashionCategories = [
+  List<String> fashionCategories = [
     'T-Shirts',
     'Shirts',
     'Sweaters',
@@ -76,6 +76,19 @@ class _MenuScreenState extends State<MenuScreen> {
         child: Column(
           children: [
             const VerticalSpeacing(50.0),
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Choose a Category',
+                style: TextStyle(
+                  fontFamily: 'CenturyGothic',
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.fontColor,
+                ),
+              ),
+            ),
+            const VerticalSpeacing(30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -86,6 +99,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     }
                     setState(() {
                       buttonCategoryType = CategoryType.food;
+                      selectedCategory = null;
                     });
                     Provider.of<MenuRepository>(context, listen: false)
                         .handleFoodButton();
@@ -159,6 +173,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     }
                     setState(() {
                       buttonCategoryType = CategoryType.fashion;
+                      selectedCategory = null;
                     });
                     Provider.of<MenuRepository>(context, listen: false)
                         .handleFashionButton();
@@ -241,12 +256,20 @@ class _MenuScreenState extends State<MenuScreen> {
                               return InkWell(
                                 onTap: () {
                                   setState(() {
-                                    selectedCategory = category;
+                                    if (selectedCategory == category) {
+                                      selectedCategory = null;
+                                      Provider.of<MenuUiRepository>(context,
+                                              listen: false)
+                                          .switchToType(
+                                              MenuEnums.DefaultSection);
+                                    } else {
+                                      selectedCategory = category;
+                                      Provider.of<MenuUiRepository>(context,
+                                              listen: false)
+                                          .switchToType(MenuEnums.Category);
+                                    }
                                   });
                                   menuRepository.fetchItems(category);
-                                  Provider.of<MenuUiRepository>(context,
-                                          listen: false)
-                                      .switchToType(MenuEnums.Category);
                                 },
                                 child: CategoryCart(
                                   text: category,
@@ -275,12 +298,20 @@ class _MenuScreenState extends State<MenuScreen> {
                               return InkWell(
                                 onTap: () {
                                   setState(() {
-                                    selectedCategory = fashion;
+                                    if (selectedCategory == fashion) {
+                                      selectedCategory = null;
+                                      Provider.of<MenuUiRepository>(context,
+                                              listen: false)
+                                          .switchToType(
+                                              MenuEnums.DefaultSection);
+                                    } else {
+                                      selectedCategory = fashion;
+                                      Provider.of<MenuUiRepository>(context,
+                                              listen: false)
+                                          .switchToType(MenuEnums.Category);
+                                    }
                                   });
                                   menuRepository.fetchItems(fashion);
-                                  Provider.of<MenuUiRepository>(context,
-                                          listen: false)
-                                      .switchToType(MenuEnums.Category);
                                 },
                                 child: CategoryCart(
                                   text: fashion,

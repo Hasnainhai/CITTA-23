@@ -44,8 +44,16 @@ class Utils {
     showFlushbar(
       context: context,
       flushbar: Flushbar(
-        margin: const EdgeInsets.symmetric(horizontal: 60.0),
-        message: message,
+        margin: const EdgeInsets.symmetric(horizontal: 50.0),
+        messageText: Text(
+          message,
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic', // Customize as needed
+            fontSize: 14.0, // Customize as needed
+            fontWeight: FontWeight.w400, // Customize as needed
+            color: Colors.white, // Customize as needed
+          ),
+        ),
         borderRadius: BorderRadius.circular(0.0),
         titleSize: 20.0,
         padding: const EdgeInsets.all(16.0),
