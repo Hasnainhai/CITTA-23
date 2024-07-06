@@ -86,7 +86,9 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
                     ),
                   ),
                   TextSpan(
-                    text: widget.address,
+                    text: widget.address.length > 20
+                        ? '${widget.address.substring(0, 20)}...\n'
+                        : '${widget.address}\n',
                     style: const TextStyle(
                       color: AppColor.grayColor,
                       fontWeight: FontWeight.w400,
