@@ -40,20 +40,24 @@ class Utils {
     );
   }
 
-  static snackBar(String mesg, BuildContext context) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        showCloseIcon: true,
-        closeIconColor: Colors.white,
-        content: const Text(
-          'error occure',
-          style: TextStyle(color: Colors.orangeAccent),
-        ),
+  static void snackBar(String message, BuildContext context) {
+    showFlushbar(
+      context: context,
+      flushbar: Flushbar(
+        margin: const EdgeInsets.symmetric(horizontal: 60.0),
+        message: message,
+        borderRadius: BorderRadius.circular(0.0),
+        titleSize: 20.0,
+        padding: const EdgeInsets.all(16.0),
+        positionOffset: 20,
+        duration: const Duration(seconds: 2),
         backgroundColor: AppColor.primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0.0),
+        flushbarPosition: FlushbarPosition.TOP,
+        icon: const Icon(
+          Icons.check,
+          color: AppColor.whiteColor,
         ),
-      ),
+      )..show(context),
     );
   }
 
