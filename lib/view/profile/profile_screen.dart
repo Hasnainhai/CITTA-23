@@ -222,6 +222,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const VerticalSpeacing(
+              8,
+            ),
             Text(
               _name == null ? 'You' : _name!,
               style: const TextStyle(
@@ -234,6 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         // Sign Up button
+        const VerticalSpeacing(8),
         Visibility(
           visible: _pImage == defaultProfile ? true : false,
           child: InkWell(

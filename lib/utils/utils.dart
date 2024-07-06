@@ -33,7 +33,7 @@ class Utils {
       context: context,
       flushbar: Flushbar(
         message: message,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(0.0),
         titleSize: 20.0,
         padding: const EdgeInsets.all(16.0),
         positionOffset: 20,
@@ -60,7 +60,7 @@ class Utils {
         ),
         backgroundColor: AppColor.primaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(0.0),
         ),
       ),
     );

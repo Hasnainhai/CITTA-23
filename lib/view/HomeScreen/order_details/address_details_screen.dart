@@ -24,7 +24,6 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController address1Controller = TextEditingController();
-  final TextEditingController address2Controller = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController zipCodeController = TextEditingController();
@@ -34,7 +33,6 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
 
     phoneController.clear();
     address1Controller.clear();
-    address2Controller.clear();
     cityController.clear();
     stateController.clear();
     zipCodeController.clear();
@@ -56,7 +54,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
           'name': nameController.text,
           'phone': phoneController.text,
           'address1': address1Controller.text,
-          "address2": address2Controller.text,
+          "address2": address1Controller.text,
           'city': cityController.text,
           'state': stateController.text,
           'zipcode': zipCodeController.text,
@@ -93,7 +91,6 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
     nameController.dispose();
     phoneController.dispose();
     address1Controller.dispose();
-    address2Controller.dispose();
     cityController.dispose();
     stateController.dispose();
     zipCodeController.dispose();
@@ -176,18 +173,6 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                               maxLines: 1,
                               text: "Address Link 1",
                               controller: address1Controller,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please enter your Address";
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            TextFieldCustom(
-                              maxLines: 1,
-                              text: "Address Link 2",
-                              controller: address2Controller,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please enter your Address";

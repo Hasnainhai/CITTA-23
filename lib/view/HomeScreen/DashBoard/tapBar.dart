@@ -204,8 +204,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             clipBehavior: Clip.none,
             children: [
               Container(
-                width: 50.0,
-                height: 50.0,
+                width: 40.0,
+                height: 40.0,
                 decoration: const BoxDecoration(
                   color: AppColor.primaryColor,
                   boxShadow: [

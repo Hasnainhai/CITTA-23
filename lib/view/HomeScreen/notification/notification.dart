@@ -37,38 +37,12 @@ class NotificationScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           child: Column(
             children: [
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0.0),
-                ),
-                color: const Color(0xffFFFFFF),
-                surfaceTintColor: const Color(0xffFFFFFF),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                  ),
-                  child: Column(
-                    children: [
-                      const VerticalSpeacing(30),
-                      const ToggleWidget(
-                        title: "App Notification",
-                      ),
-                      const Divider(),
-                      const VerticalSpeacing(20),
-                      const ToggleWidget(
-                        title: "Phone Number Notification",
-                      ),
-                      const Divider(),
-                      const VerticalSpeacing(20),
-                      const ToggleWidget(
-                        title: "Offer Notification",
-                      ),
-                      const Divider(),
-                      VerticalSpeacing(MediaQuery.of(context).size.height / 2),
-                    ],
-                  ),
-                ),
+              ListTile(
+                title: Text("Your order has been"),
+                subtitle: Text("Pending"),
+                leading: Image.asset('images/logo.png'),
+                trailing: Text("2020/8/24"),
+                onTap: () {},
               )
             ],
           ),

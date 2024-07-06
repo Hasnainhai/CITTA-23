@@ -18,7 +18,8 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  CategoryType? categoryType;  List foodCategories = [
+  CategoryType? categoryType;
+  List foodCategories = [
     "Potatoes",
     'Beets',
     'Onion',
@@ -75,19 +76,6 @@ class _MenuScreenState extends State<MenuScreen> {
         child: Column(
           children: [
             const VerticalSpeacing(50.0),
-            const Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Choose a Category',
-                style: TextStyle(
-                  fontFamily: 'CenturyGothic',
-                  fontSize: 30,
-                  fontWeight: FontWeight.w500,
-                  color: AppColor.fontColor,
-                ),
-              ),
-            ),
-            const VerticalSpeacing(30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
