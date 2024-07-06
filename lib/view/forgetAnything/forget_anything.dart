@@ -203,7 +203,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
       String dprice) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      Utils.toastMessage('Please SignUp first');
+      Utils.snackBar('Please SignUp first', context);
       return;
     }
 
@@ -219,7 +219,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
         .get();
 
     if (cartSnapshot.docs.isNotEmpty) {
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       var uuid = const Uuid().v1();
       await FirebaseFirestore.instance
@@ -242,7 +242,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
       _fetchData();
       fetchDataFromFirestore();
 
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 

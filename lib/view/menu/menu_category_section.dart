@@ -121,7 +121,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
         .get();
 
     if (cartSnapshot.docs.isNotEmpty) {
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       var uuid = const Uuid().v1();
       FirebaseFirestore.instance
@@ -141,7 +141,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
         'dPrice': disPrice,
         'color': color,
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 

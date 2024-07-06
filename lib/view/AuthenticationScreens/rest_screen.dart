@@ -29,8 +29,7 @@ class _RestScreenState extends State<RestScreen> {
   bool _isLoading = false;
   void _forgetPassFCT() async {
     if (emailController.text.isEmpty || !emailController.text.contains("@")) {
-      Utils.flushBarErrorMessage(
-          'Please enter a correct email address', context);
+      Utils.snackBar("Please enter a correct email address", context);
     } else {
       setState(() {
         _isLoading = true;
@@ -38,8 +37,8 @@ class _RestScreenState extends State<RestScreen> {
       try {
         await authInstance.sendPasswordResetEmail(
             email: emailController.text.toLowerCase());
+        Utils.snackBar("An email has been sent to your email address", context);
 
-        Utils.toastMessage('An email has been sent to your email address');
         Navigator.pushNamed(context, RoutesName.loginscreen);
       } on FirebaseException catch (error) {
         Utils.flushBarErrorMessage('${error.message}', context);

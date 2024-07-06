@@ -538,11 +538,10 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                 MaterialPageRoute(
                                     builder: (c) => const CheckOutDoneScreen()),
                                 (route) => false);
-                            Utils.toastMessage('Orders has been Placed');
                           }
                         } else {
-                          Fluttertoast.showToast(
-                              msg: "Please enter address details");
+                          Utils.snackBar(
+                              "Please enter address detail", context);
                         }
                       }),
                   const VerticalSpeacing(50.0),

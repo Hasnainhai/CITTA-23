@@ -112,7 +112,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
             title: 'Logout',
             onpress: () async {
               await authInstance.signOut();
-              Utils.toastMessage('Successfully LogOut');
+              Utils.snackBar('Successfully LogOut', context);
+
               Navigator.pushNamedAndRemoveUntil(
                   context, RoutesName.loginscreen, (route) => false);
             },

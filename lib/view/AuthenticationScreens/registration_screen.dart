@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           'profilePic': profileUrl,
         });
         Navigator.pushNamed(context, RoutesName.dashboardScreen);
-        Utils.toastMessage('SuccessFully Register');
+        Utils.snackBar('SuccessFully Register', context);
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {

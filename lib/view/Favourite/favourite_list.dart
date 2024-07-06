@@ -45,7 +45,7 @@ class _FavouriteListState extends State<FavouriteList> {
 
     if (cartSnapshot.docs.isNotEmpty) {
       // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       // Product is not in the cart, add it
       var uuid = const Uuid().v1();
@@ -68,7 +68,7 @@ class _FavouriteListState extends State<FavouriteList> {
 
         // Add other product details as needed
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
@@ -126,7 +126,7 @@ class _FavouriteListState extends State<FavouriteList> {
       }
 
       // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully removed from favourite');
+      Utils.snackBar('SuccessFully removed from favourite', context);
     } catch (e) {
       // Handle errors
       Utils.flushBarErrorMessage('Error removing from favorites: $e', context);

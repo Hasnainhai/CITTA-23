@@ -162,7 +162,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
 
     if (cartSnapshot.docs.isNotEmpty) {
       // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       // Product is not in the cart, add it
       var uuid = const Uuid().v1();
@@ -184,7 +184,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
         'color': color,
         // Add other product details as needed
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
