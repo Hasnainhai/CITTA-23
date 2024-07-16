@@ -239,17 +239,15 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
           child: ListView(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                   itemCount: _popularPacks.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 5, // Horizontal spacing
-                    mainAxisSpacing: 10, // Vertical spacing
+                    crossAxisSpacing: 16, // Horizontal spacing
+                    mainAxisSpacing: 12, // Vertical spacing
                   ),
                   itemBuilder: (_, index) {
                     // Check if _products is not empty and index is within valid range

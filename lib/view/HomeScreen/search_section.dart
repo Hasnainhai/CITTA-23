@@ -151,8 +151,8 @@ class _SearchSectionState extends State<SearchSection> {
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 12,
         ),
         itemCount: productProvider.products.length,
         itemBuilder: (context, index) {

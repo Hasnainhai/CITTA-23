@@ -215,13 +215,13 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                       Expanded(
                         child: Padding(
                           padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                              const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: GridView.builder(
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 16,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 12,
                               ),
                               itemCount: data.length,
                               itemBuilder: (context, index) {

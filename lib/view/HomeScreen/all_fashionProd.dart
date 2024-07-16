@@ -172,7 +172,7 @@ class _AllFashionProdState extends State<AllFashionProd> {
                 itemCount: _fashionProducts.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 5,
+                  crossAxisSpacing: 16,
                   mainAxisSpacing: 10,
                 ),
                 itemBuilder: (_, index) {

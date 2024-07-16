@@ -116,12 +116,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         centerTitle: true,
       ),
       body: GridView.builder(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20),
         itemCount: widget.products.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 12,
         ),
         itemBuilder: (context, index) {
           return HomeCard(
