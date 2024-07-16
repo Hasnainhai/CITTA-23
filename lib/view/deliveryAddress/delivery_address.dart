@@ -103,7 +103,8 @@ class DeliveryAddress extends StatelessWidget {
                       },
                       separatorBuilder: (context, index) {
                         return const VerticalSpeacing(
-                            12); // You can customize this divider as per your requirement
+                          12,
+                        ); // You can customize this divider as per your requirement
                       },
                     );
                   },
