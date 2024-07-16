@@ -238,6 +238,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
           _isLoading = false;
         });
       } else {
+        debugPrint("this is the error of the payment:$e");
         Utils.flushBarErrorMessage("Problem in Payment", context);
         // Utils.flushBarErrorMessage(e.toString(), context);
       }
@@ -513,7 +514,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                       ],
                     ),
                   ),
-                  VerticalSpeacing(MediaQuery.of(context).size.height / 2.8),
+                  const VerticalSpeacing(50),
                   RoundedButton(
                       title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                       onpress: () async {
