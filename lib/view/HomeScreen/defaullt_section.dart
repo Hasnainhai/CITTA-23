@@ -547,7 +547,7 @@ class _DefaultSectionState extends State<DefaultSection> {
           categoryType == CategoryType.food
               ? Column(
                   children: [
-                    const VerticalSpeacing(16.0),
+                    const VerticalSpeacing(12.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -580,10 +580,10 @@ class _DefaultSectionState extends State<DefaultSection> {
                         ),
                       ],
                     ),
-                    const VerticalSpeacing(16.0),
+                    const VerticalSpeacing(12.0),
                     // Popular packs here
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 4,
+                      height: MediaQuery.of(context).size.height / 4.4,
                       child: GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -746,8 +746,8 @@ class _DefaultSectionState extends State<DefaultSection> {
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 1,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
                       child: Column(
                         children: [
                           _buildCategorySection(
@@ -762,7 +762,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                   ],
                 )
               : Padding(
-                  padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                  padding: const EdgeInsets.only(bottom: 10.0),
                   child: Column(
                     children: [
                       _buildFashionCategorySection(
@@ -827,7 +827,7 @@ class _DefaultSectionState extends State<DefaultSection> {
               category,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: AppColor.fontColor,
               ),
@@ -846,7 +846,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 "View All",
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColor.buttonBgColor,
                 ),
@@ -854,8 +854,9 @@ class _DefaultSectionState extends State<DefaultSection> {
             ),
           ],
         ),
+        const VerticalSpeacing(12),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 4,
+          height: MediaQuery.of(context).size.height / 4.4,
           child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(
@@ -983,6 +984,7 @@ class _DefaultSectionState extends State<DefaultSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const VerticalSpeacing(12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -990,7 +992,7 @@ class _DefaultSectionState extends State<DefaultSection> {
               category,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: AppColor.fontColor,
               ),
@@ -1009,7 +1011,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 "View All",
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColor.buttonBgColor,
                 ),
@@ -1019,7 +1021,7 @@ class _DefaultSectionState extends State<DefaultSection> {
         ),
         const VerticalSpeacing(12),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 4,
+          height: MediaQuery.of(context).size.height / 4.4,
           child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(

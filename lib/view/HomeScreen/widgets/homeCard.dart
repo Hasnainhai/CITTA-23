@@ -86,9 +86,9 @@ class HomeCard extends StatelessWidget {
                 onTap: ontap,
                 child: SizedBox(
                   height: oofProd == true
-                      ? MediaQuery.of(context).size.height / 13.5
-                      : MediaQuery.of(context).size.height / 11.5,
-                  width: oofProd == true ? 60 : 70,
+                      ? MediaQuery.of(context).size.height / 12.5
+                      : MediaQuery.of(context).size.height / 10.5,
+                  width: oofProd == true ? 70 : 80,
                   child: FancyShimmerImage(
                     imageUrl: img,
                     boxFit: BoxFit.fill,
@@ -104,7 +104,7 @@ class HomeCard extends StatelessWidget {
                   name.length > 14 ? '${name.substring(0, 14)}...' : name,
                   style: const TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w800,
                     color: AppColor.fontColor,
                   ),
@@ -121,6 +121,7 @@ class HomeCard extends StatelessWidget {
                         text: price,
                         style: const TextStyle(
                           color: Colors.grey,
+                          fontSize: 12,
                           decoration: TextDecoration.lineThrough,
                         ),
                       ),
@@ -128,7 +129,7 @@ class HomeCard extends StatelessWidget {
                         text: dPrice,
                         style: const TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 16,
+                          fontSize: 12,
                           fontWeight: FontWeight.w800,
                           color: AppColor.fontColor,
                         ),
@@ -163,7 +164,7 @@ class HomeCard extends StatelessWidget {
               ignoreGestures: true,
               glowColor: Colors.amber,
               itemCount: 5,
-              itemSize: 18,
+              itemSize: 14,
               itemPadding: const EdgeInsets.symmetric(horizontal: 0),
               itemBuilder: (context, _) => const Icon(
                 Icons.star_rate_rounded,
