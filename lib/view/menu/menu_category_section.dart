@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/repository/menu_repository.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/routes/routes_name.dart';
