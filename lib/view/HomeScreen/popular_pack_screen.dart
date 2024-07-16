@@ -110,7 +110,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
       String productId, String weight, String size) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      Utils.toastMessage('Please SignUp first');
+      Utils.snackBar('Please SignUp first', context);
       return;
     }
 
@@ -129,7 +129,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
 
     if (cartSnapshot.docs.isNotEmpty) {
       // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       // Product is not in the cart, add it
       var uuid = const Uuid().v1();
@@ -151,7 +151,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
         'size': size,
         // Add other product details as needed
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
@@ -239,17 +239,15 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
           child: ListView(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.only(left: 20.0, right: 20),
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                   itemCount: _popularPacks.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 5, // Horizontal spacing
-                    mainAxisSpacing: 10, // Vertical spacing
+                    crossAxisSpacing: 16, // Horizontal spacing
+                    mainAxisSpacing: 12, // Vertical spacing
                   ),
                   itemBuilder: (_, index) {
                     // Check if _products is not empty and index is within valid range

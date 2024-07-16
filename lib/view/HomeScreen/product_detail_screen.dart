@@ -94,7 +94,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'size': size,
       });
       // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully add to favourite');
+      Utils.snackBar('SuccessFully add to favourite', context);
     } catch (e) {
       // Handle errors
       Utils.flushBarErrorMessage('Error adding to favorites: $e', context);
@@ -125,7 +125,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     if (cartSnapshot.docs.isNotEmpty) {
       // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       // Product is not in the cart, add it
       var uuid = const Uuid().v1();
@@ -148,7 +148,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
         // Add other product details as needed
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
@@ -195,7 +195,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       }
 
       // Display a success message or perform any other action
-      Utils.toastMessage('SuccessFully removed from favourite');
+      Utils.snackBar('SuccessFully removed from favourite', context);
     } catch (e) {
       // Handle errors
       Utils.flushBarErrorMessage('Error removing from favorites: $e', context);

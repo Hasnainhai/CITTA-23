@@ -42,140 +42,137 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.45,
-        decoration: const BoxDecoration(
-          color: Color(0xffF7F7F7),
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.45,
+      decoration: const BoxDecoration(
+        color: Color(0xffF7F7F7),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 10.0,
+          right: 10.0,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 10.0,
-            right: 10.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              oofProd == true
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 6),
-                      child: Container(
-                        width: 50,
-                        height: 18,
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColor,
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '$percentage% off',
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 9,
-                              fontWeight: FontWeight.w500,
-                              color: AppColor.whiteColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  : Container(),
-              VerticalSpeacing(oofProd == true
-                  ? 0
-                  : MediaQuery.of(context).size.height / 38),
-              Center(
-                child: InkWell(
-                  onTap: ontap,
-                  child: SizedBox(
-                    height: oofProd == true
-                        ? MediaQuery.of(context).size.height / 13.5
-                        : MediaQuery.of(context).size.height / 11.5,
-                    width: oofProd == true ? 60 : 70,
-                    child: FancyShimmerImage(
-                      imageUrl: img,
-                      boxFit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-              const VerticalSpeacing(6.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    name.length > 14 ? '${name.substring(0, 14)}...' : name,
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text.rich(
-                    TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: price,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                        TextSpan(
-                          text: dPrice,
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            color: AppColor.fontColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  InkWell(
-                    onTap: addCart,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            oofProd == true
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 6),
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 33,
-                      width: MediaQuery.of(context).size.width / 15,
+                      width: 50,
+                      height: 18,
                       decoration: BoxDecoration(
                         color: AppColor.primaryColor,
-                        border: Border.all(
-                          width: 1.0,
-                          color: AppColor.primaryColor,
-                        ),
+                        borderRadius: BorderRadius.circular(0),
                       ),
-                      child: const Center(
-                        child: Icon(Icons.add, color: AppColor.whiteColor),
+                      child: Center(
+                        child: Text(
+                          '$percentage% off',
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 9,
+                            fontWeight: FontWeight.w500,
+                            color: AppColor.whiteColor,
+                          ),
+                        ),
                       ),
                     ),
                   )
-                ],
-              ),
-              RatingBar.builder(
-                initialRating: productRating,
-                minRating: 1,
-                tapOnlyMode: true,
-                allowHalfRating: true,
-                ignoreGestures: true,
-                glowColor: Colors.amber,
-                itemCount: 5,
-                itemSize: 18,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star_rate_rounded,
-                  color: Colors.amber,
+                : Container(),
+            VerticalSpeacing(
+                oofProd == true ? 0 : MediaQuery.of(context).size.height / 38),
+            Center(
+              child: InkWell(
+                onTap: ontap,
+                child: SizedBox(
+                  height: oofProd == true
+                      ? MediaQuery.of(context).size.height / 12.5
+                      : MediaQuery.of(context).size.height / 10.5,
+                  width: oofProd == true ? 70 : 80,
+                  child: FancyShimmerImage(
+                    imageUrl: img,
+                    boxFit: BoxFit.fill,
+                  ),
                 ),
-                onRatingUpdate: (rating) {},
               ),
-            ],
-          ),
+            ),
+            const VerticalSpeacing(6.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  name.length > 14 ? '${name.substring(0, 14)}...' : name,
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: price,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                      TextSpan(
+                        text: dPrice,
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: addCart,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 33,
+                    width: MediaQuery.of(context).size.width / 15,
+                    decoration: BoxDecoration(
+                      color: AppColor.primaryColor,
+                      border: Border.all(
+                        width: 1.0,
+                        color: AppColor.primaryColor,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.add, color: AppColor.whiteColor),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            RatingBar.builder(
+              initialRating: productRating,
+              minRating: 1,
+              tapOnlyMode: true,
+              allowHalfRating: true,
+              ignoreGestures: true,
+              glowColor: Colors.amber,
+              itemCount: 5,
+              itemSize: 14,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star_rate_rounded,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) {},
+            ),
+          ],
         ),
       ),
     );

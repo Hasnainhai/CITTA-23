@@ -61,7 +61,7 @@ Future<void> _setupUserData(User user) async {
 }
 
 void _showSuccessMessage(BuildContext context) {
-  Utils.toastMessage('SuccessFully SignIn');
+  Utils.flushBarErrorMessage('SuccessFully SignIn', context);
 }
 
 void _navigateToDashboard(BuildContext context) {

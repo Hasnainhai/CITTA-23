@@ -19,15 +19,6 @@ class Utils {
     FocusScope.of(context).requestFocus(focusNext);
   }
 
-  static toastMessage(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      backgroundColor: AppColor.primaryColor,
-      textColor: Colors.white,
-      fontSize: 16,
-    );
-  }
-
   static void flushBarErrorMessage(String message, BuildContext context) {
     showFlushbar(
       context: context,
@@ -49,20 +40,32 @@ class Utils {
     );
   }
 
-  static snackBar(String mesg, BuildContext context) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        showCloseIcon: true,
-        closeIconColor: Colors.white,
-        content: const Text(
-          'error occure',
-          style: TextStyle(color: Colors.orangeAccent),
+  static void snackBar(String message, BuildContext context) {
+    showFlushbar(
+      context: context,
+      flushbar: Flushbar(
+        margin: const EdgeInsets.symmetric(horizontal: 50.0),
+        messageText: Text(
+          message,
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic', // Customize as needed
+            fontSize: 14.0, // Customize as needed
+            fontWeight: FontWeight.w400, // Customize as needed
+            color: Colors.white, // Customize as needed
+          ),
         ),
+        borderRadius: BorderRadius.circular(0.0),
+        titleSize: 20.0,
+        padding: const EdgeInsets.all(16.0),
+        positionOffset: 20,
+        duration: const Duration(seconds: 2),
         backgroundColor: AppColor.primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(0.0),
+        flushbarPosition: FlushbarPosition.TOP,
+        icon: const Icon(
+          Icons.check,
+          color: AppColor.whiteColor,
         ),
-      ),
+      )..show(context),
     );
   }
 

@@ -73,7 +73,7 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
       totalSalePriceString = totalSalePrice.toString();
     });
 
-    Utils.toastMessage('Successfully added to cart');
+    Utils.snackBar('Successfully added to cart', context);
   }
 
   @override

@@ -162,7 +162,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
 
     if (cartSnapshot.docs.isNotEmpty) {
       // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       // Product is not in the cart, add it
       var uuid = const Uuid().v1();
@@ -184,7 +184,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
         'color': color,
         // Add other product details as needed
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
@@ -215,13 +215,13 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                       Expanded(
                         child: Padding(
                           padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
+                              const EdgeInsets.only(left: 18.0, right: 18.0),
                           child: GridView.builder(
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 16,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 12,
                               ),
                               itemCount: data.length,
                               itemBuilder: (context, index) {

@@ -188,7 +188,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         customerEphemeralKeySecret: jsonRespone['ephemeralKey'],
       ));
       await Stripe.instance.presentPaymentSheet();
-      Utils.toastMessage('Payment is successful');
+      Utils.snackBar("Payment is successful", context);
+
       // removeCartItems();
 
       saveDetail();
@@ -480,7 +481,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ],
                     ),
                   ),
-                  const VerticalSpeacing(46),
+                  const VerticalSpeacing(50),
                   RoundedButton(
                     title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                     onpress: () async {
@@ -498,7 +499,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               amount: fixPrice);
                         } else {
                           saveDetail();
-                          Utils.toastMessage('Orders has been Placed');
+                          Utils.snackBar("Orders has been Placed", context);
+
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(

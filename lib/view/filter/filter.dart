@@ -299,7 +299,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                                       const DashBoardScreen()));
                           _allCategorits.remove;
                         } else {
-                          Utils.toastMessage('Please Select a filter');
+                          Utils.snackBar('Please Select a filter', context);
                         }
                       },
                       child: Container(

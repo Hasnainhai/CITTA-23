@@ -405,7 +405,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       showSignupDialog(context);
                     } else {
                       authInstance.signOut();
-                      Utils.toastMessage('SuccessFully LogOut');
+                      Utils.snackBar('SuccessFully LogOut', context);
                       await Navigator.pushNamedAndRemoveUntil(
                           context, RoutesName.loginscreen, (route) => false);
                     }

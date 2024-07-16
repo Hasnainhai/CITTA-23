@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:citta_23/repository/menu_repository.dart';
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/routes/routes_name.dart';
@@ -121,7 +123,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
         .get();
 
     if (cartSnapshot.docs.isNotEmpty) {
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       var uuid = const Uuid().v1();
       FirebaseFirestore.instance
@@ -141,7 +143,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
         'dPrice': disPrice,
         'color': color,
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
@@ -162,13 +164,13 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
               } else {
                 var data = snapshot.data!.docs;
                 return Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  padding: const EdgeInsets.only(left: 18.0, right: 18.0),
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 12,
                     ),
                     itemCount: data.length,
                     itemBuilder: (context, index) {

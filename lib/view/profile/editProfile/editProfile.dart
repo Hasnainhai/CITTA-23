@@ -207,7 +207,7 @@ class _EditProfileState extends State<EditProfile> {
                                   'imageUrl': imageUrl,
                                 });
                               }
-                              Utils.toastMessage('Successfully Updated');
+                              Utils.snackBar('Successfully Updated', context);
                               Navigator.pushNamed(
                                   context, RoutesName.profileScreen);
                             } catch (err) {

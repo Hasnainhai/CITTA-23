@@ -67,6 +67,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
             .set(addressMap);
         clearForm();
         Fluttertoast.showToast(msg: "Address has been added");
+        Navigator.pop(context);
       } on FirebaseException catch (e) {
         Utils.flushBarErrorMessage('${e.message}', context);
         setState(() {

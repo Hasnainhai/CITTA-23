@@ -33,7 +33,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
       String size) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
-      Utils.toastMessage('Please SignUp first');
+      Utils.snackBar('Please SignUp first', context);
       return;
     }
 
@@ -52,7 +52,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
     if (cartSnapshot.docs.isNotEmpty) {
       // Product is already in the cart, show a popup message
-      Utils.toastMessage('Product is already in the cart');
+      Utils.snackBar('Product is already in the cart', context);
     } else {
       // Product is not in the cart, add it
       var uuid = const Uuid().v1();
@@ -74,7 +74,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         'dPrice': disPrice,
         // Add other product details as needed
       });
-      Utils.toastMessage('Successfully added to cart');
+      Utils.snackBar('Successfully added to cart', context);
     }
   }
 
@@ -116,12 +116,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         centerTitle: true,
       ),
       body: GridView.builder(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20),
         itemCount: widget.products.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 12,
         ),
         itemBuilder: (context, index) {
           return HomeCard(
