@@ -425,7 +425,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                   children: [
                     SizedBox(
                       height: 60.0,
-                      width: MediaQuery.of(context).size.width * 0.43,
+                      width: MediaQuery.of(context).size.width * 0.40,
                       child: Center(
                         child: Container(
                           height: 45.0,
@@ -490,7 +490,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                   children: [
                     SizedBox(
                       height: 60.0,
-                      width: MediaQuery.of(context).size.width * 0.43,
+                      width: MediaQuery.of(context).size.width * 0.40,
                       child: Center(
                         child: Container(
                           height: 45.0,
@@ -547,41 +547,38 @@ class _DefaultSectionState extends State<DefaultSection> {
           categoryType == CategoryType.food
               ? Column(
                   children: [
-                    const VerticalSpeacing(20.0),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Popular Pack",
+                    const VerticalSpeacing(16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Popular Pack",
+                          style: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.fontColor,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return const PopularPackScreen(
+                                  title: 'Popular Pack');
+                            }));
+                          },
+                          child: const Text(
+                            "View All",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.fontColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.buttonBgColor,
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) {
-                                return const PopularPackScreen(
-                                    title: 'Popular Pack');
-                              }));
-                            },
-                            child: const Text(
-                              "View All",
-                              style: TextStyle(
-                                fontFamily: 'CenturyGothic',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.buttonBgColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     const VerticalSpeacing(16.0),
                     // Popular packs here
@@ -594,6 +591,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
+                          crossAxisSpacing: 16,
                         ),
                         itemBuilder: (_, index) {
                           // Check if _products is not empty and index is within valid range
@@ -822,42 +820,39 @@ class _DefaultSectionState extends State<DefaultSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 12.0, right: 14),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                category,
-                style: const TextStyle(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              category,
+              style: const TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColor.fontColor,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                String title = category;
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CategoryProductsScreen(
+                    title: title,
+                    products: products,
+                  );
+                }));
+              },
+              child: const Text(
+                "View All",
+                style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.fontColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.buttonBgColor,
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  String title = category;
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CategoryProductsScreen(
-                      title: title,
-                      products: products,
-                    );
-                  }));
-                },
-                child: const Text(
-                  "View All",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.buttonBgColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4,
@@ -870,6 +865,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                       categoryProducts.length < 2 ? categoryProducts.length : 2,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
+                    crossAxisSpacing: 16,
                   ),
                   itemBuilder: (_, index) {
                     final product = categoryProducts[index];
@@ -987,42 +983,39 @@ class _DefaultSectionState extends State<DefaultSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 14),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                category,
-                style: const TextStyle(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              category,
+              style: const TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColor.fontColor,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                String title = category;
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CategoryProductsScreen(
+                    title: title,
+                    products: products,
+                  );
+                }));
+              },
+              child: const Text(
+                "View All",
+                style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.fontColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.buttonBgColor,
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  String title = category;
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return CategoryProductsScreen(
-                      title: title,
-                      products: products,
-                    );
-                  }));
-                },
-                child: const Text(
-                  "View All",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.buttonBgColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         const VerticalSpeacing(12),
         SizedBox(
@@ -1036,6 +1029,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                       categoryProducts.length < 2 ? categoryProducts.length : 2,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
+                    crossAxisSpacing: 16,
                   ),
                   itemBuilder: (_, index) {
                     final product = categoryProducts[index];
