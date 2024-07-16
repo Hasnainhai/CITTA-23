@@ -82,11 +82,12 @@ class DeliveryAddress extends StatelessWidget {
                       return const Center(child: CircularProgressIndicator());
                     }
 
-                    return ListView(
+                    return ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      children:
-                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot document = snapshot.data!.docs[index];
                         Map<String, dynamic> data =
                             document.data() as Map<String, dynamic>;
                         return address_widget(
@@ -99,7 +100,11 @@ class DeliveryAddress extends StatelessWidget {
                           name: data['name'],
                           state: data['state'],
                         );
-                      }).toList(),
+                      },
+                      separatorBuilder: (context, index) {
+                        return const VerticalSpeacing(
+                            12); // You can customize this divider as per your requirement
+                      },
                     );
                   },
                 ),

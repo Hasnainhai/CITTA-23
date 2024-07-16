@@ -73,15 +73,15 @@ class address_widget extends StatelessWidget {
                       ),
                       Text(
                         address.length > 13
-                            ? '${address.substring(0, 13)}...\n'
-                            : '$address\n',
+                            ? '${address.substring(0, 13)}...'
+                            : address,
                         style: const TextStyle(
                           color: AppColor.grayColor,
                           fontSize: 14.0,
                         ),
                       ),
                       Text(
-                        '$phNo\n',
+                        '$phNo',
                         style: const TextStyle(
                           color: AppColor.grayColor,
                           fontSize: 14.0,
