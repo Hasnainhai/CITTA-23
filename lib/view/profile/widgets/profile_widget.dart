@@ -23,6 +23,7 @@ class ProfileWidgets extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: ListTile(
+        minTileHeight: 45,
         leading: Container(
           height: 30.0,
           width: 30.0,
@@ -46,7 +47,7 @@ class ProfileWidgets extends StatelessWidget {
           title,
           style: const TextStyle(
             fontFamily: 'CenturyGothic',
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: FontWeight.w400,
             color: AppColor.blackColor,
           ),

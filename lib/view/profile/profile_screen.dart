@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _name == null ? 'You' : _name!,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: AppColor.whiteColor,
               ),
@@ -245,8 +245,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               showSignupDialog(context);
             },
             child: Container(
-              height: 35.0,
-              width: 70.0,
+              height: 30.0,
+              width: 60.0,
               decoration: const BoxDecoration(
                 color: AppColor.whiteColor,
               ),
@@ -255,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'sign Up',
                   style: TextStyle(
                     color: AppColor.primaryColor,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -330,11 +330,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _buildProfileFeatures() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.42,
+      height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width * 0.9,
       color: AppColor.whiteColor,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16),
         child: ListView(
           children: [
             Column(
