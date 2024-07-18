@@ -137,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   final double tHeight = 230.0;
-  final double top = 130.0;
+  final double top = 110.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,8 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Positioned(
                     top: _pImage == defaultProfile
-                        ? tHeight - top / 3 - 10
-                        : tHeight - top / 2 - 10,
+                        ? tHeight - top / 3 - 18
+                        : tHeight - top / 2 - 18,
                     child: _builProfileContainer(),
                   ),
                 ],
@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _name == null ? 'You' : _name!,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: AppColor.whiteColor,
               ),
@@ -245,8 +245,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               showSignupDialog(context);
             },
             child: Container(
-              height: 40.0,
-              width: 80.0,
+              height: 35.0,
+              width: 70.0,
               decoration: const BoxDecoration(
                 color: AppColor.whiteColor,
               ),
@@ -255,6 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'sign Up',
                   style: TextStyle(
                     color: AppColor.primaryColor,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

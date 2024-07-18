@@ -24,8 +24,8 @@ class ProfileWidgets extends StatelessWidget {
       onTap: ontap,
       child: ListTile(
         leading: Container(
-          height: 40.0,
-          width: 40.0,
+          height: 30.0,
+          width: 30.0,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [tColor, tColor],
@@ -42,7 +42,15 @@ class ProfileWidgets extends StatelessWidget {
           ),
         ),
         titleAlignment: ListTileTitleAlignment.threeLine,
-        title: Text(title),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: AppColor.blackColor,
+          ),
+        ),
         trailing: Icon(
           trIcon,
           color: AppColor.grayColor,

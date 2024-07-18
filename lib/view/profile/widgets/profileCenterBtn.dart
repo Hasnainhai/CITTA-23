@@ -33,8 +33,8 @@ class profileCenterBtns extends StatelessWidget {
             ontap();
           },
           child: Container(
-            height: 40.0,
-            width: 40.0,
+            height: 30.0,
+            width: 30.0,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [tColor, bColor],
