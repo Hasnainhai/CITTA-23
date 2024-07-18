@@ -22,6 +22,8 @@ class AddressDetailSceen extends StatefulWidget {
 class _AddressDetailSceenState extends State<AddressDetailSceen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController address1Controller = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -30,7 +32,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
   bool isLoading = false;
   void clearForm() {
     nameController.clear();
-
+    lastNameController.clear();
     phoneController.clear();
     address1Controller.clear();
     cityController.clear();
@@ -51,7 +53,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
         Map<String, dynamic> addressMap = {
           'id': userId,
           'uuid': uuid,
-          'name': nameController.text,
+          'name': nameController.text + lastNameController.text,
           'phone': phoneController.text,
           'address1': address1Controller.text,
           "address2": address1Controller.text,
@@ -90,6 +92,8 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
   @override
   void dispose() {
     nameController.dispose();
+    lastNameController.dispose();
+
     phoneController.dispose();
     address1Controller.dispose();
     cityController.dispose();
@@ -148,11 +152,23 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                           children: [
                             TextFieldCustom(
                               maxLines: 1,
-                              text: "Full Name",
+                              text: "First Name",
                               controller: nameController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Please enter your name";
+                                  return "Please enter your first name";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            TextFieldCustom(
+                              maxLines: 1,
+                              text: "Last Name",
+                              controller: lastNameController,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter your last name";
                                 } else {
                                   return null;
                                 }
