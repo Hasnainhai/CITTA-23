@@ -156,6 +156,18 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedLabelStyle: const TextStyle(
+          fontFamily: 'CenturyGothic',
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
+          color: AppColor.fontColor,
+        ),
+        selectedLabelStyle: const TextStyle(
+          fontFamily: 'CenturyGothic',
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
+          color: AppColor.fontColor,
+        ),
         items: [
           const BottomNavigationBarItem(
             icon: Icon(

@@ -80,15 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   builder: (context, productProvider, _) {
                                 return Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
+                                    padding: const EdgeInsets.only(bottom: 12),
                                     child: TextField(
                                       controller: searchController,
                                       decoration: const InputDecoration(
                                         hintText: 'Search Products...',
                                         hintStyle: TextStyle(
                                           fontFamily: 'CenturyGothic',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
                                           color: AppColor.grayColor,
                                         ),
                                         border: InputBorder.none,

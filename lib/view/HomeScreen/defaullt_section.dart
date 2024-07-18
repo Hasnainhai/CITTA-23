@@ -431,11 +431,12 @@ class _DefaultSectionState extends State<DefaultSection> {
                           height: 45.0,
                           width: MediaQuery.of(context).size.width * 0.4,
                           decoration: BoxDecoration(
-                              color: categoryType == CategoryType.fashion
-                                  ? AppColor.buttonBgColor
-                                  : Colors.transparent,
-                              border: Border.all(
-                                  width: 1, color: AppColor.buttonBgColor)),
+                            color: categoryType == CategoryType.fashion
+                                ? AppColor.buttonBgColor
+                                : Colors.transparent,
+                            border: Border.all(
+                                width: 1, color: AppColor.buttonBgColor),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -449,7 +450,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w400,
                                   color: categoryType == CategoryType.fashion
                                       ? AppColor.whiteColor
                                       : AppColor.buttonBgColor,
@@ -514,7 +515,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w400,
                                   color: categoryType == CategoryType.food
                                       ? AppColor.whiteColor
                                       : AppColor.buttonBgColor,
@@ -554,7 +555,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           "Popular Pack",
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColor.fontColor,
                           ),
@@ -822,8 +823,8 @@ class _DefaultSectionState extends State<DefaultSection> {
               category,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
                 color: AppColor.fontColor,
               ),
             ),
@@ -842,7 +843,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: AppColor.buttonBgColor,
                 ),
               ),
@@ -986,7 +987,7 @@ class _DefaultSectionState extends State<DefaultSection> {
               category,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColor.fontColor,
               ),
@@ -1006,7 +1007,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: AppColor.buttonBgColor,
                 ),
               ),
