@@ -105,7 +105,7 @@ class HomeCard extends StatelessWidget {
                   style: const TextStyle(
                     fontFamily: 'CenturyGothic',
                     fontSize: 12,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
@@ -130,29 +130,34 @@ class HomeCard extends StatelessWidget {
                         style: const TextStyle(
                           fontFamily: 'CenturyGothic',
                           fontSize: 12,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.fontColor,
                         ),
                       ),
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: addCart,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 33,
-                    width: MediaQuery.of(context).size.width / 15,
-                    decoration: BoxDecoration(
-                      color: AppColor.primaryColor,
-                      border: Border.all(
-                        width: 1.0,
-                        color: AppColor.primaryColor,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: addCart,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 33,
+                        width: MediaQuery.of(context).size.width / 15,
+                        decoration: BoxDecoration(
+                          color: AppColor.primaryColor,
+                          border: Border.all(
+                            width: 1.0,
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                        child: const Center(
+                          child: Icon(Icons.add, color: AppColor.whiteColor),
+                        ),
                       ),
                     ),
-                    child: const Center(
-                      child: Icon(Icons.add, color: AppColor.whiteColor),
-                    ),
-                  ),
+                  ],
                 )
               ],
             ),

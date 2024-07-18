@@ -174,8 +174,8 @@ class _CartWidgetState extends State<CartWidget> {
                           : widget.title,
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                         color: AppColor.fontColor,
                       ),
                     ),
@@ -192,8 +192,8 @@ class _CartWidgetState extends State<CartWidget> {
                         decrement();
                       },
                       child: Container(
-                          height: 30,
-                          width: 30,
+                          height: 25,
+                          width: 25,
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: AppColor.grayColor,
@@ -215,8 +215,8 @@ class _CartWidgetState extends State<CartWidget> {
                       widget.items.toString(),
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
                         color: AppColor.fontColor,
                       ),
                     ),
@@ -228,8 +228,8 @@ class _CartWidgetState extends State<CartWidget> {
                         increment();
                       },
                       child: Container(
-                        height: 30,
-                        width: 30,
+                        height: 25,
+                        width: 25,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: AppColor.grayColor,
@@ -254,15 +254,15 @@ class _CartWidgetState extends State<CartWidget> {
                     child: const Icon(
                       Icons.delete_outline,
                       color: AppColor.fontColor,
-                      size: 24,
+                      size: 20,
                     ),
                   ),
                   Text(
                     newPrice == null ? "${widget.price}₹" : "$newPrice₹",
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                       color: AppColor.fontColor,
                     ),
                   ),

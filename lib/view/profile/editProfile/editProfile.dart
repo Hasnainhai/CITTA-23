@@ -18,11 +18,13 @@ class EditProfile extends StatefulWidget {
   String profilePic;
   String name;
   String email;
+  String? phone;
   EditProfile({
     super.key,
     required this.profilePic,
     required this.name,
     required this.email,
+    this.phone,
   });
 
   @override
@@ -35,6 +37,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   void pickImage() async {
     final pickedImage = await pickImageFromGallery(context);
@@ -49,6 +52,7 @@ class _EditProfileState extends State<EditProfile> {
     super.dispose();
     nameController.dispose();
     emailController.dispose();
+    phoneController.dispose();
   }
 
   Future<String> uploadImageToFirestore(File imageFile, String uid) async {
@@ -161,6 +165,12 @@ class _EditProfileState extends State<EditProfile> {
                     hintText: widget.email,
                     maxLines: 10,
                   ),
+                  TextFieldCustom(
+                    controller: phoneController,
+                    text: 'Phone',
+                    hintText: widget.phone ?? "Please enter phone number",
+                    maxLines: 10,
+                  ),
                   const VerticalSpeacing(24.0),
                   _isLoading
                       ? const Center(
@@ -205,6 +215,15 @@ class _EditProfileState extends State<EditProfile> {
                                     .doc(userId)
                                     .update({
                                   'imageUrl': imageUrl,
+                                });
+                              }
+                              if (phoneController.text.isNotEmpty) {
+                                //updating imageUrl
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userId)
+                                    .update({
+                                  'phoneNumber': phoneController.text,
                                 });
                               }
                               Utils.snackBar('Successfully Updated', context);
