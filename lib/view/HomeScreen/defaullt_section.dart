@@ -612,8 +612,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                         debugPrint(
                                             "this is the bundle pack list:${selectedPack['image']}");
                                         return BundleProductScreen(
-                                          imageUrl:
-                                              selectedPack['image'][0] ?? '',
+                                          imageUrl: selectedPack['image'] ?? '',
                                           sellerId:
                                               selectedPack['sellerId'] ?? "",
                                           productId: selectedPack['id'] ?? "",
@@ -878,7 +877,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                 title: product['title'].toString(),
                                 productId: product['id'].toString(),
                                 sellerId: product['sellerId'].toString(),
-                                imageUrl: product['imageUrl'][0],
+                                imageUrl: product['imageUrl'],
                                 price: product['price'].toString(),
                                 salePrice: category == "Lightening Deals"
                                     ? calculateDiscountedPrice(
@@ -1040,7 +1039,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                             sellerId: product['sellerId'],
                             productId: product['id'],
                             title: product['title'].toString(),
-                            imageUrl: product['imageUrl'][0],
+                            imageUrl: product['imageUrl'],
                             salePrice: category == "Lightening Deals"
                                 ? calculateDiscountedPrice(
                                     product['price'], product['discount'])
