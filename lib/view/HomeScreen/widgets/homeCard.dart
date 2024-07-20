@@ -70,7 +70,7 @@ class HomeCard extends StatelessWidget {
                           '$percentage% off',
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 9,
+                            fontSize: 8,
                             fontWeight: FontWeight.w500,
                             color: AppColor.whiteColor,
                           ),
@@ -86,9 +86,9 @@ class HomeCard extends StatelessWidget {
                 onTap: ontap,
                 child: SizedBox(
                   height: oofProd == true
-                      ? MediaQuery.of(context).size.height / 12.5
-                      : MediaQuery.of(context).size.height / 10.5,
-                  width: oofProd == true ? 70 : 80,
+                      ? MediaQuery.of(context).size.height / 10.8
+                      : MediaQuery.of(context).size.height / 9,
+                  width: oofProd == true ? 80 : 90,
                   child: FancyShimmerImage(
                     imageUrl: img,
                     boxFit: BoxFit.fill,
@@ -100,45 +100,61 @@ class HomeCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  name.length > 14 ? '${name.substring(0, 14)}...' : name,
-                  style: const TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.fontColor,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text.rich(
-                  TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: price,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                          decoration: TextDecoration.lineThrough,
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name.length > 14 ? '${name.substring(0, 14)}...' : name,
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.fontColor,
                       ),
-                      TextSpan(
-                        text: dPrice,
-                        style: const TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.fontColor,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          price,
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
+                            decoration: TextDecoration.lineThrough,
+                          ),
                         ),
+                        Text(
+                          dPrice,
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.fontColor,
+                          ),
+                        )
+                      ],
+                    ),
+                    RatingBar.builder(
+                      initialRating: productRating,
+                      minRating: 1,
+                      tapOnlyMode: true,
+                      allowHalfRating: true,
+                      ignoreGestures: true,
+                      glowColor: Colors.amber,
+                      itemCount: 5,
+                      itemSize: 14,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star_rate_rounded,
+                        color: Colors.amber,
                       ),
-                    ],
-                  ),
+                      onRatingUpdate: (rating) {},
+                    ),
+                  ],
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
                       onTap: addCart,
@@ -160,22 +176,6 @@ class HomeCard extends StatelessWidget {
                   ],
                 )
               ],
-            ),
-            RatingBar.builder(
-              initialRating: productRating,
-              minRating: 1,
-              tapOnlyMode: true,
-              allowHalfRating: true,
-              ignoreGestures: true,
-              glowColor: Colors.amber,
-              itemCount: 5,
-              itemSize: 14,
-              itemPadding: const EdgeInsets.symmetric(horizontal: 0),
-              itemBuilder: (context, _) => const Icon(
-                Icons.star_rate_rounded,
-                color: Colors.amber,
-              ),
-              onRatingUpdate: (rating) {},
             ),
           ],
         ),

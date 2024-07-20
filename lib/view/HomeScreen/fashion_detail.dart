@@ -29,7 +29,7 @@ class FashionDetail extends StatefulWidget {
       required this.disPrice});
 
   final String title;
-  final String imageUrl;
+  final List<String> imageUrl;
   String salePrice;
   final String detail;
   final String sellerId;
@@ -225,7 +225,7 @@ class _FashionDetailState extends State<FashionDetail> {
   @override
   void initState() {
     super.initState();
-    _selectedImageUrl = widget.imageUrl;
+    _selectedImageUrl = widget.imageUrl[0];
     fetchFashionRelatedProducts();
   }
 
@@ -648,7 +648,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                   "Please select size and color", context);
                             } else {
                               addToCart(
-                                  widget.imageUrl,
+                                  widget.imageUrl[0],
                                   widget.title,
                                   widget.salePrice,
                                   widget.sellerId,
@@ -686,7 +686,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                   builder: (c) => CheckOutScreen(
                                     tile: widget.title,
                                     price: widget.salePrice,
-                                    img: widget.imageUrl,
+                                    img: widget.imageUrl[0],
                                     id: widget.productId,
                                     customerId: widget.sellerId,
                                     weight: 'N/A',
@@ -739,7 +739,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             builder: (c) => TotalRatingScreen(
                               productType: "fashion",
                               productId: widget.productId,
-                              productPic: widget.imageUrl,
+                              productPic: widget.imageUrl[0],
                             ),
                           ),
                         );
@@ -907,7 +907,8 @@ class _FashionDetailState extends State<FashionDetail> {
                                   width: 84,
                                   color: const Color(0xffC4C4C4),
                                   child: Center(
-                                    child: Image.network(fashion['imageUrl']),
+                                    child:
+                                        Image.network(fashion['imageUrl'][0]),
                                   ),
                                 ),
                                 const SizedBox(width: 8.0),

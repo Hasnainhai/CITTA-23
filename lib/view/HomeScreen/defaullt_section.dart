@@ -431,11 +431,12 @@ class _DefaultSectionState extends State<DefaultSection> {
                           height: 45.0,
                           width: MediaQuery.of(context).size.width * 0.4,
                           decoration: BoxDecoration(
-                              color: categoryType == CategoryType.fashion
-                                  ? AppColor.buttonBgColor
-                                  : Colors.transparent,
-                              border: Border.all(
-                                  width: 1, color: AppColor.buttonBgColor)),
+                            color: categoryType == CategoryType.fashion
+                                ? AppColor.buttonBgColor
+                                : Colors.transparent,
+                            border: Border.all(
+                                width: 1, color: AppColor.buttonBgColor),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -449,7 +450,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w400,
                                   color: categoryType == CategoryType.fashion
                                       ? AppColor.whiteColor
                                       : AppColor.buttonBgColor,
@@ -514,7 +515,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
                                   fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w400,
                                   color: categoryType == CategoryType.food
                                       ? AppColor.whiteColor
                                       : AppColor.buttonBgColor,
@@ -554,7 +555,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           "Popular Pack",
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColor.fontColor,
                           ),
@@ -608,10 +609,10 @@ class _DefaultSectionState extends State<DefaultSection> {
                                           index < _popularPacks.length) {
                                         Map<String, dynamic> selectedPack =
                                             _popularPacks[index];
-
+                                        debugPrint(
+                                            "this is the bundle pack list:${selectedPack['image']}");
                                         return BundleProductScreen(
-                                          imageUrl:
-                                              selectedPack['imageUrl'] ?? '',
+                                          imageUrl: selectedPack['image'] ?? '',
                                           sellerId:
                                               selectedPack['sellerId'] ?? "",
                                           productId: selectedPack['id'] ?? "",
@@ -695,7 +696,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                               dPrice: "₹${_popularPacks[index]['price']}",
                               borderColor: AppColor.buttonBgColor,
                               fillColor: AppColor.appBarButtonColor,
-                              img: _popularPacks[index]['imageUrl'],
+                              img: _popularPacks[index]['imageUrl'][0],
                               iconColor: AppColor.buttonBgColor,
                               // add to cart logic
                               addCart: () {
@@ -703,7 +704,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                     index >= 0 &&
                                     index < _popularPacks.length) {
                                   addToCart(
-                                    _popularPacks[index]['imageUrl'],
+                                    _popularPacks[index]['imageUrl'][0],
                                     _popularPacks[index]['title'],
                                     _popularPacks[index]['price'],
                                     _popularPacks[index]['sellerId'],
@@ -822,8 +823,8 @@ class _DefaultSectionState extends State<DefaultSection> {
               category,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
                 color: AppColor.fontColor,
               ),
             ),
@@ -842,7 +843,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: AppColor.buttonBgColor,
                 ),
               ),
@@ -908,14 +909,14 @@ class _DefaultSectionState extends State<DefaultSection> {
                           : product['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: product['imageUrl'],
+                      img: product['imageUrl'][0],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
                         if (categoryProducts.isNotEmpty &&
                             index >= 0 &&
                             index < categoryProducts.length) {
                           addToCart(
-                            product['imageUrl'],
+                            product['imageUrl'][0],
                             product['title'],
                             product['price'].toString(),
                             product['sellerId'],
@@ -986,7 +987,7 @@ class _DefaultSectionState extends State<DefaultSection> {
               category,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColor.fontColor,
               ),
@@ -1006,7 +1007,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: AppColor.buttonBgColor,
                 ),
               ),
@@ -1069,7 +1070,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           : product['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: product['imageUrl'],
+                      img: product['imageUrl'][0],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
                         debugPrint(
@@ -1082,7 +1083,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           //   context,
                           // );
                           addToCart(
-                            product['imageUrl'],
+                            product['imageUrl'][0],
                             product['title'],
                             product['price'],
                             product['sellerId'],
