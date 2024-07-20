@@ -214,11 +214,11 @@ class _SearchSectionState extends State<SearchSection> {
                 : product.price,
             borderColor: AppColor.buttonBgColor,
             fillColor: AppColor.appBarButtonColor,
-            img: product.imageUrl,
+            img: product.imageUrl[0],
             iconColor: AppColor.buttonBgColor,
             addCart: () {
               addToCart(
-                product.imageUrl,
+                product.imageUrl[0],
                 product.title,
                 product.price,
                 product.sellerId,

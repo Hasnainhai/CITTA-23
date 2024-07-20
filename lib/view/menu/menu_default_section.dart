@@ -261,7 +261,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                                             : item['price'] + '₹',
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
-                                        img: item['imageUrl'],
+                                        img: item['imageUrl'][0],
                                         iconColor: AppColor.buttonBgColor,
                                         ontap: () {
                                           Navigator.push(
@@ -304,7 +304,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                                         },
                                         addCart: () {
                                           addToCart(
-                                            item['imageUrl'],
+                                            item['imageUrl'][0],
                                             item['title'],
                                             item['price'],
                                             item['sellerId'],
@@ -341,7 +341,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                                             : item['price'],
                                         borderColor: AppColor.buttonBgColor,
                                         fillColor: AppColor.appBarButtonColor,
-                                        img: item['imageUrl'],
+                                        img: item['imageUrl'][0],
                                         iconColor: AppColor.buttonBgColor,
                                         ontap: () {
                                           Navigator.push(
@@ -384,7 +384,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                                         },
                                         addCart: () {
                                           addToCart(
-                                            item['imageUrl'],
+                                            item['imageUrl'][0],
                                             item['title'],
                                             item['price'],
                                             item['sellerId'],
