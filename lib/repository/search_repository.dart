@@ -44,9 +44,15 @@ class ProductProvider with ChangeNotifier {
     _debounce = Timer(const Duration(milliseconds: 300), () {
       _isSearch = query.isNotEmpty;
       _filteredProducts = [];
+      debugPrint("this is search list query:$query");
+
       if (query.isNotEmpty) {
         for (var product in _products) {
+          debugPrint("this is search list:$product");
+
           if (product.title.toLowerCase().contains(query.toLowerCase())) {
+            debugPrint("this is search list:$product");
+
             _filteredProducts.add(product);
           }
         }

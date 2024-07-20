@@ -176,6 +176,8 @@ class _DefaultSectionState extends State<DefaultSection> {
   }
 
   final List<Map<String, dynamic>> _popularPacks = [];
+  List<dynamic> listedImages = [];
+
   fetchPopularPack() async {
     try {
       setState(() {
@@ -189,6 +191,9 @@ class _DefaultSectionState extends State<DefaultSection> {
         _popularPacks.clear();
         for (var doc in qn.docs) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          debugPrint("this is the data map:${data.entries}");
+          // Ensure imageUrl is a list of strings
+          List<dynamic> imageUrl = List<dynamic>.from(data['imageUrl'] ?? []);
 
           // Access individual products in the bundle
           Map<String, dynamic> product1 = data['product1'] ?? {};
@@ -230,17 +235,18 @@ class _DefaultSectionState extends State<DefaultSection> {
               'title': product6['title'] ?? '',
             },
             // simple card
-            'sellerId': data['sellerId'],
-            'id': data['id'],
+            'sellerId': data['sellerId'] ?? '',
+            'id': data['id'] ?? '',
             'imageUrl': data['imageUrl'],
-            'title': data['title'],
-            'price': data['price'],
+            'title': data['title'] ?? '',
+            'price': data['price'] ?? '',
             'salePrice': data['salePrice'] ?? '',
-            'detail': data['detail'],
+            'detail': data['detail'] ?? '',
             'weight': data['weight'] ?? '',
-            'size': data['size'],
+            'size': data['size'] ?? '',
             'averageReview': data['averageReview'] ?? 0.0,
           });
+          listedImages = data['imageUrl'];
         }
       });
 
@@ -610,9 +616,9 @@ class _DefaultSectionState extends State<DefaultSection> {
                                         Map<String, dynamic> selectedPack =
                                             _popularPacks[index];
                                         debugPrint(
-                                            "this is the bundle pack list:${selectedPack['image']}");
+                                            "this is the bundle pack list2:${_popularPacks[index]['image']}");
                                         return BundleProductScreen(
-                                          imageUrl: selectedPack['image'] ?? '',
+                                          imageUrl: listedImages,
                                           sellerId:
                                               selectedPack['sellerId'] ?? "",
                                           productId: selectedPack['id'] ?? "",

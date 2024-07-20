@@ -213,7 +213,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
                             : item['price'] + '₹',
                         borderColor: AppColor.buttonBgColor,
                         fillColor: AppColor.appBarButtonColor,
-                        img: item['imageUrl'],
+                        img: item['imageUrl'][0],
                         iconColor: AppColor.buttonBgColor,
                         ontap: () {
                           Navigator.push(
@@ -293,7 +293,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
                               : ['N/A'];
 
                           addToCart(
-                            product['imageUrl'],
+                            product['imageUrl'][0],
                             product['title'],
                             product['price'],
                             product['sellerId'],

@@ -84,7 +84,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           .set({
         'title': widget.title.toString(),
         'salePrice': widget.salePrice.toString(),
-        'imageUrl': widget.imageUrl.toString(),
+        'imageUrl': widget.imageUrl[0].toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
         'deletedId': uuid,

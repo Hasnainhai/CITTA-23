@@ -47,7 +47,7 @@ class BundleProductScreen extends StatefulWidget {
     required this.sellerId,
     required this.productId,
   });
-  final String imageUrl;
+  List<dynamic> imageUrl;
   final String title;
   final String price;
   String saleprice;
@@ -184,7 +184,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
           .set({
         'title': widget.title.toString(),
         'salePrice': widget.saleprice.toString(),
-        'imageUrl': widget.imageUrl.toString(),
+        'imageUrl': widget.imageUrl[0],
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
         'deletedId': uuid,
@@ -405,7 +405,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               height: 250,
                               width: 250,
                               child: FancyShimmerImage(
-                                imageUrl: widget.imageUrl,
+                                imageUrl: widget.imageUrl[0],
                                 boxFit: BoxFit.fill,
                               ),
                             ),
@@ -935,7 +935,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           child: IconButton(
                             onPressed: () {
                               addToCart(
-                                widget.imageUrl,
+                                widget.imageUrl[0],
                                 widget.title,
                                 widget.saleprice,
                                 widget.sellerId,
@@ -965,7 +965,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                   builder: (c) => CheckOutScreen(
                                     tile: widget.title,
                                     price: widget.price,
-                                    img: widget.imageUrl,
+                                    img: widget.imageUrl[0],
                                     id: widget.productId,
                                     customerId: widget.sellerId,
                                     weight: widget.weight,
@@ -1017,7 +1017,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               builder: (c) => TotalRatingScreen(
                                 productType: "bundle pack",
                                 productId: widget.productId,
-                                productPic: widget.imageUrl,
+                                productPic: widget.imageUrl[0],
                               ),
                             ),
                           );
@@ -1240,7 +1240,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                     color: const Color(0xffC4C4C4),
                                     child: Center(
                                       child: Image.network(
-                                        popularRelatedProducts['imageUrl'],
+                                        popularRelatedProducts['imageUrl'][0],
                                         height: 50,
                                         width: 60,
                                       ),
