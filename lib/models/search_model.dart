@@ -2,7 +2,7 @@ class Product {
   final String id;
   final String sellerId;
   final String title;
-  final String imageUrl;
+  final List<String> imageUrl;
   final String price;
   final String detail;
   final List<String> colors;

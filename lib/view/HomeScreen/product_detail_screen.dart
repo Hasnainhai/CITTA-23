@@ -30,7 +30,7 @@ class ProductDetailScreen extends StatefulWidget {
   });
 
   final String title;
-  final String imageUrl;
+  final List<String> imageUrl;
   final String price;
   String salePrice;
   final String weight;
@@ -352,7 +352,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               height: 250,
                               width: 250,
                               child: FancyShimmerImage(
-                                imageUrl: widget.imageUrl,
+                                imageUrl: widget.imageUrl[0],
                                 boxFit: BoxFit.fill,
                               ),
                             ),
@@ -508,7 +508,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           child: IconButton(
                             onPressed: () {
                               addToCart(
-                                  widget.imageUrl,
+                                  widget.imageUrl[0],
                                   widget.title,
                                   widget.price,
                                   widget.sellerId,
@@ -537,7 +537,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   builder: (c) => CheckOutScreen(
                                     tile: widget.title,
                                     price: widget.price,
-                                    img: widget.imageUrl,
+                                    img: widget.imageUrl[0],
                                     id: widget.productId,
                                     customerId: widget.sellerId,
                                     weight: widget.weight,
@@ -589,7 +589,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               builder: (c) => TotalRatingScreen(
                                 productType: "products",
                                 productId: widget.productId,
-                                productPic: widget.imageUrl,
+                                productPic: widget.imageUrl[0],
                               ),
                             ),
                           );
