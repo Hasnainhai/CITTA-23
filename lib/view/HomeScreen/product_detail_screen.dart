@@ -30,7 +30,7 @@ class ProductDetailScreen extends StatefulWidget {
   });
 
   final String title;
-  final List<String> imageUrl;
+  final List<dynamic> imageUrl;
   final String price;
   String salePrice;
   final String weight;
@@ -766,7 +766,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     color: const Color(0xffC4C4C4),
                                     child: Center(
                                       child: Image.network(
-                                        categoryRelatedProducts['imageUrl'],
+                                        categoryRelatedProducts['imageUrl'][0],
                                         height: 50,
                                         width: 60,
                                       ),
