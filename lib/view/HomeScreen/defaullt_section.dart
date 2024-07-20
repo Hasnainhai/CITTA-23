@@ -612,7 +612,7 @@ class _DefaultSectionState extends State<DefaultSection> {
 
                                         return BundleProductScreen(
                                           imageUrl:
-                                              selectedPack['imageUrl'] ?? '',
+                                              selectedPack['imageUrl'][0] ?? '',
                                           sellerId:
                                               selectedPack['sellerId'] ?? "",
                                           productId: selectedPack['id'] ?? "",
@@ -704,7 +704,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                     index >= 0 &&
                                     index < _popularPacks.length) {
                                   addToCart(
-                                    _popularPacks[index]['imageUrl'],
+                                    _popularPacks[index]['imageUrl'][0],
                                     _popularPacks[index]['title'],
                                     _popularPacks[index]['price'],
                                     _popularPacks[index]['sellerId'],
@@ -877,7 +877,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                 title: product['title'].toString(),
                                 productId: product['id'].toString(),
                                 sellerId: product['sellerId'].toString(),
-                                imageUrl: product['imageUrl'],
+                                imageUrl: product['imageUrl'][0],
                                 price: product['price'].toString(),
                                 salePrice: category == "Lightening Deals"
                                     ? calculateDiscountedPrice(
@@ -909,14 +909,14 @@ class _DefaultSectionState extends State<DefaultSection> {
                           : product['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: product['imageUrl'],
+                      img: product['imageUrl'][0],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
                         if (categoryProducts.isNotEmpty &&
                             index >= 0 &&
                             index < categoryProducts.length) {
                           addToCart(
-                            product['imageUrl'],
+                            product['imageUrl'][0],
                             product['title'],
                             product['price'].toString(),
                             product['sellerId'],
@@ -1039,7 +1039,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                             sellerId: product['sellerId'],
                             productId: product['id'],
                             title: product['title'].toString(),
-                            imageUrl: product['imageUrl'],
+                            imageUrl: product['imageUrl'][0],
                             salePrice: category == "Lightening Deals"
                                 ? calculateDiscountedPrice(
                                     product['price'], product['discount'])
@@ -1070,7 +1070,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           : product['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: product['imageUrl'],
+                      img: product['imageUrl'][0],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
                         debugPrint(
@@ -1083,7 +1083,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           //   context,
                           // );
                           addToCart(
-                            product['imageUrl'],
+                            product['imageUrl'][0],
                             product['title'],
                             product['price'],
                             product['sellerId'],
