@@ -29,7 +29,7 @@ class FashionDetail extends StatefulWidget {
       required this.disPrice});
 
   final String title;
-  final List<String> imageUrl;
+  final List<dynamic> imageUrl;
   String salePrice;
   final String detail;
   final String sellerId;
