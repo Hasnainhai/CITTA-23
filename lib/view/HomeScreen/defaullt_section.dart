@@ -609,10 +609,11 @@ class _DefaultSectionState extends State<DefaultSection> {
                                           index < _popularPacks.length) {
                                         Map<String, dynamic> selectedPack =
                                             _popularPacks[index];
-
+                                        debugPrint(
+                                            "this is the bundle pack list:${selectedPack['image']}");
                                         return BundleProductScreen(
                                           imageUrl:
-                                              selectedPack['imageUrl'][0] ?? '',
+                                              selectedPack['image'][0] ?? '',
                                           sellerId:
                                               selectedPack['sellerId'] ?? "",
                                           productId: selectedPack['id'] ?? "",
@@ -696,7 +697,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                               dPrice: "₹${_popularPacks[index]['price']}",
                               borderColor: AppColor.buttonBgColor,
                               fillColor: AppColor.appBarButtonColor,
-                              img: _popularPacks[index]['imageUrl'],
+                              img: _popularPacks[index]['imageUrl'][0],
                               iconColor: AppColor.buttonBgColor,
                               // add to cart logic
                               addCart: () {
