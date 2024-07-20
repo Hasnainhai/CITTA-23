@@ -406,31 +406,37 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ),
                 ),
-                const VerticalSpeacing(30),
-                Text(
-                  widget.title,
-                  style: const TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.fontColor,
-                  ),
-                ),
                 const VerticalSpeacing(16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Text(
-                          widget.price,
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.fontColor,
-                            decoration: TextDecoration.lineThrough,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              widget.title,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 18,
+                            ),
+                            Text(
+                              widget.price,
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.fontColor,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                          ],
                         ),
                         Text(
                           newPrice == null
@@ -438,8 +444,8 @@ class _FashionDetailState extends State<FashionDetail> {
                               : "$newPrice₹",
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                             color: AppColor.primaryColor,
                           ),
                         ),
@@ -452,8 +458,8 @@ class _FashionDetailState extends State<FashionDetail> {
                             decrement();
                           },
                           child: Container(
-                              height: 34,
-                              width: 34,
+                              height: 24,
+                              width: 24,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: AppColor.grayColor,
@@ -475,8 +481,8 @@ class _FashionDetailState extends State<FashionDetail> {
                           items.toString(),
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                             color: AppColor.fontColor,
                           ),
                         ),
@@ -488,8 +494,8 @@ class _FashionDetailState extends State<FashionDetail> {
                             increment();
                           },
                           child: Container(
-                            height: 34,
-                            width: 34,
+                            height: 24,
+                            width: 24,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppColor.grayColor,
@@ -505,14 +511,20 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(
-                  20,
-                ),
                 const Text(
                   "Product Details",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.grayColor,
+                  ),
+                ),
+                Text(
+                  widget.detail,
+                  style: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: AppColor.grayColor,
                   ),
@@ -520,28 +532,15 @@ class _FashionDetailState extends State<FashionDetail> {
                 const VerticalSpeacing(
                   8,
                 ),
-                Text(
-                  widget.detail,
-                  style: const TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
-                  ),
-                ),
-                const VerticalSpeacing(
-                  20,
-                ),
                 const Text(
                   "Colors:",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
-                const VerticalSpeacing(14),
                 Wrap(
                   spacing: 8,
                   children: widget.colors.map((color) {
@@ -557,8 +556,8 @@ class _FashionDetailState extends State<FashionDetail> {
                       child: Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: Container(
-                          height: 40,
-                          width: 44,
+                          height: 30,
+                          width: 34,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 5),
                           decoration: BoxDecoration(
@@ -584,18 +583,18 @@ class _FashionDetailState extends State<FashionDetail> {
                   }).toList(),
                 ),
                 const VerticalSpeacing(
-                  20,
+                  8,
                 ),
                 const Text(
                   "Sizes:",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(8),
                 Wrap(
                   spacing: 8,
                   children: widget.sizes.map((size) {
@@ -617,8 +616,8 @@ class _FashionDetailState extends State<FashionDetail> {
                           size,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
                             color: Colors.black,
                           ),
                         ),
@@ -628,9 +627,6 @@ class _FashionDetailState extends State<FashionDetail> {
                 ),
                 const VerticalSpeacing(
                   14,
-                ),
-                const VerticalSpeacing(
-                  28,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -718,7 +714,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(24),
+                const VerticalSpeacing(14),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -726,8 +722,8 @@ class _FashionDetailState extends State<FashionDetail> {
                       'Top reviews',
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                         color: AppColor.fontColor,
                       ),
                     ),
@@ -748,8 +744,8 @@ class _FashionDetailState extends State<FashionDetail> {
                         "See More",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
                           color: AppColor.buttonBgColor,
                         ),
                       ),
@@ -779,7 +775,15 @@ class _FashionDetailState extends State<FashionDetail> {
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                         return const Center(
-                          child: Text('No comments and ratings available'),
+                          child: Text(
+                            'No comments and ratings available',
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
                         );
                       }
 
@@ -814,8 +818,8 @@ class _FashionDetailState extends State<FashionDetail> {
                       'Related products',
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                         color: AppColor.fontColor,
                       ),
                     ),
@@ -830,8 +834,8 @@ class _FashionDetailState extends State<FashionDetail> {
                         "See More",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
                           color: AppColor.buttonBgColor,
                         ),
                       ),
@@ -847,7 +851,15 @@ class _FashionDetailState extends State<FashionDetail> {
                     itemBuilder: (context, index) {
                       if (_fashionRelatedProducts.isEmpty) {
                         return const Center(
-                          child: Text('Empty fashion products'),
+                          child: Text(
+                            'Empty fashion products',
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
                         );
                       } else {
                         final fashion = _fashionRelatedProducts[index];
@@ -918,8 +930,8 @@ class _FashionDetailState extends State<FashionDetail> {
                                       text: '${fashion['title']}\n',
                                       style: const TextStyle(
                                         fontFamily: 'CenturyGothic',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w600,
                                         color: AppColor.fontColor,
                                       ),
                                       children: [
@@ -927,8 +939,8 @@ class _FashionDetailState extends State<FashionDetail> {
                                           text: '₹${fashion['price']}',
                                           style: const TextStyle(
                                             fontFamily: 'CenturyGothic',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w400,
                                             color: AppColor.buttonBgColor,
                                           ),
                                         ),
