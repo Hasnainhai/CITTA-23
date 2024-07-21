@@ -555,6 +555,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             child: const Icon(
                               Icons.add,
                               color: AppColor.primaryColor,
+                              size: 16,
                             ),
                           ),
                         ),
