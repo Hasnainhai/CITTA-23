@@ -198,7 +198,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                 : widget.products[index]['price'].toString(),
             borderColor: AppColor.buttonBgColor,
             fillColor: AppColor.appBarButtonColor,
-            img: widget.products[index]['imageUrl'],
+            img: widget.products[index]['imageUrl'][0],
             iconColor: AppColor.buttonBgColor,
             addCart: () {
               var product = widget.products[index];
@@ -215,7 +215,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
 
               // Adding to cart
               addToCart(
-                product['imageUrl'],
+                product['imageUrl'][0],
                 product['title'],
                 product['price'],
                 product['sellerId'],

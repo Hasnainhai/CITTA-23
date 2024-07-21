@@ -169,12 +169,12 @@ class _CartWidgetState extends State<CartWidget> {
                   const SizedBox(width: 30.0),
                   Text.rich(
                     TextSpan(
-                      text: widget.title.length > 7
-                          ? '${widget.title.substring(0, 7)}...'
+                      text: widget.title.length > 12
+                          ? '${widget.title.substring(0, 12)}...'
                           : widget.title,
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: AppColor.fontColor,
                       ),
@@ -215,7 +215,7 @@ class _CartWidgetState extends State<CartWidget> {
                       widget.items.toString(),
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: AppColor.fontColor,
                       ),
@@ -261,7 +261,7 @@ class _CartWidgetState extends State<CartWidget> {
                     newPrice == null ? "${widget.price}₹" : "$newPrice₹",
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: AppColor.fontColor,
                     ),

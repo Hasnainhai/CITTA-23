@@ -223,14 +223,14 @@ class _AllFashionProdState extends State<AllFashionProd> {
                       dPrice: _fashionProducts[index]['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: _fashionProducts[index]['imageUrl'],
+                      img: _fashionProducts[index]['imageUrl'][0],
                       iconColor: AppColor.buttonBgColor, // add to cart logic
                       addCart: () {
                         if (_fashionProducts.isNotEmpty &&
                             index >= 0 &&
                             index < _fashionProducts.length) {
                           addToCart(
-                            _fashionProducts[index]['imageUrl'],
+                            _fashionProducts[index]['imageUrl'][0],
                             _fashionProducts[index]['title'],
                             _fashionProducts[index]['price'],
                             _fashionProducts[index]['sellerId'],

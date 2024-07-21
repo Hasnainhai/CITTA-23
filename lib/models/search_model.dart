@@ -34,7 +34,8 @@ class Product {
       id: data['id'] ?? '',
       sellerId: data['sellerId'] ?? '',
       title: data['title'] ?? 'No Title',
-      imageUrl: data['imageUrl'] ?? [],
+      imageUrl:
+          data['imageUrl'] != null ? List<dynamic>.from(data['imageUrl']) : [],
       price: data['price'] ?? 'N/A',
       detail: data['detail'] ?? 'N/A',
       colors:

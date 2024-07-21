@@ -31,8 +31,10 @@ class RoundedButton extends StatelessWidget {
               : Text(
                   title,
                   style: const TextStyle(
-                    color: AppColor.buttonTxColor,
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
+                    color: AppColor.whiteColor,
                   ),
                 ),
         ),

@@ -170,7 +170,7 @@ class _CardScreenState extends State<CardScreen> {
                     'You haven\'t finished checking out yet. Don\'t miss out on free shipping & a ₹${totalPriceModel.totalPrice} discount',
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: AppColor.menuColor,
                     ),
@@ -194,7 +194,12 @@ class _CardScreenState extends State<CardScreen> {
                 },
                 child: const Text(
                   'Keep checking out',
-                  style: TextStyle(color: AppColor.whiteColor),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.whiteColor,
+                  ),
                 ),
               ),
               const SizedBox(height: 12.0),
@@ -213,7 +218,12 @@ class _CardScreenState extends State<CardScreen> {
                 },
                 child: const Text(
                   'Return to cart',
-                  style: TextStyle(color: AppColor.primaryColor),
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.menuColor,
+                  ),
                 ),
               ),
             ],
@@ -303,7 +313,7 @@ class _CardScreenState extends State<CardScreen> {
                     },
                   ),
                 ),
-                const VerticalSpeacing(20.0),
+                const VerticalSpeacing(50.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -311,7 +321,7 @@ class _CardScreenState extends State<CardScreen> {
                       "Total Items",
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColor.grayColor,
                       ),
@@ -322,7 +332,7 @@ class _CardScreenState extends State<CardScreen> {
                           '${indexModel.items}',
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColor.blackColor,
                           ),
@@ -339,7 +349,7 @@ class _CardScreenState extends State<CardScreen> {
                       "Price",
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColor.grayColor,
                       ),
@@ -350,7 +360,7 @@ class _CardScreenState extends State<CardScreen> {
                           '₹${subTotalModel.subTotal}',
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColor.blackColor,
                           ),
@@ -367,7 +377,7 @@ class _CardScreenState extends State<CardScreen> {
                       "Discount",
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColor.grayColor,
                       ),
@@ -378,7 +388,7 @@ class _CardScreenState extends State<CardScreen> {
                           '${discountSum.dis}',
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColor.blackColor,
                           ),
@@ -399,7 +409,7 @@ class _CardScreenState extends State<CardScreen> {
                       "Sub-Total",
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColor.grayColor,
                       ),
@@ -410,7 +420,7 @@ class _CardScreenState extends State<CardScreen> {
                           '₹${totalPriceModel.totalPrice}',
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: FontWeight.w600,
                             color: AppColor.blackColor,
                           ),
@@ -419,7 +429,7 @@ class _CardScreenState extends State<CardScreen> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(30.0),
+                const VerticalSpeacing(20.0),
                 SizedBox(
                   height: 46.0,
                   width: double.infinity,
@@ -430,7 +440,7 @@ class _CardScreenState extends State<CardScreen> {
                             context, productList, subTotal.toString());
                       }),
                 ),
-                const VerticalSpeacing(30.0),
+                const VerticalSpeacing(20.0),
               ],
             ),
           ),
