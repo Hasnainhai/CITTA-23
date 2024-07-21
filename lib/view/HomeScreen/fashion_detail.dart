@@ -223,11 +223,9 @@ class _FashionDetailState extends State<FashionDetail> {
     }
   }
 
-  Color? likeColor;
-  Color? disLikeColor;
-
   String? _selectedImageUrl;
   String? _selectedSize;
+  Color? likeColor;
   checkThefav() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     QuerySnapshot querySnapshot = await _firestoreInstance

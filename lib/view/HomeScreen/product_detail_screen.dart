@@ -258,9 +258,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   int _currentIndex = 0;
+  Color? likeColor;
+  checkThefav() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    QuerySnapshot querySnapshot = await _firestoreInstance
+        .collection('favoriteList')
+        .doc(uid)
+        .collection('favorites')
+        .where('id', isEqualTo: widget.productId.toString())
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      setState(() {
+        likeColor = Colors.transparent;
+      });
+    } else {
+      likeColor = AppColor.primaryColor;
+    }
+  }
 
   @override
   void initState() {
+    checkThefav();
     fetchRelatedProducts();
     super.initState();
   }
@@ -323,16 +341,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 onTap: () {
                                   // Toggle the value of like
                                   setState(() {
-                                    like = !like;
-                                    if (like) {
+                                    if (likeColor == Colors.transparent) {
                                       // Add to favorites
                                       addToFavorites(widget.disPrice,
                                           widget.weight, "N/A", "N/A");
-                                      like = true;
+                                      likeColor = AppColor.primaryColor;
                                     } else {
                                       // Remove from favorites
                                       removeFromFavorites();
-                                      like = false;
+                                      likeColor = Colors.transparent;
                                     }
                                   });
                                 },
@@ -340,7 +357,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   height: 48,
                                   width: 48,
                                   color: Colors.white,
-                                  child: like
+                                  child: likeColor == AppColor.primaryColor
                                       ? const Icon(
                                           Icons.favorite,
                                           color: AppColor.primaryColor,

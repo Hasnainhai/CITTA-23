@@ -312,9 +312,28 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
   }
 
   int _currentIndex = 0;
+  Color? likeColor;
+
+  checkThefav() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    QuerySnapshot querySnapshot = await _firestoreInstance
+        .collection('favoriteList')
+        .doc(uid)
+        .collection('favorites')
+        .where('id', isEqualTo: widget.productId.toString())
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      setState(() {
+        likeColor = Colors.transparent;
+      });
+    } else {
+      likeColor = AppColor.primaryColor;
+    }
+  }
 
   @override
   void initState() {
+    checkThefav();
     fetchPopularRelatedPack();
     super.initState();
   }
