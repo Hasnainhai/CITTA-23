@@ -353,6 +353,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           CarouselSlider(
                             options: CarouselOptions(
+                              viewportFraction: 1,
                               height: 220.0,
                               autoPlay: false,
                               enlargeCenterPage: true,

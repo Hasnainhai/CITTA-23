@@ -398,6 +398,7 @@ class _FashionDetailState extends State<FashionDetail> {
                         ),
                         CarouselSlider(
                           options: CarouselOptions(
+                            viewportFraction: 1,
                             height: 220.0,
                             autoPlay: false,
                             enlargeCenterPage: true,
