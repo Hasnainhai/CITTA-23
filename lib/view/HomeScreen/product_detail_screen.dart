@@ -332,7 +332,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         left: 14,
                         right: 14,
                       ),
-                      child: Column(
+                      child: Stack(
                         children: [
                           const VerticalSpeacing(10),
                           Row(
@@ -367,44 +367,51 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ],
                           ),
-                          CarouselSlider(
-                            options: CarouselOptions(
-                              viewportFraction: 1,
-                              height: 220.0,
-                              autoPlay: false,
-                              enlargeCenterPage: true,
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  _currentIndex = index;
-                                });
-                              },
-                            ),
-                            items: widget.imageUrl.map((imageUrl) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    width: 250,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.transparent,
-                                    ),
-                                    child: Image.network(
-                                      imageUrl,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  );
+                          Positioned.fill(
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                viewportFraction: 1,
+                                height: 300.0,
+                                autoPlay: false,
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _currentIndex = index;
+                                  });
                                 },
-                              );
-                            }).toList(),
+                              ),
+                              items: widget.imageUrl.map((imageUrl) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      width: 300,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Image.network(
+                                        imageUrl,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
                           ),
-                          const VerticalSpeacing(20),
-                          AnimatedSmoothIndicator(
-                            activeIndex: _currentIndex,
-                            count: widget.imageUrl.length,
-                            effect: const ScrollingDotsEffect(
-                              dotWidth: 10.0,
-                              dotHeight: 10.0,
-                              activeDotColor: AppColor.primaryColor,
-                              dotColor: Colors.grey,
+                          const Positioned(
+                              bottom: 20, child: VerticalSpeacing(12)),
+                          Positioned(
+                            bottom: 12,
+                            right: MediaQuery.of(context).size.width / 2.8,
+                            child: AnimatedSmoothIndicator(
+                              activeIndex: _currentIndex,
+                              count: widget.imageUrl.length,
+                              effect: const ScrollingDotsEffect(
+                                dotWidth: 10.0,
+                                dotHeight: 10.0,
+                                activeDotColor: AppColor.primaryColor,
+                                dotColor: Colors.grey,
+                              ),
                             ),
                           ),
                           // Center(
@@ -840,8 +847,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             '${categoryRelatedProducts['title']}\n',
                                         style: const TextStyle(
                                           fontFamily: 'CenturyGothic',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
                                           color: AppColor.fontColor,
                                         ),
                                         children: [
@@ -850,8 +857,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                 '₹${categoryRelatedProducts['price']}',
                                             style: const TextStyle(
                                               fontFamily: 'CenturyGothic',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400,
                                               color: AppColor.buttonBgColor,
                                             ),
                                           ),

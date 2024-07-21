@@ -372,85 +372,97 @@ class _FashionDetailState extends State<FashionDetail> {
                       left: 14,
                       right: 14,
                     ),
-                    child: Column(
+                    child: Stack(
                       children: [
                         const VerticalSpeacing(10),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                // Toggle the value of like
-                                setState(() {
-                                  if (likeColor == Colors.transparent) {
-                                    if (_selectedImageUrl != null &&
-                                        _selectedSize != null) {
-                                      addToFavorites('N/A', _selectedImageUrl!,
-                                          _selectedSize!, widget.disPrice);
-                                      likeColor = AppColor.primaryColor;
+                        Positioned(
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  // Toggle the value of like
+                                  setState(() {
+                                    if (likeColor == Colors.transparent) {
+                                      if (_selectedImageUrl != null &&
+                                          _selectedSize != null) {
+                                        addToFavorites(
+                                            'N/A',
+                                            _selectedImageUrl!,
+                                            _selectedSize!,
+                                            widget.disPrice);
+                                        likeColor = AppColor.primaryColor;
+                                      } else {
+                                        Utils.flushBarErrorMessage(
+                                            "Please select the color and size",
+                                            context);
+                                      }
                                     } else {
-                                      Utils.flushBarErrorMessage(
-                                          "Please select the color and size",
-                                          context);
-                                    }
-                                  } else {
-                                    likeColor = Colors.transparent;
+                                      likeColor = Colors.transparent;
 
-                                    // Remove from favorites
-                                    removeFromFavorites();
-                                  }
+                                      // Remove from favorites
+                                      removeFromFavorites();
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  child: likeColor == AppColor.primaryColor
+                                      ? const Icon(
+                                          Icons.favorite,
+                                          color: AppColor.primaryColor,
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_border_rounded),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              viewportFraction: 1,
+                              height: 300.0,
+                              autoPlay: false,
+                              enlargeCenterPage: true,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _currentIndex = index;
                                 });
                               },
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                child: likeColor == AppColor.primaryColor
-                                    ? const Icon(
-                                        Icons.favorite,
-                                        color: AppColor.primaryColor,
-                                      )
-                                    : const Icon(Icons.favorite_border_rounded),
-                              ),
                             ),
-                          ],
-                        ),
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            viewportFraction: 1,
-                            height: 220.0,
-                            autoPlay: false,
-                            enlargeCenterPage: true,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _currentIndex = index;
-                              });
-                            },
+                            items: widget.imageUrl.map((imageUrl) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    width: 250,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
                           ),
-                          items: widget.imageUrl.map((imageUrl) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-                                  width: 250,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.transparent,
-                                  ),
-                                  child: Image.network(
-                                    imageUrl,
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
                         ),
                         const VerticalSpeacing(20),
-                        AnimatedSmoothIndicator(
-                          activeIndex: _currentIndex,
-                          count: widget.imageUrl.length,
-                          effect: const ScrollingDotsEffect(
-                            dotWidth: 10.0,
-                            dotHeight: 10.0,
-                            activeDotColor: AppColor.primaryColor,
-                            dotColor: Colors.grey,
+                        Positioned(
+                          bottom: 12,
+                          right: MediaQuery.of(context).size.width / 2.8,
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: _currentIndex,
+                            count: widget.imageUrl.length,
+                            effect: const ScrollingDotsEffect(
+                              dotWidth: 10.0,
+                              dotHeight: 10.0,
+                              activeDotColor: AppColor.primaryColor,
+                              dotColor: Colors.grey,
+                            ),
                           ),
                         ),
                       ],
@@ -982,7 +994,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                       text: '${fashion['title']}\n',
                                       style: const TextStyle(
                                         fontFamily: 'CenturyGothic',
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: AppColor.fontColor,
                                       ),
