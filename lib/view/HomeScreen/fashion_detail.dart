@@ -223,13 +223,33 @@ class _FashionDetailState extends State<FashionDetail> {
     }
   }
 
+  Color? likeColor;
+  Color? disLikeColor;
+
   String? _selectedImageUrl;
   String? _selectedSize;
+  checkThefav() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    QuerySnapshot querySnapshot = await _firestoreInstance
+        .collection('favoriteList')
+        .doc(uid)
+        .collection('favorites')
+        .where('id', isEqualTo: widget.productId.toString())
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      setState(() {
+        likeColor = Colors.transparent;
+      });
+    } else {
+      likeColor = AppColor.primaryColor;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _selectedImageUrl = widget.imageUrl[0];
+    checkThefav();
     fetchFashionRelatedProducts();
   }
 
@@ -363,20 +383,20 @@ class _FashionDetailState extends State<FashionDetail> {
                               onTap: () {
                                 // Toggle the value of like
                                 setState(() {
-                                  like = !like;
-                                  if (like) {
+                                  if (likeColor == Colors.transparent) {
                                     if (_selectedImageUrl != null &&
                                         _selectedSize != null) {
                                       addToFavorites('N/A', _selectedImageUrl!,
                                           _selectedSize!, widget.disPrice);
+                                      likeColor = AppColor.primaryColor;
                                     } else {
-                                      like =
-                                          false; // Reset like state if validation fails
                                       Utils.flushBarErrorMessage(
                                           "Please select the color and size",
                                           context);
                                     }
                                   } else {
+                                    likeColor = Colors.transparent;
+
                                     // Remove from favorites
                                     removeFromFavorites();
                                   }
@@ -386,7 +406,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                 height: 48,
                                 width: 48,
                                 color: Colors.white,
-                                child: like
+                                child: likeColor == AppColor.primaryColor
                                     ? const Icon(
                                         Icons.favorite,
                                         color: AppColor.primaryColor,
