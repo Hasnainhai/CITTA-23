@@ -395,24 +395,22 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                 onTap: () {
                                   // Toggle the value of like
                                   setState(() {
-                                    like = !like;
-                                    if (like) {
+                                    if (likeColor == Colors.transparent) {
                                       // Add to favorites
                                       addToFavorites("0", widget.weight,
                                           widget.size, 'N/A');
-                                      like = true;
+                                      likeColor = AppColor.primaryColor;
                                     } else {
                                       // Remove from favorites
                                       removeFromFavorites();
-                                      like = false;
+                                      likeColor = Colors.transparent;
                                     }
                                   });
                                 },
                                 child: Container(
                                   height: 48,
                                   width: 48,
-                                  color: Colors.white,
-                                  child: like
+                                  child: likeColor == AppColor.primaryColor
                                       ? const Icon(
                                           Icons.favorite,
                                           color: AppColor.primaryColor,
