@@ -257,12 +257,12 @@ class _CreateOwnPackScreenState extends State<CreateOwnPackScreen> {
                       dPrice: productData['price'].toString(),
                       borderColor: AppColor.buttonBgColor,
                       fillColor: AppColor.appBarButtonColor,
-                      img: productData['imageUrl'],
+                      img: productData['imageUrl'][0],
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
                         setState(() {
                           addToCart(
-                              productData['imageUrl'],
+                              productData['imageUrl'][0],
                               productData['title'].toString(),
                               productData['price'].toString(),
                               productData['sellerId'],
