@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -13,6 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class ProductDetailScreen extends StatefulWidget {
@@ -255,6 +257,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
+  int _currentIndex = 0;
+
   @override
   void initState() {
     fetchRelatedProducts();
@@ -347,16 +351,55 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ],
                           ),
-                          Center(
-                            child: SizedBox(
-                              height: 250,
-                              width: 250,
-                              child: FancyShimmerImage(
-                                imageUrl: widget.imageUrl[0],
-                                boxFit: BoxFit.fill,
-                              ),
+                          CarouselSlider(
+                            options: CarouselOptions(
+                              height: 220.0,
+                              autoPlay: false,
+                              enlargeCenterPage: true,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _currentIndex = index;
+                                });
+                              },
+                            ),
+                            items: widget.imageUrl.map((imageUrl) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    width: 250,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
+                          const VerticalSpeacing(20),
+                          AnimatedSmoothIndicator(
+                            activeIndex: _currentIndex,
+                            count: widget.imageUrl.length,
+                            effect: const ScrollingDotsEffect(
+                              dotWidth: 10.0,
+                              dotHeight: 10.0,
+                              activeDotColor: AppColor.primaryColor,
+                              dotColor: Colors.grey,
                             ),
                           ),
+                          // Center(
+                          //   child: SizedBox(
+                          //     height: 250,
+                          //     width: 250,
+                          //     child: FancyShimmerImage(
+                          //       imageUrl: widget.imageUrl[0],
+                          //       boxFit: BoxFit.fill,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
