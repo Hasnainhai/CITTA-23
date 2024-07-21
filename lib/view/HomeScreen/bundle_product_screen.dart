@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
@@ -11,6 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../res/components/colors.dart';
@@ -309,8 +311,29 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
     }
   }
 
+  int _currentIndex = 0;
+  Color? likeColor;
+
+  checkThefav() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    QuerySnapshot querySnapshot = await _firestoreInstance
+        .collection('favoriteList')
+        .doc(uid)
+        .collection('favorites')
+        .where('id', isEqualTo: widget.productId.toString())
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      setState(() {
+        likeColor = Colors.transparent;
+      });
+    } else {
+      likeColor = AppColor.primaryColor;
+    }
+  }
+
   @override
   void initState() {
+    checkThefav();
     fetchPopularRelatedPack();
     super.initState();
   }
@@ -363,7 +386,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         left: 14,
                         right: 14,
                       ),
-                      child: Column(
+                      child: Stack(
                         children: [
                           const VerticalSpeacing(10),
                           Row(
@@ -372,24 +395,22 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                 onTap: () {
                                   // Toggle the value of like
                                   setState(() {
-                                    like = !like;
-                                    if (like) {
+                                    if (likeColor == Colors.transparent) {
                                       // Add to favorites
                                       addToFavorites("0", widget.weight,
                                           widget.size, 'N/A');
-                                      like = true;
+                                      likeColor = AppColor.primaryColor;
                                     } else {
                                       // Remove from favorites
                                       removeFromFavorites();
-                                      like = false;
+                                      likeColor = Colors.transparent;
                                     }
                                   });
                                 },
                                 child: Container(
                                   height: 48,
                                   width: 48,
-                                  color: Colors.white,
-                                  child: like
+                                  child: likeColor == AppColor.primaryColor
                                       ? const Icon(
                                           Icons.favorite,
                                           color: AppColor.primaryColor,
@@ -400,13 +421,49 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               ),
                             ],
                           ),
-                          Center(
-                            child: SizedBox(
-                              height: 250,
-                              width: 250,
-                              child: FancyShimmerImage(
-                                imageUrl: widget.imageUrl[0],
-                                boxFit: BoxFit.fill,
+                          Positioned.fill(
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                viewportFraction: 1,
+                                height: 220.0,
+                                autoPlay: false,
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _currentIndex = index;
+                                  });
+                                },
+                              ),
+                              items: widget.imageUrl.map((imageUrl) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      width: 250,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Image.network(
+                                        imageUrl,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          const VerticalSpeacing(20),
+                          Positioned(
+                            bottom: 12,
+                            right: MediaQuery.of(context).size.width / 2.8,
+                            child: AnimatedSmoothIndicator(
+                              activeIndex: _currentIndex,
+                              count: widget.imageUrl.length,
+                              effect: const ScrollingDotsEffect(
+                                dotWidth: 10.0,
+                                dotHeight: 10.0,
+                                activeDotColor: AppColor.primaryColor,
+                                dotColor: Colors.grey,
                               ),
                             ),
                           ),
@@ -414,34 +471,37 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ),
                   ),
-                  const VerticalSpeacing(30),
-                  Text(
-                    widget.title,
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                  const VerticalSpeacing(30),
+                  const VerticalSpeacing(12),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           Text(
+                            widget.title,
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
                             widget.price,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                               decoration: TextDecoration.underline,
                             ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 4,
                           ),
                           Text(
                             newPrice == null
@@ -449,8 +509,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                 : "₹$newPrice",
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.primaryColor,
                             ),
                           ),
@@ -463,8 +523,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               decrement();
                             },
                             child: Container(
-                                height: 34,
-                                width: 34,
+                                height: 24,
+                                width: 24,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: AppColor.grayColor,
@@ -486,8 +546,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             items.toString(),
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                             ),
                           ),
@@ -499,8 +559,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               increment();
                             },
                             child: Container(
-                              height: 34,
-                              width: 34,
+                              height: 24,
+                              width: 24,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: AppColor.grayColor,
@@ -509,6 +569,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               child: const Icon(
                                 Icons.add,
                                 color: AppColor.primaryColor,
+                                size: 16,
                               ),
                             ),
                           ),
@@ -516,7 +577,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(30),
+                  const VerticalSpeacing(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -526,8 +587,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             widget.weight,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                             ),
                           ),
@@ -535,7 +596,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             "Weight",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.grayColor,
                             ),
@@ -548,8 +609,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             widget.size,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                             ),
                           ),
@@ -557,7 +618,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             "Size",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.grayColor,
                             ),
@@ -570,8 +631,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             "6",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                             ),
                           ),
@@ -579,7 +640,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             "Item’s",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.grayColor,
                             ),
@@ -589,14 +650,14 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ],
                   ),
 
-                  const VerticalSpeacing(20),
+                  const VerticalSpeacing(12),
                   const Text(
                     "Pack Details",
                     style: TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.grayColor,
                     ),
                   ),
 
@@ -607,13 +668,13 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     widget.detail,
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
+                      fontSize: 10,
                       fontWeight: FontWeight.w400,
                       color: AppColor.grayColor,
                     ),
                   ),
 
-                  const VerticalSpeacing(20),
+                  const VerticalSpeacing(12),
                   // first bundle product
                   Row(
                     children: [
@@ -630,7 +691,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ),
                       const SizedBox(
-                        width: 12,
+                        width: 6,
                       ),
                       Expanded(
                         child: Row(
@@ -640,8 +701,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.title1,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
@@ -665,7 +726,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ],
                   ),
 
-                  const VerticalSpeacing(10),
+                  const VerticalSpeacing(8),
                   // second bundle product
                   Row(
                     children: [
@@ -682,7 +743,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ),
                       const SizedBox(
-                        width: 12,
+                        width: 6,
                       ),
                       Expanded(
                         child: Row(
@@ -692,8 +753,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.title2,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
@@ -733,7 +794,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ),
                       const SizedBox(
-                        width: 12,
+                        width: 6,
                       ),
                       Expanded(
                         child: Row(
@@ -743,8 +804,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.title3,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
@@ -767,7 +828,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(10),
+                  const VerticalSpeacing(8),
                   // fourth Bundle product
                   Row(
                     children: [
@@ -784,7 +845,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ),
                       const SizedBox(
-                        width: 12,
+                        width: 6,
                       ),
                       Expanded(
                         child: Row(
@@ -794,8 +855,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.title4,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
@@ -818,7 +879,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(10),
+                  const VerticalSpeacing(8),
                   // fifth Bundle product detail
                   Row(
                     children: [
@@ -835,7 +896,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ),
                       const SizedBox(
-                        width: 12,
+                        width: 6,
                       ),
                       Expanded(
                         child: Row(
@@ -845,8 +906,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.title5,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
@@ -869,7 +930,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(10),
+                  const VerticalSpeacing(8),
                   // sixth Bundle product
                   Row(
                     children: [
@@ -886,7 +947,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         ),
                       ),
                       const SizedBox(
-                        width: 12,
+                        width: 6,
                       ),
                       Expanded(
                         child: Row(
@@ -896,8 +957,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               widget.title6,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
@@ -985,8 +1046,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                 "Buy Now",
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColor.whiteColor,
                                 ),
                               ),
@@ -1004,8 +1065,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         'Top reviews',
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.fontColor,
                         ),
                       ),
@@ -1026,8 +1087,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           "See More",
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
                             color: AppColor.buttonBgColor,
                           ),
                         ),
@@ -1058,7 +1119,15 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
 
                         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                           return const Center(
-                            child: Text('No comments and ratings available'),
+                            child: Text(
+                              'No comments and ratings available',
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
                           );
                         }
 
@@ -1094,8 +1163,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         'Related products',
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.fontColor,
                         ),
                       ),
@@ -1111,8 +1180,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                           "See More",
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
                             color: AppColor.buttonBgColor,
                           ),
                         ),
@@ -1254,8 +1323,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                             '${popularRelatedProducts['title']}\n',
                                         style: const TextStyle(
                                           fontFamily: 'CenturyGothic',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
                                           color: AppColor.fontColor,
                                         ),
                                         children: [
@@ -1264,8 +1333,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                                 '₹${popularRelatedProducts['price']}',
                                             style: const TextStyle(
                                               fontFamily: 'CenturyGothic',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w400,
                                               color: AppColor.buttonBgColor,
                                             ),
                                           ),

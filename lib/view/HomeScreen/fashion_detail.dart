@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
@@ -9,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:uuid/uuid.dart';
 import '../../res/components/colors.dart';
 import '../../routes/routes_name.dart';
@@ -186,6 +188,8 @@ class _FashionDetailState extends State<FashionDetail> {
     }
   }
 
+  int _currentIndex = 0;
+
   void removeFromFavorites() async {
     try {
       // Get the user's UID
@@ -221,11 +225,29 @@ class _FashionDetailState extends State<FashionDetail> {
 
   String? _selectedImageUrl;
   String? _selectedSize;
+  Color? likeColor;
+  checkThefav() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    QuerySnapshot querySnapshot = await _firestoreInstance
+        .collection('favoriteList')
+        .doc(uid)
+        .collection('favorites')
+        .where('id', isEqualTo: widget.productId.toString())
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      setState(() {
+        likeColor = Colors.transparent;
+      });
+    } else {
+      likeColor = AppColor.primaryColor;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _selectedImageUrl = widget.imageUrl[0];
+    checkThefav();
     fetchFashionRelatedProducts();
   }
 
@@ -350,55 +372,96 @@ class _FashionDetailState extends State<FashionDetail> {
                       left: 14,
                       right: 14,
                     ),
-                    child: Column(
+                    child: Stack(
                       children: [
                         const VerticalSpeacing(10),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                // Toggle the value of like
-                                setState(() {
-                                  like = !like;
-                                  if (like) {
-                                    if (_selectedImageUrl != null &&
-                                        _selectedSize != null) {
-                                      addToFavorites('N/A', _selectedImageUrl!,
-                                          _selectedSize!, widget.disPrice);
+                        Positioned(
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  // Toggle the value of like
+                                  setState(() {
+                                    if (likeColor == Colors.transparent) {
+                                      if (_selectedImageUrl != null &&
+                                          _selectedSize != null) {
+                                        addToFavorites(
+                                            'N/A',
+                                            _selectedImageUrl!,
+                                            _selectedSize!,
+                                            widget.disPrice);
+                                        likeColor = AppColor.primaryColor;
+                                      } else {
+                                        Utils.flushBarErrorMessage(
+                                            "Please select the color and size",
+                                            context);
+                                      }
                                     } else {
-                                      like =
-                                          false; // Reset like state if validation fails
-                                      Utils.flushBarErrorMessage(
-                                          "Please select the color and size",
-                                          context);
+                                      likeColor = Colors.transparent;
+
+                                      // Remove from favorites
+                                      removeFromFavorites();
                                     }
-                                  } else {
-                                    // Remove from favorites
-                                    removeFromFavorites();
-                                  }
+                                  });
+                                },
+                                child: Container(
+                                  height: 48,
+                                  width: 48,
+                                  child: likeColor == AppColor.primaryColor
+                                      ? const Icon(
+                                          Icons.favorite,
+                                          color: AppColor.primaryColor,
+                                        )
+                                      : const Icon(
+                                          Icons.favorite_border_rounded),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              viewportFraction: 1,
+                              height: 300.0,
+                              autoPlay: false,
+                              enlargeCenterPage: true,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  _currentIndex = index;
                                 });
                               },
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                color: Colors.white,
-                                child: like
-                                    ? const Icon(
-                                        Icons.favorite,
-                                        color: AppColor.primaryColor,
-                                      )
-                                    : const Icon(Icons.favorite_border_rounded),
-                              ),
                             ),
-                          ],
+                            items: widget.imageUrl.map((imageUrl) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    width: 250,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
                         ),
-                        Center(
-                          child: SizedBox(
-                            height: 250,
-                            width: 250,
-                            child: FancyShimmerImage(
-                              imageUrl: _selectedImageUrl.toString(),
-                              boxFit: BoxFit.fill,
+                        const VerticalSpeacing(20),
+                        Positioned(
+                          bottom: 12,
+                          right: MediaQuery.of(context).size.width / 2.8,
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: _currentIndex,
+                            count: widget.imageUrl.length,
+                            effect: const ScrollingDotsEffect(
+                              dotWidth: 10.0,
+                              dotHeight: 10.0,
+                              activeDotColor: AppColor.primaryColor,
+                              dotColor: Colors.grey,
                             ),
                           ),
                         ),
@@ -504,6 +567,7 @@ class _FashionDetailState extends State<FashionDetail> {
                             child: const Icon(
                               Icons.add,
                               color: AppColor.primaryColor,
+                              size: 16,
                             ),
                           ),
                         ),
@@ -703,8 +767,8 @@ class _FashionDetailState extends State<FashionDetail> {
                               "Buy Now",
                               style: TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.whiteColor,
                               ),
                             ),
@@ -930,7 +994,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                       text: '${fashion['title']}\n',
                                       style: const TextStyle(
                                         fontFamily: 'CenturyGothic',
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                         color: AppColor.fontColor,
                                       ),
