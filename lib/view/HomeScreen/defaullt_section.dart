@@ -562,7 +562,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
                             fontSize: 12,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w600,
                             color: AppColor.fontColor,
                           ),
                         ),
@@ -578,7 +578,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                             "View All",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 12,
+                              fontSize: 10,
                               fontWeight: FontWeight.w400,
                               color: AppColor.buttonBgColor,
                             ),
@@ -830,7 +830,7 @@ class _DefaultSectionState extends State<DefaultSection> {
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
                 fontSize: 12,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w600,
                 color: AppColor.fontColor,
               ),
             ),
@@ -848,7 +848,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 "View All",
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 12,
+                  fontSize: 10,
                   fontWeight: FontWeight.w400,
                   color: AppColor.buttonBgColor,
                 ),
@@ -1012,7 +1012,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                 "View All",
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 12,
+                  fontSize: 10,
                   fontWeight: FontWeight.w400,
                   color: AppColor.buttonBgColor,
                 ),

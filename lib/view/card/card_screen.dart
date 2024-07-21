@@ -323,7 +323,7 @@ class _CardScreenState extends State<CardScreen> {
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.grayColor,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     Consumer<IndexModel>(
@@ -351,7 +351,7 @@ class _CardScreenState extends State<CardScreen> {
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.grayColor,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     Consumer<SubTotalModel>(
@@ -379,7 +379,7 @@ class _CardScreenState extends State<CardScreen> {
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.grayColor,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     Consumer<DiscountSum>(
@@ -411,7 +411,7 @@ class _CardScreenState extends State<CardScreen> {
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
-                        color: AppColor.grayColor,
+                        color: AppColor.fontColor,
                       ),
                     ),
                     Consumer<TotalPriceModel>(
