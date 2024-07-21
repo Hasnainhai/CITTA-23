@@ -403,7 +403,6 @@ class _FashionDetailState extends State<FashionDetail> {
                               child: Container(
                                 height: 48,
                                 width: 48,
-                                color: Colors.white,
                                 child: likeColor == AppColor.primaryColor
                                     ? const Icon(
                                         Icons.favorite,
