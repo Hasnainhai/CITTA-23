@@ -703,8 +703,8 @@ class _FashionDetailState extends State<FashionDetail> {
                               "Buy Now",
                               style: TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.whiteColor,
                               ),
                             ),
