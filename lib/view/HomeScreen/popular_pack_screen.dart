@@ -80,7 +80,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
             // simple card
             'sellerId': data['sellerId'],
             'id': data['id'],
-            'imageUrl': data['imageUrl'],
+            'imageUrl': data['imageUrl'][0],
             'title': data['title'],
             'price': data['price'],
             'salePrice': data['salePrice'] ?? '',
@@ -195,8 +195,8 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                         "Create Own Pack",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.buttonTxColor,
                         ),
                       ),
@@ -341,7 +341,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                         dPrice: _popularPacks[index]['salePrice'].toString(),
                         borderColor: AppColor.buttonBgColor,
                         fillColor: AppColor.appBarButtonColor,
-                        img: _popularPacks[index]['imageUrl'],
+                        img: _popularPacks[index]['imageUrl'][0],
                         iconColor: AppColor.buttonBgColor,
                         // add to cart logic
                         addCart: () {
@@ -349,7 +349,7 @@ class _PopularPackScreenState extends State<PopularPackScreen> {
                               index >= 0 &&
                               index < _popularPacks.length) {
                             addToCart(
-                              _popularPacks[index]['imageUrl'],
+                              _popularPacks[index]['imageUrl'][0],
                               _popularPacks[index]['title'],
                               _popularPacks[index]['salePrice'],
                               _popularPacks[index]['sellerId'],
