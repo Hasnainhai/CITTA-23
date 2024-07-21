@@ -444,7 +444,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                       ),
                                       child: Image.network(
                                         imageUrl,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.contain,
                                       ),
                                     );
                                   },

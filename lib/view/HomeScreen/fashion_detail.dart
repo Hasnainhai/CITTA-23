@@ -442,7 +442,7 @@ class _FashionDetailState extends State<FashionDetail> {
                                     ),
                                     child: Image.network(
                                       imageUrl,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                     ),
                                   );
                                 },

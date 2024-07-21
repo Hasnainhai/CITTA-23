@@ -562,7 +562,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
                             fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                             color: AppColor.fontColor,
                           ),
                         ),
@@ -579,7 +579,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
                               fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                               color: AppColor.buttonBgColor,
                             ),
                           ),

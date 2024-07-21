@@ -428,16 +428,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                   ),
-                  const VerticalSpeacing(30),
-                  Text(
-                    widget.title,
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
                   const VerticalSpeacing(16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -445,17 +435,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Row(
                         children: [
                           Text(
+                            widget.title,
+                            style: const TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
                             widget.price,
                             style: const TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                               decoration: TextDecoration.lineThrough,
                             ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 4,
                           ),
                           Row(
                             children: [
@@ -465,8 +467,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     : "${newPrice.toString()}₹",
                                 style: const TextStyle(
                                   fontFamily: 'CenturyGothic',
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColor.primaryColor,
                                 ),
                               ),
@@ -484,8 +486,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   decrement();
                                 },
                                 child: Container(
-                                    height: 34,
-                                    width: 34,
+                                    height: 24,
+                                    width: 24,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         color: AppColor.grayColor,
@@ -507,8 +509,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 "${items}Kg",
                                 style: const TextStyle(
                                   fontFamily: 'CenturyGothic',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColor.fontColor,
                                 ),
                               ),
@@ -520,8 +522,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   increment();
                                 },
                                 child: Container(
-                                  height: 34,
-                                  width: 34,
+                                  height: 24,
+                                  width: 24,
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                       color: AppColor.grayColor,
@@ -530,6 +532,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   child: const Icon(
                                     Icons.add,
                                     color: AppColor.primaryColor,
+                                    size: 16,
                                   ),
                                 ),
                               ),
@@ -539,26 +542,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(
-                    20,
-                  ),
                   const Text(
                     "Product Details",
                     style: TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.grayColor,
                     ),
-                  ),
-                  const VerticalSpeacing(
-                    8,
                   ),
                   Text(
                     widget.detail,
                     style: const TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 16,
+                      fontSize: 10,
                       fontWeight: FontWeight.w400,
                       color: AppColor.grayColor,
                     ),
@@ -624,8 +621,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 "Buy Now",
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColor.whiteColor,
                                 ),
                               ),
@@ -643,8 +640,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         'Top reviews',
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.fontColor,
                         ),
                       ),
@@ -665,8 +662,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           "See More",
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
                             color: AppColor.buttonBgColor,
                           ),
                         ),
@@ -697,7 +694,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                           return const Center(
-                            child: Text('No comments and ratings available'),
+                            child: Text(
+                              'No comments and ratings available',
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.fontColor,
+                              ),
+                            ),
                           );
                         }
 
@@ -733,8 +738,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         'Related products',
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.fontColor,
                         ),
                       ),
@@ -749,8 +754,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           "See More",
                           style: TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
                             color: AppColor.buttonBgColor,
                           ),
                         ),
