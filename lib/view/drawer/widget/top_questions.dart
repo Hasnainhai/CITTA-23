@@ -17,15 +17,15 @@ class TopQuestion extends StatelessWidget {
             question,
             style: const TextStyle(
               fontFamily: 'CenturyGothic',
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: FontWeight.w400,
-              color: AppColor.grayColor,
+              color: AppColor.fontColor,
             ),
           ),
           const Icon(
             Icons.arrow_forward_ios,
             color: AppColor.primaryColor,
-            size: 14,
+            size: 16,
           )
         ]),
         const Divider()

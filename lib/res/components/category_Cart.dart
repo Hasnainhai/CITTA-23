@@ -48,7 +48,7 @@ class _CategoryCartState extends State<CategoryCart> {
                     widget.text,
                     style: TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: widget.textColor,
                     ),

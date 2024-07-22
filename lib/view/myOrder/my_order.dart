@@ -64,8 +64,8 @@ class _MyOrdersState extends State<MyOrders>
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w800,
-            color: AppColor.blackColor,
+            fontWeight: FontWeight.w600,
+            color: AppColor.fontColor,
           ),
         ),
         centerTitle: true,
@@ -76,6 +76,12 @@ class _MyOrdersState extends State<MyOrders>
             child: Column(
               children: <Widget>[
                 TabBar(
+                  labelStyle: const TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
+                  ),
                   indicatorColor:
                       AppColor.primaryColor, // Color of the selection indicator
                   labelColor: AppColor

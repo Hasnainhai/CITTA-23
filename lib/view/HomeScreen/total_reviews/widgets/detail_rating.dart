@@ -59,7 +59,7 @@ class DetailRating extends StatelessWidget {
                               userName,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 16,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
@@ -68,9 +68,9 @@ class DetailRating extends StatelessWidget {
                               comment,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xff8B8B97),
+                                color: AppColor.fontColor,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

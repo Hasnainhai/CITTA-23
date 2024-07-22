@@ -20,7 +20,7 @@ class _MyReviewState extends State<MyReview> {
         elevation: 0.0,
         centerTitle: true,
         title: const Text(
-          'Profile ',
+          'My Reviews ',
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
@@ -52,7 +52,15 @@ class _MyReviewState extends State<MyReview> {
 
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                 return const Center(
-                  child: Text('No comments and ratings available'),
+                  child: Text(
+                    'No comments and ratings available',
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
                 );
               }
 

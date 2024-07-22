@@ -46,9 +46,9 @@ class AboutUsScreen extends StatelessWidget {
             textAlign: TextAlign.justify,
             style: TextStyle(
               fontFamily: 'CenturyGothic',
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: FontWeight.w400,
-              color: AppColor.grayColor,
+              color: AppColor.fontColor,
             ),
           ),
         ),

@@ -374,51 +374,6 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                     child: Stack(
                       children: [
-                        const VerticalSpeacing(10),
-                        Positioned(
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  // Toggle the value of like
-                                  setState(() {
-                                    if (likeColor == Colors.transparent) {
-                                      if (_selectedImageUrl != null &&
-                                          _selectedSize != null) {
-                                        addToFavorites(
-                                            'N/A',
-                                            _selectedImageUrl!,
-                                            _selectedSize!,
-                                            widget.disPrice);
-                                        likeColor = AppColor.primaryColor;
-                                      } else {
-                                        Utils.flushBarErrorMessage(
-                                            "Please select the color and size",
-                                            context);
-                                      }
-                                    } else {
-                                      likeColor = Colors.transparent;
-
-                                      // Remove from favorites
-                                      removeFromFavorites();
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 48,
-                                  child: likeColor == AppColor.primaryColor
-                                      ? const Icon(
-                                          Icons.favorite,
-                                          color: AppColor.primaryColor,
-                                        )
-                                      : const Icon(
-                                          Icons.favorite_border_rounded),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         Positioned.fill(
                           child: CarouselSlider(
                             options: CarouselOptions(
@@ -462,6 +417,43 @@ class _FashionDetailState extends State<FashionDetail> {
                               dotHeight: 10.0,
                               activeDotColor: AppColor.primaryColor,
                               dotColor: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 12,
+                          child: GestureDetector(
+                            onTap: () {
+                              // Toggle the value of like
+                              setState(() {
+                                if (likeColor == Colors.transparent) {
+                                  if (_selectedImageUrl != null &&
+                                      _selectedSize != null) {
+                                    addToFavorites('N/A', _selectedImageUrl!,
+                                        _selectedSize!, widget.disPrice);
+                                    likeColor = AppColor.primaryColor;
+                                  } else {
+                                    Utils.flushBarErrorMessage(
+                                        "Please select the color and size",
+                                        context);
+                                  }
+                                } else {
+                                  likeColor = Colors.transparent;
+
+                                  // Remove from favorites
+                                  removeFromFavorites();
+                                }
+                              });
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 48,
+                              child: likeColor == AppColor.primaryColor
+                                  ? const Icon(
+                                      Icons.favorite,
+                                      color: AppColor.primaryColor,
+                                    )
+                                  : const Icon(Icons.favorite_border_rounded),
                             ),
                           ),
                         ),

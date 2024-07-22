@@ -124,7 +124,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                   style: TextStyle(
                                     fontFamily: 'CenturyGothic',
                                     fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w400,
                                     color:
                                         buttonCategoryType == CategoryType.food
                                             ? AppColor.whiteColor
@@ -196,7 +196,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                   style: TextStyle(
                                     fontFamily: 'CenturyGothic',
                                     fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w400,
                                     color: buttonCategoryType ==
                                             CategoryType.fashion
                                         ? AppColor.whiteColor

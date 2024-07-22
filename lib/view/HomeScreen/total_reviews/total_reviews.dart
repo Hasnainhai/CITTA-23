@@ -87,8 +87,8 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "4.5",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 22,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.buttonTxColor,
                             ),
                           ),
@@ -99,8 +99,8 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                         "320 reviews",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                           color: AppColor.fontColor,
                         ),
                       ),
@@ -144,9 +144,9 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "5 stars",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           LinearPercentIndicator(
@@ -161,7 +161,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "200",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.fontColor,
                             ),
@@ -175,9 +175,9 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "4 stars",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           LinearPercentIndicator(
@@ -192,7 +192,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "150",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.fontColor,
                             ),
@@ -206,9 +206,9 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "3 stars ",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           LinearPercentIndicator(
@@ -223,7 +223,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "90",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.fontColor,
                             ),
@@ -237,9 +237,9 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "2 stars",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           LinearPercentIndicator(
@@ -254,7 +254,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "30",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.fontColor,
                             ),
@@ -268,9 +268,9 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "1 stars",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: AppColor.grayColor,
+                              color: AppColor.fontColor,
                             ),
                           ),
                           LinearPercentIndicator(
@@ -285,7 +285,7 @@ class _TotalRatingScreenState extends State<TotalRatingScreen> {
                             "10",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: AppColor.fontColor,
                             ),

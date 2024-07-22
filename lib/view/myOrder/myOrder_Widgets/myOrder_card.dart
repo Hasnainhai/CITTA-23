@@ -56,7 +56,7 @@ class _myOrderCardState extends State<myOrderCard> {
                 Text(
                   widget.date,
                   style: const TextStyle(
-                    color: AppColor.grayColor,
+                    color: AppColor.fontColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 12.0,
                   ),
@@ -89,8 +89,8 @@ class _myOrderCardState extends State<myOrderCard> {
                         'Track Order',
                         style: TextStyle(
                           color: AppColor.whiteColor,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 14.0,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.0,
                         ),
                       ),
                     ),
@@ -105,9 +105,9 @@ class _myOrderCardState extends State<myOrderCard> {
                 const Text(
                   'Status:',
                   style: TextStyle(
-                    color: AppColor.grayColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14.0,
+                    color: AppColor.fontColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
                   ),
                 ),
                 TextButton(
@@ -117,7 +117,7 @@ class _myOrderCardState extends State<myOrderCard> {
                     style: const TextStyle(
                       color: AppColor.primaryColor,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 )

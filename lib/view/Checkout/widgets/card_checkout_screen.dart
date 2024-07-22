@@ -294,9 +294,9 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                         'Select delivery address',
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColor.blackColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.fontColor,
                         ),
                       ),
                       InkWell(
@@ -318,7 +318,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(20),
+                  const VerticalSpeacing(8),
                   SizedBox(
                     child: StreamBuilder(
                         stream: FirebaseFirestore.instance
@@ -392,12 +392,12 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontFamily: 'CenturyGothic',
-                      fontSize: 18,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                       color: AppColor.fontColor,
                     ),
                   ),
-                  const VerticalSpeacing(20.0),
+                  const VerticalSpeacing(16.0),
                   SizedBox(
                     height: 66,
                     width: MediaQuery.of(context).size.width,
@@ -445,7 +445,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                         "Master Card",
                                         style: TextStyle(
                                             fontFamily: 'CenturyGothic',
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w600,
                                             color: firstButton
                                                 ? AppColor.fontColor
@@ -498,7 +498,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                         "Cash On Delivery",
                                         style: TextStyle(
                                             fontFamily: 'CenturyGothic',
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w600,
                                             color: thirdButton
                                                 ? AppColor.fontColor

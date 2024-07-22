@@ -185,7 +185,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
           .doc(uuid)
           .set({
         'title': widget.title.toString(),
-        'salePrice': widget.saleprice.toString(),
+        'salePrice': widget.price.toString(),
         'imageUrl': widget.imageUrl[0],
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
@@ -388,39 +388,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                       child: Stack(
                         children: [
-                          const VerticalSpeacing(10),
-                          Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  // Toggle the value of like
-                                  setState(() {
-                                    if (likeColor == Colors.transparent) {
-                                      // Add to favorites
-                                      addToFavorites("0", widget.weight,
-                                          widget.size, 'N/A');
-                                      likeColor = AppColor.primaryColor;
-                                    } else {
-                                      // Remove from favorites
-                                      removeFromFavorites();
-                                      likeColor = Colors.transparent;
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 48,
-                                  child: likeColor == AppColor.primaryColor
-                                      ? const Icon(
-                                          Icons.favorite,
-                                          color: AppColor.primaryColor,
-                                        )
-                                      : const Icon(
-                                          Icons.favorite_border_rounded),
-                                ),
-                              ),
-                            ],
-                          ),
                           Positioned.fill(
                             child: CarouselSlider(
                               options: CarouselOptions(
@@ -464,6 +431,37 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                                 dotHeight: 10.0,
                                 activeDotColor: AppColor.primaryColor,
                                 dotColor: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 12,
+                            child: GestureDetector(
+                              onTap: () {
+                                print('GestureDetector tapped');
+                                setState(() {
+                                  if (likeColor == Colors.transparent) {
+                                    // Add to favorites
+                                    addToFavorites(
+                                        "0", widget.weight, widget.size, 'N/A');
+                                  } else {
+                                    // Remove from favorites
+                                    removeFromFavorites();
+                                    likeColor = Colors.transparent;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                height: 48,
+                                width: 48,
+                                color:
+                                    Colors.transparent, // Ensure it's tappable
+                                child: likeColor == AppColor.primaryColor
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: AppColor.primaryColor,
+                                      )
+                                    : const Icon(Icons.favorite_border_rounded),
                               ),
                             ),
                           ),

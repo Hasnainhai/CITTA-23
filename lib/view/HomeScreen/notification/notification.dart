@@ -64,7 +64,15 @@ class NotificationScreen extends StatelessWidget {
             }
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
               return const Center(
-                child: Text("No notifications to show"),
+                child: Text(
+                  "No notifications to show",
+                  style: TextStyle(
+                    fontFamily: 'CenturyGothic',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
+                  ),
+                ),
               );
             }
             return ListView(
@@ -75,8 +83,26 @@ class NotificationScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    title: const Text("Your order has been"),
-                    subtitle: Text(formatDateAndTime(data['date'])),
+                    title: const Text(
+                      "Your order has been",
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    subtitle: Text(
+                      formatDateAndTime(
+                        data['date'],
+                      ),
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
                     leading: Image.network(
                       data['imageUrl'] ?? 'images/logo.png',
                       height: 50,

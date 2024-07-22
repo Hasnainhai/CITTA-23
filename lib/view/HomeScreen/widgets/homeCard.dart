@@ -86,9 +86,9 @@ class HomeCard extends StatelessWidget {
                 onTap: ontap,
                 child: SizedBox(
                   height: oofProd == true
-                      ? MediaQuery.of(context).size.height / 10.8
-                      : MediaQuery.of(context).size.height / 9,
-                  width: oofProd == true ? 80 : 90,
+                      ? MediaQuery.of(context).size.height / 11
+                      : MediaQuery.of(context).size.height / 10,
+                  width: oofProd == true ? 75 : 85,
                   child: FancyShimmerImage(
                     imageUrl: img,
                     boxFit: BoxFit.fill,
@@ -107,7 +107,7 @@ class HomeCard extends StatelessWidget {
                       name.length > 14 ? '${name.substring(0, 14)}...' : name,
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: AppColor.fontColor,
                       ),
@@ -118,9 +118,9 @@ class HomeCard extends StatelessWidget {
                           price,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 10,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: AppColor.fontColor,
+                            color: AppColor.grayColor,
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
@@ -128,7 +128,7 @@ class HomeCard extends StatelessWidget {
                           dPrice,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 10,
+                            fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: AppColor.fontColor,
                           ),
