@@ -99,37 +99,37 @@ class _RatingState extends State<Rating> {
                               ),
                               // User Image URL
                             ),
-                            const VerticalSpeacing(30),
+                            const VerticalSpeacing(8),
                             Text(
                               userData['name'] ??
                                   FirebaseAuth
                                       .instance.currentUser!.displayName,
                               style: const TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                                 color: AppColor.fontColor,
                               ),
                             ),
-                            const VerticalSpeacing(25),
+                            const VerticalSpeacing(8),
                             const Text(
                               "How would you rate the quality of this Products",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'CenturyGothic',
-                                fontSize: 18,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 color: AppColor.fontColor,
                               ),
                             ),
-                            const VerticalSpeacing(25),
+                            const VerticalSpeacing(16),
                             RatingBar.builder(
                                 initialRating: 4,
                                 minRating: 1,
                                 allowHalfRating: true,
                                 glowColor: Colors.amber,
                                 itemCount: 5,
-                                itemSize: 55,
+                                itemSize: 40,
                                 itemPadding:
                                     const EdgeInsets.symmetric(horizontal: 0),
                                 itemBuilder: (context, _) => const Icon(
@@ -139,7 +139,7 @@ class _RatingState extends State<Rating> {
                                 onRatingUpdate: (rating) {
                                   countRatingStars = rating;
                                 }),
-                            const VerticalSpeacing(25),
+                            const VerticalSpeacing(16),
                             TextFieldCustom(
                               controller: commentController,
                               maxLines: 6,
