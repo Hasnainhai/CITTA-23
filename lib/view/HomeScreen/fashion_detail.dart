@@ -573,16 +573,16 @@ class _FashionDetailState extends State<FashionDetail> {
                     fontFamily: 'CenturyGothic',
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: AppColor.grayColor,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 Text(
                   widget.detail,
                   style: const TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(
