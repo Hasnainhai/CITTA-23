@@ -116,19 +116,39 @@ class _TrackOrderState extends State<TrackOrder> {
                   widget.orderId,
                   style: const TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.blackColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: OrderTracker(
+                    subTitleTextStyle: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                    headingTitleStyle: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
+                    ),
                     status: _getOrderStatus(widget.status),
-                    headingDateTextStyle:
-                        const TextStyle(color: Colors.transparent),
-                    subDateTextStyle:
-                        const TextStyle(color: AppColor.primaryColor),
+                    headingDateTextStyle: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.fontColor,
+                    ),
+                    subDateTextStyle: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.primaryColor,
+                    ),
                     activeColor: AppColor.primaryColor,
                     inActiveColor: Colors.grey[300],
                     orderTitleAndDateList: orderList,
@@ -141,12 +161,12 @@ class _TrackOrderState extends State<TrackOrder> {
                   '   Product Details',
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.blackColor,
                   ),
                 ),
-                const VerticalSpeacing(20.0),
+                const VerticalSpeacing(8.0),
                 // This is not favourite list card but I use it in order track in Product details
                 ProductDetailsWidget(
                   img: widget.img,
