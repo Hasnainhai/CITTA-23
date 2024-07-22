@@ -55,6 +55,7 @@ class ProfileWidgets extends StatelessWidget {
         trailing: Icon(
           trIcon,
           color: AppColor.grayColor,
+          size: 16,
         ),
       ),
     );

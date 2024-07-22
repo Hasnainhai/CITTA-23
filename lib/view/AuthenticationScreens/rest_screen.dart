@@ -90,6 +90,7 @@ class _RestScreenState extends State<RestScreen> {
             padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Card(
                     color: const Color(0xffFFFFFF),
@@ -105,29 +106,29 @@ class _RestScreenState extends State<RestScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const VerticalSpeacing(24),
+                          const VerticalSpeacing(100),
                           const Text(
                             "Reset Your Password",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 24,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
                             ),
                           ),
-                          const VerticalSpeacing(24),
+                          const VerticalSpeacing(8),
                           const Text(
                             "Please enter your email. We will send a link to your email to reset your password.",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 16,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff8B8B97),
+                              color: AppColor.fontColor,
                             ),
                           ),
-                          const VerticalSpeacing(30),
+                          const VerticalSpeacing(12),
                           TextFieldCustom(
                             controller: emailController,
                             maxLines: 1,

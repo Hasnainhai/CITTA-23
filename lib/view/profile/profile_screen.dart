@@ -229,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _name == null ? 'You' : _name!,
               style: const TextStyle(
                 fontFamily: 'CenturyGothic',
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColor.whiteColor,
               ),
@@ -255,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   'sign Up',
                   style: TextStyle(
                     color: AppColor.primaryColor,
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -393,7 +393,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: 'Edit Profile'),
                 const Divider(),
                 ProfileWidgets(
-                    ontap: () {},
+                    ontap: () {
+                      Navigator.pushNamed(context, RoutesName.helpscreen);
+                    },
                     tColor: const Color(0xffFF6A9F),
                     bColor: const Color(0xffD50059),
                     icon: Icons.help_outline,

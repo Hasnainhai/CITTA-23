@@ -36,8 +36,8 @@ class _TextFieldCustomState extends State<TextFieldCustom> {
             widget.text,
             style: const TextStyle(
               fontFamily: 'CenturyGothic',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
               color: AppColor.fontColor,
             ),
           ),

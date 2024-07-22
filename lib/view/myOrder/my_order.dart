@@ -64,8 +64,8 @@ class _MyOrdersState extends State<MyOrders>
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w800,
-            color: AppColor.blackColor,
+            fontWeight: FontWeight.w600,
+            color: AppColor.fontColor,
           ),
         ),
         centerTitle: true,
