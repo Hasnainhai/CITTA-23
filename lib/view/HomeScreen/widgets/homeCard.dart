@@ -120,7 +120,7 @@ class HomeCard extends StatelessWidget {
                             fontFamily: 'CenturyGothic',
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
-                            color: AppColor.grayColor,
+                            color: AppColor.fontColor,
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
