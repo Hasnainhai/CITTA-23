@@ -439,7 +439,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                   : product['price'] + '₹',
               borderColor: AppColor.primaryColor,
               fillColor: AppColor.bgColor,
-              img: product['imageUrl'],
+              img: product['imageUrl'][0],
               iconColor: AppColor.primaryColor,
               ontap: () {
                 product.containsKey('size')
@@ -497,7 +497,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               },
               addCart: () {
                 addToCart(
-                  product['imageUrl'],
+                  product['imageUrl'][0],
                   product['title'],
                   product['price'],
                   product['sellerId'],
@@ -556,7 +556,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                   : product['price'] + '₹',
               borderColor: AppColor.primaryColor,
               fillColor: AppColor.bgColor,
-              img: product['imageUrl'],
+              img: product['imageUrl'][0],
               iconColor: AppColor.primaryColor,
               ontap: () {
                 Navigator.push(
@@ -588,7 +588,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               },
               addCart: () {
                 addToCart(
-                  product['imageUrl'],
+                  product['imageUrl'][0],
                   product['title'],
                   product['price'],
                   product['sellerId'],
@@ -647,7 +647,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                   : product['price'] + '₹',
               borderColor: AppColor.primaryColor,
               fillColor: AppColor.bgColor,
-              img: product['imageUrl'],
+              img: product['imageUrl'][0],
               iconColor: AppColor.primaryColor,
               ontap: () {
                 debugPrint('.................ontap Fashion..................');
@@ -676,7 +676,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
               },
               addCart: () {
                 addToCart(
-                  product['imageUrl'],
+                  product['imageUrl'][0],
                   product['title'],
                   product['price'],
                   product['sellerId'],

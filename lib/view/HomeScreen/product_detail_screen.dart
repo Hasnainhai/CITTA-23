@@ -334,39 +334,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       child: Stack(
                         children: [
-                          const VerticalSpeacing(10),
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  // Toggle the value of like
-                                  setState(() {
-                                    if (likeColor == Colors.transparent) {
-                                      // Add to favorites
-                                      addToFavorites(widget.disPrice,
-                                          widget.weight, "N/A", "N/A");
-                                      likeColor = AppColor.primaryColor;
-                                    } else {
-                                      // Remove from favorites
-                                      removeFromFavorites();
-                                      likeColor = Colors.transparent;
-                                    }
-                                  });
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 48,
-                                  child: likeColor == AppColor.primaryColor
-                                      ? const Icon(
-                                          Icons.favorite,
-                                          color: AppColor.primaryColor,
-                                        )
-                                      : const Icon(
-                                          Icons.favorite_border_rounded),
-                                ),
-                              ),
-                            ],
-                          ),
                           Positioned.fill(
                             child: CarouselSlider(
                               options: CarouselOptions(
@@ -414,16 +381,36 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ),
                           ),
-                          // Center(
-                          //   child: SizedBox(
-                          //     height: 250,
-                          //     width: 250,
-                          //     child: FancyShimmerImage(
-                          //       imageUrl: widget.imageUrl[0],
-                          //       boxFit: BoxFit.fill,
-                          //     ),
-                          //   ),
-                          // ),
+                          Positioned(
+                            top: 12,
+                            child: GestureDetector(
+                              onTap: () {
+                                // Toggle the value of like
+                                setState(() {
+                                  if (likeColor == Colors.transparent) {
+                                    // Add to favorites
+                                    addToFavorites(widget.disPrice,
+                                        widget.weight, "N/A", "N/A");
+                                    likeColor = AppColor.primaryColor;
+                                  } else {
+                                    // Remove from favorites
+                                    removeFromFavorites();
+                                    likeColor = Colors.transparent;
+                                  }
+                                });
+                              },
+                              child: Container(
+                                height: 48,
+                                width: 48,
+                                child: likeColor == AppColor.primaryColor
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: AppColor.primaryColor,
+                                      )
+                                    : const Icon(Icons.favorite_border_rounded),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
