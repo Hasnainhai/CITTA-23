@@ -20,7 +20,7 @@ class _MyReviewState extends State<MyReview> {
         elevation: 0.0,
         centerTitle: true,
         title: const Text(
-          'Profile ',
+          'My Reviews ',
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,

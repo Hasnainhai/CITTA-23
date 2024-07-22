@@ -64,8 +64,8 @@ class _ReviewCardState extends State<ReviewCard> {
                           widget.name,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                             color: AppColor.fontColor,
                           ),
                         ),
@@ -95,7 +95,7 @@ class _ReviewCardState extends State<ReviewCard> {
                     fontFamily: 'CenturyGothic',
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
+                    color: AppColor.fontColor,
                   ),
                 ),
               ],
@@ -107,7 +107,7 @@ class _ReviewCardState extends State<ReviewCard> {
                 fontFamily: 'CenturyGothic',
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                color: AppColor.grayColor,
+                color: AppColor.fontColor,
               ),
             ),
             const VerticalSpeacing(14),
@@ -117,14 +117,15 @@ class _ReviewCardState extends State<ReviewCard> {
                 Icon(
                   Icons.favorite,
                   color: AppColor.primaryColor,
+                  size: 16,
                 ),
                 Text(
                   "24 Like",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
+                    color: AppColor.fontColor,
                   ),
                 ),
                 SizedBox(
@@ -133,14 +134,15 @@ class _ReviewCardState extends State<ReviewCard> {
                 Icon(
                   Icons.reply_outlined,
                   color: AppColor.grayColor,
+                  size: 16,
                 ),
                 Text(
                   "Reply",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.w400,
-                    color: AppColor.grayColor,
+                    color: AppColor.fontColor,
                   ),
                 ),
               ],
