@@ -46,11 +46,10 @@ class ContactUsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VerticalSpeacing(20),
               ListTile(
                 leading: Container(
-                  height: 50,
-                  width: 50,
+                  height: 30,
+                  width: 30,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: AppColor.primaryColor,
@@ -65,8 +64,8 @@ class ContactUsScreen extends StatelessWidget {
                   "+8801710000000",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
@@ -74,17 +73,16 @@ class ContactUsScreen extends StatelessWidget {
                   "+8801710000000",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
               ),
-              const VerticalSpeacing(24),
               ListTile(
                 leading: Container(
-                  height: 50,
-                  width: 50,
+                  height: 30,
+                  width: 30,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: AppColor.primaryColor,
@@ -99,17 +97,16 @@ class ContactUsScreen extends StatelessWidget {
                   "Hello@gmail.com",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
               ),
-              const VerticalSpeacing(24),
               ListTile(
                 leading: Container(
-                  height: 50,
-                  width: 50,
+                  height: 30,
+                  width: 30,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: AppColor.primaryColor,
@@ -124,8 +121,8 @@ class ContactUsScreen extends StatelessWidget {
                   "Dhaka, Bangladesh",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
@@ -133,8 +130,8 @@ class ContactUsScreen extends StatelessWidget {
                   "26/C Mohammadpur",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
