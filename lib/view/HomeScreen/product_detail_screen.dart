@@ -85,7 +85,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           .doc(uuid)
           .set({
         'title': widget.title.toString(),
-        'salePrice': widget.salePrice.toString(),
+        'salePrice': widget.price.toString(),
         'imageUrl': widget.imageUrl[0].toString(),
         'id': widget.productId.toString(),
         'sellerId': widget.sellerId,
@@ -337,7 +337,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           const VerticalSpeacing(10),
                           Row(
                             children: [
-                              InkWell(
+                              GestureDetector(
                                 onTap: () {
                                   // Toggle the value of like
                                   setState(() {
