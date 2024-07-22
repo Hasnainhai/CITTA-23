@@ -30,7 +30,7 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 92,
+      height: 80,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: widget.bgColor,
@@ -42,27 +42,32 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InkWell(
-              onTap: () {
-                widget.ontapSelect();
-              },
-              child: Container(
-                  width: 18,
-                  height: 18,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
-                  child: Center(
-                    child: Container(
-                      width: 12.0,
-                      height: 12.0,
-                      color: widget.isSelect
-                          ? AppColor.primaryColor
-                          : Colors.transparent,
-                    ),
-                  )),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    widget.ontapSelect();
+                  },
+                  child: Container(
+                      width: 18,
+                      height: 18,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      child: Center(
+                        child: Container(
+                          width: 12.0,
+                          height: 12.0,
+                          color: widget.isSelect
+                              ? AppColor.primaryColor
+                              : Colors.transparent,
+                        ),
+                      )),
+                ),
+              ],
             ),
             const SizedBox(width: 15.0),
             Text.rich(
@@ -72,17 +77,17 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
                     : '${widget.title}\n',
                 style: TextStyle(
                   fontFamily: 'CenturyGothic',
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
                   color: widget.titleColor,
                 ),
                 children: <TextSpan>[
                   TextSpan(
                     text: '${widget.phNo}\n',
                     style: const TextStyle(
-                      color: AppColor.grayColor,
+                      color: AppColor.fontColor,
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
+                      fontSize: 12.0,
                     ),
                   ),
                   TextSpan(
@@ -90,9 +95,9 @@ class _AddressCheckOutWidgetState extends State<AddressCheckOutWidget> {
                         ? '${widget.address.substring(0, 20)}...\n'
                         : '${widget.address}\n',
                     style: const TextStyle(
-                      color: AppColor.grayColor,
+                      color: AppColor.fontColor,
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
+                      fontSize: 12.0,
                     ),
                   ),
                 ],

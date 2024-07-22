@@ -286,8 +286,8 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                       "You haven't finished checking out yet.\nDon't miss out anything?",
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
                         color: AppColor.fontColor,
                       ),
                       textAlign: TextAlign.center,
@@ -298,6 +298,12 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: TabBar(
+                          labelStyle: TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.fontColor,
+                          ),
                           isScrollable: true,
                           labelColor: AppColor.primaryColor,
                           unselectedLabelColor: AppColor.fontColor,
@@ -345,8 +351,8 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                                   'Total',
                                   style: TextStyle(
                                     fontFamily: 'CenturyGothic',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
                                     color: AppColor.blackColor,
                                   ),
                                 ),
@@ -354,9 +360,9 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                                   '₹${totalPriceModel.totalPrice}',
                                   style: const TextStyle(
                                     fontFamily: 'CenturyGothic',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                    color: AppColor.grayColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColor.fontColor,
                                   ),
                                 ),
                               ],
@@ -387,7 +393,7 @@ class _ForgetAnythingBottomSheetState extends State<ForgetAnythingBottomSheet> {
                                 style: TextStyle(
                                   fontFamily: 'CenturyGothic',
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   color: AppColor.whiteColor,
                                 ),
                               ),
