@@ -107,7 +107,7 @@ class HomeCard extends StatelessWidget {
                       name.length > 14 ? '${name.substring(0, 14)}...' : name,
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 12,
+                        fontSize: 10,
                         fontWeight: FontWeight.w400,
                         color: AppColor.fontColor,
                       ),
@@ -118,7 +118,7 @@ class HomeCard extends StatelessWidget {
                           price,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 12,
+                            fontSize: 10,
                             fontWeight: FontWeight.w400,
                             color: AppColor.fontColor,
                             decoration: TextDecoration.lineThrough,
@@ -128,7 +128,7 @@ class HomeCard extends StatelessWidget {
                           dPrice,
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
-                            fontSize: 12,
+                            fontSize: 10,
                             fontWeight: FontWeight.w400,
                             color: AppColor.fontColor,
                           ),
