@@ -87,7 +87,7 @@ class HomeCard extends StatelessWidget {
                 child: SizedBox(
                   height: oofProd == true
                       ? MediaQuery.of(context).size.height / 11
-                      : MediaQuery.of(context).size.height / 10,
+                      : MediaQuery.of(context).size.height / 9,
                   width: oofProd == true ? 75 : 85,
                   child: FancyShimmerImage(
                     imageUrl: img,
