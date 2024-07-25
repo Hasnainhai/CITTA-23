@@ -141,7 +141,7 @@ class _TrackOrderState extends State<TrackOrder> {
                       fontFamily: 'CenturyGothic',
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: AppColor.fontColor,
+                      color: Colors.transparent,
                     ),
                     subDateTextStyle: const TextStyle(
                       fontFamily: 'CenturyGothic',
