@@ -388,7 +388,6 @@ class _FashionDetailState extends State<FashionDetail> {
           padding: const EdgeInsets.only(
             left: 20,
             right: 20,
-            top: 8,
           ),
           child: SingleChildScrollView(
             child: Column(
