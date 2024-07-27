@@ -159,8 +159,8 @@ class HomeCard extends StatelessWidget {
                     InkWell(
                       onTap: addCart,
                       child: Container(
-                        height: MediaQuery.of(context).size.height / 33,
-                        width: MediaQuery.of(context).size.width / 15,
+                        height: MediaQuery.of(context).size.height / 40,
+                        width: MediaQuery.of(context).size.width / 18,
                         decoration: BoxDecoration(
                           color: AppColor.primaryColor,
                           border: Border.all(
@@ -169,11 +169,15 @@ class HomeCard extends StatelessWidget {
                           ),
                         ),
                         child: const Center(
-                          child: Icon(Icons.add, color: AppColor.whiteColor),
+                          child: Icon(
+                            Icons.add,
+                            color: AppColor.whiteColor,
+                            size: 16,
+                          ),
                         ),
                       ),
                     ),
-                    VerticalSpeacing(10),
+                    const VerticalSpeacing(16),
                   ],
                 )
               ],

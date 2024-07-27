@@ -383,33 +383,6 @@ class _FashionDetailState extends State<FashionDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => const DashBoardScreen(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.fontColor,
-            )),
-        title: const Text(
-          "Product Details",
-          style: TextStyle(
-            fontFamily: 'CenturyGothic',
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: AppColor.fontColor,
-          ),
-        ),
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -421,6 +394,31 @@ class _FashionDetailState extends State<FashionDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    const Text(
+                      "Fashion Detail ",
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    Container(),
+                  ],
+                ),
+                const VerticalSpeacing(8),
                 Container(
                   height: 320,
                   width: 400,

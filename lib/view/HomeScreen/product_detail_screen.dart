@@ -343,28 +343,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.fontColor,
-            )),
-        title: const Text(
-          'Product Details',
-          style: TextStyle(
-            fontFamily: 'CenturyGothic',
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: AppColor.fontColor,
-          ),
-        ),
-      ),
       body: LoadingManager(
         isLoading: _isLoading,
         child: SafeArea(
@@ -378,8 +356,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      const Text(
+                        "Product Detail ",
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.fontColor,
+                        ),
+                      ),
+                      Container(),
+                    ],
+                  ),
+                  const VerticalSpeacing(8),
                   Container(
-                    height: 320,
+                    height: 350,
                     width: 400,
                     decoration: const BoxDecoration(
                       color: Color(0xffEEEEEE),
@@ -395,7 +398,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             child: CarouselSlider(
                               options: CarouselOptions(
                                 viewportFraction: 1,
-                                height: 300.0,
+                                height: 340.0,
                                 autoPlay: false,
                                 enlargeCenterPage: true,
                                 onPageChanged: (index, reason) {

@@ -85,25 +85,25 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     super.initState();
     getUserData();
     tabController = TabController(length: 4, vsync: this);
-    BackButtonInterceptor.add(myInterceptor);
+    // BackButtonInterceptor.add(myInterceptor);
   }
 
   @override
   void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
+    // BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
 
-  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      Fluttertoast.showToast(msg: 'Press back again to exit');
-      return true; // Prevent the default back button behavior
-    }
-    return false; // Allow the default back button behavior
-  }
+  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+  //   DateTime now = DateTime.now();
+  //   if (currentBackPressTime == null ||
+  //       now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+  //     currentBackPressTime = now;
+  //     Fluttertoast.showToast(msg: 'Press back again to exit');
+  //     return true; // Prevent the default back button behavior
+  //   }
+  //   return false; // Allow the default back button behavior
+  // }
 
   void showSignupDialog(BuildContext context) {
     showDialog(
