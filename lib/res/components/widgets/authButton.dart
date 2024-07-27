@@ -88,46 +88,6 @@ void _showErrorMessage(String message, BuildContext context) {
 }
 
 class _AuthButtonState extends State<AuthButton> {
-  // Future<void> signup(BuildContext context) async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn();
-  //   final GoogleSignInAccount? googleSignInAccount =
-  //       await googleSignIn.signIn();
-  //   if (googleSignInAccount != null) {
-  //     try {
-  //       final GoogleSignInAuthentication googleSignInAuthentication =
-  //           await googleSignInAccount.authentication;
-  //       final AuthCredential authCredential = GoogleAuthProvider.credential(
-  //           idToken: googleSignInAuthentication.idToken,
-  //           accessToken: googleSignInAuthentication.accessToken);
-
-  //       // Getting users credential
-  //       UserCredential result =
-  //           await authInstance.signInWithCredential(authCredential);
-
-  //       if (result != null) {
-  //         // setup google credentials in firebase Firestore
-  //         await FirebaseFirestore.instance
-  //             .collection('users')
-  //             .doc(result.user!.uid)
-  //             .set({
-  //           'createdAt': Timestamp.now(),
-  //           'email': result.user!.email,
-  //           'id': result.user!.uid,
-  //           'name': result.user!.displayName,
-  //           'profilePic': result.user!.photoURL,
-  //         });
-  //         Utils.toastMessage('Successfully SignIn');
-  //         Navigator.pushReplacement(context,
-  //             MaterialPageRoute(builder: (context) => const DashBoardScreen()));
-  //       }
-  //     } on FirebaseException catch (e) {
-  //       Utils.flushBarErrorMessage('${e.message}', context);
-  //     } catch (e) {
-  //       Utils.flushBarErrorMessage(e.toString(), context);
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
