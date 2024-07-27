@@ -65,9 +65,10 @@ void _showSuccessMessage(BuildContext context) {
 }
 
 void _navigateToDashboard(BuildContext context) {
-  Navigator.pushReplacement(
+  Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(builder: (context) => const DashBoardScreen()),
+    (route) => false,
   );
 }
 

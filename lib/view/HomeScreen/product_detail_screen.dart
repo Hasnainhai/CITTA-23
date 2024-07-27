@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/all_related_prod.dart';
@@ -152,6 +153,62 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       });
       Utils.snackBar('Successfully added to cart', context);
     }
+  }
+
+  void showSignupDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   String calculateDiscountedPrice(
@@ -558,14 +615,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: Center(
                           child: IconButton(
                             onPressed: () {
-                              addToCart(
-                                  widget.imageUrl[0],
-                                  widget.title,
-                                  widget.price,
-                                  widget.sellerId,
-                                  widget.productId,
-                                  items == 1 ? widget.weight : items.toString(),
-                                  widget.disPrice.toString());
+                              if (FirebaseAuth.instance.currentUser != null) {
+                                addToCart(
+                                    widget.imageUrl[0],
+                                    widget.title,
+                                    widget.price,
+                                    widget.sellerId,
+                                    widget.productId,
+                                    items == 1
+                                        ? widget.weight
+                                        : items.toString(),
+                                    widget.disPrice.toString());
+                              } else {
+                                showSignupDialog(context);
+                              }
                             },
                             icon: const Icon(
                               Icons.add_shopping_cart_outlined,
@@ -582,26 +645,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           color: AppColor.primaryColor,
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (c) => CheckOutScreen(
-                                    tile: widget.title,
-                                    price: widget.price,
-                                    img: widget.imageUrl[0],
-                                    id: widget.productId,
-                                    customerId: widget.sellerId,
-                                    weight: widget.weight,
-                                    productType: "product",
-                                    salePrice: newPrice == null
-                                        ? widget.salePrice
-                                        : newPrice.toString(),
-                                    size: "N/A",
-                                    quantity: items.toString(),
-                                    color: "N/A",
+                              if (FirebaseAuth.instance.currentUser != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (c) => CheckOutScreen(
+                                      tile: widget.title,
+                                      price: widget.price,
+                                      img: widget.imageUrl[0],
+                                      id: widget.productId,
+                                      customerId: widget.sellerId,
+                                      weight: widget.weight,
+                                      productType: "product",
+                                      salePrice: newPrice == null
+                                          ? widget.salePrice
+                                          : newPrice.toString(),
+                                      size: "N/A",
+                                      quantity: items.toString(),
+                                      color: "N/A",
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                showSignupDialog(context);
+                              }
                             },
                             child: const Center(
                               child: Text(

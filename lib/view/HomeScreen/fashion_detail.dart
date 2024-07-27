@@ -100,6 +100,62 @@ class _FashionDetailState extends State<FashionDetail> {
     });
   }
 
+  void showSignupDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void addToCart(
     String img,
     String title,
@@ -111,6 +167,10 @@ class _FashionDetailState extends State<FashionDetail> {
     String disPrice,
   ) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
+    if (FirebaseAuth.instance.currentUser == null) {
+      showSignupDialog(context);
+      return;
+    }
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')
@@ -698,6 +758,9 @@ class _FashionDetailState extends State<FashionDetail> {
                                 _selectedImageUrl == null) {
                               Utils.snackBar(
                                   "Please select size and color", context);
+                            } else if (FirebaseAuth.instance.currentUser ==
+                                null) {
+                              showSignupDialog(context);
                             } else {
                               addToCart(
                                   widget.imageUrl[0],
@@ -731,6 +794,9 @@ class _FashionDetailState extends State<FashionDetail> {
                                   "Please select the size and color", context);
                               // Utils.flushBarErrorMessage(
                               //     "Please select the size and color", context);
+                            } else if (FirebaseAuth.instance.currentUser ==
+                                null) {
+                              showSignupDialog(context);
                             } else {
                               Navigator.push(
                                 context,

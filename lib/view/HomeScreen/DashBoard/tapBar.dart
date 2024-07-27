@@ -1,14 +1,17 @@
 // ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/menu/menu.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../res/consts/firebase_const.dart';
 import '../../Favourite/favourite_list.dart';
@@ -24,13 +27,14 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
   int selectIndex = 0;
-  onItemClick(int index) {
+  DateTime? currentBackPressTime;
+
+  void onItemClick(int index) {
     setState(() {
       selectIndex = index;
       tabController!.index = selectIndex;
     });
   }
-  // for profile
 
   String? _name;
   String? _pImage;
@@ -63,7 +67,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     final currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser == null) {
-      // Utils.toastMessage('please SignUp first');
       return const Stream<int>.empty();
     }
 
@@ -81,11 +84,27 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   void initState() {
     super.initState();
     getUserData();
-
     tabController = TabController(length: 4, vsync: this);
+    BackButtonInterceptor.add(myInterceptor);
   }
 
-  // popUp
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Fluttertoast.showToast(msg: 'Press back again to exit');
+      return true; // Prevent the default back button behavior
+    }
+    return false; // Allow the default back button behavior
+  }
+
   void showSignupDialog(BuildContext context) {
     showDialog(
       context: context,
