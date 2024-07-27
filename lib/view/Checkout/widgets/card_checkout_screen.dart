@@ -363,21 +363,110 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                       debugPrint(
                                           'Address selected: $selectedAddress');
                                     },
-                                    child: AddressCheckOutWidget(
-                                      bgColor: AppColor.whiteColor,
-                                      borderColor: isSelected
-                                          ? AppColor.primaryColor
-                                          : AppColor.grayColor,
-                                      titleColor: AppColor.blackColor,
-                                      title: data['address2'],
-                                      phNo: data['phone'],
-                                      address: data['address1'],
-                                      isSelect: isSelected,
-                                      ontapSelect: () {
-                                        setState(() {
-                                          selectedAddress = data['address2'];
-                                        });
-                                      },
+                                    child:
+                                        //  AddressCheckOutWidget(
+                                        //   bgColor: AppColor.whiteColor,
+                                        //   borderColor: isSelected
+                                        //       ? AppColor.primaryColor
+                                        //       : AppColor.grayColor,
+                                        //   titleColor: AppColor.blackColor,
+                                        //   title: data['address2'],
+                                        //   phNo: data['phone'],
+                                        //   address: data['address1'],
+                                        //   isSelect: isSelected,
+                                        //   ontapSelect: () {
+                                        //     setState(() {
+                                        //       selectedAddress = data['address2'];
+                                        //     });
+                                        //   },
+                                        // ),
+                                        Container(
+                                      height: 80,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        color: AppColor.whiteColor,
+                                        border: Border.all(
+                                            width: 2,
+                                            color: isSelected
+                                                ? AppColor.primaryColor
+                                                : AppColor.grayColor),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15.0, left: 15.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                    width: 18,
+                                                    height: 18,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: AppColor
+                                                            .primaryColor,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: Container(
+                                                          width: 12.0,
+                                                          height: 12.0,
+                                                          color: isSelected
+                                                              ? AppColor
+                                                                  .primaryColor
+                                                              : AppColor
+                                                                  .whiteColor),
+                                                    )),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 15.0),
+                                            Text.rich(
+                                              TextSpan(
+                                                text: data['address2'].length >
+                                                        13
+                                                    ? '${data['address2'].substring(0, 13)}...\n'
+                                                    : '${data['address2']}\n',
+                                                style: const TextStyle(
+                                                  fontFamily: 'CenturyGothic',
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: AppColor.fontColor,
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: '${data['phone']}\n',
+                                                    style: const TextStyle(
+                                                      color: AppColor.fontColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 12.0,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: data['address1']
+                                                                .length >
+                                                            20
+                                                        ? '${data['address1'].substring(0, 20)}...\n'
+                                                        : '${data['address1']}\n',
+                                                    style: const TextStyle(
+                                                      color: AppColor.fontColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 12.0,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   const VerticalSpeacing(12.0),
