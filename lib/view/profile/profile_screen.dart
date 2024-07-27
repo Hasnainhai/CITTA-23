@@ -186,8 +186,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               _pImage == defaultProfile
-                  ? const VerticalSpeacing(90.0)
-                  : const VerticalSpeacing(70.0),
+                  ? const VerticalSpeacing(70.0)
+                  : const VerticalSpeacing(50.0),
               _buildProfileFeatures(),
             ],
           ),
@@ -288,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             bColor: const Color(0xffD50059),
             icon: Icons.local_shipping_outlined,
             title: 'My All',
-            subtitle: 'Order',
+            subtitle: 'Orders',
           ),
           profileCenterBtns(
             ontap: () {

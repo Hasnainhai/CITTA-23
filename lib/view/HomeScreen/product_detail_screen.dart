@@ -315,7 +315,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             padding: const EdgeInsets.only(
               left: 20,
               right: 20,
-              top: 26,
+              top: 8,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -415,7 +415,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                   ),
-                  const VerticalSpeacing(16),
+                  const VerticalSpeacing(8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -547,7 +547,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       color: AppColor.fontColor,
                     ),
                   ),
-                  const VerticalSpeacing(20),
+                  const VerticalSpeacing(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -619,7 +619,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(24),
+                  const VerticalSpeacing(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -657,7 +657,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(14),
+                  const VerticalSpeacing(8),
                   SizedBox(
                     height: 145,
                     child: StreamBuilder(
@@ -717,7 +717,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                     ),
                   ),
-                  const VerticalSpeacing(13),
+                  const VerticalSpeacing(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -749,7 +749,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(12),
+                  const VerticalSpeacing(8),
                   SizedBox(
                     height: 63,
                     child: ListView.builder(

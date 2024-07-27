@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/routes/routes_name.dart';

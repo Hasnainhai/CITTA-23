@@ -355,7 +355,7 @@ class _FashionDetailState extends State<FashionDetail> {
           padding: const EdgeInsets.only(
             left: 20,
             right: 20,
-            top: 26,
+            top: 8,
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -461,7 +461,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ),
                 ),
-                const VerticalSpeacing(16),
+                const VerticalSpeacing(8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -682,7 +682,7 @@ class _FashionDetailState extends State<FashionDetail> {
                   }).toList(),
                 ),
                 const VerticalSpeacing(
-                  14,
+                  12,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -770,7 +770,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -808,7 +808,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(8),
                 SizedBox(
                   height: 145,
                   child: StreamBuilder(
@@ -866,7 +866,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     },
                   ),
                 ),
-                const VerticalSpeacing(13),
+                const VerticalSpeacing(12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -898,7 +898,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(12),
+                const VerticalSpeacing(8),
                 SizedBox(
                   height: 63,
                   child: ListView.builder(

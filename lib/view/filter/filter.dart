@@ -39,7 +39,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
             padding: const EdgeInsets.only(
               left: 20,
               right: 20,
-              top: 60,
+              top: 12,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,19 +55,19 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                   ),
                 ),
-                const VerticalSpeacing(30),
+                const VerticalSpeacing(12),
                 const PriceRangeSlider(),
                 const Text(
                   "Categories",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
                 ),
                 const VerticalSpeacing(
-                  20,
+                  12,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,7 +124,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                             "Grocery",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: button2
                                   ? AppColor.buttonTxColor
@@ -155,7 +155,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                             "Vagetabals",
                             style: TextStyle(
                               fontFamily: 'CenturyGothic',
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: button3
                                   ? AppColor.buttonTxColor
@@ -167,7 +167,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                     ),
                   ],
                 ),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(12),
                 InkWell(
                   onTap: () {
                     setState(() {
@@ -188,7 +188,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         "See All",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: button4
                               ? AppColor.buttonTxColor
@@ -199,19 +199,16 @@ class _FilterPopUpState extends State<FilterPopUp> {
                   ),
                 ),
                 const VerticalSpeacing(
-                  30,
+                  12,
                 ),
                 const Text(
                   "Rating",
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     color: AppColor.fontColor,
                   ),
-                ),
-                const VerticalSpeacing(
-                  14,
                 ),
                 RatingBar.builder(
                     initialRating: 4,
@@ -226,7 +223,7 @@ class _FilterPopUpState extends State<FilterPopUp> {
                         ),
                     onRatingUpdate: (rating) {}),
                 const VerticalSpeacing(
-                  50,
+                  12,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,6 +246,8 @@ class _FilterPopUpState extends State<FilterPopUp> {
                           child: Text(
                             "Clear Filter",
                             style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
                               color: AppColor.fontColor,
                               fontWeight: FontWeight.w600,
                             ),
@@ -315,6 +314,8 @@ class _FilterPopUpState extends State<FilterPopUp> {
                           child: Text(
                             "Apply Filter",
                             style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
                               color: AppColor.buttonTxColor,
                               fontWeight: FontWeight.w600,
                             ),
