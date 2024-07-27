@@ -27,9 +27,9 @@ class _PriceRangeSliderState extends State<PriceRangeSlider> {
             'Price Range: \$${_values.start.toInt()} - \$${_values.end.toInt()}',
             style: const TextStyle(
               fontFamily: 'CenturyGothic',
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColor.blackColor,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColor.fontColor,
             ),
           ),
           RangeSlider(

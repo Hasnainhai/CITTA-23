@@ -52,28 +52,15 @@ class profileCenterBtns extends StatelessWidget {
           ),
         ),
         const VerticalSpeacing(10.0),
-        Text.rich(
-          textAlign: TextAlign.center,
-          TextSpan(
-            text: '$title\n',
-            style: const TextStyle(
-              fontFamily: 'CenturyGothic',
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColor.fontColor,
-            ),
-            children: <TextSpan>[
-              TextSpan(
-                text: subtitle,
-                style: const TextStyle(
-                  color: AppColor.fontColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12.0,
-                ),
-              ),
-            ],
+        Text(
+          "$subtitle",
+          style: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColor.fontColor,
           ),
-        ),
+        )
       ],
     );
   }

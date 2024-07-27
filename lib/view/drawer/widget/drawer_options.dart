@@ -14,18 +14,20 @@ class DrawerOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 30,
       child: ListTile(
         onTap: onpress,
         leading: Icon(
           icon,
-          size: 26,
+          size: 20,
           color: AppColor.fontColor,
         ),
         title: Text(
           title,
           style: const TextStyle(
-            fontSize: 18.0,
+            fontSize: 12.0,
+            fontFamily: 'CenturyGothic',
+            fontWeight: FontWeight.w600,
             color: AppColor.fontColor,
           ),
         ),
