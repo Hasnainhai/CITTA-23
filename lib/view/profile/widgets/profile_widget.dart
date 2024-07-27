@@ -23,7 +23,7 @@ class ProfileWidgets extends StatelessWidget {
     return GestureDetector(
       onTap: ontap,
       child: ListTile(
-        minTileHeight: 45,
+        minTileHeight: 30,
         leading: Container(
           height: 30.0,
           width: 30.0,

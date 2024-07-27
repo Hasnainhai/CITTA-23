@@ -253,7 +253,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const VerticalSpeacing(24.0),
+                  const VerticalSpeacing(12.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -347,7 +347,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       },
                                     ),
                                   ),
-                                  const VerticalSpeacing(20.0),
+                                  const VerticalSpeacing(12.0),
                                 ],
                               );
                             }).toList(),
@@ -364,7 +364,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       color: AppColor.fontColor,
                     ),
                   ),
-                  const VerticalSpeacing(12.0),
+                  const VerticalSpeacing(8.0),
                   SizedBox(
                     height: 66,
                     width: MediaQuery.of(context).size.width,
@@ -481,7 +481,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       ],
                     ),
                   ),
-                  const VerticalSpeacing(50),
+                  const VerticalSpeacing(12),
                   RoundedButton(
                     title: paymentType == "Stripe" ? 'Pay Now' : "Order Now",
                     onpress: () async {
