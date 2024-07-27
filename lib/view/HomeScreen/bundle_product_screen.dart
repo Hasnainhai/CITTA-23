@@ -721,7 +721,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ],
                   ),
 
-                  const VerticalSpeacing(8),
                   // second bundle product
                   Row(
                     children: [
@@ -772,7 +771,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(10),
                   // third bundle product
                   Row(
                     children: [
@@ -823,7 +821,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(8),
                   // fourth Bundle product
                   Row(
                     children: [
@@ -874,7 +871,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(8),
                   // fifth Bundle product detail
                   Row(
                     children: [
@@ -925,7 +921,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(8),
                   // sixth Bundle product
                   Row(
                     children: [
@@ -977,7 +972,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ],
                   ),
                   const VerticalSpeacing(
-                    20,
+                    12,
                   ),
 
                   Row(
@@ -1052,7 +1047,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(24),
+                  const VerticalSpeacing(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -1090,7 +1085,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       ),
                     ],
                   ),
-                  const VerticalSpeacing(14),
+                  const VerticalSpeacing(8),
                   SizedBox(
                     height: 145,
                     child: StreamBuilder(
@@ -1150,7 +1145,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       },
                     ),
                   ),
-                  const VerticalSpeacing(13),
+                  const VerticalSpeacing(12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -1184,7 +1179,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                     ],
                   ),
 
-                  const VerticalSpeacing(12),
+                  const VerticalSpeacing(8),
                   SizedBox(
                     height: 63,
                     child: ListView.builder(
