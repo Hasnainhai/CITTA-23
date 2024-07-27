@@ -173,6 +173,7 @@ class HomeCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    VerticalSpeacing(10),
                   ],
                 )
               ],
