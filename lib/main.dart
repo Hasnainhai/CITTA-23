@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           ),
         ), // Set the background color here
       ),
-      initialRoute: RoutesName.splashScreen,
+      initialRoute: RoutesName.loginOrSignup,
       onGenerateRoute: Routes.generateRoute,
     );
   }

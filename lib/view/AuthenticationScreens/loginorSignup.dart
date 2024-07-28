@@ -4,6 +4,8 @@ import 'package:citta_23/res/components/roundedButton.dart';
 import 'package:citta_23/res/components/widgets/authButton.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
+import 'package:citta_23/utils/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrSignUp extends StatefulWidget {
@@ -14,8 +16,25 @@ class LoginOrSignUp extends StatefulWidget {
 }
 
 class _LoginOrSignUpState extends State<LoginOrSignUp> {
+  void startTimer() async {
+    await Future.delayed(const Duration(seconds: 3), () async {
+      try {
+        if (FirebaseAuth.instance.currentUser != null) {
+          await Navigator.pushNamedAndRemoveUntil(
+              context, RoutesName.dashboardScreen, (routes) => false);
+        } else {
+          await Navigator.pushNamedAndRemoveUntil(
+              context, RoutesName.loginscreen, (routes) => false);
+        }
+      } catch (e) {
+        Utils.flushBarErrorMessage('$e', context);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    startTimer();
     return Scaffold(
       body: SafeArea(
         child: Center(
