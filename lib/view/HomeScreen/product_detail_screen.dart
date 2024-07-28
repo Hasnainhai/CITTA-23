@@ -492,21 +492,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            widget.price,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColor.fontColor,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
                           Row(
                             children: [
+                              Text(
+                                widget.price,
+                                style: const TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.fontColor,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
                               Text(
                                 newPrice == null
                                     ? "${widget.salePrice}₹"

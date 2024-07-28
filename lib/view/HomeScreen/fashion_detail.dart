@@ -538,6 +538,10 @@ class _FashionDetailState extends State<FashionDetail> {
                             const SizedBox(
                               width: 18,
                             ),
+                          ],
+                        ),
+                        Row(
+                          children: [
                             Text(
                               widget.price,
                               style: const TextStyle(
@@ -548,18 +552,21 @@ class _FashionDetailState extends State<FashionDetail> {
                                 decoration: TextDecoration.lineThrough,
                               ),
                             ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              newPrice == null
+                                  ? "${widget.salePrice}₹"
+                                  : "$newPrice₹",
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
                           ],
-                        ),
-                        Text(
-                          newPrice == null
-                              ? "${widget.salePrice}₹"
-                              : "$newPrice₹",
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
-                          ),
                         ),
                       ],
                     ),

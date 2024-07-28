@@ -497,7 +497,6 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                             top: 12,
                             child: GestureDetector(
                               onTap: () {
-                                print('GestureDetector tapped');
                                 setState(() {
                                   if (likeColor == Colors.transparent) {
                                     // Add to favorites
@@ -554,7 +553,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: AppColor.fontColor,
-                              decoration: TextDecoration.underline,
+                              decoration: TextDecoration.lineThrough,
                             ),
                           ),
                           const SizedBox(
