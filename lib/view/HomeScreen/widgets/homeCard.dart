@@ -124,6 +124,9 @@ class HomeCard extends StatelessWidget {
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
+                        const SizedBox(
+                          width: 4,
+                        ),
                         Text(
                           dPrice,
                           style: const TextStyle(
