@@ -100,6 +100,62 @@ class _FashionDetailState extends State<FashionDetail> {
     });
   }
 
+  void showSignupDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColor.whiteColor,
+          shape: const RoundedRectangleBorder(),
+          icon: const Icon(
+            Icons.no_accounts_outlined,
+            size: 80,
+            color: AppColor.primaryColor,
+          ),
+          title: const Text('You don\'t have any account, please'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.loginscreen);
+                },
+                child: const Text(
+                  'LOGIN',
+                  style: TextStyle(color: AppColor.whiteColor),
+                ),
+              ),
+              const SizedBox(height: 12.0), // Vertical spacing
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  shape: const RoundedRectangleBorder(),
+                  side: const BorderSide(
+                    color: AppColor.primaryColor, // Border color
+                    width: 2.0, // Border width
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutesName.registerScreen);
+                },
+                child: const Text(
+                  'SIGN UP',
+                  style: TextStyle(color: AppColor.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void addToCart(
     String img,
     String title,
@@ -111,6 +167,10 @@ class _FashionDetailState extends State<FashionDetail> {
     String disPrice,
   ) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
+    if (FirebaseAuth.instance.currentUser == null) {
+      showSignupDialog(context);
+      return;
+    }
     // Get the collection reference for the user's cart
     CollectionReference cartCollectionRef = FirebaseFirestore.instance
         .collection('users')
@@ -323,44 +383,41 @@ class _FashionDetailState extends State<FashionDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (c) => const DashBoardScreen(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: AppColor.fontColor,
-            )),
-        title: const Text(
-          "Product Details",
-          style: TextStyle(
-            fontFamily: 'CenturyGothic',
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: AppColor.fontColor,
-          ),
-        ),
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
             left: 20,
             right: 20,
-            top: 8,
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    const Text(
+                      "Fashion Detail ",
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    Container(),
+                  ],
+                ),
+                const VerticalSpeacing(8),
                 Container(
                   height: 320,
                   width: 400,
@@ -481,6 +538,10 @@ class _FashionDetailState extends State<FashionDetail> {
                             const SizedBox(
                               width: 18,
                             ),
+                          ],
+                        ),
+                        Row(
+                          children: [
                             Text(
                               widget.price,
                               style: const TextStyle(
@@ -491,18 +552,21 @@ class _FashionDetailState extends State<FashionDetail> {
                                 decoration: TextDecoration.lineThrough,
                               ),
                             ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              newPrice == null
+                                  ? "${widget.salePrice}₹"
+                                  : "$newPrice₹",
+                              style: const TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
                           ],
-                        ),
-                        Text(
-                          newPrice == null
-                              ? "${widget.salePrice}₹"
-                              : "$newPrice₹",
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.primaryColor,
-                          ),
                         ),
                       ],
                     ),
@@ -698,6 +762,9 @@ class _FashionDetailState extends State<FashionDetail> {
                                 _selectedImageUrl == null) {
                               Utils.snackBar(
                                   "Please select size and color", context);
+                            } else if (FirebaseAuth.instance.currentUser ==
+                                null) {
+                              showSignupDialog(context);
                             } else {
                               addToCart(
                                   widget.imageUrl[0],
@@ -731,6 +798,9 @@ class _FashionDetailState extends State<FashionDetail> {
                                   "Please select the size and color", context);
                               // Utils.flushBarErrorMessage(
                               //     "Please select the size and color", context);
+                            } else if (FirebaseAuth.instance.currentUser ==
+                                null) {
+                              showSignupDialog(context);
                             } else {
                               Navigator.push(
                                 context,
