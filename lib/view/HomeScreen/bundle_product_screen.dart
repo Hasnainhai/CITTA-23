@@ -425,9 +425,9 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         "Bundle Detail ",
                         style: TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: AppColor.fontColor,
+                          color: Colors.transparent,
                         ),
                       ),
                       Container(),

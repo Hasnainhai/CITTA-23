@@ -409,9 +409,9 @@ class _FashionDetailState extends State<FashionDetail> {
                       "Fashion Detail ",
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: AppColor.fontColor,
+                        color: Colors.transparent,
                       ),
                     ),
                     Container(),

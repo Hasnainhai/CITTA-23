@@ -371,9 +371,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         "Product Detail ",
                         style: const TextStyle(
                           fontFamily: 'CenturyGothic',
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: AppColor.fontColor,
+                          color: Colors.transparent,
                         ),
                       ),
                       Container(),
