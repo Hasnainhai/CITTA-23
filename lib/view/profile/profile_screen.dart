@@ -334,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       width: MediaQuery.of(context).size.width * 0.9,
       color: AppColor.whiteColor,
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16),
+        padding: const EdgeInsets.only(left: 24.0, right: 16),
         child: ListView(
           children: [
             Column(
