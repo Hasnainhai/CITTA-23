@@ -235,8 +235,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
             clipBehavior: Clip.none,
             children: [
               Container(
-                width: 40.0,
-                height: 40.0,
+                width: 30.0,
+                height: 30.0,
                 decoration: const BoxDecoration(
                   color: AppColor.primaryColor,
                   boxShadow: [
@@ -258,14 +258,15 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   child: Center(
-                    child: Image.asset('images/card.png'),
+                    child:
+                        Image.asset('images/card.png', height: 15, width: 15),
                   ),
                 ),
               ),
               if (itemCount > 0)
                 Positioned(
-                  right: -3,
-                  top: -13,
+                  right: -4,
+                  top: -15,
                   child: Container(
                     padding: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(

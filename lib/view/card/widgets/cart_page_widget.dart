@@ -2,6 +2,7 @@
 
 import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
+import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -245,7 +246,6 @@ class _CartWidgetState extends State<CartWidget> {
                 ),
               ),
               trailing: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () {
@@ -257,6 +257,7 @@ class _CartWidgetState extends State<CartWidget> {
                       size: 20,
                     ),
                   ),
+                  const VerticalSpeacing(6),
                   Text(
                     newPrice == null ? "${widget.price}₹" : "$newPrice₹",
                     style: const TextStyle(
