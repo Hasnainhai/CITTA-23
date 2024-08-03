@@ -428,10 +428,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                             const SizedBox(width: 15.0),
                                             Text.rich(
                                               TextSpan(
-                                                text: data['address2'].length >
-                                                        13
-                                                    ? '${data['address2'].substring(0, 13)}...\n'
-                                                    : '${data['address2']}\n',
+                                                text: '${data['address2']}\n',
                                                 style: const TextStyle(
                                                   fontFamily: 'CenturyGothic',
                                                   fontSize: 12,
@@ -449,11 +446,8 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                                     ),
                                                   ),
                                                   TextSpan(
-                                                    text: data['address1']
-                                                                .length >
-                                                            20
-                                                        ? '${data['address1'].substring(0, 20)}...\n'
-                                                        : '${data['address1']}\n',
+                                                    text:
+                                                        '${data['address1']}\n',
                                                     style: const TextStyle(
                                                       color: AppColor.fontColor,
                                                       fontWeight:

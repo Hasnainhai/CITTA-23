@@ -586,7 +586,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                         ),
                       ],
                     ),
-                    const VerticalSpeacing(4.0),
+                    const VerticalSpeacing(2.0),
                     // Popular packs here
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 4.8,
@@ -853,7 +853,7 @@ class _DefaultSectionState extends State<DefaultSection> {
             ),
           ],
         ),
-        const VerticalSpeacing(4),
+        const VerticalSpeacing(2),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4.8,
           child: categoryProducts.isEmpty
@@ -1017,7 +1017,7 @@ class _DefaultSectionState extends State<DefaultSection> {
             ),
           ],
         ),
-        const VerticalSpeacing(4),
+        const VerticalSpeacing(2),
         SizedBox(
           height: MediaQuery.of(context).size.height / 4.65,
           child: categoryProducts.isEmpty

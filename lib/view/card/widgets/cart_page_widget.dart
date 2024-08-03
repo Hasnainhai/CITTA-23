@@ -247,6 +247,7 @@ class _CartWidgetState extends State<CartWidget> {
               ),
               trailing: Column(
                 children: [
+                  const VerticalSpeacing(8),
                   InkWell(
                     onTap: () {
                       _deleteProduct(widget.deletedId);
