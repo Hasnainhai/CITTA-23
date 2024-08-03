@@ -56,7 +56,7 @@ class address_widget extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    width: 8,
+                    width: 12,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,16 +72,14 @@ class address_widget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        address.length > 13
-                            ? '${address.substring(0, 13)}...'
-                            : address,
+                        address,
                         style: const TextStyle(
                           color: AppColor.grayColor,
                           fontSize: 14.0,
                         ),
                       ),
                       Text(
-                        '$phNo',
+                        phNo,
                         style: const TextStyle(
                           color: AppColor.grayColor,
                           fontSize: 14.0,
@@ -114,7 +112,7 @@ class address_widget extends StatelessWidget {
                     child: const Icon(
                       Icons.edit_outlined,
                       color: AppColor.fontColor,
-                      size: 24,
+                      size: 20,
                     ),
                   ),
                   const VerticalSpeacing(8),
@@ -131,7 +129,7 @@ class address_widget extends StatelessWidget {
                     child: const Icon(
                       Icons.delete_outline,
                       color: AppColor.fontColor,
-                      size: 24,
+                      size: 20,
                     ),
                   ),
                 ],
