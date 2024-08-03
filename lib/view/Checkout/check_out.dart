@@ -330,24 +330,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       debugPrint(
                                           'Address selected: $selectedAddress');
                                     },
-                                    child:
-                                        //  AddressCheckOutWidget(
-                                        //   bgColor: AppColor.whiteColor,
-                                        //   borderColor: isSelected
-                                        //       ? AppColor.primaryColor
-                                        //       : AppColor.grayColor,
-                                        //   titleColor: AppColor.blackColor,
-                                        //   title: data['address2'],
-                                        //   phNo: data['phone'],
-                                        //   address: data['address1'],
-                                        //   isSelect: isSelected,
-                                        //   ontapSelect: () {
-                                        //     setState(() {
-                                        //       selectedAddress = data['address2'];
-                                        //     });
-                                        //   },
-                                        // ),
-                                        Container(
+                                    child: Container(
                                       height: 80,
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
