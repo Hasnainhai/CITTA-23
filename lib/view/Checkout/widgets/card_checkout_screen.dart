@@ -346,7 +346,6 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
                                   document.data() as Map<String, dynamic>;
                               bool isSelected =
                                   selectedAddress == data['address2'];
-
                               return Column(
                                 children: [
                                   InkWell(
