@@ -589,7 +589,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                     const VerticalSpeacing(2.0),
                     // Popular packs here
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 4.8,
+                      height: MediaQuery.of(context).size.height / 4.7,
                       child: GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -785,8 +785,6 @@ class _DefaultSectionState extends State<DefaultSection> {
     String calculateDiscountedPrice(
         String originalPriceString, String discountPercentageString) {
       // Convert strings to double
-      debugPrint("this is the discount:$discountPercentageString");
-      debugPrint("this is the total:$originalPriceString");
 
       double originalPrice = double.parse(originalPriceString);
       double discountPercentage = double.parse(discountPercentageString);
@@ -802,8 +800,6 @@ class _DefaultSectionState extends State<DefaultSection> {
 
     String dPrice(String originalPriceString, String discountPercentageString) {
       // Convert strings to double
-      debugPrint("this is the discount:$discountPercentageString");
-      debugPrint("this is the total:$originalPriceString");
 
       double originalPrice = double.parse(originalPriceString);
       double discountPercentage = double.parse(discountPercentageString);
@@ -855,7 +851,7 @@ class _DefaultSectionState extends State<DefaultSection> {
         ),
         const VerticalSpeacing(2),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 4.8,
+          height: MediaQuery.of(context).size.height / 4.7,
           child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(
@@ -1019,7 +1015,7 @@ class _DefaultSectionState extends State<DefaultSection> {
         ),
         const VerticalSpeacing(2),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 4.65,
+          height: MediaQuery.of(context).size.height / 4.7,
           child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(
