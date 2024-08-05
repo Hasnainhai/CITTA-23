@@ -241,7 +241,7 @@ class _CardScreenState extends State<CardScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: const Text(
-          'Cart Page',
+          'Total Items Counts',
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 16,

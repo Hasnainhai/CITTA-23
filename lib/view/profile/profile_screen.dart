@@ -302,7 +302,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             bColor: const Color(0xffD50059),
             icon: Icons.location_on_outlined,
             title: 'Delivery',
-            subtitle: 'Address',
+            subtitle: 'Addresses',
           ),
           profileCenterBtns(
             ontap: () {
