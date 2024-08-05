@@ -882,9 +882,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             child: Container(
                               width: 206,
                               color: const Color(0xffEEEEEE),
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 6.0,
-                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [

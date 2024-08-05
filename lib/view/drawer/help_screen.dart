@@ -64,28 +64,26 @@ class HelpScreen extends StatelessWidget {
                 SizedBox(
                   height: 60,
                   width: MediaQuery.of(context).size.width,
-                  child: TextFormField(
+                  child: TextField(
                     decoration: const InputDecoration(
-                      hintText: "Search Here",
+                      filled: true,
+                      fillColor: AppColor.appBarButtonColor,
+                      hintText: 'Search here...',
                       hintStyle: TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.fontColor,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.grayColor,
                       ),
-                      helperStyle: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.fontColor,
-                      ),
-                      filled: true,
                       border: InputBorder.none,
-                      suffixIcon: Icon(
-                        Icons.search,
-                        size: 16,
-                      ),
                     ),
+                    style: const TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColor.grayColor,
+                    ),
+                    onChanged: (value) {},
                   ),
                 ),
                 const VerticalSpeacing(12),
