@@ -1034,9 +1034,6 @@ class _FashionDetailState extends State<FashionDetail> {
                           child: Container(
                             width: 206,
                             color: const Color(0xffEEEEEE),
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 6.0,
-                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
