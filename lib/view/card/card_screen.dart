@@ -385,7 +385,7 @@ class _CardScreenState extends State<CardScreen> {
                     Consumer<DiscountSum>(
                       builder: (context, discountSum, child) {
                         return Text(
-                          '${discountSum.dis}',
+                          '-₹${discountSum.dis}',
                           style: const TextStyle(
                             fontFamily: 'CenturyGothic',
                             fontSize: 12,

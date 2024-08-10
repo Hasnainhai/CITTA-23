@@ -138,27 +138,33 @@ class HomeCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    RatingBar.builder(
-                      initialRating: productRating,
-                      minRating: 1,
-                      tapOnlyMode: true,
-                      allowHalfRating: true,
-                      ignoreGestures: true,
-                      glowColor: Colors.amber,
-                      itemCount: 5,
-                      itemSize: 14,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star_rate_rounded,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {},
+                    Row(
+                      children: [
+                        RatingBar.builder(
+                          initialRating: productRating,
+                          minRating: 1,
+                          tapOnlyMode: true,
+                          allowHalfRating: true,
+                          ignoreGestures: true,
+                          glowColor: Colors.amber,
+                          itemCount: 5,
+                          itemSize: 14,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star_rate_rounded,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {},
+                        ),
+                      ],
                     ),
                   ],
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    const VerticalSpeacing(10),
                     InkWell(
                       onTap: addCart,
                       child: Container(
@@ -180,7 +186,6 @@ class HomeCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const VerticalSpeacing(16),
                   ],
                 )
               ],

@@ -34,108 +34,109 @@ class address_widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: AppColor.primaryColor), // Set border color to grey
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: AppColor.primaryColor), // Set border color to grey
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                const Column(
+                  children: [
+                    VerticalSpeacing(15),
+                    MyCheckBox(),
+                  ],
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                    Text(
+                      address,
+                      style: const TextStyle(
+                        color: AppColor.grayColor,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    Text(
+                      phNo,
+                      style: const TextStyle(
+                        color: AppColor.grayColor,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (c) => EditAddressScreen(
+                            name: name,
+                            address1: address1,
+                            zipCode: zipcode,
+                            city: title,
+                            address2: address,
+                            phoneNumber: phNo,
+                            state: state,
+                            uuid: uuid),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.edit_outlined,
+                    color: AppColor.fontColor,
+                    size: 20,
+                  ),
+                ),
+                const VerticalSpeacing(8),
+                InkWell(
+                  onTap: () {
+                    FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .collection("my_Address")
+                        .doc(uuid)
+                        .delete();
+                    Fluttertoast.showToast(msg: "Address has been delete");
+                  },
+                  child: const Icon(
+                    Icons.delete_outline,
+                    color: AppColor.fontColor,
+                    size: 20,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Column(
-                    children: [
-                      VerticalSpeacing(15),
-                      MyCheckBox(),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontFamily: 'CenturyGothic',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: AppColor.fontColor,
-                        ),
-                      ),
-                      Text(
-                        address,
-                        style: const TextStyle(
-                          color: AppColor.grayColor,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                      Text(
-                        phNo,
-                        style: const TextStyle(
-                          color: AppColor.grayColor,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (c) => EditAddressScreen(
-                              name: name,
-                              address1: address1,
-                              zipCode: zipcode,
-                              city: title,
-                              address2: address,
-                              phoneNumber: phNo,
-                              state: state,
-                              uuid: uuid),
-                        ),
-                      );
-                    },
-                    child: const Icon(
-                      Icons.edit_outlined,
-                      color: AppColor.fontColor,
-                      size: 20,
-                    ),
-                  ),
-                  const VerticalSpeacing(8),
-                  InkWell(
-                    onTap: () {
-                      FirebaseFirestore.instance
-                          .collection("users")
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .collection("my_Address")
-                          .doc(uuid)
-                          .delete();
-                      Fluttertoast.showToast(msg: "Address has been delete");
-                    },
-                    child: const Icon(
-                      Icons.delete_outline,
-                      color: AppColor.fontColor,
-                      size: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }

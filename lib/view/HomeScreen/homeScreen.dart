@@ -101,12 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       onChanged: (value) {
                                         if (searchController.text.isNotEmpty) {
-                                          productProvider.filterProducts(value);
                                           Provider.of<HomeUiSwithchRepository>(
                                                   context,
                                                   listen: false)
                                               .switchToType(
                                                   UIType.SearchSection);
+                                          productProvider.filterProducts(value);
                                         } else {
                                           Provider.of<HomeUiSwithchRepository>(
                                                   context,

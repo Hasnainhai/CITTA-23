@@ -19,7 +19,7 @@ class HelpScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: AppColor.primaryColor,
+              color: AppColor.fontColor,
             )),
         title: const Text(
           "Help Center",
@@ -27,7 +27,7 @@ class HelpScreen extends StatelessWidget {
             fontFamily: 'CenturyGothic',
             fontSize: 18,
             fontWeight: FontWeight.w400,
-            color: AppColor.fontColor,
+            color: AppColor.primaryColor,
           ),
         ),
         bottom: const PreferredSize(
