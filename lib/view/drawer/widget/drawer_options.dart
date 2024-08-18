@@ -13,29 +13,44 @@ class DrawerOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
-      child: ListTile(
-        onTap: onpress,
-        leading: Icon(
-          icon,
-          size: 20,
-          color: AppColor.fontColor,
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 12.0,
-            fontFamily: 'CenturyGothic',
-            fontWeight: FontWeight.w600,
-            color: AppColor.fontColor,
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20.0,
+        right: 20,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              InkWell(
+                onTap: onpress,
+                child: Icon(
+                  icon,
+                  size: 16,
+                  color: AppColor.fontColor,
+                ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: 'CenturyGothic',
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.fontColor,
+                ),
+              ),
+            ],
           ),
-        ),
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          color: AppColor.primaryColor,
-          size: 15.0,
-        ),
+          const Icon(
+            Icons.arrow_forward_ios,
+            color: AppColor.primaryColor,
+            size: 15.0,
+          ),
+        ],
       ),
     );
   }

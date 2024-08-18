@@ -182,7 +182,7 @@ class _FavouriteListState extends State<FavouriteList> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: AppColor.blackColor,
+            color: AppColor.primaryColor,
           ),
         ),
       ),

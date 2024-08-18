@@ -72,12 +72,12 @@ class _RestScreenState extends State<RestScreen> {
             style: TextStyle(
               fontFamily: 'CenturyGothic',
               fontSize: 18,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
               color: AppColor.fontColor,
             ),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: AppColor.fontColor),
+            icon: const Icon(Icons.arrow_back, color: AppColor.primaryColor),
             onPressed: () {
               Navigator.pop(context);
             },

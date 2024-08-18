@@ -19,15 +19,15 @@ class HelpScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: AppColor.fontColor,
+              color: AppColor.primaryColor,
             )),
         title: const Text(
           "Help Center",
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: AppColor.primaryColor,
+            fontWeight: FontWeight.w600,
+            color: AppColor.fontColor,
           ),
         ),
         bottom: const PreferredSize(
@@ -60,7 +60,7 @@ class HelpScreen extends StatelessWidget {
                     color: AppColor.fontColor,
                   ),
                 ),
-                const VerticalSpeacing(24),
+                const VerticalSpeacing(12),
                 SizedBox(
                   height: 60,
                   width: MediaQuery.of(context).size.width,
@@ -121,13 +121,13 @@ class HelpScreen extends StatelessWidget {
                 ),
                 const VerticalSpeacing(14),
                 const TopQuestion(question: "My Account?"),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(8),
                 const TopQuestion(question: "Payments & Wallett?"),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(8),
                 const TopQuestion(question: "Shiping & Delivery"),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(8),
                 const TopQuestion(question: "Vouchers & Promotions?"),
-                const VerticalSpeacing(14),
+                const VerticalSpeacing(8),
                 const TopQuestion(
                   question: "Orderinge?",
                 ),

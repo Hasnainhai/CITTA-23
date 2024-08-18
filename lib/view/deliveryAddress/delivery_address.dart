@@ -22,7 +22,7 @@ class DeliveryAddress extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: AppColor.fontColor,
+            color: AppColor.primaryColor,
           ),
         ),
         title: const Text(

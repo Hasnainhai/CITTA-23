@@ -18,15 +18,15 @@ class ContactUsScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: AppColor.fontColor,
+              color: AppColor.primaryColor,
             )),
         title: const Text(
           "Contact Us",
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
-            color: AppColor.primaryColor,
+            fontWeight: FontWeight.w600,
+            color: AppColor.fontColor,
           ),
         ),
         bottom: const PreferredSize(

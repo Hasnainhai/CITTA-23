@@ -46,12 +46,9 @@ class address_widget extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 10,
-                ),
                 const Column(
                   children: [
-                    VerticalSpeacing(15),
+                    VerticalSpeacing(6),
                     MyCheckBox(),
                   ],
                 ),

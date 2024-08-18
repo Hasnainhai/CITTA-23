@@ -56,7 +56,7 @@ class _MyOrdersState extends State<MyOrders>
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: AppColor.blackColor,
+            color: AppColor.primaryColor,
           ),
         ),
         title: const Text(

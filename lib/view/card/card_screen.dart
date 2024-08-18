@@ -259,7 +259,7 @@ class _CardScreenState extends State<CardScreen> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: AppColor.blackColor,
+            color: AppColor.primaryColor,
           ),
         ),
       ),

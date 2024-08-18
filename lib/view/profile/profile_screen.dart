@@ -149,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: AppColor.whiteColor,
           ),
         ),
