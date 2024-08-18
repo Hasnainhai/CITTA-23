@@ -28,7 +28,6 @@ class TopQuestion extends StatelessWidget {
             size: 16,
           )
         ]),
-        const Divider()
       ],
     );
   }

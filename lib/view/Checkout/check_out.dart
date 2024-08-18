@@ -314,107 +314,102 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               bool isSelected =
                                   selectedAddress == data['address2'];
 
-                              return Column(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedAddress = data['address2'];
-                                        address = data['address2'];
-                                        name = data['name'];
-                                        city = data['city'];
-                                        postalCode = data['zipcode'];
-                                        state = data['state'];
-                                        phone = data['phone'];
-                                      });
-                                      debugPrint(
-                                          'Address selected: $selectedAddress');
-                                    },
-                                    child: Container(
-                                      height: 80,
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: AppColor.whiteColor,
-                                        border: Border.all(
-                                            width: 2,
-                                            color: isSelected
-                                                ? AppColor.primaryColor
-                                                : AppColor.grayColor),
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 10.0), // Adds space between items
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedAddress = data['address2'];
+                                      address = data['address2'];
+                                      name = data['name'];
+                                      city = data['city'];
+                                      postalCode = data['zipcode'];
+                                      state = data['state'];
+                                      phone = data['phone'];
+                                    });
+                                    debugPrint(
+                                        'Address selected: $selectedAddress');
+                                  },
+                                  child: Container(
+                                    height: 80,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.whiteColor,
+                                      border: Border.all(
+                                        width: 2,
+                                        color: isSelected
+                                            ? AppColor.primaryColor
+                                            : AppColor.grayColor,
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 15.0, left: 15.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Column(
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 15.0, left: 15.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start, // Aligns the Row contents to the top
+                                        children: [
+                                          Column(
+                                            children: [
+                                              const SizedBox(
+                                                  height:
+                                                      6), // Vertical spacing above the checkbox
+                                              Container(
+                                                width: 18,
+                                                height: 18,
+                                                decoration: BoxDecoration(
+                                                  color: isSelected
+                                                      ? AppColor.primaryColor
+                                                      : AppColor.whiteColor,
+                                                  border: Border.all(
+                                                      color: AppColor
+                                                          .primaryColor),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(width: 15.0),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               children: [
-                                                Container(
-                                                    width: 18,
-                                                    height: 18,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: AppColor
-                                                            .primaryColor,
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Container(
-                                                          width: 12.0,
-                                                          height: 12.0,
-                                                          color: isSelected
-                                                              ? AppColor
-                                                                  .primaryColor
-                                                              : AppColor
-                                                                  .whiteColor),
-                                                    )),
+                                                Text(
+                                                  '${data['address2']}',
+                                                  style: const TextStyle(
+                                                    fontFamily: 'CenturyGothic',
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColor.fontColor,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data['phone']}',
+                                                  style: const TextStyle(
+                                                    color: AppColor.fontColor,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12.0,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data['address1']}',
+                                                  style: const TextStyle(
+                                                    color: AppColor.fontColor,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12.0,
+                                                  ),
+                                                ),
                                               ],
                                             ),
-                                            const SizedBox(width: 15.0),
-                                            Text.rich(
-                                              TextSpan(
-                                                text: '${data['address2']}\n',
-                                                style: const TextStyle(
-                                                  fontFamily: 'CenturyGothic',
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: AppColor.fontColor,
-                                                ),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                    text: '${data['phone']}\n',
-                                                    style: const TextStyle(
-                                                      color: AppColor.fontColor,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12.0,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text:
-                                                        '${data['address1']}\n',
-                                                    style: const TextStyle(
-                                                      color: AppColor.fontColor,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  const VerticalSpeacing(12.0),
-                                ],
+                                ),
                               );
                             }).toList(),
                           );

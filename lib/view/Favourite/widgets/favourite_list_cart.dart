@@ -90,7 +90,7 @@ class FavouristListCart extends StatelessWidget {
                       ontap2();
                     },
                     child: const Icon(
-                      Icons.shopping_cart_outlined,
+                      Icons.add,
                       color: AppColor.fontColor,
                       size: 24,
                     ),

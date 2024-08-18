@@ -24,8 +24,17 @@ class _MyReviewState extends State<MyReview> {
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: AppColor.blackColor,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColor.primaryColor,
           ),
         ),
       ),

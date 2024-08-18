@@ -849,9 +849,9 @@ class _DefaultSectionState extends State<DefaultSection> {
             ),
           ],
         ),
-        const VerticalSpeacing(2),
+        const VerticalSpeacing(6),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 4.7,
+          height: MediaQuery.of(context).size.height / 4.8,
           child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(
@@ -1013,9 +1013,9 @@ class _DefaultSectionState extends State<DefaultSection> {
             ),
           ],
         ),
-        const VerticalSpeacing(2),
+        const VerticalSpeacing(6),
         SizedBox(
-          height: MediaQuery.of(context).size.height / 4.7,
+          height: MediaQuery.of(context).size.height / 4.8,
           child: categoryProducts.isEmpty
               ? Center(child: Text('No $category...'))
               : GridView.builder(

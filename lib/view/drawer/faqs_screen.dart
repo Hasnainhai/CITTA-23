@@ -25,7 +25,7 @@ class FAQsScreen extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: AppColor.fontColor,
           ),
         ),

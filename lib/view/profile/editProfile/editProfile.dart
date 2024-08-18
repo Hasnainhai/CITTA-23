@@ -98,7 +98,22 @@ class _EditProfileState extends State<EditProfile> {
           elevation: 0.0,
           centerTitle: true,
           title: const Text(
-            'Edit Profile',
+            "Edit Profile",
+            style: TextStyle(
+              fontFamily: 'CenturyGothic',
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: AppColor.fontColor,
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColor.primaryColor,
+            ),
           ),
         ),
         body: Padding(

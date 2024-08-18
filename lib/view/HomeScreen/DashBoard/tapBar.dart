@@ -268,7 +268,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   right: -4,
                   top: -15,
                   child: Container(
-                    padding: const EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(6.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.whiteColor,

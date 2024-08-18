@@ -188,7 +188,7 @@ class _AddressDetailSceenState extends State<AddressDetailSceen> {
                             ),
                             TextFieldCustom(
                               maxLines: 1,
-                              text: "Address Link 1",
+                              text: "Address Link",
                               controller: address1Controller,
                               validator: (value) {
                                 if (value!.isEmpty) {

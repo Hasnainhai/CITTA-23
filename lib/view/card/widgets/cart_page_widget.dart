@@ -176,7 +176,7 @@ class _CartWidgetState extends State<CartWidget> {
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                         color: AppColor.fontColor,
                       ),
                     ),
