@@ -262,7 +262,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: AppColor.blackColor,
           ),
         ),
@@ -273,7 +273,7 @@ class _CardCheckOutScreenState extends State<CardCheckOutScreen> {
           },
           child: const Icon(
             Icons.arrow_back,
-            color: AppColor.blackColor,
+            color: AppColor.primaryColor,
           ),
         ),
       ),

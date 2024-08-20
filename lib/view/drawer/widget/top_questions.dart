@@ -23,7 +23,7 @@ class TopQuestion extends StatelessWidget {
             ),
           ),
           const Icon(
-            Icons.arrow_forward_ios,
+            Icons.keyboard_arrow_down_outlined,
             color: AppColor.primaryColor,
             size: 16,
           )

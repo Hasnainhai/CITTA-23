@@ -66,6 +66,10 @@ class HelpScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: TextField(
                     decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 16,
+                      ),
                       filled: true,
                       fillColor: AppColor.appBarButtonColor,
                       hintText: 'Search here...',

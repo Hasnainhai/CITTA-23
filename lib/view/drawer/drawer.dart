@@ -40,7 +40,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   ),
                   const SizedBox(width: 16.0),
                   const Text(
-                    'Settings',
+                    'Citta-23',
                     style: TextStyle(
                       fontSize: 18,
                       color: AppColor.buttonTxColor,
