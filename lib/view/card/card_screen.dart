@@ -263,188 +263,222 @@ class _CardScreenState extends State<CardScreen> {
           ),
         ),
       ),
-      body: ListView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.56,
-                  width: double.infinity,
-                  child: StreamBuilder(
-                    stream: _productsCollection.snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.56,
+                    width: double.infinity,
+                    child: StreamBuilder(
+                      stream: _productsCollection.snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                      fetchDataFromFirestore();
+                        fetchDataFromFirestore();
 
-                      return snapshot.data!.docs.isEmpty
-                          ? const EmptyCart()
-                          : ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs
-                                  .map((DocumentSnapshot document) {
-                                Map<String, dynamic> data =
-                                    document.data() as Map<String, dynamic>;
-                                return CartWidget(
-                                  title: data['title'],
-                                  price: data['salePrice'],
-                                  img: data['imageUrl'],
-                                  items: 1,
-                                  sellerId: data['sellerId'],
-                                  productId: data['id'],
-                                  deletedId: data['deleteId'],
-                                  discount: data['dPrice'],
-                                );
-                              }).toList(),
-                            );
-                    },
+                        return snapshot.data!.docs.isEmpty
+                            ? const EmptyCart()
+                            : Scrollbar(
+                                thumbVisibility:
+                                    true, // Show the scrollbar thumb
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data!.docs
+                                      .map((DocumentSnapshot document) {
+                                    Map<String, dynamic> data =
+                                        document.data() as Map<String, dynamic>;
+                                    return CartWidget(
+                                      title: data['title'],
+                                      price: data['salePrice'],
+                                      img: data['imageUrl'],
+                                      items: 1,
+                                      sellerId: data['sellerId'],
+                                      productId: data['id'],
+                                      deletedId: data['deleteId'],
+                                      discount: data['dPrice'],
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 3,
+              decoration: BoxDecoration(
+                color: Colors.white, // Background color of the container
+                borderRadius:
+                    BorderRadius.circular(10), // Optional: Rounded corners
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: 2, // Spread radius
+                    blurRadius: 5, // Blur radius
+                    offset:
+                        const Offset(0, 3), // Offset in the x and y directions
+                  ),
+                ],
+              ),
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 20.0, top: 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Total Items",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          Consumer<IndexModel>(
+                            builder: (context, indexModel, child) {
+                              return Text(
+                                '${indexModel.items}',
+                                style: const TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.blackColor,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const VerticalSpeacing(12.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Price",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          Consumer<SubTotalModel>(
+                            builder: (context, subTotalModel, child) {
+                              return Text(
+                                '₹${subTotalModel.subTotal}',
+                                style: const TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.blackColor,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const VerticalSpeacing(12.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Discount",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          Consumer<DiscountSum>(
+                            builder: (context, discountSum, child) {
+                              return Text(
+                                '-₹${discountSum.dis}',
+                                style: const TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.blackColor,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const VerticalSpeacing(12.0),
+                      const Divider(
+                        color: AppColor.primaryColor,
+                      ),
+                      const VerticalSpeacing(12.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Sub-Total",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          Consumer<TotalPriceModel>(
+                            builder: (context, totalPriceModel, child) {
+                              return Text(
+                                '₹${totalPriceModel.totalPrice}',
+                                style: const TextStyle(
+                                  fontFamily: 'CenturyGothic',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.blackColor,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      const VerticalSpeacing(20.0),
+                      SizedBox(
+                        height: 46.0,
+                        width: double.infinity,
+                        child: RoundedButton(
+                            title: 'Checkout',
+                            onpress: () {
+                              showCustomBottomSheet(
+                                  context, productList, subTotal.toString());
+                            }),
+                      ),
+                      const VerticalSpeacing(20.0),
+                    ],
                   ),
                 ),
-                const VerticalSpeacing(50.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Total Items",
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
-                    ),
-                    Consumer<IndexModel>(
-                      builder: (context, indexModel, child) {
-                        return Text(
-                          '${indexModel.items}',
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(12.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Price",
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
-                    ),
-                    Consumer<SubTotalModel>(
-                      builder: (context, subTotalModel, child) {
-                        return Text(
-                          '₹${subTotalModel.subTotal}',
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(12.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Discount",
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
-                    ),
-                    Consumer<DiscountSum>(
-                      builder: (context, discountSum, child) {
-                        return Text(
-                          '-₹${discountSum.dis}',
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(12.0),
-                const Divider(
-                  color: AppColor.primaryColor,
-                ),
-                const VerticalSpeacing(12.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Sub-Total",
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
-                      ),
-                    ),
-                    Consumer<TotalPriceModel>(
-                      builder: (context, totalPriceModel, child) {
-                        return Text(
-                          '₹${totalPriceModel.totalPrice}',
-                          style: const TextStyle(
-                            fontFamily: 'CenturyGothic',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.blackColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                const VerticalSpeacing(20.0),
-                SizedBox(
-                  height: 46.0,
-                  width: double.infinity,
-                  child: RoundedButton(
-                      title: 'Checkout',
-                      onpress: () {
-                        showCustomBottomSheet(
-                            context, productList, subTotal.toString());
-                      }),
-                ),
-                const VerticalSpeacing(20.0),
-              ],
-            ),
-          ),
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -229,7 +229,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: AppColor.blackColor,
           ),
         ),
@@ -240,7 +240,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           },
           child: const Icon(
             Icons.arrow_back,
-            color: AppColor.blackColor,
+            color: AppColor.primaryColor,
           ),
         ),
       ),

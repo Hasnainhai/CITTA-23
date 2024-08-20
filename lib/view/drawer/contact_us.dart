@@ -1,4 +1,3 @@
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:flutter/material.dart';
 import '../../res/components/colors.dart';
 
@@ -58,6 +57,7 @@ class ContactUsScreen extends StatelessWidget {
                   child: const Icon(
                     Icons.phone,
                     color: AppColor.primaryColor,
+                    size: 16,
                   ),
                 ),
                 subtitle: const Text(
@@ -79,30 +79,74 @@ class ContactUsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTile(
-                leading: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppColor.primaryColor,
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.email,
+                        color: AppColor.primaryColor,
+                        size: 16,
+                      ),
                     ),
-                  ),
-                  child: const Icon(
-                    Icons.email,
-                    color: AppColor.primaryColor,
-                  ),
-                ),
-                title: const Text(
-                  "Hello@gmail.com",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.fontColor,
-                  ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Text(
+                      "Hello@gmail.com",
+                      style: TextStyle(
+                        fontFamily: 'CenturyGothic',
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.fontColor,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              // ListTile(
+              //   leading: Container(
+              //     height: 30,
+              //     width: 30,
+              //     decoration: BoxDecoration(
+              //       border: Border.all(
+              //         color: AppColor.primaryColor,
+              //       ),
+              //     ),
+              //     child: const Icon(
+              //       Icons.email,
+              //       color: AppColor.primaryColor,
+              //       size: 16,
+              //     ),
+              //   ),
+              //   title: const Text(
+              //     "Hello@gmail.com",
+              //     style: TextStyle(
+              //       fontFamily: 'CenturyGothic',
+              //       fontSize: 12,
+              //       fontWeight: FontWeight.w600,
+              //       color: AppColor.fontColor,
+              //     ),
+              //   ),
+              //   subtitle: const Text(
+              //     "Citta23@gmail.com",
+              //     style: TextStyle(
+              //       fontFamily: 'CenturyGothic',
+              //       fontSize: 12,
+              //       fontWeight: FontWeight.w600,
+              //       color: AppColor.fontColor,
+              //     ),
+              //   ),
+              // ),
               ListTile(
                 leading: Container(
                   height: 30,
@@ -115,6 +159,7 @@ class ContactUsScreen extends StatelessWidget {
                   child: const Icon(
                     Icons.location_on,
                     color: AppColor.primaryColor,
+                    size: 16,
                   ),
                 ),
                 subtitle: const Text(

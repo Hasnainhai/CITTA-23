@@ -144,14 +144,14 @@ class _EditAddressSceenState extends State<EditAddressScreen> {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: AppColor.fontColor,
+              color: AppColor.primaryColor,
             )),
         title: const Text(
           "New Address",
           style: TextStyle(
             fontFamily: 'CenturyGothic',
             fontSize: 18,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             color: AppColor.fontColor,
           ),
         ),

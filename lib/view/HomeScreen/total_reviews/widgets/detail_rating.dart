@@ -19,7 +19,7 @@ class DetailRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 85,
+      height: 75,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         border: Border(
@@ -42,11 +42,11 @@ class DetailRating extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 60,
-                        width: 60,
+                        height: 50,
+                        width: 50,
                         decoration: BoxDecoration(
-                          image: DecorationImage(image: NetworkImage(img)),
-                        ),
+                            image: DecorationImage(image: NetworkImage(img)),
+                            shape: BoxShape.circle),
                       ),
                       const SizedBox(
                         width: 12,
