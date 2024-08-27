@@ -3,9 +3,24 @@ import 'package:citta_23/view/drawer/widget/top_questions.dart';
 import 'package:flutter/material.dart';
 import '../../res/components/colors.dart';
 
-class HelpScreen extends StatelessWidget {
+class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
 
+  @override
+  State<HelpScreen> createState() => _HelpScreenState();
+}
+
+class _HelpScreenState extends State<HelpScreen> {
+  bool item = false;
+  bool point = false;
+  bool grocery = false;
+  bool address = false;
+  bool price = false;
+  bool account = false;
+  bool wallet = false;
+  bool delivery = false;
+  bool promotion = false;
+  bool ordering = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,17 +116,97 @@ class HelpScreen extends StatelessWidget {
                   ),
                 ),
                 const VerticalSpeacing(8),
-                const TopQuestion(question: "How do I return my items?"),
+                TopQuestion(
+                  question: "How do I return my items?",
+                  onpress: () {
+                    setState(() {
+                      item = !item;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(question: "How to use collection point?"),
+                TopQuestion(
+                  question: "How to use collection point?",
+                  onpress: () {
+                    setState(() {
+                      point = !point;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(question: "What is Grocery?"),
+                TopQuestion(
+                  question: "What is Grocery?",
+                  onpress: () {
+                    setState(() {
+                      grocery = !grocery;
+                    });
+                  },
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(
-                    question: "How can i add new delivery address?"),
+                TopQuestion(
+                  question: "How can i add new delivery address?",
+                  onpress: () {
+                    setState(() {
+                      address = !address;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(
+                TopQuestion(
                   question: "How can i avail Sticker Price?",
+                  onpress: () {
+                    setState(() {
+                      price = !price;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
                 ),
                 const VerticalSpeacing(12),
                 const Text(
@@ -124,16 +219,109 @@ class HelpScreen extends StatelessWidget {
                   ),
                 ),
                 const VerticalSpeacing(14),
-                const TopQuestion(question: "My Account?"),
+                TopQuestion(
+                  question: "My Account?",
+                  onpress: () {
+                    setState(() {
+                      account = !account;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(question: "Payments & Wallett?"),
+                TopQuestion(
+                  question: "Payments & Wallett?",
+                  onpress: () {
+                    setState(() {
+                      wallet = !wallet;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(question: "Shiping & Delivery"),
+                TopQuestion(
+                  question: "Shiping & Delivery",
+                  onpress: () {
+                    setState(() {
+                      delivery = !delivery;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(question: "Vouchers & Promotions?"),
+                TopQuestion(
+                  question: "Vouchers & Promotions?",
+                  onpress: () {
+                    setState(() {
+                      promotion = !promotion;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
-                const TopQuestion(
+                TopQuestion(
                   question: "Orderinge?",
+                  onpress: () {
+                    setState(() {
+                      ordering = !ordering;
+                    });
+                  },
+                ),
+                Visibility(
+                  visible: item,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
                 ),
               ],
             ),
