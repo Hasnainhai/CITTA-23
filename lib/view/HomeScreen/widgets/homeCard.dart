@@ -80,15 +80,15 @@ class HomeCard extends StatelessWidget {
                   )
                 : Container(),
             VerticalSpeacing(
-                oofProd == true ? 0 : MediaQuery.of(context).size.height / 38),
+                oofProd == true ? 0 : MediaQuery.of(context).size.height / 50),
             Center(
               child: InkWell(
                 onTap: ontap,
                 child: SizedBox(
                   height: oofProd == true
-                      ? MediaQuery.of(context).size.height / 11
+                      ? MediaQuery.of(context).size.height / 12
                       : MediaQuery.of(context).size.height / 9,
-                  width: oofProd == true ? 75 : 85,
+                  width: oofProd == true ? 70 : 80,
                   child: FancyShimmerImage(
                     imageUrl: img,
                     boxFit: BoxFit.fill,
@@ -96,7 +96,7 @@ class HomeCard extends StatelessWidget {
                 ),
               ),
             ),
-            const VerticalSpeacing(6.0),
+            const VerticalSpeacing(8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -164,7 +164,7 @@ class HomeCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const VerticalSpeacing(10),
+                    VerticalSpeacing(MediaQuery.of(context).size.height / 42),
                     InkWell(
                       onTap: addCart,
                       child: Container(
