@@ -146,7 +146,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: point,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -166,6 +166,18 @@ class _HelpScreenState extends State<HelpScreen> {
                     });
                   },
                 ),
+                Visibility(
+                  visible: grocery,
+                  child: const Text(
+                    "Answer",
+                    style: TextStyle(
+                      fontFamily: 'CenturyGothic',
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.fontColor,
+                    ),
+                  ),
+                ),
                 const VerticalSpeacing(8),
                 TopQuestion(
                   question: "How can i add new delivery address?",
@@ -176,7 +188,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: address,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -197,7 +209,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: price,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -228,7 +240,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: account,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -249,7 +261,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: wallet,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -270,7 +282,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: delivery,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -291,7 +303,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: promotion,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
@@ -312,7 +324,7 @@ class _HelpScreenState extends State<HelpScreen> {
                   },
                 ),
                 Visibility(
-                  visible: item,
+                  visible: ordering,
                   child: const Text(
                     "Answer",
                     style: TextStyle(
