@@ -4,6 +4,7 @@ import 'package:citta_23/repository/menu_repository.dart';
 import 'package:citta_23/repository/menu_ui_repository.dart';
 import 'package:citta_23/repository/search_repository.dart';
 import 'package:citta_23/repository/ui_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    var auth = FirebaseAuth.instance;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -62,7 +64,9 @@ class MyApp extends StatelessWidget {
           ),
         ), // Set the background color here
       ),
-      initialRoute: RoutesName.loginOrSignup,
+      initialRoute: auth.currentUser?.uid == null
+          ? RoutesName.loginOrSignup
+          : RoutesName.dashboardScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
