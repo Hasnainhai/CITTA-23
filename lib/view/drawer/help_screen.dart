@@ -81,19 +81,29 @@ class _HelpScreenState extends State<HelpScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: TextField(
                     decoration: const InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.search,
-                        size: 16,
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(
+                            left: 16), // Align the icon with the hint text
+                        child: Icon(
+                          Icons.search,
+                          size:
+                              20, // Slightly increase the size for better alignment
+                        ),
                       ),
                       filled: true,
                       fillColor: AppColor.appBarButtonColor,
                       hintText: 'Search here...',
                       hintStyle: TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize: 12,
+                        fontSize:
+                            14, // Adjust the font size for better alignment
                         fontWeight: FontWeight.w400,
                         color: AppColor.grayColor,
                       ),
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 18,
+                          horizontal:
+                              16), // Adjust vertical padding for alignment
                       border: InputBorder.none,
                     ),
                     style: const TextStyle(
