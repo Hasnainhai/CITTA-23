@@ -6,7 +6,7 @@ import 'package:citta_23/view/AuthenticationScreens/registration_screen.dart';
 import 'package:citta_23/view/AuthenticationScreens/rest_screen.dart';
 import 'package:citta_23/view/Checkout/done_screen.dart';
 import 'package:citta_23/view/Favourite/favourite_list.dart';
-import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapbar.dart';
 import 'package:citta_23/view/HomeScreen/HomeScreen.dart';
 import 'package:citta_23/view/HomeScreen/Search/search_screen.dart';
 import 'package:citta_23/view/HomeScreen/all_fashionProd.dart';

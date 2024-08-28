@@ -1,6 +1,6 @@
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
-import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapbar.dart';
 import 'package:citta_23/view/HomeScreen/all_fashionProd.dart';
 import 'package:citta_23/view/HomeScreen/popular_pack_screen.dart';
 import 'package:flutter/material.dart';
