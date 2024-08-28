@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
-import 'package:citta_23/view/HomeScreen/DashBoard/tapBar.dart';
+import 'package:citta_23/view/HomeScreen/DashBoard/tapbar.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -751,36 +751,39 @@ class _FashionDetailState extends State<FashionDetail> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width / 8,
-                      color: AppColor.primaryColor,
-                      child: Center(
-                        child: IconButton(
-                          onPressed: () {
-                            if (_selectedSize == null ||
-                                _selectedImageUrl == null) {
-                              Utils.snackBar(
-                                  "Please select size and color", context);
-                            } else if (FirebaseAuth.instance.currentUser ==
-                                null) {
-                              showSignupDialog(context);
-                            } else {
-                              addToCart(
-                                  widget.imageUrl[0],
-                                  widget.title,
-                                  widget.salePrice,
-                                  widget.sellerId,
-                                  widget.productId,
-                                  _selectedSize!,
-                                  _selectedImageUrl!,
-                                  widget.disPrice);
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.add_shopping_cart_outlined,
-                            color: AppColor.whiteColor,
-                            size: 30,
+                    InkWell(
+                      onTap: () {
+                        if (_selectedSize == null ||
+                            _selectedImageUrl == null) {
+                          Utils.snackBar(
+                              "Please select size and color", context);
+                        } else if (FirebaseAuth.instance.currentUser == null) {
+                          showSignupDialog(context);
+                        } else {
+                          addToCart(
+                              widget.imageUrl[0],
+                              widget.title,
+                              widget.salePrice,
+                              widget.sellerId,
+                              widget.productId,
+                              _selectedSize!,
+                              _selectedImageUrl!,
+                              widget.disPrice);
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width / 2.4,
+                        color: AppColor.primaryColor,
+                        child: const Center(
+                          child: Text(
+                            "Add To Cart",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.whiteColor,
+                            ),
                           ),
                         ),
                       ),
@@ -788,7 +791,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     InkWell(
                       child: Container(
                         height: 50,
-                        width: MediaQuery.of(context).size.width / 1.4,
+                        width: MediaQuery.of(context).size.width / 2.4,
                         color: AppColor.primaryColor,
                         child: InkWell(
                           onTap: () {

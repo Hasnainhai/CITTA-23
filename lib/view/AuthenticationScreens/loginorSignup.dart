@@ -34,7 +34,7 @@ class _LoginOrSignUpState extends State<LoginOrSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    startTimer();
+    // startTimer();
     return Scaffold(
       body: SafeArea(
         child: Center(

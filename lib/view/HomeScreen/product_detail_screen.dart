@@ -610,32 +610,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width / 8,
-                        color: AppColor.primaryColor,
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {
-                              if (FirebaseAuth.instance.currentUser != null) {
-                                addToCart(
-                                    widget.imageUrl[0],
-                                    widget.title,
-                                    widget.price,
-                                    widget.sellerId,
-                                    widget.productId,
-                                    items == 1
-                                        ? widget.weight
-                                        : items.toString(),
-                                    widget.disPrice.toString());
-                              } else {
-                                showSignupDialog(context);
-                              }
-                            },
-                            icon: const Icon(
-                              Icons.add_shopping_cart_outlined,
-                              color: AppColor.whiteColor,
-                              size: 30,
+                      InkWell(
+                        onTap: () {
+                          if (FirebaseAuth.instance.currentUser != null) {
+                            addToCart(
+                                widget.imageUrl[0],
+                                widget.title,
+                                widget.price,
+                                widget.sellerId,
+                                widget.productId,
+                                items == 1 ? widget.weight : items.toString(),
+                                widget.disPrice.toString());
+                          } else {
+                            showSignupDialog(context);
+                          }
+                        },
+                        child: Container(
+                          height: 50,
+                          width: MediaQuery.of(context).size.width / 2.4,
+                          color: AppColor.primaryColor,
+                          child: const Center(
+                            child: Text(
+                              "Add To Cart",
+                              style: TextStyle(
+                                fontFamily: 'CenturyGothic',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.whiteColor,
+                              ),
                             ),
                           ),
                         ),
@@ -643,7 +645,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       InkWell(
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 1.4,
+                          width: MediaQuery.of(context).size.width / 2.4,
                           color: AppColor.primaryColor,
                           child: InkWell(
                             onTap: () {

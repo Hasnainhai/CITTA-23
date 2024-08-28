@@ -18,39 +18,39 @@ class DrawerOptions extends StatelessWidget {
         left: 20.0,
         right: 20,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              InkWell(
-                onTap: onpress,
-                child: Icon(
+      child: InkWell(
+        onTap: onpress,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(
                   icon,
                   size: 16,
                   color: AppColor.fontColor,
                 ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  fontFamily: 'CenturyGothic',
-                  fontWeight: FontWeight.w600,
-                  color: AppColor.fontColor,
+                const SizedBox(
+                  width: 16,
                 ),
-              ),
-            ],
-          ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            color: AppColor.primaryColor,
-            size: 15.0,
-          ),
-        ],
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 12.0,
+                    fontFamily: 'CenturyGothic',
+                    fontWeight: FontWeight.w600,
+                    color: AppColor.fontColor,
+                  ),
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: AppColor.primaryColor,
+              size: 15.0,
+            ),
+          ],
+        ),
       ),
     );
   }

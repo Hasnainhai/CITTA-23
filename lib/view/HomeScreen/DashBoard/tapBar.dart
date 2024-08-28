@@ -1,9 +1,7 @@
-// ignore_for_file: file_names, use_build_context_synchronously, unnecessary_null_comparison
-
-import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/routes/routes_name.dart';
@@ -11,7 +9,6 @@ import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/homeScreen.dart';
 import 'package:citta_23/view/menu/menu.dart';
 import 'package:citta_23/view/profile/profile_screen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../res/consts/firebase_const.dart';
 import '../../Favourite/favourite_list.dart';
@@ -85,25 +82,169 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     super.initState();
     getUserData();
     tabController = TabController(length: 4, vsync: this);
-    // BackButtonInterceptor.add(myInterceptor);
+  }
+
+  Future<bool> onWillPop() async {
+    DateTime now = DateTime.now();
+
+    if (tabController!.index == 0 ||
+        tabController!.index == 1 ||
+        tabController!.index == 2 ||
+        tabController!.index == 3) {
+      if (currentBackPressTime == null ||
+          now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+        currentBackPressTime = now;
+        Fluttertoast.showToast(msg: 'Press back again to exit');
+        return Future.value(false); // Prevents exiting
+      }
+      return Future.value(true); // Allows exiting
+    } else {
+      return Future.value(true); // Allows normal back navigation
+    }
   }
 
   @override
-  void dispose() {
-    // BackButtonInterceptor.remove(myInterceptor);
-    super.dispose();
-  }
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: tabController,
+          children: const [
+            HomeScreen(),
+            MenuScreen(),
+            FavouriteList(),
+            ProfileScreen(),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          unselectedLabelStyle: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
+          ),
+          selectedLabelStyle: const TextStyle(
+            fontFamily: 'CenturyGothic',
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: AppColor.fontColor,
+          ),
+          items: [
+            const BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+              label: ('Home'),
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list_alt_outlined,
+              ),
+              label: ('Categories'),
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite_border_outlined,
+              ),
+              label: ('Wish List'),
+            ),
+            BottomNavigationBarItem(
+              icon: _pImage == null
+                  ? const Icon(Icons.account_circle)
+                  : CircleAvatar(
+                      radius: 14.0,
+                      backgroundImage: NetworkImage(_pImage.toString()),
+                    ),
+              label: _name == null
+                  ? 'You'
+                  : _name!.substring(0, _name!.length > 6 ? 6 : _name!.length),
+            ),
+          ],
+          unselectedItemColor: AppColor.grayColor,
+          selectedItemColor: AppColor.buttonBgColor,
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          showUnselectedLabels: true,
+          currentIndex: selectIndex,
+          onTap: onItemClick,
+        ),
+        floatingActionButton: StreamBuilder<int>(
+          stream: getCartItemCountStream(),
+          builder: (context, snapshot) {
+            int itemCount = snapshot.data ?? 0;
 
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   DateTime now = DateTime.now();
-  //   if (currentBackPressTime == null ||
-  //       now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-  //     currentBackPressTime = now;
-  //     Fluttertoast.showToast(msg: 'Press back again to exit');
-  //     return true; // Prevent the default back button behavior
-  //   }
-  //   return false; // Allow the default back button behavior
-  // }
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: 30.0,
+                  height: 30.0,
+                  decoration: const BoxDecoration(
+                    color: AppColor.primaryColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(254, 1, 128, 0.2588),
+                        blurRadius: 18.0,
+                        offset: Offset(0, 12),
+                      ),
+                    ],
+                  ),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      if (FirebaseAuth.instance.currentUser == null) {
+                        showSignupDialog(context);
+                      } else {
+                        Navigator.pushNamed(context, RoutesName.cartScreen);
+                      }
+                    },
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    child: Center(
+                      child:
+                          Image.asset('images/card.png', height: 15, width: 15),
+                    ),
+                  ),
+                ),
+                if (itemCount > 0)
+                  Positioned(
+                    right: -4,
+                    top: -15,
+                    child: Container(
+                      padding: const EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColor.whiteColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColor.primaryColor.withOpacity(0.2),
+                            blurRadius: 10.0,
+                            offset: const Offset(4, 4),
+                            spreadRadius: 0.5,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          '$itemCount',
+                          style: const TextStyle(
+                            fontSize: 9.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppColor.primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
+    );
+  }
 
   void showSignupDialog(BuildContext context) {
     showDialog(
@@ -150,7 +291,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   Navigator.pushNamed(context, RoutesName.registerScreen);
                 },
                 child: const Text(
-                  'SIGN UP',
+                  'REGISTER',
                   style: TextStyle(color: AppColor.primaryColor),
                 ),
               ),
@@ -158,170 +299,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
           ),
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: tabController,
-        children: const [
-          HomeScreen(),
-          MenuScreen(),
-          FavouriteList(),
-          ProfileScreen(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedLabelStyle: const TextStyle(
-          fontFamily: 'CenturyGothic',
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: AppColor.fontColor,
-        ),
-        selectedLabelStyle: const TextStyle(
-          fontFamily: 'CenturyGothic',
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: AppColor.fontColor,
-        ),
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-            ),
-            label: ('Home'),
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.list_alt_outlined,
-            ),
-            label: ('Categories'),
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite_border_outlined,
-            ),
-            label: ('Wish List'),
-          ),
-          BottomNavigationBarItem(
-            icon: _pImage == null
-                ? const Icon(Icons.account_circle)
-                : CircleAvatar(
-                    radius: 14.0,
-                    backgroundImage: NetworkImage(_pImage.toString()),
-                  ),
-            label: _name == null
-                ? 'You'
-                : _name!.substring(0, _name!.length > 6 ? 6 : _name!.length),
-          ),
-        ],
-        unselectedItemColor: AppColor.grayColor,
-        selectedItemColor: AppColor.buttonBgColor,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: true,
-        currentIndex: selectIndex,
-        onTap: onItemClick,
-      ),
-      floatingActionButton: StreamBuilder<int>(
-        stream: getCartItemCountStream(),
-        builder: (context, snapshot) {
-          int itemCount = snapshot.data ?? 0;
-
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                width: 30.0,
-                height: 30.0,
-                decoration: const BoxDecoration(
-                  color: AppColor.primaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(254, 1, 128, 0.2588),
-                      blurRadius: 18.0,
-                      offset: Offset(0, 12),
-                    ),
-                  ],
-                ),
-                child: FloatingActionButton(
-                  onPressed: () {
-                    if (FirebaseAuth.instance.currentUser == null) {
-                      showSignupDialog(context);
-                    } else {
-                      Navigator.pushNamed(context, RoutesName.cartScreen);
-                    }
-                  },
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  child: Center(
-                    child:
-                        Image.asset('images/card.png', height: 15, width: 15),
-                  ),
-                ),
-              ),
-              if (itemCount > 0)
-                Positioned(
-                  right: -4,
-                  top: -15,
-                  child: Container(
-                    padding: const EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColor.whiteColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColor.primaryColor.withOpacity(0.2),
-                          blurRadius: 10.0,
-                          offset: const Offset(4, 4),
-                          spreadRadius: 0.5,
-                        ),
-                      ],
-                    ),
-                    child: Text(
-                      itemCount.toString(),
-                      style: const TextStyle(
-                        color: AppColor.primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              if (itemCount == 0)
-                Positioned(
-                  right: -3,
-                  top: -13,
-                  child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColor.whiteColor,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColor.primaryColor.withOpacity(0.2),
-                          blurRadius: 10.0,
-                          offset: const Offset(4, 4),
-                          spreadRadius: 0.5,
-                        ),
-                      ],
-                    ),
-                    child: const Text(
-                      '0',
-                      style: TextStyle(
-                        color: AppColor.primaryColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          );
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
