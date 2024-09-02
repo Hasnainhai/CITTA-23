@@ -97,7 +97,7 @@ class NotificationScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     title: const Text(
-                      "Your order has been",
+                      "Your order has been Delivered",
                       style: TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
@@ -125,30 +125,31 @@ class NotificationScreen extends StatelessWidget {
                             height: 50, width: 50);
                       },
                     ),
-                    trailing: const Text(
-                      "Delivered",
-                      style: TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.primaryColor,
-                      ),
-                    ),
+                    // trailing: const Text(
+                    //   "Delivered",
+                    //   style: TextStyle(
+                    //     fontFamily: 'CenturyGothic',
+                    //     fontSize: 12,
+                    //     fontWeight: FontWeight.w600,
+                    //     color: AppColor.primaryColor,
+                    //   ),
+                    // ),
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (c) => TrackOrder(
-                              title: data['title'],
-                              date: formatDateAndTime(data['date']),
-                              status: data['status'],
-                              weight: data['weight'],
-                              items: "1",
-                              price: data['salePrice'],
-                              orderId: data['uuid'],
-                              img: data['imageUrl'],
-                            ),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => TrackOrder(
+                            title: data['title'],
+                            date: formatDateAndTime(data['date']),
+                            status: data['status'],
+                            weight: data['weight'],
+                            items: "1",
+                            price: data['salePrice'],
+                            orderId: data['uuid'],
+                            img: data['imageUrl'],
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );

@@ -722,26 +722,23 @@ class _FashionDetailState extends State<FashionDetail> {
                       onTap: () {
                         _onSizeTap(size);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(3),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: _selectedSize == size
-                                  ? AppColor.primaryColor
-                                  : Colors.grey,
-                            ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: _selectedSize == size
+                                ? AppColor.primaryColor
+                                : Colors.grey,
                           ),
-                          child: Text(
-                            size,
-                            style: const TextStyle(
-                              fontFamily: 'CenturyGothic',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
+                        ),
+                        child: Text(
+                          size,
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -775,7 +772,7 @@ class _FashionDetailState extends State<FashionDetail> {
                         }
                       },
                       child: Container(
-                        height: 50,
+                        height: 46,
                         width: MediaQuery.of(context).size.width / 2.4,
                         color: AppColor.primaryColor,
                         child: const Center(
@@ -793,7 +790,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                     InkWell(
                       child: Container(
-                        height: 50,
+                        height: 46,
                         width: MediaQuery.of(context).size.width / 2.4,
                         color: AppColor.primaryColor,
                         child: InkWell(
