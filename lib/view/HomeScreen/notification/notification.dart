@@ -16,6 +16,22 @@ class NotificationScreen extends StatelessWidget {
     return formattedDateTime;
   }
 
+  Future<List<QueryDocumentSnapshot>> _fetchOrders() async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('my_orders')
+          .where("status", isEqualTo: "Delivered")
+          .orderBy('date', descending: true)
+          .get();
+      return snapshot.docs;
+    } catch (e) {
+      // Handle the error here if needed
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,17 +60,14 @@ class NotificationScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .collection('my_orders')
-              .orderBy('date', descending: true)
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        child: FutureBuilder<List<QueryDocumentSnapshot>>(
+          future: _fetchOrders(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
             if (snapshot.hasError) {
-              Utils.flushBarErrorMessage('${snapshot.error}', context);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Utils.flushBarErrorMessage('${snapshot.error}', context);
+              });
               return const Center(child: Text("Something went wrong"));
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -62,7 +75,7 @@ class NotificationScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(
                 child: Text(
                   "No notifications to show",
@@ -77,7 +90,7 @@ class NotificationScreen extends StatelessWidget {
             }
             return ListView(
               shrinkWrap: true,
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              children: snapshot.data!.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
                 return Padding(
@@ -112,9 +125,9 @@ class NotificationScreen extends StatelessWidget {
                             height: 50, width: 50);
                       },
                     ),
-                    trailing: Text(
-                      data['status'],
-                      style: const TextStyle(
+                    trailing: const Text(
+                      "Delivered",
+                      style: TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
