@@ -22,7 +22,7 @@ class NotificationScreen extends StatelessWidget {
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('my_orders')
-          // .where("status", isEqualTo: "Delivered")
+          .where("status", isEqualTo: "Delivered")
           .orderBy('date', descending: true)
           .get();
       return snapshot.docs;
