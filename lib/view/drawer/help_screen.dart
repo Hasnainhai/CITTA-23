@@ -1,7 +1,7 @@
-import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
-import 'package:citta_23/view/drawer/widget/top_questions.dart';
 import 'package:flutter/material.dart';
 import '../../res/components/colors.dart';
+import '../../res/components/widgets/verticalSpacing.dart';
+import 'widget/top_questions.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -11,16 +11,111 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
-  bool item = false;
-  bool point = false;
-  bool grocery = false;
-  bool address = false;
-  bool price = false;
-  bool account = false;
-  bool wallet = false;
-  bool delivery = false;
-  bool promotion = false;
-  bool ordering = false;
+  String? expandedQuestion;
+  bool isSearch = false;
+  TextEditingController searchController = TextEditingController();
+
+  final List<Map<String, String>> questionsAndAnswers = [
+    {
+      "question": "How do I return my items?",
+      "answer": "Answer for item return"
+    },
+    {
+      "question": "How to use collection point?",
+      "answer": "Answer for collection point"
+    },
+    {"question": "What is Grocery?", "answer": "Answer for grocery"},
+    {
+      "question": "How can I add a new delivery address?",
+      "answer": "Answer for delivery address"
+    },
+    {
+      "question": "How can I avail Sticker Price?",
+      "answer": "Answer for sticker price"
+    },
+    {"question": "My Account?", "answer": "Answer for account"},
+    {
+      "question": "Payments & Wallet?",
+      "answer": "Answer for payments and wallet"
+    },
+    {
+      "question": "Shipping & Delivery?",
+      "answer": "Answer for shipping and delivery"
+    },
+    {
+      "question": "Vouchers & Promotions?",
+      "answer": "Answer for vouchers and promotions"
+    },
+    {"question": "Ordering?", "answer": "Answer for ordering"},
+  ];
+
+  List<Map<String, String>> filteredQuestionsAndAnswers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredQuestionsAndAnswers = questionsAndAnswers;
+    searchController.addListener(_filterQuestions);
+  }
+
+  void _filterQuestions() {
+    String query = searchController.text.toLowerCase();
+    debugPrint("Current query: $query");
+
+    setState(() {
+      if (query.isEmpty) {
+        filteredQuestionsAndAnswers = questionsAndAnswers;
+        isSearch = false;
+        debugPrint("Query is empty, showing all questions.");
+      } else {
+        filteredQuestionsAndAnswers = questionsAndAnswers
+            .where((qa) => qa['question']!.toLowerCase().contains(query))
+            .toList();
+        isSearch = true;
+        debugPrint(
+            "Filtered results length: ${filteredQuestionsAndAnswers.length}");
+      }
+    });
+  }
+
+  void _toggleQuestion(String question) {
+    setState(() {
+      expandedQuestion = (expandedQuestion == question) ? null : question;
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildQuestionTile(Map<String, String> qa) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TopQuestion(
+          question: qa['question']!,
+          onpress: () => _toggleQuestion(qa['question']!),
+        ),
+        if (expandedQuestion == qa['question'])
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(
+              qa['answer']!,
+              style: const TextStyle(
+                fontFamily: 'CenturyGothic',
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: AppColor.fontColor,
+              ),
+            ),
+          ),
+        const VerticalSpeacing(8),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,12 +151,7 @@ class _HelpScreenState extends State<HelpScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20,
-          ),
+          padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,271 +170,94 @@ class _HelpScreenState extends State<HelpScreen> {
                   height: 60,
                   width: MediaQuery.of(context).size.width,
                   child: TextField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            left: 16), // Align the icon with the hint text
-                        child: Icon(
-                          Icons.search,
-                          size:
-                              20, // Slightly increase the size for better alignment
+                      controller: searchController,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                              left: 16), // Align the icon with the hint text
+                          child: Icon(
+                            Icons.search,
+                            size:
+                                20, // Slightly increase the size for better alignment
+                          ),
                         ),
+                        filled: true,
+                        fillColor: AppColor.appBarButtonColor,
+                        hintText: 'Search here...',
+                        hintStyle: TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize:
+                              14, // Adjust the font size for better alignment
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.grayColor,
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 18,
+                            horizontal:
+                                16), // Adjust vertical padding for alignment
+                        border: InputBorder.none,
                       ),
-                      filled: true,
-                      fillColor: AppColor.appBarButtonColor,
-                      hintText: 'Search here...',
-                      hintStyle: TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'CenturyGothic',
-                        fontSize:
-                            14, // Adjust the font size for better alignment
-                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
                         color: AppColor.grayColor,
                       ),
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 18,
-                          horizontal:
-                              16), // Adjust vertical padding for alignment
-                      border: InputBorder.none,
-                    ),
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.grayColor,
-                    ),
-                    onChanged: (value) {},
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          isSearch = value.isNotEmpty;
+                        });
+                      }),
                 ),
                 const VerticalSpeacing(12),
-                const Text(
-                  "Top Questions",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.fontColor,
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "How do I return my items?",
-                  onpress: () {
-                    setState(() {
-                      item = !item;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: item,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "How to use collection point?",
-                  onpress: () {
-                    setState(() {
-                      point = !point;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: point,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "What is Grocery?",
-                  onpress: () {
-                    setState(() {
-                      grocery = !grocery;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: grocery,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "How can i add new delivery address?",
-                  onpress: () {
-                    setState(() {
-                      address = !address;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: address,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "How can i avail Sticker Price?",
-                  onpress: () {
-                    setState(() {
-                      price = !price;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: price,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(12),
-                const Text(
-                  "Topics",
-                  style: TextStyle(
-                    fontFamily: 'CenturyGothic',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColor.fontColor,
-                  ),
-                ),
-                const VerticalSpeacing(14),
-                TopQuestion(
-                  question: "My Account?",
-                  onpress: () {
-                    setState(() {
-                      account = !account;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: account,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "Payments & Wallett?",
-                  onpress: () {
-                    setState(() {
-                      wallet = !wallet;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: wallet,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "Shiping & Delivery",
-                  onpress: () {
-                    setState(() {
-                      delivery = !delivery;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: delivery,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "Vouchers & Promotions?",
-                  onpress: () {
-                    setState(() {
-                      promotion = !promotion;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: promotion,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
-                const VerticalSpeacing(8),
-                TopQuestion(
-                  question: "Orderinge?",
-                  onpress: () {
-                    setState(() {
-                      ordering = !ordering;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: ordering,
-                  child: const Text(
-                    "Answer",
-                    style: TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ),
+                isSearch
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.8,
+                        child: ListView.builder(
+                          itemCount: filteredQuestionsAndAnswers.length,
+                          itemBuilder: (context, index) {
+                            debugPrint(
+                                "Rendering question: ${filteredQuestionsAndAnswers[index]['question']}");
+
+                            return _buildQuestionTile(
+                                filteredQuestionsAndAnswers[index]);
+                          },
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Top Questions",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          const VerticalSpeacing(8),
+                          ...questionsAndAnswers
+                              .take(5)
+                              .map(_buildQuestionTile)
+                              .toList(),
+                          const VerticalSpeacing(12),
+                          const Text(
+                            "Topics",
+                            style: TextStyle(
+                              fontFamily: 'CenturyGothic',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.fontColor,
+                            ),
+                          ),
+                          const VerticalSpeacing(14),
+                          ...questionsAndAnswers
+                              .skip(5)
+                              .map(_buildQuestionTile)
+                              .toList(),
+                        ],
+                      ),
               ],
             ),
           ),
