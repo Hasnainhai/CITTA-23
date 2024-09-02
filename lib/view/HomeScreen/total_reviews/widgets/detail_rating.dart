@@ -42,8 +42,8 @@ class DetailRating extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 50,
-                        width: 50,
+                        height: 40,
+                        width: 40,
                         decoration: BoxDecoration(
                             image: DecorationImage(image: NetworkImage(img)),
                             shape: BoxShape.circle),

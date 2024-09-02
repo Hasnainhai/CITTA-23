@@ -65,7 +65,7 @@ class _MenuScreenState extends State<MenuScreen> {
         'Handbags',
     "Others"
   ];
-  var buttonCategoryType = CategoryType.food;
+  var buttonCategoryType = CategoryType.fashion;
 
   String? selectedCategory;
 
@@ -79,6 +79,78 @@ class _MenuScreenState extends State<MenuScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                InkWell(
+                  onTap: () {
+                    if (buttonCategoryType == CategoryType.fashion) {
+                      return;
+                    }
+                    setState(() {
+                      buttonCategoryType = CategoryType.fashion;
+                      selectedCategory = null;
+                    });
+                    Provider.of<MenuRepository>(context, listen: false)
+                        .handleFashionButton();
+                    Provider.of<MenuUiRepository>(context, listen: false)
+                        .switchToType(MenuEnums.DefaultSection);
+                  },
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        height: 60.0,
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        child: Center(
+                          child: Container(
+                            height: 45.0,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            decoration: BoxDecoration(
+                                color:
+                                    buttonCategoryType == CategoryType.fashion
+                                        ? AppColor.buttonBgColor
+                                        : Colors.transparent,
+                                border: Border.all(
+                                    width: 1, color: AppColor.buttonBgColor)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  height: 33.0,
+                                  width: 63.0,
+                                  color: AppColor.categoryLightColor,
+                                ),
+                                Text(
+                                  'Fashion',
+                                  style: TextStyle(
+                                    fontFamily: 'CenturyGothic',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: buttonCategoryType ==
+                                            CategoryType.fashion
+                                        ? AppColor.whiteColor
+                                        : AppColor.buttonBgColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 30,
+                        top: 0,
+                        bottom: 12.0,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Image.asset(
+                            'images/fashionimg.png',
+                            height: 56.0,
+                            width: 42.0,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 InkWell(
                   onTap: () {
                     if (buttonCategoryType == CategoryType.food) {
@@ -153,126 +225,12 @@ class _MenuScreenState extends State<MenuScreen> {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    if (buttonCategoryType == CategoryType.fashion) {
-                      return;
-                    }
-                    setState(() {
-                      buttonCategoryType = CategoryType.fashion;
-                      selectedCategory = null;
-                    });
-                    Provider.of<MenuRepository>(context, listen: false)
-                        .handleFashionButton();
-                    Provider.of<MenuUiRepository>(context, listen: false)
-                        .switchToType(MenuEnums.DefaultSection);
-                  },
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        height: 60.0,
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        child: Center(
-                          child: Container(
-                            height: 45.0,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            decoration: BoxDecoration(
-                                color:
-                                    buttonCategoryType == CategoryType.fashion
-                                        ? AppColor.buttonBgColor
-                                        : Colors.transparent,
-                                border: Border.all(
-                                    width: 1, color: AppColor.buttonBgColor)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  height: 33.0,
-                                  width: 63.0,
-                                  color: AppColor.categoryLightColor,
-                                ),
-                                Text(
-                                  'Fashion',
-                                  style: TextStyle(
-                                    fontFamily: 'CenturyGothic',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: buttonCategoryType ==
-                                            CategoryType.fashion
-                                        ? AppColor.whiteColor
-                                        : AppColor.buttonBgColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 30,
-                        top: 0,
-                        bottom: 12.0,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Image.asset(
-                            'images/fashionimg.png',
-                            height: 56.0,
-                            width: 42.0,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
             Consumer<MenuRepository>(
               builder: (context, menuRepository, child) {
-                return menuRepository.productType == "food"
+                return menuRepository.productType == "fashion"
                     ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children:
-                                List.generate(foodCategories.length, (index) {
-                              String category = foodCategories[index];
-                              bool isSelected = category == selectedCategory;
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (selectedCategory == category) {
-                                      selectedCategory = null;
-                                      Provider.of<MenuUiRepository>(context,
-                                              listen: false)
-                                          .switchToType(
-                                              MenuEnums.DefaultSection);
-                                    } else {
-                                      selectedCategory = category;
-                                      Provider.of<MenuUiRepository>(context,
-                                              listen: false)
-                                          .switchToType(MenuEnums.Category);
-                                    }
-                                  });
-                                  menuRepository.fetchItems(category);
-                                },
-                                child: CategoryCart(
-                                  text: category,
-                                  textColor: isSelected
-                                      ? AppColor.whiteColor
-                                      : AppColor.primaryColor,
-                                  containerColor: isSelected
-                                      ? AppColor.primaryColor
-                                      : AppColor.bgColor,
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
-                      )
-                    : SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -302,6 +260,48 @@ class _MenuScreenState extends State<MenuScreen> {
                                 },
                                 child: CategoryCart(
                                   text: fashion,
+                                  textColor: isSelected
+                                      ? AppColor.whiteColor
+                                      : AppColor.primaryColor,
+                                  containerColor: isSelected
+                                      ? AppColor.primaryColor
+                                      : AppColor.bgColor,
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children:
+                                List.generate(foodCategories.length, (index) {
+                              String category = foodCategories[index];
+                              bool isSelected = category == selectedCategory;
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedCategory == category) {
+                                      selectedCategory = null;
+                                      Provider.of<MenuUiRepository>(context,
+                                              listen: false)
+                                          .switchToType(
+                                              MenuEnums.DefaultSection);
+                                    } else {
+                                      selectedCategory = category;
+                                      Provider.of<MenuUiRepository>(context,
+                                              listen: false)
+                                          .switchToType(MenuEnums.Category);
+                                    }
+                                  });
+                                  menuRepository.fetchItems(category);
+                                },
+                                child: CategoryCart(
+                                  text: category,
                                   textColor: isSelected
                                       ? AppColor.whiteColor
                                       : AppColor.primaryColor,

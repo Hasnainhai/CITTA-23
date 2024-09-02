@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MenuRepository extends ChangeNotifier {
-  String _productType = 'food';
+  String _productType = 'fashion'; // Default to 'fashion'
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   CollectionReference _collectionReference =
-      FirebaseFirestore.instance.collection('products');
+      FirebaseFirestore.instance.collection('fashion'); // Default collection
   Query _categoryReference = FirebaseFirestore.instance
       .collection('fashion')
-      .where('category', isEqualTo: 'Paints');
+      .where('category', isEqualTo: 'Paints'); // Default category reference
+
   String get productType => _productType;
   CollectionReference get collectionReference => _collectionReference;
   Query get categoryReference => _categoryReference;
@@ -24,7 +25,6 @@ class MenuRepository extends ChangeNotifier {
   void handleFashionButton() {
     _productType = 'fashion';
     setProductType(_productType);
-
     _collectionReference = FirebaseFirestore.instance.collection('fashion');
     notifyListeners();
   }
