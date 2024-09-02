@@ -22,7 +22,7 @@ class NotificationScreen extends StatelessWidget {
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('my_orders')
-          .where("status", isEqualTo: "Delivered")
+          // .where("status", isEqualTo: "Delivered")
           .orderBy('date', descending: true)
           .get();
       return snapshot.docs;
@@ -96,9 +96,9 @@ class NotificationScreen extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    title: const Text(
-                      "Your order has been Delivered",
-                      style: TextStyle(
+                    title: Text(
+                      "Your order of '${data['title']}' has been Delivered",
+                      style: const TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -143,7 +143,7 @@ class NotificationScreen extends StatelessWidget {
                             date: formatDateAndTime(data['date']),
                             status: data['status'],
                             weight: data['weight'],
-                            items: "1",
+                            items: data['quantity'],
                             price: data['salePrice'],
                             orderId: data['uuid'],
                             img: data['imageUrl'],

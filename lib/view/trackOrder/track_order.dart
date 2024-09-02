@@ -174,7 +174,7 @@ class _TrackOrderState extends State<TrackOrder> {
                   subTitle: widget.weight,
                   price: widget.weight,
                   productPrice: widget.price,
-                  procustAverate: '1',
+                  procustAverate: widget.items,
                   id: widget.orderId,
                   productId: widget.orderId,
                 ),

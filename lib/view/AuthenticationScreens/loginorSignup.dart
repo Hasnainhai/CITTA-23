@@ -40,7 +40,22 @@ class _LoginOrSignUpState extends State<LoginOrSignUp> {
         child: Center(
             child: Column(
           children: <Widget>[
-            const VerticalSpeacing(80.0),
+            const VerticalSpeacing(10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutesName.dashboardScreen);
+                  },
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(color: AppColor.primaryColor),
+                  ),
+                ),
+              ],
+            ),
+            const VerticalSpeacing(60.0),
             Container(
               height: 80.0,
               width: 215.0,
