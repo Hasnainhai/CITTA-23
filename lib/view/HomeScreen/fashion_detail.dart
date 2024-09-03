@@ -723,7 +723,7 @@ class _FashionDetailState extends State<FashionDetail> {
                         _onSizeTap(size);
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(3),
+                        padding: const EdgeInsets.all(3.0),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 5, vertical: 5),
@@ -775,7 +775,7 @@ class _FashionDetailState extends State<FashionDetail> {
                         }
                       },
                       child: Container(
-                        height: 50,
+                        height: 46,
                         width: MediaQuery.of(context).size.width / 2.4,
                         color: AppColor.primaryColor,
                         child: const Center(
@@ -793,7 +793,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     ),
                     InkWell(
                       child: Container(
-                        height: 50,
+                        height: 46,
                         width: MediaQuery.of(context).size.width / 2.4,
                         color: AppColor.primaryColor,
                         child: InkWell(

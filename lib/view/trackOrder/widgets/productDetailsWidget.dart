@@ -76,6 +76,7 @@ class ProductDetailsWidget extends StatelessWidget {
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         productPrice,
@@ -87,7 +88,7 @@ class ProductDetailsWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        procustAverate,
+                        "quantity:$procustAverate",
                         style: const TextStyle(
                           fontFamily: 'CenturyGothic',
                           fontSize: 12,
