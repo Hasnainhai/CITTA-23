@@ -351,15 +351,17 @@ class _DefaultSectionState extends State<DefaultSection> {
   }
 
   void addToCart(
-      String img,
-      String title,
-      String dPrice,
-      String sellerId,
-      String productId,
-      String size,
-      String color,
-      String weight,
-      String dprice) async {
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String size,
+    String color,
+    String weight,
+    String dprice,
+    String bio,
+  ) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       showSignupDialog(context);
@@ -401,6 +403,7 @@ class _DefaultSectionState extends State<DefaultSection> {
         "size": size,
         "color": color,
         "dPrice": dprice,
+        'details': bio,
         // Add other product details as needed
       });
       Utils.snackBar('Successfully added to cart', context);
@@ -719,6 +722,7 @@ class _DefaultSectionState extends State<DefaultSection> {
                                     "N/A",
                                     _popularPacks[index]['weight'],
                                     "0",
+                                    _popularPacks[index]['detail'],
                                   );
                                 }
                               },
@@ -915,18 +919,19 @@ class _DefaultSectionState extends State<DefaultSection> {
                             index >= 0 &&
                             index < categoryProducts.length) {
                           addToCart(
-                            product['imageUrl'][0],
-                            product['title'],
-                            product['price'].toString(),
-                            product['sellerId'],
-                            product['id'],
-                            "N/A",
-                            "N/A",
-                            product['weight'],
-                            category == "Lightening Deals"
-                                ? dPrice(product['price'], product['discount'])
-                                : '0',
-                          );
+                              product['imageUrl'][0],
+                              product['title'],
+                              product['price'].toString(),
+                              product['sellerId'],
+                              product['id'],
+                              "N/A",
+                              "N/A",
+                              product['weight'],
+                              category == "Lightening Deals"
+                                  ? dPrice(
+                                      product['price'], product['discount'])
+                                  : '0',
+                              product['detail']);
                         }
                       },
                       productRating: product['averageReview'] ?? 0.0,
@@ -1073,23 +1078,24 @@ class _DefaultSectionState extends State<DefaultSection> {
                       iconColor: AppColor.buttonBgColor,
                       addCart: () {
                         debugPrint(
-                            "this is the product of fashion:${product.toString()}");
+                            "this is the product of fashion:${product['imageUrl'][0]}");
                         if (categoryProducts.isNotEmpty &&
                             index >= 0 &&
                             index < categoryProducts.length) {
                           addToCart(
-                            product['imageUrl'][0],
-                            product['title'],
-                            product['price'],
-                            product['sellerId'],
-                            product['id'],
-                            product['size'][0],
-                            product['color'][0],
-                            "N/A",
-                            product['category'] == "Lightening Deals"
-                                ? dPrice(product['price'], product['discount'])
-                                : '0',
-                          );
+                              product['imageUrl'][0],
+                              product['title'],
+                              product['price'],
+                              product['sellerId'],
+                              product['id'],
+                              product['size'][0],
+                              product['color'][0],
+                              "N/A",
+                              product['category'] == "Lightening Deals"
+                                  ? dPrice(
+                                      product['price'], product['discount'])
+                                  : '0',
+                              product['detail']);
                         }
                       },
                       productRating: product['averageReview'],

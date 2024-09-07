@@ -163,7 +163,7 @@ class _CartWidgetState extends State<CartWidget> {
                 InkWell(
                   onTap: widget.ontap,
                   child: SizedBox(
-                    height: 80.0,
+                    height: 70.0,
                     width: 58.0,
                     child: FancyShimmerImage(
                       imageUrl: widget.img,

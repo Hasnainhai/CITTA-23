@@ -1,23 +1,22 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
+import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
-import 'package:citta_23/view/HomeScreen/DashBoard/tapbar.dart';
+import 'package:citta_23/view/HomeScreen/fashion_detail.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:uuid/uuid.dart';
-import '../../res/components/colors.dart';
-import '../../routes/routes_name.dart';
 
 // ignore: must_be_immutable
-class FashionDetail extends StatefulWidget {
-  FashionDetail(
+class CartFashionDetailScreen extends StatefulWidget {
+  CartFashionDetailScreen(
       {super.key,
       required this.title,
       required this.imageUrl,
@@ -42,10 +41,11 @@ class FashionDetail extends StatefulWidget {
   final String disPrice;
 
   @override
-  State<FashionDetail> createState() => _FashionDetailState();
+  State<CartFashionDetailScreen> createState() =>
+      _CartFashionDetailScreenState();
 }
 
-class _FashionDetailState extends State<FashionDetail> {
+class _CartFashionDetailScreenState extends State<CartFashionDetailScreen> {
   bool like = false;
   int? newPrice;
   int items = 1;

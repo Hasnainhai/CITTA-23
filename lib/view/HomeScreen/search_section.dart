@@ -86,15 +86,17 @@ class _SearchSectionState extends State<SearchSection> {
   }
 
   void addToCart(
-      String img,
-      String title,
-      String dPrice,
-      String sellerId,
-      String productId,
-      String size,
-      String color,
-      String weight,
-      String dprice) async {
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String size,
+    String color,
+    String weight,
+    String dprice,
+    String bio,
+  ) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       showSignupDialog();
@@ -136,6 +138,7 @@ class _SearchSectionState extends State<SearchSection> {
         "size": size,
         "color": color,
         "dPrice": dprice,
+        'details': bio
         // Add other product details as needed
       });
       Utils.snackBar('Successfully added to cart', context);
@@ -218,21 +221,21 @@ class _SearchSectionState extends State<SearchSection> {
             iconColor: AppColor.buttonBgColor,
             addCart: () {
               addToCart(
-                product.imageUrl[0],
-                product.title,
-                product.price,
-                product.sellerId,
-                product.id,
-                product.sizes.isNotEmpty ? product.sizes[0] : "N/A",
-                product.colors.isNotEmpty ? product.colors[0] : "N/A",
-                product.weight,
-                product.discount != "N/A"
-                    ? (int.parse(product.discount) /
-                            100 *
-                            int.parse(product.price))
-                        .toStringAsFixed(0)
-                    : '0',
-              );
+                  product.imageUrl[0],
+                  product.title,
+                  product.price,
+                  product.sellerId,
+                  product.id,
+                  product.sizes.isNotEmpty ? product.sizes[0] : "N/A",
+                  product.colors.isNotEmpty ? product.colors[0] : "N/A",
+                  product.weight,
+                  product.discount != "N/A"
+                      ? (int.parse(product.discount) /
+                              100 *
+                              int.parse(product.price))
+                          .toStringAsFixed(0)
+                      : '0',
+                  product.detail);
             },
             productRating: product.averageReview,
           );
