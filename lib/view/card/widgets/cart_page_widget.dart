@@ -26,10 +26,12 @@ class CartWidget extends StatefulWidget {
     required this.productId,
     required this.deletedId,
     required this.discount,
+    required this.ontap,
   });
   final String title;
   String price;
   final String img;
+  final VoidCallback ontap;
   int items;
   final String sellerId;
   final String productId;
