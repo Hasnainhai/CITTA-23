@@ -16,20 +16,21 @@ int subTotal = 0;
 int d = 0;
 
 class CartWidget extends StatefulWidget {
-  CartWidget({
-    super.key,
-    required this.title,
-    required this.price,
-    required this.img,
-    required this.items,
-    required this.sellerId,
-    required this.productId,
-    required this.deletedId,
-    required this.discount,
-  });
+  CartWidget(
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.img,
+      required this.items,
+      required this.sellerId,
+      required this.productId,
+      required this.deletedId,
+      required this.discount,
+      required this.ontap});
   final String title;
   String price;
   final String img;
+  final VoidCallback ontap;
   int items;
   final String sellerId;
   final String productId;
@@ -150,70 +151,119 @@ class _CartWidgetState extends State<CartWidget> {
     return SizedBox(
       height: 110,
       child: Card(
-        shape: const RoundedRectangleBorder(),
-        color: AppColor.whiteColor,
-        elevation: 0.5,
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Center(
-            child: ListTile(
-              leading: SizedBox(
-                height: 80.0,
-                width: 58.0,
-                child: FancyShimmerImage(
-                  imageUrl: widget.img,
-                  boxFit: BoxFit.fill,
+          shape: const RoundedRectangleBorder(),
+          color: AppColor.whiteColor,
+          elevation: 0.5,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 80.0,
+                  width: 58.0,
+                  child: FancyShimmerImage(
+                    imageUrl: widget.img,
+                    boxFit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              title: Row(
-                children: [
-                  const SizedBox(width: 30.0),
-                  Text.rich(
-                    TextSpan(
-                      text: widget.title.length > 20
-                          ? '${widget.title.substring(0, 20)}...'
-                          : widget.title,
-                      style: const TextStyle(
-                        fontFamily: 'CenturyGothic',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.fontColor,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text.rich(
+                      TextSpan(
+                        text: widget.title.length > 30
+                            ? '${widget.title.substring(0, 30)}...'
+                            : widget.title,
+                        style: const TextStyle(
+                          fontFamily: 'CenturyGothic',
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.fontColor,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 9.0),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 30.0),
-                    InkWell(
-                      onTap: () {
-                        decrement();
-                      },
-                      child: Container(
-                          height: 25,
-                          width: 25,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColor.grayColor,
-                            ),
+                    const VerticalSpeacing(8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            decrement();
+                          },
+                          child: Container(
+                              height: 25,
+                              width: 25,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColor.grayColor,
+                                ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Divider(
+                                  height: 2,
+                                  thickness: 2.5,
+                                  color: AppColor.primaryColor,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          widget.items.toString(),
+                          style: const TextStyle(
+                            fontFamily: 'CenturyGothic',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.fontColor,
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Divider(
-                              height: 2,
-                              thickness: 2.5,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            increment();
+                          },
+                          child: Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColor.grayColor,
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.add,
                               color: AppColor.primaryColor,
                             ),
-                          )),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 10,
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const VerticalSpeacing(8),
+                    InkWell(
+                      onTap: () {
+                        _deleteProduct(widget.deletedId);
+                      },
+                      child: const Icon(
+                        Icons.delete_outline,
+                        color: AppColor.fontColor,
+                        size: 20,
+                      ),
                     ),
+                    const VerticalSpeacing(6),
                     Text(
-                      widget.items.toString(),
+                      newPrice == null ? "${widget.price}₹" : "$newPrice₹",
                       style: const TextStyle(
                         fontFamily: 'CenturyGothic',
                         fontSize: 12,
@@ -221,59 +271,11 @@ class _CartWidgetState extends State<CartWidget> {
                         color: AppColor.fontColor,
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        increment();
-                      },
-                      child: Container(
-                        height: 25,
-                        width: 25,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: AppColor.grayColor,
-                          ),
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: AppColor.primaryColor,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
-              ),
-              trailing: Column(
-                children: [
-                  const VerticalSpeacing(8),
-                  InkWell(
-                    onTap: () {
-                      _deleteProduct(widget.deletedId);
-                    },
-                    child: const Icon(
-                      Icons.delete_outline,
-                      color: AppColor.fontColor,
-                      size: 20,
-                    ),
-                  ),
-                  const VerticalSpeacing(6),
-                  Text(
-                    newPrice == null ? "${widget.price}₹" : "$newPrice₹",
-                    style: const TextStyle(
-                      fontFamily: 'CenturyGothic',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.fontColor,
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

@@ -1,24 +1,25 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:citta_23/res/components/colors.dart';
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/routes/routes_name.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/Checkout/check_out.dart';
 import 'package:citta_23/view/HomeScreen/all_related_prod.dart';
+import 'package:citta_23/view/HomeScreen/product_detail_screen.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/total_reviews.dart';
 import 'package:citta_23/view/HomeScreen/total_reviews/widgets/detail_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import '../../res/components/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
-class ProductDetailScreen extends StatefulWidget {
-  ProductDetailScreen({
+class CardProductDetailScreen extends StatefulWidget {
+  CardProductDetailScreen({
     super.key,
     required this.title,
     required this.imageUrl,
@@ -42,10 +43,11 @@ class ProductDetailScreen extends StatefulWidget {
   final String disPrice;
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  State<CardProductDetailScreen> createState() =>
+      _CardProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _CardProductDetailScreenState extends State<CardProductDetailScreen> {
   bool like = false;
   final _firestoreInstance = FirebaseFirestore.instance;
   int? newPrice;

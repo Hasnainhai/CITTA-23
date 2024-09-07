@@ -303,6 +303,7 @@ class _CardScreenState extends State<CardScreen> {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
                                     return CartWidget(
+                                      ontap: () {},
                                       title: data['title'],
                                       price: data['salePrice'],
                                       img: data['imageUrl'],
