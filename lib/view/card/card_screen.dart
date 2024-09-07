@@ -5,6 +5,7 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
+import 'package:citta_23/view/card/widgets/cart_detail_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
 import 'package:citta_23/view/forgetAnything/forget_anything.dart';
@@ -303,7 +304,27 @@ class _CardScreenState extends State<CardScreen> {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
                                     return CartWidget(
-                                      ontap: () {},
+                                      ontap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    CardProductDetailScreen(
+                                                      detail: data['details'],
+                                                      title: data['title'],
+                                                      imageUrl: [
+                                                        data['imageUrl']
+                                                      ],
+                                                      price: data['salePrice'],
+                                                      salePrice:
+                                                          data['salePrice'],
+                                                      weight: data['dPrice'],
+                                                      productId: data['id'],
+                                                      sellerId:
+                                                          data['sellerId'],
+                                                      disPrice: data['dPrice'],
+                                                    )));
+                                      },
                                       title: data['title'],
                                       price: data['salePrice'],
                                       img: data['imageUrl'],

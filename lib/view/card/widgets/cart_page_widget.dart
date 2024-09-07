@@ -160,12 +160,15 @@ class _CartWidgetState extends State<CartWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 80.0,
-                  width: 58.0,
-                  child: FancyShimmerImage(
-                    imageUrl: widget.img,
-                    boxFit: BoxFit.fill,
+                InkWell(
+                  onTap: widget.ontap,
+                  child: SizedBox(
+                    height: 80.0,
+                    width: 58.0,
+                    child: FancyShimmerImage(
+                      imageUrl: widget.img,
+                      boxFit: BoxFit.fill,
+                    ),
                   ),
                 ),
                 Column(
