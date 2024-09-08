@@ -237,6 +237,7 @@ class _FashionDetailState extends State<FashionDetail> {
         'size': size,
         'color': color,
         "discount": widget.disPrice,
+        'details':widget.detail
 
         // 'isLike': like,
       });

@@ -94,6 +94,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'weight': weight,
         'color': color,
         'size': size,
+        'details':widget.detail,
       });
       // Display a success message or perform any other action
       Utils.snackBar('SuccessFully add to favourite', context);

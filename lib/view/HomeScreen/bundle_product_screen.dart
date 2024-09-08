@@ -249,7 +249,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         "weight": weight,
         'color': 'N/A',
         'size': size,
-        "discount": discount
+        "discount": discount,
+        'details': widget.detail,
         // 'isLike': like,
       });
       // Display a success message or perform any other action

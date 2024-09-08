@@ -237,6 +237,7 @@ class _FavouriteListState extends State<FavouriteList> {
                               favorite['size'],
                               favorite['color']);
                         },
+                        ontap3: () {},
                       );
                     },
                   );
