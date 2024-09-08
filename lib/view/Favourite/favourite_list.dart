@@ -2,6 +2,8 @@
 import 'package:citta_23/res/components/loading_manager.dart';
 import 'package:citta_23/utils/utils.dart';
 import 'package:citta_23/view/HomeScreen/DashBoard/tapbar.dart';
+import 'package:citta_23/view/card/widgets/cart_detail_screen.dart';
+import 'package:citta_23/view/card/widgets/cart_fashion_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -237,7 +239,46 @@ class _FavouriteListState extends State<FavouriteList> {
                               favorite['size'],
                               favorite['color']);
                         },
-                        ontap3: () {},
+                        ontap3: () {
+                          if (favorite['color'] != 'N/A') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => CartFashionDetailScreen(
+                                  title: favorite['title'],
+                                  imageUrl: [favorite['imageUrl']],
+                                  salePrice: favorite['salePrice'],
+                                  detail: favorite['details'],
+                                  sellerId: favorite['sellerId'],
+                                  productId: favorite['id'],
+                                  colors: [favorite['color']],
+                                  sizes: [favorite['size']],
+                                  price: favorite['salePrice'],
+                                  disPrice: favorite['discount'],
+                                ),
+                              ),
+                            );
+                          } else {
+                            List<dynamic> imgeList = [];
+                            imgeList.add(favorite['imageUrl']);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (c) => CardProductDetailScreen(
+                                  detail: favorite['details'],
+                                  title: favorite['title'],
+                                  imageUrl: imgeList,
+                                  price: favorite['salePrice'],
+                                  salePrice: favorite['salePrice'],
+                                  weight: favorite['weight'],
+                                  productId: favorite['id'],
+                                  sellerId: favorite['sellerId'],
+                                  disPrice: favorite['discount'],
+                                ),
+                              ),
+                            );
+                          }
+                        },
                       );
                     },
                   );
