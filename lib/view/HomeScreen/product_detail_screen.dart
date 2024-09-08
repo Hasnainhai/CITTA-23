@@ -94,7 +94,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         'weight': weight,
         'color': color,
         'size': size,
-        'details':widget.detail,
+        'details': widget.detail,
       });
       // Display a success message or perform any other action
       Utils.snackBar('SuccessFully add to favourite', context);
@@ -627,7 +627,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         },
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          width: MediaQuery.of(context).size.width / 2.35,
                           color: AppColor.primaryColor,
                           child: const Center(
                             child: Text(
@@ -645,7 +645,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       InkWell(
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          width: MediaQuery.of(context).size.width / 2.35,
                           color: AppColor.primaryColor,
                           child: InkWell(
                             onTap: () {

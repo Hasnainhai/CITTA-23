@@ -778,7 +778,7 @@ class _CartFashionDetailScreenState extends State<CartFashionDetailScreen> {
                       },
                       child: Container(
                         height: 46,
-                        width: MediaQuery.of(context).size.width / 2.4,
+                        width: MediaQuery.of(context).size.width / 2.35,
                         color: AppColor.primaryColor,
                         child: const Center(
                           child: Text(
@@ -796,7 +796,7 @@ class _CartFashionDetailScreenState extends State<CartFashionDetailScreen> {
                     InkWell(
                       child: Container(
                         height: 46,
-                        width: MediaQuery.of(context).size.width / 2.4,
+                        width: MediaQuery.of(context).size.width / 2.35,
                         color: AppColor.primaryColor,
                         child: InkWell(
                           onTap: () {

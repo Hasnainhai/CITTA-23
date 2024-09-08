@@ -628,7 +628,7 @@ class _CardProductDetailScreenState extends State<CardProductDetailScreen> {
                         },
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          width: MediaQuery.of(context).size.width / 2.35,
                           color: AppColor.primaryColor,
                           child: const Center(
                             child: Text(
@@ -646,7 +646,7 @@ class _CardProductDetailScreenState extends State<CardProductDetailScreen> {
                       InkWell(
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          width: MediaQuery.of(context).size.width / 2.35,
                           color: AppColor.primaryColor,
                           child: InkWell(
                             onTap: () {

@@ -237,7 +237,7 @@ class _FashionDetailState extends State<FashionDetail> {
         'size': size,
         'color': color,
         "discount": widget.disPrice,
-        'details':widget.detail
+        'details': widget.detail
 
         // 'isLike': like,
       });
@@ -779,7 +779,7 @@ class _FashionDetailState extends State<FashionDetail> {
                       },
                       child: Container(
                         height: 46,
-                        width: MediaQuery.of(context).size.width / 2.4,
+                        width: MediaQuery.of(context).size.width / 2.35,
                         color: AppColor.primaryColor,
                         child: const Center(
                           child: Text(
@@ -797,7 +797,7 @@ class _FashionDetailState extends State<FashionDetail> {
                     InkWell(
                       child: Container(
                         height: 46,
-                        width: MediaQuery.of(context).size.width / 2.4,
+                        width: MediaQuery.of(context).size.width / 2.35,
                         color: AppColor.primaryColor,
                         child: InkWell(
                           onTap: () {
