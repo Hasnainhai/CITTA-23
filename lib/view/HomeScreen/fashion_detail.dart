@@ -665,7 +665,7 @@ class _FashionDetailState extends State<FashionDetail> {
                   ),
                 ),
                 Wrap(
-                  spacing: 8,
+                  spacing: 6,
                   children: widget.colors.map((color) {
                     // ignore: unnecessary_null_comparison
                     if (color == null || color.isEmpty) {
@@ -719,7 +719,7 @@ class _FashionDetailState extends State<FashionDetail> {
                 ),
                 const VerticalSpeacing(8),
                 Wrap(
-                  spacing: 8,
+                  spacing: 6,
                   children: widget.sizes.map((size) {
                     return GestureDetector(
                       onTap: () {
