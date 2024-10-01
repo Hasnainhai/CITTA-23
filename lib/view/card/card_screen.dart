@@ -5,6 +5,8 @@ import 'package:citta_23/models/index_model.dart';
 import 'package:citta_23/models/sub_total_model.dart';
 import 'package:citta_23/res/components/widgets/verticalSpacing.dart';
 import 'package:citta_23/res/consts/firebase_const.dart';
+import 'package:citta_23/view/card/widgets/cart_detail_screen.dart';
+import 'package:citta_23/view/card/widgets/cart_fashion_detail_screen.dart';
 import 'package:citta_23/view/card/widgets/cart_page_widget.dart';
 import 'package:citta_23/view/card/widgets/emptyCartWidget.dart';
 import 'package:citta_23/view/forgetAnything/forget_anything.dart';
@@ -303,7 +305,50 @@ class _CardScreenState extends State<CardScreen> {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
                                     return CartWidget(
-                                      ontap: () {},
+                                      ontap: () {
+                                        if (data['color'] != 'N/A') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (c) =>
+                                                  CartFashionDetailScreen(
+                                                title: data['title'],
+                                                imageUrl: [data['imageUrl']],
+                                                salePrice: data['salePrice'],
+                                                detail: data['details'],
+                                                sellerId: data['sellerId'],
+                                                productId: data['id'],
+                                                colors: [data['color']],
+                                                sizes: [data['size']],
+                                                price: data['salePrice'],
+                                                disPrice: data['dPrice'],
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          List<dynamic> imgeList = [];
+                                          imgeList.add(data['imageUrl']);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (c) =>
+                                                      CardProductDetailScreen(
+                                                        detail: data['details'],
+                                                        title: data['title'],
+                                                        imageUrl: imgeList,
+                                                        price:
+                                                            data['salePrice'],
+                                                        salePrice:
+                                                            data['salePrice'],
+                                                        weight: data['dPrice'],
+                                                        productId: data['id'],
+                                                        sellerId:
+                                                            data['sellerId'],
+                                                        disPrice:
+                                                            data['dPrice'],
+                                                      )));
+                                        }
+                                      },
                                       title: data['title'],
                                       price: data['salePrice'],
                                       img: data['imageUrl'],

@@ -249,7 +249,8 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
         "weight": weight,
         'color': 'N/A',
         'size': size,
-        "discount": discount
+        "discount": discount,
+        'details': widget.detail,
         // 'isLike': like,
       });
       // Display a success message or perform any other action
@@ -1054,7 +1055,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                         },
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          width: MediaQuery.of(context).size.width / 2.35,
                           color: AppColor.primaryColor,
                           child: const Center(
                             child: Text(
@@ -1072,7 +1073,7 @@ class _BundleProductScreenState extends State<BundleProductScreen> {
                       InkWell(
                         child: Container(
                           height: 50,
-                          width: MediaQuery.of(context).size.width / 2.4,
+                          width: MediaQuery.of(context).size.width / 2.35,
                           color: AppColor.primaryColor,
                           child: InkWell(
                             onTap: () {

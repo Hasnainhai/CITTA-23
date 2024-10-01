@@ -132,15 +132,17 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
   }
 
   void addToCart(
-      String img,
-      String title,
-      String dPrice,
-      String sellerId,
-      String productId,
-      String size,
-      String weight,
-      String color,
-      String disPrice) async {
+    String img,
+    String title,
+    String dPrice,
+    String sellerId,
+    String productId,
+    String size,
+    String weight,
+    String color,
+    String disPrice,
+    String bio,
+  ) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       showSignupDialog(context);
@@ -182,6 +184,7 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
         'weight': weight,
         'dPrice': disPrice,
         'color': color,
+        'details': bio,
         // Add other product details as needed
       });
       Utils.snackBar('Successfully added to cart', context);
@@ -303,21 +306,23 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                                           );
                                         },
                                         addCart: () {
+                                          debugPrint(
+                                              "this is the detail of the groccery:${item['detail']}");
                                           addToCart(
-                                            item['imageUrl'][0],
-                                            item['title'],
-                                            item['price'],
-                                            item['sellerId'],
-                                            item['id'],
-                                            'N/A',
-                                            item['weight'],
-                                            'N/A',
-                                            item['category'] ==
-                                                    "Lightening Deals"
-                                                ? dPrice(item['price'],
-                                                    item['discount'])
-                                                : '0',
-                                          );
+                                              item['imageUrl'][0],
+                                              item['title'],
+                                              item['price'],
+                                              item['sellerId'],
+                                              item['id'],
+                                              'N/A',
+                                              item['weight'],
+                                              'N/A',
+                                              item['category'] ==
+                                                      "Lightening Deals"
+                                                  ? dPrice(item['price'],
+                                                      item['discount'])
+                                                  : '0',
+                                              item['detail'].toString());
                                         },
                                         productId: item['id'],
                                         sellerId: item['sellerId'],
@@ -384,20 +389,20 @@ class _MenuDefaultSectionState extends State<MenuDefaultSection> {
                                         },
                                         addCart: () {
                                           addToCart(
-                                            item['imageUrl'][0],
-                                            item['title'],
-                                            item['price'],
-                                            item['sellerId'],
-                                            item['id'],
-                                            item['size'][0],
-                                            'N/A',
-                                            item['color'][0],
-                                            item['category'] ==
-                                                    "Lightening Deals"
-                                                ? dPrice(item['price'],
-                                                    item['discount'])
-                                                : '0',
-                                          );
+                                              item['imageUrl'][0],
+                                              item['title'],
+                                              item['price'],
+                                              item['sellerId'],
+                                              item['id'],
+                                              item['size'][0],
+                                              'N/A',
+                                              item['color'][0],
+                                              item['category'] ==
+                                                      "Lightening Deals"
+                                                  ? dPrice(item['price'],
+                                                      item['discount'])
+                                                  : '0',
+                                              item['detail'].toString());
                                         },
                                         productId: item['id'],
                                         sellerId: item['sellerId'],
